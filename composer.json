@@ -1,0 +1,35 @@
+{
+    "name": "fanamurov/larrock-core",
+    "description": "Core components for LarrockCMS",
+    "type": "library",
+    "require": {
+        "php": ">=7.0.0",
+        "barryvdh/laravel-debugbar": "~2.0",
+        "barryvdh/laravel-ide-helper": "~2.1",
+        "proengsoft/laravel-jsvalidation": "^1.5",
+        "prologue/alerts": "^0.4.1",
+        "davejamesmiller/laravel-breadcrumbs": "3.*",
+        "graham-campbell/exceptions": "^9.3",
+        "graham-campbell/manager": "^2.5",
+        "greggilbert/recaptcha": "^2.1",
+        "intervention/image": "^2.3",
+        "nicolaslopezj/searchable": "^1.9",
+        "roumen/feed": "^2.10",
+        "roumen/sitemap": "^2.6",
+        "spatie/laravel-medialibrary": "4.*.*",
+        "kix/mdash": "^0.5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Larrock\\Core\\": "src",
+            "Larrock\\Core\\Models\\": "src/Models"
+        }
+    },
+    "license": "BSD",
+    "authors": [
+        {
+            "name": "Alexandr Fanamurov",
+            "email": "fanamurov@ya.ru"
+        }
+    ]
+}
