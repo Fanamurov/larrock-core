@@ -15,7 +15,7 @@ Route::group(['prefix' => 'admin', 'middleware'=> ['web', 'level:2', 'LarrockAdm
     ]); //Роут главной страницы админки
 
     Route::post('ajax/EditRow', AdminAjax::class .'@EditRow');
-    Route::post('ajax/ClearCache', AdminAjax::class .'Larrock\Core\AdminAjax@ClearCache');
+    Route::post('ajax/ClearCache', AdminAjax::class .'@ClearCache');
 
     Route::post('ajax/UploadImage', AdminAjax::class .'@UploadImage');
     Route::post('ajax/GetUploadedImage', AdminAjax::class .'@GetUploadedImage');
