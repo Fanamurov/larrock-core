@@ -6,7 +6,8 @@
         "php": ">=7.0.0",
         "barryvdh/laravel-debugbar": "~2.0",
         "barryvdh/laravel-ide-helper": "~2.1",
-        "proengsoft/laravel-jsvalidation": "^1.5",
+        //"proengsoft/laravel-jsvalidation": "^1.5",
+        "proengsoft/laravel-jsvalidation": "^1.6.0-dev", //ВРЕМЕННО jsvalidation Laravel 5.4 Support https://github.com/proengsoft/laravel-jsvalidation/issues/222
         "prologue/alerts": "^0.4.1",
         "davejamesmiller/laravel-breadcrumbs": "3.*",
         "graham-campbell/exceptions": "^9.3",
@@ -19,6 +20,13 @@
         "spatie/laravel-medialibrary": "4.*.*",
         "kix/mdash": "^0.5.4"
     },
+    //ВРЕМЕННО jsvalidation Laravel 5.4 Support https://github.com/proengsoft/laravel-jsvalidation/issues/222
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/reganjohnson/laravel-jsvalidation"
+        }
+    ]
     "autoload": {
         "psr-4": {
             "Larrock\\Core\\": "src",

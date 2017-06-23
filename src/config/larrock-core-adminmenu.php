@@ -7,31 +7,31 @@
 /** @var  $components Основные пункты */
 $components = [];
 if(file_exists(base_path(). '/vendor/fanamurov/larrock-pages')){
-    $components[] = new Larrock\ComponentPages\PageComponent;
+    $components[] = new \Larrock\ComponentPages\PageComponent();
 }
 if(file_exists(base_path(). '/vendor/fanamurov/larrock-blocks')){
-    $components[] = new Larrock\ComponentBlocks\BlocksComponent;
+    $components[] = new \Larrock\ComponentBlocks\BlocksComponent();
 }
 if(file_exists(base_path(). '/vendor/fanamurov/larrock-feed')){
-    $components[] = new Larrock\ComponentFeed\FeedComponent;
+    $components[] = new \Larrock\ComponentFeed\FeedComponent();
 }
 if(file_exists(base_path(). '/vendor/fanamurov/larrock-catalog')){
-    $components[] = new Larrock\ComponentCatalog\CatalogComponent;
+    $components[] = new \Larrock\ComponentCatalog\CatalogComponent();
 }
 if(file_exists(base_path(). '/vendor/fanamurov/larrock-cart')){
-    $components[] = new Larrock\ComponentCart\CartComponent;
+    $components[] = new \Larrock\ComponentCart\CartComponent();
 }
 
 /** @var  $other_items Второстепенные пункты, свернутые в выпадающий список */
 $other_items = [];
 if(file_exists(base_path(). '/vendor/fanamurov/larrock-menu')){
-    $other_items[] = new Larrock\ComponentMenu\MenuComponent;
+    $other_items[] = new \Larrock\ComponentMenu\MenuComponent();
 }
 if(file_exists(base_path(). '/vendor/fanamurov/larrock-seo')){
-    $other_items[] = new Larrock\ComponentSeo\SeoComponent;
+    $other_items[] = new \Larrock\ComponentSeo\SeoComponent();
 }
 if(file_exists(base_path(). '/vendor/fanamurov/larrock-users')){
-    $other_items[] = new Larrock\ComponentUsers\UsersComponent;
+    $other_items[] = new \Larrock\ComponentUsers\UsersComponent();
 }
 
 return [
