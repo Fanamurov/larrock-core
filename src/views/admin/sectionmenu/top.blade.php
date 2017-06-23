@@ -15,9 +15,13 @@
                         {!! $item !!}
                     @endforeach
                     <li class="uk-nav-header">Система</li>
-                    <li><a href="#" onclick="rebuild_sitemap(); return false">Перегенерировать /sitemap.xml</a></li>
-                    <li><a href="#" onclick="rebuild_rss(); return false">Перегенерировать /feed.rss</a></li>
-                    <li><a target="_blank" href="/external/adminer.php">DB</a></li>
+                    @if(file_exists(base_path(). '/vendor/fanamurov/larrock-sitemap'))
+                        <li><a href="#" onclick="rebuild_sitemap(); return false">Перегенерировать /sitemap.xml</a></li>
+                        <li><a href="#" onclick="rebuild_rss(); return false">Перегенерировать /feed.rss</a></li>
+                    @endif
+                    @if(file_exists(public_path(). '/external/adminer.php'))
+                        <li><a target="_blank" href="/external/adminer.php">DB</a></li>
+                    @endif
                     <li>
                         <a href="#" onclick="clear_cache(); return false">Очистить кэш</a>
                     </li>
@@ -56,9 +60,13 @@
                                 {!! $item !!}
                             @endforeach
                             <li class="uk-nav-header">Система</li>
-                            <li><a href="#" onclick="rebuild_sitemap(); return false">Перегенерировать /sitemap.xml</a></li>
-                            <li><a href="#" onclick="rebuild_rss(); return false">Перегенерировать /feed.rss</a></li>
-                            <li><a target="_blank" href="/external/adminer.php">DB</a></li>
+                            @if(file_exists(base_path(). '/vendor/fanamurov/larrock-sitemap'))
+                                <li><a href="#" onclick="rebuild_sitemap(); return false">Перегенерировать /sitemap.xml</a></li>
+                                <li><a href="#" onclick="rebuild_rss(); return false">Перегенерировать /feed.rss</a></li>
+                            @endif
+                            @if(file_exists(public_path(). '/external/adminer.php'))
+                                <li><a target="_blank" href="/external/adminer.php">DB</a></li>
+                            @endif
                             <li>
                                 <a href="#" onclick="clear_cache(); return false">Очистить кэш</a>
                             </li>
