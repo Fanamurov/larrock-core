@@ -3,12 +3,6 @@
 use Larrock\ComponentPages\AdminPageController;
 use Larrock\Core\AdminAjax;
 
-Route::group(['middleware' => ['web', 'AddMenuFront', 'GetSeo', 'AddBlocksTemplate']], function(){
-    Route::get('/', [
-        'as' => 'site.index', 'uses' => 'Larrock\ComponentPages\PageController@getItem'
-    ]);
-});
-
 Route::group(['prefix' => 'admin', 'middleware'=> ['web', 'level:2', 'LarrockAdminMenu']], function(){
     Route::get('/', [
         'as' => 'admin.home', 'uses' => AdminPageController::class .'@index'

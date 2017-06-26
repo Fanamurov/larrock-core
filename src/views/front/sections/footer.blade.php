@@ -2,7 +2,9 @@
     <div class="uk-container uk-container-center body-container">
         <div class="uk-grid">
             <div class="uk-width-1-1 footer-text">
-                {!! $tekst_v_podvale->description !!}
+                @if(isset($tekst_v_podvale))
+                    {!! $tekst_v_podvale->description !!}
+                @endif
             </div>
             <div class="uk-width-1-1 sharing">
                 <script src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js"></script>
