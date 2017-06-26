@@ -7,7 +7,7 @@
         <ul class="uk-nav uk-nav-navbar">
             <li><a href="{{ $url }}">Все материалы</a></li>
             @foreach($dropdown as $item)
-                <li @if(\URL::current() === $url .'/'. $item->id) class="uk-active" @endif><a href="{{ $url }}/{{ $item->id }}@if($item->table !== 'category'){!! '/edit' !!}@endif">{{ $item->title }}</a></li>
+                <li @if(\URL::current() === $url .'/'. $item->id) class="uk-active" @endif><a href="{{ $url }}/{{ $item->id }}@if($item->getTable() !== 'category'){!! '/edit' !!}@endif">{{ $item->title }}</a></li>
             @endforeach
             @if(isset($push))
                 <li class="uk-nav-header">Дополнительно</li>
