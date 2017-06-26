@@ -27,8 +27,8 @@ $other_items = [];
 if(file_exists(base_path(). '/vendor/fanamurov/larrock-menu')){
     $other_items[] = new \Larrock\ComponentMenu\MenuComponent();
 }
-if(file_exists(base_path(). '/vendor/fanamurov/larrock-seo')){
-    $other_items[] = new \Larrock\ComponentSeo\SeoComponent();
+if(file_exists(base_path(). '/vendor/fanamurov/larrock-admin-seo')){
+    $other_items[] = new \Larrock\ComponentAdminSeo\SeoComponent();
 }
 if(file_exists(base_path(). '/vendor/fanamurov/larrock-users')){
     $other_items[] = new \Larrock\ComponentUsers\UsersComponent();

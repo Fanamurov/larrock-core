@@ -9,3 +9,6 @@ use https://github.com/reganjohnson/laravel-jsvalidation
 
 change config/jsvalidation.php
 'view' => 'larrock::jsvalidation.uikit',
+
+change config/database.php
+'connections' => mysql => strict' => false,

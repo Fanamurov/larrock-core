@@ -29,7 +29,7 @@
             </div>
         </li>
     </ul>
-    @if(file_exists(base_path(). '/vendor/fanamurov/larrock-admin-search')){
+    @if(file_exists(base_path(). '/vendor/fanamurov/larrock-admin-search'))
         <div class="uk-navbar-content uk-hidden-small">
             <form class="uk-form uk-margin-remove uk-display-inline-block" action="/admin/search" method="get">
                 <input type="text" class="uk-form-controls" placeholder="Что ищем?" name="text" value="{{ Request::get('text') }}">
