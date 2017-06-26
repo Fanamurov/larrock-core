@@ -29,12 +29,14 @@
             </div>
         </li>
     </ul>
-    <div class="uk-navbar-content uk-hidden-small">
-        <form class="uk-form uk-margin-remove uk-display-inline-block" action="/admin/search" method="get">
-            <input type="text" class="uk-form-controls" placeholder="Что ищем?" name="text" value="{{ Request::get('text') }}">
-            <button type="submit" class="uk-button" title="Поиск по сайту"><i class="uk-icon-search"></i></button>
-        </form>
-    </div>
+    @if(file_exists(base_path(). '/vendor/fanamurov/larrock-admin-search')){
+        <div class="uk-navbar-content uk-hidden-small">
+            <form class="uk-form uk-margin-remove uk-display-inline-block" action="/admin/search" method="get">
+                <input type="text" class="uk-form-controls" placeholder="Что ищем?" name="text" value="{{ Request::get('text') }}">
+                <button type="submit" class="uk-button" title="Поиск по сайту"><i class="uk-icon-search"></i></button>
+            </form>
+        </div>
+    @endif
     <div class="uk-navbar-content uk-navbar-flip">
         <a href="/" target="_blank" class="uk-button">К сайту</a>
         <a class="uk-button" href="{{ url('/logout') }}">Выйти</a>
