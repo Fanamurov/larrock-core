@@ -42,10 +42,21 @@ class Component
 
     public function addPositionAndActive()
     {
+        $this->addActive();
+        $this->addPosition();
+        return $this;
+    }
+
+    public function addPosition()
+    {
         $row = new FormInput('position', 'Вес');
         $this->rows['position'] = $row->setTab('other', 'Дата, вес, активность')->setValid('integer')
             ->setDefaultValue(0)->setInTableAdminAjaxEditable();
+        return $this;
+    }
 
+    public function addActive()
+    {
         $row = new FormCheckbox('active', 'Опубликован');
         $this->rows['active'] = $row->setTab('other', 'Дата, вес, активность')->setChecked()
             ->setValid('integer|max:1')->setDefaultValue(1)->setInTableAdminAjaxEditable();
@@ -85,7 +96,7 @@ class Component
         $row = new FormInput('url', 'URL материала');
         $this->rows['url'] = $row->setTab('seo', 'SEO')->setValid('max:155|required|unique:'. $this->table .',url,:id')->setCssClass('uk-width-1-1');
 
-        if(method_exists(\Request::class, 'has') && !\Request::has('_jsvalidation') && \Request::has('seo_title')){
+        if( !\Request::has('_jsvalidation') && \Request::has('seo_title')){
             if( !$seo = Seo::whereIdConnect(\Request::input('id_connect'))->whereTypeConnect(\Request::input('type_connect'))->first()){
                 $seo = new Seo();
             }
@@ -129,7 +140,7 @@ class Component
 
         $this->plugins_backend['anons']['rows'] = $rows_plugin;
 
-        if(method_exists(\Request::class, 'has') && !\Request::has('_jsvalidation') && (\Request::has('anons_merge') || !empty(\Request::has('anons_description')))){
+        if( !\Request::has('_jsvalidation') && (\Request::has('anons_merge') || !empty(\Request::has('anons_description')))){
             $anons = new Feed();
             $anons->title = \Request::get('title');
             $anons->url = 'anons_'. \Request::get('id_connect') .''. random_int(1,9999);
