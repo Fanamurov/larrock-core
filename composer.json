@@ -9,8 +9,6 @@
         "proengsoft/laravel-jsvalidation": "^1.6.0-dev",
         "prologue/alerts": "^0.4.1",
         "davejamesmiller/laravel-breadcrumbs": "3.*",
-        "graham-campbell/exceptions": "^9.3",
-        "graham-campbell/manager": "^2.5",
         "greggilbert/recaptcha": "^2.1",
         "intervention/image": "^2.3",
         "nicolaslopezj/searchable": "^1.9",
