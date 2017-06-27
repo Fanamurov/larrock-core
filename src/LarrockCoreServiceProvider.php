@@ -46,7 +46,7 @@ class LarrockCoreServiceProvider extends ServiceProvider
             $timestamp = date('Y_m_d_His', time());
 
             $this->publishes([
-                __DIR__.'/../database/migrations/0000_00_00_000000_create_config_table.php' => database_path('migrations/'.$timestamp.'_create_config_table.php')
+                __DIR__.'/database/migrations/0000_00_00_000000_create_config_table.php' => database_path('migrations/'.$timestamp.'_create_config_table.php')
             ], 'migrations');
         }
         if ( !class_exists('CreateLarrockSeoTable')){
@@ -54,7 +54,7 @@ class LarrockCoreServiceProvider extends ServiceProvider
             $timestamp = date('Y_m_d_His', time());
 
             $this->publishes([
-                __DIR__.'/../database/migrations/0000_00_00_000000_create_seo_table.php' => database_path('migrations/'.$timestamp.'_create_seo_table.php')
+                __DIR__.'/database/migrations/0000_00_00_000000_create_seo_table.php' => database_path('migrations/'.$timestamp.'_create_seo_table.php')
             ], 'migrations');
         }
     }
