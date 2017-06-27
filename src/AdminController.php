@@ -28,7 +28,11 @@ class AdminController extends BaseController
      */
     public function index()
     {
-        $data['data'] = $this->config->model::orderBy('position', 'DESC')->paginate(30);
+        if(array_key_exists('position', $this->config->rows)){
+            $data['data'] = $this->config->model::orderBy('position', 'DESC')->paginate(30);
+        }else{
+            $data['data'] = $this->config->model::paginate(30);
+        }
         return view('larrock::admin.admin-builder.index', $data);
     }
 
@@ -39,11 +43,14 @@ class AdminController extends BaseController
      */
     public function create()
     {
-        $test = Request::create('/admin/'. $this->config->name, 'POST', [
+        $post_rows = [
             'title' => 'Новый материал',
-            'url' => str_slug('novyy-material'),
-            'active' => 0,
-        ]);
+            'url' => str_slug('novyy-material')
+        ];
+        if(array_key_exists('position', $this->config->rows)){
+            $post_rows['active'] = 0;
+        }
+        $test = Request::create('/admin/'. $this->config->name, 'POST', $post_rows);
         return $this->store($test);
     }
 
@@ -103,9 +110,11 @@ class AdminController extends BaseController
      */
     public function store(Request $request)
     {
-        if($search_blank = $this->config->model::whereUrl('novyy-material')->first()){
-            Alert::add('errorAdmin', 'Измените URL этого материала, чтобы получить возможность создать новый')->flash();
-            return redirect()->to('/admin/'. $this->config->name .'/'. $search_blank->id. '/edit');
+        if(array_key_exists('url', $this->config->rows)){
+            if($search_blank = $this->config->model::whereUrl('novyy-material')->first()){
+                Alert::add('errorAdmin', 'Измените URL этого материала, чтобы получить возможность создать новый')->flash();
+                return redirect()->to('/admin/'. $this->config->name .'/'. $search_blank->id. '/edit');
+            }
         }
 
         $validator = Validator::make($request->all(), Component::_valid_construct($this->config->valid));

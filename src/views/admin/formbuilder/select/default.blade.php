@@ -6,7 +6,7 @@
         @endif
     </label>
     <select name="{{ $row_key }}" class="{{ $row_settings->css_class }}" id="{{ $row_key }}">
-        @foreach($row_settings['options'] as $options_key => $options_value)
+        @foreach($row_settings->options as $options_key => $options_value)
             <option value="{{ $options_key }}" @isset($data->{$row_key}) @if(Request::old($row_key, $data->{$row_key}) === $options_key) selected @endif @endisset>{{ $options_value }}</option>
         @endforeach
     </select>
