@@ -21,6 +21,9 @@ if(file_exists(base_path(). '/vendor/fanamurov/larrock-catalog')){
 if(file_exists(base_path(). '/vendor/fanamurov/larrock-cart')){
     $components[] = new \Larrock\ComponentCart\CartComponent();
 }
+if(file_exists(base_path(). '/vendor/fanamurov/larrock-reviews')){
+    $components[] = new \Larrock\ComponentReviews\ReviewsComponent();
+}
 
 /** @var  $other_items Второстепенные пункты, свернутые в выпадающий список */
 $other_items = [];
