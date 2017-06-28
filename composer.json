@@ -15,7 +15,14 @@
         "roumen/feed": "^2.10",
         "roumen/sitemap": "^2.6",
         "spatie/laravel-medialibrary": "4.*.*",
-        "kix/mdash": "^0.5.4"
+        "kix/mdash": "^0.5.4",
+        "fanamurov/larrock-menu": "^0.1",
+        "fanamurov/larrock-users": "^0.1",
+        "fanamurov/larrock-pages": "^0.1",
+        "fanamurov/larrock-blocks": "^0.1",
+        "fanamurov/larrock-contact": "^0.1",
+        "fanamurov/larrock-admin-seo": "^0.1",
+        "fanamurov/larrock-admin-search": "^0.1"
     },
     "repositories": [
         {
