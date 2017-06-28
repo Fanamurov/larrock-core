@@ -21,7 +21,15 @@ $ composer create-project --prefer-dist laravel/laravel blog
 2. Create DB
 3. Publish larrock views, migrations etc.
 ```sh
-$ php artisan vendor:publish
+$ php artisan vendor:publish --provider="Larrock\Core\LarrockCoreServiceProvider"
+$ php artisan vendor:publish --provider="Larrock\ComponentUsers\LarrockComponentUsersServiceProvider"
+$ php artisan vendor:publish --provider="Larrock\ComponentPages\LarrockComponentPagesServiceProvider"
+$ php artisan vendor:publish --provider="Larrock\ComponentBlocks\LarrockComponentBlocksServiceProvider"
+$ php artisan vendor:publish --provider="Larrock\ComponentMenu\LarrockComponentMenuServiceProvider"
+$ php artisan vendor:publish --provider="Larrock\ComponentContact\LarrockComponentContactServiceProvider"
+$ php artisan vendor:publish --provider="Larrock\ComponentAdminSeo\LarrockComponentAdminSeoServiceProvider"
+$ php artisan vendor:publish --provider="Larrock\ComponentAdminSearch\LarrockComponentAdminSearchServiceProvider"
+$ php artisan migrate
 ```
        
 4. Install migration table
