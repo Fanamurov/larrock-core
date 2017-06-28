@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateLarrockConfigTable extends Migration {
+class CreateConfigTable extends Migration {
 
 	/**
 	 * Run the migrations.

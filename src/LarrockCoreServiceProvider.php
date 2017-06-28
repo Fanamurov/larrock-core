@@ -41,7 +41,7 @@ class LarrockCoreServiceProvider extends ServiceProvider
 
         $this->mergeConfigFrom( __DIR__.'/config/larrock-core-adminmenu.php', 'larrock-core-adminmenu');
 
-        if ( !class_exists('CreateLarrockConfigTable')){
+        if ( !class_exists('CreateConfigTable')){
             // Publish the migration
             $timestamp = date('Y_m_d_His', time());
 
@@ -49,7 +49,7 @@ class LarrockCoreServiceProvider extends ServiceProvider
                 __DIR__.'/database/migrations/0000_00_00_000000_create_config_table.php' => database_path('migrations/'.$timestamp.'_create_config_table.php')
             ], 'migrations');
         }
-        if ( !class_exists('CreateLarrockSeoTable')){
+        if ( !class_exists('CreateSeoTable')){
             // Publish the migration
             $timestamp = date('Y_m_d_His', time());
 
