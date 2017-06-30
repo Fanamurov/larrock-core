@@ -20,10 +20,17 @@ class LarrockCoreServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/lang', 'larrock');
 
         $this->publishes([
-            __DIR__.'/lang' => resource_path('lang/larrock'),
-            __DIR__.'/views' => base_path('resources/views/larrock'),
-            __DIR__.'/config/larrock-core-adminmenu.php' => config_path('larrock-core-adminmenu.php'),
-        ]);
+            __DIR__.'/lang' => resource_path('vendor/lang/larrock')
+        ], 'lang');
+        $this->publishes([
+            __DIR__.'/views' => base_path('resources/views/larrock')
+        ], 'views');
+        $this->publishes([
+            __DIR__.'/assets' => resource_path('assets')
+        ], 'assets');
+        $this->publishes([
+            __DIR__.'/config/larrock-core-adminmenu.php' => config_path('larrock-core-adminmenu.php')
+        ], 'config');
     }
 
     /**
@@ -37,6 +44,7 @@ class LarrockCoreServiceProvider extends ServiceProvider
         $this->app['router']->aliasMiddleware('level', VerifyLevel::class);
         $this->app['router']->aliasMiddleware('LarrockAdminMenu', AdminMenu::class);
         $this->app['router']->aliasMiddleware('GetSeo', GetSeo::class);
+        $this->app['router']->aliasMiddleware('SaveAdminPluginsData', SaveAdminPluginsData::class);
         $this->app->make(AdminController::class);
 
         $this->mergeConfigFrom( __DIR__.'/config/larrock-core-adminmenu.php', 'larrock-core-adminmenu');

@@ -10,6 +10,7 @@ use Larrock\Core\Models\Seo;
 use Illuminate\Database\Eloquent\Model;
 use JsValidator;
 use View;
+use Illuminate\Http\Request;
 
 class Component
 {
@@ -37,6 +38,10 @@ class Component
         if(empty($this->name)){
             return abort('Конфиг компонента не заполнен');
         }
+
+        //Вызываем middleware сохранения данных плагинов
+        $this->middleware(SaveAdminPluginsData::class);
+
         return $this;
     }
 
@@ -78,6 +83,12 @@ class Component
         return $this;
     }
 
+    public function savePluginsData($request)
+    {
+        $this->savePluginSeoData($request);
+        $this->savePluginAnonsToModuleData($request);
+    }
+
     public function addPluginSeo()
     {
         $row = new FormInput('seo_title', 'Title материала');
@@ -113,6 +124,24 @@ class Component
         return $this;
     }
 
+    public function savePluginSeoData($request)
+    {
+        if( !\Request::has('_jsvalidation') && \Request::has('seo_title')){
+            if( !$seo = Seo::whereIdConnect(\Request::input('id_connect'))->whereTypeConnect(\Request::input('type_connect'))->first()){
+                $seo = new Seo();
+            }
+            if(\Request::get('seo_title', '') !== ''){
+                if($seo->fill(\Request::all())->save()){
+                    \Alert::add('successAdmin', 'SEO обновлено')->flash();
+                }
+            }else{
+                $seo->delete($seo->id);
+                \Alert::add('successAdmin', 'SEO удалено')->flash();
+            }
+        }
+        return TRUE;
+    }
+
     public function addPluginImages()
     {
         $this->plugins_backend['images'] = 'images';
@@ -140,7 +169,12 @@ class Component
 
         $this->plugins_backend['anons']['rows'] = $rows_plugin;
 
-        if(method_exists(\Request::class, 'has') && !\Request::has('_jsvalidation') && (\Request::has('anons_merge') || !empty(\Request::has('anons_description')))){
+        return $this;
+    }
+
+    public function savePluginAnonsToModuleData($request)
+    {
+        if( !\Request::has('_jsvalidation') && (\Request::has('anons_merge') || !empty(\Request::has('anons_description')))){
             $anons = new Feed();
             $anons->title = \Request::get('title');
             $anons->url = 'anons_'. \Request::get('id_connect') .''. random_int(1,9999);
@@ -161,9 +195,8 @@ class Component
             }else{
                 \Alert::add('errorAdmin', 'Анонс не добавлен')->flash();
             }
-        }
-
-        return $this;
+        };
+        return TRUE;
     }
 
     /**

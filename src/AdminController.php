@@ -92,7 +92,19 @@ class AdminController extends BaseController
         }
 
         $data = $this->config->model::find($id);
-        if($data->fill($request->all())->save()){
+        $data->fill($request->all());
+        foreach ($this->config->rows as $row){
+            if(in_array($row->name, $data->getFillable())){
+                if(get_class($row) === 'Larrock\Core\Helpers\FormBuilder\FormCheckbox'){
+                    $data->{$row->name} = $request->input($row->name, NULL);
+                }
+                if(get_class($row) === 'Larrock\Core\Helpers\FormBuilder\FormDate'){
+                    $data->{$row->name} = $request->input('date', date('Y-m-d'));
+                }
+            }
+        }
+
+        if($data->save()){
             Alert::add('successAdmin', 'Материал '. $request->input('title') .' изменен')->flash();
             \Cache::flush();
             return back();
@@ -125,11 +137,13 @@ class AdminController extends BaseController
         $data = new $this->config->model();
         $data->fill($request->all());
         foreach ($this->config->rows as $row){
-            if(get_class($row) === 'App\Helpers\FormBuilder\FormCheckbox'){
-                $data->{$row->name} = $request->input($row->name, NULL);
-            }
-            if(get_class($row) === 'App\Helpers\FormBuilder\FormDate'){
-                $data->{$row->name} = $request->input('date', date('Y-m-d'));
+            if(in_array($row->name, $data->getFillable())){
+                if(get_class($row) === 'Larrock\Core\Helpers\FormBuilder\FormCheckbox'){
+                    $data->{$row->name} = $request->input($row->name, NULL);
+                }
+                if(get_class($row) === 'Larrock\Core\Helpers\FormBuilder\FormDate'){
+                    $data->{$row->name} = $request->input('date', date('Y-m-d'));
+                }
             }
         }
 
@@ -160,9 +174,9 @@ class AdminController extends BaseController
 
             if($data->delete()){
                 \Cache::flush();
-                Alert::add('successAdmin', Lang::get('apps.delete.success', ['name' => $name]))->flash();
+                Alert::add('successAdmin', Lang::get('larrock::apps.delete.success', ['name' => $name]))->flash();
             }else{
-                Alert::add('errorAdmin', Lang::get('apps.delete.error', ['name' => $name]))->flash();
+                Alert::add('errorAdmin', Lang::get('larrock::apps.delete.error', ['name' => $name]))->flash();
             }
         }else{
             Alert::add('errorAdmin', 'Такого материала больше нет')->flash();

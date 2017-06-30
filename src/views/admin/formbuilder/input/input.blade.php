@@ -11,10 +11,10 @@
                 <input type="text" name="{{ $row_key }}"
                        value="@isset($data->{$row_key}){{ Request::old($row_key, $data->{$row_key}) }}@endif"
                        class="uk-width-1-1 {{ $row_settings->css_class }}" id="{{ $row_key }}"
-                @if($row_key === 'title') data-table="{{ $app->table }}" @endif>
+                @if($row_key === 'title') data-table="{{ $app->model }}" @endif>
             </div>
             <div class="uk-width-1-1 uk-width-medium-3-10">
-                <button type="button" class="uk-button uk-button-outline btn-typo">Типограф</button>
+                <button type="button" class="uk-button uk-button-outline typo-target" data-target="{{ $row_key }}">Типограф</button>
                 @if($row_key === 'title')
                     <button type="button" class="uk-button uk-button-outline refresh-url">Создать url</button>
                 @endif

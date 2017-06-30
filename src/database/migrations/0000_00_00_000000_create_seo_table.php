@@ -15,11 +15,11 @@ class CreateSeoTable extends Migration {
 		Schema::create('seo', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('seo_title');
-			$table->text('seo_description');
-			$table->text('seo_keywords');
-			$table->integer('id_connect');
-			$table->string('url_connect');
+			$table->string('seo_title')->nullable();
+			$table->text('seo_description')->nullable();
+			$table->text('seo_keywords')->nullable();
+			$table->integer('id_connect')->nullable();
+			$table->string('url_connect')->nullable();
 			$table->string('type_connect');
 			$table->timestamps();
 		});

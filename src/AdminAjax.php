@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use DB;
 use Image;
 use Cache;
+use Larrock\Core\Helpers\Plugins\Typograf;
 
 class AdminAjax extends Controller
 {
@@ -212,7 +213,12 @@ class AdminAjax extends Controller
 			if($model::whereUrl($url)->first(['url'])){
 				$url = $url .'-'. random_int(2, 999);
 			}
+
+			if($model === 'Larrock\ComponentBlocks\Models\Blocks'){
+			    $url = str_replace('-', '_', $url);
+            }
 		}
+
 		return response()->json(['status' => 'success', 'message' => $url]);
 	}
 
@@ -231,32 +237,8 @@ class AdminAjax extends Controller
      */
 	public function TypographLight(Request $request)
 	{
-		$rules = array(
-			'Etc.unicode_convert' => 'on',
-			'OptAlign.all' => 'off',
-			'OptAlign.oa_oquote' => 'off',
-			'OptAlign.oa_obracket_coma' => 'off',
-			'OptAlign.oa_oquote_extra' => 'off',
-
-			'Text.paragraphs' => 'off',
-			'Text.auto_links' => 'off',
-			'Text.email' => 'off',
-			'Text.breakline' => 'off',
-			'Text.no_repeat_words' => 'off',
-			'Abbr.nbsp_money_abbr' => 'off',
-			'Abbr.nobr_vtch_itd_itp' => 'off',
-			'Abbr.nobr_sm_im' => 'off',
-			'Abbr.nobr_acronym' => 'off',
-			'Abbr.nobr_locations' => 'off',
-			'Abbr.nobr_abbreviation' => 'off',
-			'Abbr.ps_pps' => 'off',
-			'Abbr.nbsp_org_abbr' => 'off',
-			'Abbr.nobr_gost' => 'off',
-			'Abbr.nobr_before_unit_volt' => 'off',
-			'Abbr.nbsp_before_unit' => 'off',
-		);
-
-		return response()->json(['text' => EMTypograph::fast_apply($request->get('text'), $rules)]);
+	    $typo = new Typograf();
+	    return $typo->TypographLight($request->get('text'));
 	}
 
 }
