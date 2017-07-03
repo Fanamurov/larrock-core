@@ -30,6 +30,8 @@
 <link rel="stylesheet" href="/_assets/bower_components/fancybox/source/jquery.fancybox.css"/>
 <link rel="stylesheet" href="/_assets/bower_components/fancybox/source/helpers/jquery.fancybox-buttons.css"/>
 <link rel="stylesheet" href="/_assets/bower_components/fancybox/source/helpers/jquery.fancybox-thumbs.css"/>
+<link rel="stylesheet" href="/_assets/bower_components/pickadate/lib/compressed/themes/classic.css"/>
+<link rel="stylesheet" href="/_assets/bower_components/pickadate/lib/compressed/themes/classic.date.css"/>
 
 
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,500i,700&amp;subset=cyrillic" rel="stylesheet">
