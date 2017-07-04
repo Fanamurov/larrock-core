@@ -19,8 +19,10 @@ class SaveAdminPluginsData
      */
     public function handle($request, Closure $next)
     {
-    	$component = new Component();
-    	$component->savePluginsData($request);
+        if(auth()->user() && auth()->user()->role()->first()->level === 3){
+            $component = new Component();
+            $component->savePluginsData($request);
+        }
 
         return $next($request);
     }

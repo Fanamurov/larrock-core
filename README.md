@@ -124,6 +124,11 @@ SITE_NAME="your sitename"
 'model' => \Larrock\ComponentUsers\Models\User::class
 ```
 
+12. Add SaveAdminPluginsData::class in $middlewareGroups (Http/Kernel.php)
+```php
+SaveAdminPluginsData::class
+```
+
 
 ##START
 http://yousite/admin
