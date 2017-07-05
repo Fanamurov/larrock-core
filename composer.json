@@ -4,8 +4,19 @@
     "type": "library",
     "repositories": [
         {
-            "type": "vcs",
-            "url": "https://github.com/Fanamurov/laravel-jsvalidation.git"
+            "type": "package",
+            "package": {
+                "name": "Fanamurov/laravel-jsvalidation",
+                "version": "master",
+                "source": {
+                    "url": "https://github.com/Fanamurov/laravel-jsvalidation.git",
+                    "type": "git",
+                    "reference": "larrock"
+                },
+                "autoload": {
+                    "classmap": [""]
+                }
+            }
         }
     ],
     "require": {
