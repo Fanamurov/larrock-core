@@ -5,14 +5,14 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/reganjohnson/laravel-jsvalidation"
+            "url": "https://github.com/Fanamurov/laravel-jsvalidation"
         }
     ],
     "require": {
         "php": ">=7.0.0",
         "barryvdh/laravel-debugbar": "~2.0",
         "barryvdh/laravel-ide-helper": "~2.1",
-        "proengsoft/laravel-jsvalidation": "^1.6",
+        "proengsoft/laravel-jsvalidation": "dev-master",
         "prologue/alerts": "^0.4.1",
         "davejamesmiller/laravel-breadcrumbs": "3.*",
         "greggilbert/recaptcha": "^2.1",
