@@ -21,12 +21,22 @@ $ composer create-project --prefer-dist laravel/laravel blog
 2.Install Larrock core:
 ```sh
 $ composer require fanamurov/larrock-core
+```
+
+3. Update composer.json and get laravel-jsvalidation for laravel 5.4
+```
+"repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/reganjohnson/laravel-jsvalidation"
+        }
+    ],
+```
+```sh
 $ composer update
 ```
 
-3. Create DB
-
-4. Disable mysql strict mode (config/database.php)
+4. Create DB and disable mysql strict mode (config/database.php)
 ```php
 'strict' => false
 ```
