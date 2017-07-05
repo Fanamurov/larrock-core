@@ -2,6 +2,12 @@
     "name": "fanamurov/larrock-core",
     "description": "Core components for LarrockCMS",
     "type": "library",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/reganjohnson/laravel-jsvalidation"
+        }
+    ],
     "require": {
         "php": ">=7.0.0",
         "barryvdh/laravel-debugbar": "~2.0",
@@ -25,12 +31,6 @@
         "fanamurov/larrock-admin-seo": "^0.1",
         "fanamurov/larrock-admin-search": "^0.1"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/reganjohnson/laravel-jsvalidation"
-        }
-    ],
     "autoload": {
         "psr-4": {
             "Larrock\\Core\\": "src",
