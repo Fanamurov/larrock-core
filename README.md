@@ -103,7 +103,6 @@ $ php artisan vendor:publish --provider="Larrock\ComponentMenu\LarrockComponentM
 $ php artisan vendor:publish --provider="Larrock\ComponentContact\LarrockComponentContactServiceProvider"
 $ php artisan vendor:publish --provider="Larrock\ComponentAdminSeo\LarrockComponentAdminSeoServiceProvider"
 $ php artisan vendor:publish --provider="Larrock\ComponentAdminSearch\LarrockComponentAdminSearchServiceProvider"
-$ php artisan migrate
 ```
        
 7. Install migration table
@@ -112,6 +111,17 @@ $ php artisan migrate:install
 ```
        
 8. Run Larrock migrations
+Laravel 5.4: Specified key was too long error (https://laravel-news.com/laravel-5-4-key-too-long-error)
+AppServiceProvider.php
+```php
+use Illuminate\Support\Facades\Schema;
+
+public function boot()
+{
+    Schema::defaultStringLength(191);
+}
+```
+
 ```sh
 $ php artisan migrate
 $ php artisan db:seed --class="Larrock\ComponentUsers\Database\Seeds\UsersTableSeeder"
