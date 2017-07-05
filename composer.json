@@ -12,7 +12,7 @@
         "php": ">=7.0.0",
         "barryvdh/laravel-debugbar": "~2.0",
         "barryvdh/laravel-ide-helper": "~2.1",
-        "proengsoft/laravel-jsvalidation": "^1.6.0-dev",
+        "proengsoft/laravel-jsvalidation": "^1.5",
         "prologue/alerts": "^0.4.1",
         "davejamesmiller/laravel-breadcrumbs": "3.*",
         "greggilbert/recaptcha": "^2.1",

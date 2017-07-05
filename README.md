@@ -21,6 +21,7 @@ $ composer create-project --prefer-dist laravel/laravel blog
 2.Install Larrock core:
 ```sh
 $ composer require fanamurov/larrock-core
+$ composer update
 ```
 
 3. Create DB
