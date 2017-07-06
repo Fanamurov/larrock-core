@@ -3,7 +3,7 @@
 use Larrock\ComponentPages\AdminPageController;
 use Larrock\Core\AdminAjax;
 
-Route::group(['prefix' => 'admin', 'middleware'=> ['web', 'level:2', 'LarrockAdminMenu']], function(){
+Route::group(['prefix' => 'admin', 'middleware'=> ['web', 'level:2', 'LarrockAdminMenu', 'SaveAdminPluginsData']], function(){
     Route::get('/', [
         'as' => 'admin.home', 'uses' => AdminPageController::class .'@index'
     ]); //Роут главной страницы админки

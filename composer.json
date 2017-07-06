@@ -38,7 +38,7 @@
             "Larrock\\Core\\Requests\\": "src/Requests"
         }
     },
-    "license": "BSD",
+    "license": "LGPL",
     "authors": [
         {
             "name": "Alexandr Fanamurov",

@@ -3,9 +3,12 @@
 namespace Larrock\Core;
 
 use Illuminate\Support\ServiceProvider;
+use Larrock\Core\Commands\LarrockCheckCommand;
+use Larrock\Core\Commands\LarrockWriteCommand;
 use Larrock\Core\Middleware\AdminMenu;
 use Larrock\Core\Middleware\GetSeo;
 use Larrock\Core\Middleware\VerifyLevel;
+use Larrock\Core\Middleware\SaveAdminPluginsData;
 
 class LarrockCoreServiceProvider extends ServiceProvider
 {
@@ -65,5 +68,12 @@ class LarrockCoreServiceProvider extends ServiceProvider
                 __DIR__.'/database/migrations/0000_00_00_000000_create_seo_table.php' => database_path('migrations/'.$timestamp.'_create_seo_table.php')
             ], 'migrations');
         }
+
+        $this->app->bind('command.larrock:check', LarrockCheckCommand::class);
+        $this->app->bind('command.larrock:write', LarrockWriteCommand::class);
+        $this->commands([
+            'command.larrock:check',
+            'command.larrock:write',
+        ]);
     }
 }
