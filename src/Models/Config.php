@@ -28,11 +28,6 @@ class Config extends Model
 
 	protected $fillable = ['name', 'value', 'type'];
 
-	public function scopeImagePresets($query, $key)
-	{
-		return $query->where('key', '=', $key)->where('type', '=', 'image_presets');
-	}
-
 	public function getValueAttribute($value)
 	{
 		return unserialize($value);

@@ -1,0 +1,60 @@
+header{
+  @media (max-width: 414px) {
+    .uk-margin-large-bottom {
+      margin-bottom: 25px!important;
+    }
+  }
+
+  .logo-link{
+    @media (max-width: 414px) {
+      display: block;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  }
+  > .uk-container-center{
+    background: #F6F6F6;
+  }
+  .larrock-block-adres_v_shapke{
+    font-size: 16px;
+    line-height: 24px;
+    color: $color_link;
+    font-weight: 500;
+  }
+  .larrock-block-telefony-v-shapke{
+    text-align: right;
+    @media (max-width: 414px) {
+      text-align: center;
+    }
+    a {
+      font-size: 60px;
+      font-weight: 800;
+      color: $color_link;
+      line-height: 67px;
+      text-decoration: none;
+      @media (max-width: 768px) {
+        font-size: 32px;
+        line-height: 40px;
+      }
+    }
+    strong{
+      font-style: normal;
+      font-size: 29.5px;
+      font-weight: 400;
+      color: #000;
+      letter-spacing: 7.3px;
+      margin-top: 20px;
+      display: inline-block;
+      @media (max-width: 768px) {
+        font-size: 21.5px;
+        letter-spacing: 4.3px;
+        margin-top: 10px;
+      }
+      @media (max-width: 768px) {
+        font-size: 17.5px;
+        letter-spacing: 2.3px;
+        margin-top: 0;
+      }
+    }
+  }
+}

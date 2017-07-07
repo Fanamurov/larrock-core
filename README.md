@@ -150,13 +150,32 @@ CMS for Laravel framework v. >= 5.4
   ```
   
   ```sh
-  $ php artisan migrate:install
   $ php artisan migrate
   ```
   Add admin user
   ```sh
   $ php artisan db:seed --class="Larrock\ComponentUsers\Database\Seeds\UsersTableSeeder"
   ```
+  
+##BOWER COMPONENTS FOR TEMPLATE
+```sh
+cd /public_html/_assets
+bower install fancybox
+bower install fileapi
+bower install jquery
+bower install jquery-validation
+bower install jquery.cookie
+bower install jquery.filer
+bower install jquery.spinner
+bower install microplugin
+bower install noty
+bower install pickadate
+bower install selectize
+bower install sifter
+bower install tinymce
+bower install uikit
+bower install yohoho.flexy
+```
 
 ##START
 http://yousite/admin

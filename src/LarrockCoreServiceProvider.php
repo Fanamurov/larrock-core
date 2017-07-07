@@ -26,10 +26,16 @@ class LarrockCoreServiceProvider extends ServiceProvider
             __DIR__.'/lang' => resource_path('vendor/lang/larrock')
         ], 'lang');
         $this->publishes([
-            __DIR__.'/views' => base_path('resources/views/larrock')
+            __DIR__.'/views' => base_path('resources/views/vendor/larrock')
         ], 'views');
         $this->publishes([
-            __DIR__.'/assets' => resource_path('assets')
+            __DIR__.'/assets/resources' => resource_path('assets')
+        ], 'assets');
+        $this->publishes([
+            __DIR__.'/assets/public_html' => public_path('_assets')
+        ], 'assets');
+        $this->publishes([
+            __DIR__.'/assets/gulpfile.js' => base_path('')
         ], 'assets');
         $this->publishes([
             __DIR__.'/config/larrock-core-adminmenu.php' => config_path('larrock-core-adminmenu.php')

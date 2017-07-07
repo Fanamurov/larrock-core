@@ -41,12 +41,12 @@ $(document).ready(function(){
                         {
                             if(data.status === 'success'){
                                 notify_show('success', data.message);
-                                noty_show('success', '! Выберите в поле пункт с названием нового поля !');
+                                notify_show('success', '! Выберите в поле пункт с названием нового поля !');
                                 $('.wizard-db-colomns')
                                     .append($("<option></option>")
                                         .attr("value", column)
                                         .text(column))
-                                    .attr('selected','selected');
+                                    .prop('selected', true);
                             }else{
                                 notify_show('error', data.message);
                             }
@@ -192,32 +192,60 @@ $(document).ready(function(){
     });
 
     function importXLS() {
-        var form = $('.import_row:first');
-        var tr = form.find('tr');
-        tr.addClass('info').removeClass('danger').removeClass('success');
+        var sheet = $('.import_row').parentsUntil('.load_sheet').parent().attr('data-sheet');
+        var last_sheet = 0;
+        var count_rows = $('.import_row').length;
 
-        $.ajax({
-            type: "POST",
-            url: '/admin/wizard/importrow',
-            dataType: 'json',
-            data: form.serialize() +'&current_category='+ current_category_import +'&current_level='+ current_level_import +'&current_title='+ current_title_import, // serializes the form's elements.
-            success: function(data)
-            {
-                tr.addClass('success').removeClass('info');
-                form.removeClass('import_row');
-                current_category_import = data.category_id;
-                current_level_import = data.category_level;
-                current_title_import = data.category_title;
-                //alert(data.id); // show response from the php script.
-                notify_show('success', 'Строка импортирована');
-                importXLS();
-            },
-            error: function()
-            {
-                tr.addClass('danger').removeClass('info');
-                notify_show('error', 'Импорт не завершен. Ошибка внесения данных');
-            }
-        });
+        if(count_rows < 1){
+            sheet = last_sheet;
+        }
+
+        var progress = $('#sheet'+ sheet).find('.uk-progress');
+        var progress_bar = $('#sheet'+ sheet).find('.uk-progress-bar');
+        var progress_all_rows = parseInt($('.all_rows').html());
+        var progress_percent = parseInt(100-(count_rows * 100)/progress_all_rows);
+
+        progress.addClass('uk-progress-striped').addClass('uk-active');
+
+        if(count_rows > 0){
+            var form = $('.import_row:first');
+            var tr = form.find('tr');
+            last_sheet = sheet;
+
+            progress_bar
+                .css('width', progress_percent +'%')
+                .find('.imported_rows').html(progress_all_rows - count_rows +' '+ progress_percent +'%');
+
+            $.ajax({
+                type: "POST",
+                url: '/admin/wizard/importrow',
+                dataType: 'json',
+                data: form.serialize() +'&current_category='+ current_category_import +'&current_level='+ current_level_import +'&current_title='+ current_title_import, // serializes the form's elements.
+                success: function(data)
+                {
+                    tr.addClass('uk-alert-success');
+                    form.removeClass('import_row');
+                    current_category_import = data.category_id;
+                    current_level_import = data.category_level;
+                    current_title_import = data.category_title;
+                    //notify_show('success', 'Строка импортирована');
+                    importXLS();
+                },
+                error: function()
+                {
+                    tr.addClass('uk-alert-danger');
+                    notify_show('error', 'Импорт не завершен. Ошибка внесения данных');
+                    progress_bar.css('width', progress_percent +'%');
+                    progress.addClass('uk-progress-danger').removeClass('uk-progress-striped').removeClass('uk-active');
+                }
+            });
+        }else{
+            progress_bar
+                .css('width', '100%')
+                .find('.imported_rows').html(progress_all_rows +' 100%');
+            progress.addClass('uk-progress-success').removeClass('uk-progress-striped').removeClass('uk-active');
+            notify_show('success', 'Импорт завершен');
+        }
     }
 
     var editor_height = 300;
