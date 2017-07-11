@@ -6,9 +6,12 @@
          aria-hidden="true" style="top: 40px; left: 0px;" tabindex="">
         <ul class="uk-nav uk-nav-navbar">
             <li><a href="{{ $url }}">Все материалы</a></li>
-            @foreach($dropdown as $item)
+            @foreach($dropdown->take(10) as $item)
                 <li @if(\URL::current() === $url .'/'. $item->id) class="uk-active" @endif><a href="{{ $url }}/{{ $item->id }}@if($item->getTable() !== 'category'){!! '/edit' !!}@endif">{{ $item->title }}</a></li>
             @endforeach
+            @if(count($dropdown) > 10)
+                <li><a href="{{ $url }}">...</a></li>
+            @endif
             @if(isset($push))
                 <li class="uk-nav-header">Дополнительно</li>
                 @foreach($push as $key => $item)

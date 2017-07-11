@@ -53,6 +53,12 @@ class LarrockCheckCommand extends Command
 
         $this->line('=== Check depends configs ===');
 
+        if(config('breadcrumbs.view') === 'larrock::front.modules.breadcrumbs.breadcrumbs'){
+            $this->info('Breadcrumbs.view: uikit (OK)');
+        }else{
+            $this->error('Breadcrumbs.view: '. config('jsvalidation.view') .'. Please change config/breadcrumbs.php to larrock::front.modules.breadcrumbs.breadcrumbs');
+        }
+
         if(config('jsvalidation.view') === 'larrock::jsvalidation.uikit'){
             $this->info('Jsvalidation.view: uikit (OK)');
         }else{

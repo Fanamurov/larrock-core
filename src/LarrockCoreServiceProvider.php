@@ -19,6 +19,7 @@ class LarrockCoreServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->loadRoutesFrom(__DIR__.'/routes.php');
         $this->loadViewsFrom(__DIR__.'/views', 'larrock');
         $this->loadTranslationsFrom(__DIR__.'/lang', 'larrock');
 
@@ -49,12 +50,10 @@ class LarrockCoreServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        include __DIR__.'/routes.php';
         $this->app['router']->aliasMiddleware('level', VerifyLevel::class);
         $this->app['router']->aliasMiddleware('LarrockAdminMenu', AdminMenu::class);
         $this->app['router']->aliasMiddleware('GetSeo', GetSeo::class);
         $this->app['router']->aliasMiddleware('SaveAdminPluginsData', SaveAdminPluginsData::class);
-        $this->app->make(AdminController::class);
 
         $this->mergeConfigFrom( __DIR__.'/config/larrock-core-adminmenu.php', 'larrock-core-adminmenu');
 

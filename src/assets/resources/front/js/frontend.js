@@ -15,10 +15,10 @@ $(document).ready(function(){
     //$('.matchHeight').matchHeight();
 
     $(".fancybox").fancybox({
-        helpers	: {
-            thumbs	: {
-                width	: 50,
-                height	: 50
+        helpers : {
+            thumbs  : {
+                width   : 50,
+                height  : 50
             }
         }
     });
@@ -422,10 +422,10 @@ function submit_to_cart() {
  }*/
 
 function rebuild_cost() {
-    $('.cart_item_row').each(function () {
+    /*$('.cart_item_row').each(function () {
         var nalicie = parseInt($(this).find('.nalichie').attr('data-count'));
         var current_qty = parseInt($(this).find('.editQty').val());
-        /*if(nalicie <= current_qty){
+        if(nalicie <= current_qty){
          $(this).find('.addon-what').hide();
          }else{
          $(this).find('.addon-what').show();
@@ -434,13 +434,13 @@ function rebuild_cost() {
          $(this).find('.addon-x').hide();
          }else{
          $(this).find('.addon-x').show();
-         }*/
-    });
+         }
+    });*/
 
     $("#modal-spinner")
         .spinner('changing', function(e, newVal, oldVal) {
             var cost = parseFloat($('#ModalToCart-form').find('.cost').attr('data-cost'));
-            $('#ModalToCart-form').find('.cost').html(cost*newVal);
+            $('#ModalToCart-form').find('.cost').html(parseFloat(cost*newVal).toFixed(2));
         });
 
     $(".spinner-qty")
@@ -464,13 +464,13 @@ function rebuild_cost() {
                         $('.total').html(res.total);
                         $('.total_cart').html(res.total);
                         if(res.total_discount > 0){
-                            $('.total_discount_cart').html(parseInt(res.total) - parseInt(res.total_discount));
-                            $('.total_discount').html(res.total_discount);
+                            $('.total_discount_cart').html(parseInt(res.total).toFixed(2) - parseInt(res.total_discount).toFixed(2));
+                            $('.total_discount').html(parseFloat(res.total_discount));
                             $('.discount_row').show();
                         }else{
                             $('.discount_row').hide();
                         }
-                        $('tr[data-rowid='+ rowid +']').find('.subtotal span').html(res.subtotal);
+                        $('tr[data-rowid='+ rowid +']').find('.subtotal span').html(parseFloat(res.subtotal).toFixed(2));
                         noty_show('success', 'Количество изменено');
                     }
                 });
@@ -480,6 +480,6 @@ function rebuild_cost() {
     $('#ModalToCart-form').find('input[name=kolvo]').keyup(function () {
         var cost = parseFloat($('#ModalToCart-form').find('.cost').attr('data-cost'));
         var kolvo = parseInt($(this).val());
-        $('#ModalToCart-form').find('.cost').html(cost*kolvo);
+        $('#ModalToCart-form').find('.cost').html(parseFloat(cost*kolvo).toFixed(2));
     })
 }

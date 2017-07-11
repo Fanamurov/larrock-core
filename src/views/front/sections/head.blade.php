@@ -40,11 +40,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-@if(App::environment() === 'local')
-    <script src="{{asset('_assets/_admin/_js/jquery-1.11.1.min.js')}}"></script>
-@else
-    <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
-@endif
+<script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 
 <link rel="alternate" hreflang="ru" type="rss" href="{!! URL::to('/feed.rss') !!}" title="RSS feed">
 {{--

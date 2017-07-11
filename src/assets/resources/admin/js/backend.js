@@ -710,7 +710,8 @@ function rebuild_cost() {
     $('#ModalToCart-form').find('input[name=kolvo]').keyup(function () {
         var cost = parseFloat($('#ModalToCart-form').find('.cost').attr('data-cost'));
         var kolvo = parseInt($(this).val());
-        $('#ModalToCart-form').find('.cost').html(cost*kolvo);
+
+        $('#ModalToCart-form').find('.cost').html(parseFloat(cost*kolvo).toFixed(2));
     })
 }
 

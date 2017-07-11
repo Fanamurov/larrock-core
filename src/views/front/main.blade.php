@@ -33,6 +33,7 @@
                 <div class="uk-padding-top uk-padding-bottom">
                     <span class="devider_top"></span>
                     <div class="uk-grid grid-right-colomn">
+                        @yield('front.modules.list.catalog')
                         {{--@if(isset($anons) && count($anons) > 0)
                             @include('larrock::front.modules.list.news', ['data' => $anons])
                         @endif--}}
