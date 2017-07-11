@@ -394,7 +394,7 @@ function submit_to_cart() {
                     if(action === '/cart'){
                         window.location.href = '/cart';
                     }else{
-                        $('#ModalToCart').modal('hide');
+                        UIkit.modal("#ModalToCart").hide();
                     }
                 }
                 if(res.status === 'error'){
