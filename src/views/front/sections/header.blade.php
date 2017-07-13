@@ -10,9 +10,12 @@
                 </address>
             </div>
             <div class="uk-width-1-1 uk-width-medium-1-3 uk-width-large-1-2 header-links">
-                <a href="/user"><span class="flaticon flaticon-profile"></span> <span class="text">Личный кабинет</span></a>
+                <a href="/user"><i class="uk-icon-user"></i> <span class="text">Личный кабинет</span></a>
                 @if(file_exists(base_path(). '/vendor/fanamurov/larrock-cart'))
                     @include('larrock::front.modules.cart.moduleSplash')
+                @endif
+                @if(file_exists(base_path(). '/vendor/fanamurov/larrock-catalog'))
+                    @include('larrock::front.modules.search.catalog')
                 @endif
             </div>
         </div>
