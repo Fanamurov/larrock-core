@@ -48,20 +48,7 @@ CMS for Laravel framework v. >= 5.4
   $ composer require fanamurov/larrock-core
   ```
 
-3. Update composer.json and get laravel-jsvalidation for laravel 5.4
-  ```json
-  "repositories": [
-          {
-              "type": "vcs",
-              "url": "https://github.com/reganjohnson/laravel-jsvalidation"
-          }
-      ],
-  ```
-  ```sh
-  $ composer update
-  ```
-
-4. Add the ServiceProvider to the providers array in app/config/app.php
+3. Add the ServiceProvider to the providers array in app/config/app.php
   ```
   //LARROCK CORE DEPENDS
   Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
@@ -114,7 +101,7 @@ CMS for Laravel framework v. >= 5.4
   'Socialite' => Laravel\Socialite\Facades\Socialite::class,
   ```
 
-5. Publish views, migrations etc.
+4. Publish views, migrations etc.
   ```sh
   $ php artisan vendor:publish
   ```
@@ -130,14 +117,14 @@ CMS for Laravel framework v. >= 5.4
   $ php artisan vendor:publish --provider="Larrock\ComponentAdminSearch\LarrockComponentAdminSearchServiceProvider"
   ```
        
-6. Run artisan command:
+5. Run artisan command:
   ```sh
   $ php artisan larrock:check
   ```
   And follow the tips for setting third-party dependencies
   
   
-7. Run Larrock migrations
+6. Run Larrock migrations
   Laravel 5.4: Specified key was too long error (https://laravel-news.com/laravel-5-4-key-too-long-error)
   AppServiceProvider.php
   ```php
@@ -155,6 +142,17 @@ CMS for Laravel framework v. >= 5.4
   Add admin user
   ```sh
   $ php artisan db:seed --class="Larrock\ComponentUsers\Database\Seeds\UsersTableSeeder"
+  ```
+
+7. Medialibrary files deleting (Корректное удаление файлов с нашей системой хранения)
+  /vendor/spatie/laravel-medialibrary/src/Filesystem.php
+  ```php
+  public function removeFiles(Media $media)
+  {
+    $pathGenerator = PathGeneratorFactory::create();
+    $this->filesystem->disk($media->disk)->deleteDirectory($pathGenerator->getPathForConversions($media));
+    $this->filesystem->disk($media->disk)->delete($pathGenerator->getPath($media) .'/'. $media->file_name);
+  }
   ```
   
 ##BOWER COMPONENTS FOR TEMPLATE

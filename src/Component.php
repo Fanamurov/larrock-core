@@ -312,6 +312,18 @@ class Component
                 if($request->has($row->name)){
                     if(is_array($request->get($row->name))){
                         foreach ($request->get($row->name) as $param){
+                            if(class_basename($row) === 'FormTagsCreate'){
+                                if( !$row->connect->model::find($param)){
+                                    if($find_param = $row->connect->model::whereTitle($param)->first()){
+                                        $param = $find_param->id;
+                                    }else{
+                                        $add_param = new $row->connect->model();
+                                        $add_param['title'] = $param;
+                                        $add_param->save();
+                                        $param = $add_param->id;
+                                    }
+                                }
+                            }
                             $data->{$row->connect->relation_name}()->attach($param);
                         }
                     }else{
