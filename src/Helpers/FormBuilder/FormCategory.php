@@ -3,7 +3,7 @@
 namespace Larrock\Core\Helpers\FormBuilder;
 
 use Larrock\Core\Helpers\Tree;
-use Larrock\ComponentCategory\Models\Category;
+use Larrock\ComponentCategory\Facades\LarrockCategory;
 use View;
 
 class FormCategory extends FBElement {
@@ -56,7 +56,7 @@ class FormCategory extends FBElement {
 
         if($selected === NULL){
             if(isset($data->{$row_settings->name})){
-                if($get_category = Category::whereId($data->{$row_settings->name})->first()){
+                if($get_category = LarrockCategory::getModel()->whereId($data->{$row_settings->name})->first()){
                     $selected[] = $get_category;
                 }
             }

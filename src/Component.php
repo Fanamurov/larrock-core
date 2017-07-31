@@ -33,6 +33,41 @@ class Component
 
     public $valid;
 
+    public function getConfig()
+    {
+        return $this;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    public function getModel()
+    {
+        return new $this->model;
+    }
+
+    public function getModelName()
+    {
+        return $this->model;
+    }
+
+    public function getRows()
+    {
+        return $this->rows;
+    }
+
+    public function getValid()
+    {
+        return Component::_valid_construct($this);
+    }
+
     protected function addPlugins()
     {
         if(empty($this->name)){
