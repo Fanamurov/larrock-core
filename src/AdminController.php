@@ -39,9 +39,10 @@ class AdminController extends BaseController
     /**
      * Creating a new resource.
      *
+     * @param Request                     $request
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $post_rows = [
             'title' => 'Новый материал',
