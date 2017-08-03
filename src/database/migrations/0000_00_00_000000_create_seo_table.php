@@ -18,9 +18,9 @@ class CreateSeoTable extends Migration {
 			$table->string('seo_title')->nullable();
 			$table->text('seo_description')->nullable();
 			$table->text('seo_keywords')->nullable();
-			$table->integer('id_connect')->nullable();
-			$table->string('url_connect')->nullable();
-			$table->string('type_connect');
+			$table->integer('seo_id_connect')->nullable();
+			$table->string('seo_url_connect')->nullable();
+			$table->string('seo_type_connect');
 			$table->timestamps();
 		});
 	}
