@@ -8,10 +8,15 @@ class FormTextarea extends FBElement{
 
     public $typo;
 
-
     public function setTypo()
     {
         $this->typo = TRUE;
+        return $this;
+    }
+
+    public function setNotEditor()
+    {
+        $this->css_class = $this->css_class .' not-editor';
         return $this;
     }
 

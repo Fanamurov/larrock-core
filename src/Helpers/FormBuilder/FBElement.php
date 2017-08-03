@@ -76,13 +76,13 @@ class FBElement{
 
     public function setCssClassGroup($class)
     {
-        $this->css_class_group = $class;
+        $this->css_class_group = $this->css_class .' '. $class;
         return $this;
     }
 
     public function setCssClass($class)
     {
-        $this->css_class = $class;
+        $this->css_class = $this->css_class .' '. $class;
         return $this;
     }
 

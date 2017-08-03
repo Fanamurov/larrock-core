@@ -52,7 +52,6 @@ class LarrockCoreServiceProvider extends ServiceProvider
     {
         $this->app['router']->aliasMiddleware('level', VerifyLevel::class);
         $this->app['router']->aliasMiddleware('LarrockAdminMenu', AdminMenu::class);
-        $this->app['router']->aliasMiddleware('GetSeo', GetSeo::class);
         $this->app['router']->aliasMiddleware('SaveAdminPluginsData', SaveAdminPluginsData::class);
 
         $this->mergeConfigFrom( __DIR__.'/config/larrock-core-adminmenu.php', 'larrock-core-adminmenu');
