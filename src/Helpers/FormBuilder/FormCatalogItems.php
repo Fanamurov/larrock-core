@@ -17,13 +17,6 @@ class FormCatalogItems extends FBElement {
         return $this;
     }
 
-    public function setModelLink($link_name, $link_key)
-    {
-        $this->model_link = $link_name;
-        $this->link_key = $link_key;
-        return $this;
-    }
-
     public function setMaxItems($max = null)
     {
         $this->max_items = $max;
@@ -37,7 +30,7 @@ class FormCatalogItems extends FBElement {
             $tags->where($row_settings->connect['where'], '=', $row_settings->connect['where_value']);
         }
         $tags = $tags->get();
-        $selected = $data->{$row_settings->model_link};
+        $selected = $data->{$row_settings->connect->relation_name};
         return View::make('larrock::admin.formbuilder.tags.tags', ['tags' => $tags, 'data' => $data, 'row_key' => $row_settings->name, 'row_settings' => $row_settings, 'selected' => $selected])->render();
     }
 }
