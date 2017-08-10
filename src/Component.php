@@ -2,11 +2,11 @@
 
 namespace Larrock\Core;
 
-use Larrock\ComponentFeed\Models\Feed;
+use Larrock\ComponentAdminSeo\Facades\LarrockSeo;
+use Larrock\ComponentFeed\Facades\LarrockFeed;
 use Larrock\Core\Helpers\FormBuilder\FormCheckbox;
 use Larrock\Core\Helpers\FormBuilder\FormInput;
 use Larrock\Core\Helpers\FormBuilder\FormTextarea;
-use Larrock\Core\Models\Seo;
 use Illuminate\Database\Eloquent\Model;
 use JsValidator;
 use View;
@@ -143,7 +143,7 @@ class Component
         $this->rows['url'] = $row->setTab('seo', 'SEO')->setValid('max:155|required|unique:'. $this->table .',url,:id')->setCssClass('uk-width-1-1');
 
         if(method_exists(\Request::class, 'has') && !\Request::has('_jsvalidation') && \Request::has('seo_title')){
-            if( !$seo = Seo::whereIdConnect(\Request::input('id_connect'))->whereTypeConnect(\Request::input('type_connect'))->first()){
+            if( !$seo = LarrockSeo::getModel()->whereIdConnect(\Request::input('id_connect'))->whereTypeConnect(\Request::input('type_connect'))->first()){
                 $seo = new Seo();
             }
             if(\Request::get('seo_title', '') !== ''){
@@ -159,11 +159,11 @@ class Component
         return $this;
     }
 
-    public function savePluginSeoData($request)
+    public function savePluginSeoData()
     {
         if( !\Request::has('_jsvalidation') && \Request::has('seo_title')){
-            if( !$seo = Seo::whereIdConnect(\Request::input('id_connect'))->whereTypeConnect(\Request::input('type_connect'))->first()){
-                $seo = new Seo();
+            if( !$seo = LarrockSeo::getModel()->whereIdConnect(\Request::input('id_connect'))->whereTypeConnect(\Request::input('type_connect'))->first()){
+                $seo = LarrockSeo::getModel();
             }
             if(\Request::get('seo_title', '') !== ''){
                 if($seo->fill(\Request::all())->save()){
@@ -202,6 +202,8 @@ class Component
         $row = new FormTextarea('anons_description', 'Текст для анонса новости в модуле');
         $this->rows['anons_description'] = $rows_plugin[] = $row->setTab('anons', 'Анонс')->setTypo();
 
+        $this->settings['anons_category'] = $categoryAnons;
+
         $this->plugins_backend['anons']['rows'] = $rows_plugin;
 
         return $this;
@@ -210,16 +212,16 @@ class Component
     public function savePluginAnonsToModuleData($request)
     {
         if( !\Request::has('_jsvalidation') && (\Request::has('anons_merge') || !empty(\Request::has('anons_description')))){
-            $anons = new Feed();
+            $anons = LarrockFeed::getModel();
             $anons->title = \Request::get('title');
             $anons->url = 'anons_'. \Request::get('id_connect') .''. random_int(1,9999);
-            $anons->category = $categoryAnons;
+            $anons->category = $this->getRows()['anons_category'];
             $anons->user_id = 1; //TODO: Временно, переписать
             $anons->active = 1;
-            $anons->position = Feed::whereCategory($categoryAnons)->max('position') +1;
+            $anons->position = LarrockFeed::getModel()->whereCategory($categoryAnons)->max('position') +1;
 
             if(\Request::has('anons_merge')){
-                $original = Feed::whereId(\Request::get('id_connect'))->first();
+                $original = LarrockFeed::getModel()->whereId(\Request::get('id_connect'))->first();
                 $anons->short = '<a href="'. $original->full_url .'">'. \Request::get('title') .'</a>';
             }else{
                 $anons->short = \Request::get('anons_description');
@@ -320,7 +322,7 @@ class Component
         if($config->plugins_backend){
             foreach ($config->plugins_backend as $key_plugin => $value_plugin){
                 if($key_plugin === 'seo'){
-                    if($seo = Seo::whereIdConnect(\Request::input('id_connect'))->whereTypeConnect(\Request::input('type_connect'))->first()){
+                    if($seo = LarrockSeo::getModel()->whereIdConnect(\Request::input('id_connect'))->whereTypeConnect(\Request::input('type_connect'))->first()){
                         $seo->delete();
                     }
                 }

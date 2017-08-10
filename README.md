@@ -188,5 +188,5 @@ Password: password
 ### OTHER
 Run Whoops
 ```sh
-$ php artisan larrock:white
+$ php artisan larrock:write
 ```
