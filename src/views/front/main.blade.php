@@ -5,11 +5,11 @@
 </head>
 <body class="@yield('body_class')">
 @include('larrock::front.sections.header')
-@if(isset($menu))
+@if(isset($menu_default))
     <section id="top_menu">
         <div class="uk-container uk-container-center">
             <button class="uk-button uk-button-large uk-button-primary uk-width-1-1 uk-hidden-medium uk-hidden-large" data-uk-toggle="{target:'#top_menu_block', cls:'uk-hidden-small'}">Меню</button>
-            @include('larrock::front.modules.menu.top', $menu)
+            @include('larrock::front.modules.menu.top', ['menu' => $menu_default])
         </div>
     </section>
 @endif

@@ -168,7 +168,9 @@ class AdminController extends BaseController
     public function destroy(Request $request, $id)
     {
         if($data = $this->config->getModel()::find($id)){
-            $data->clearMediaCollection();
+            if(method_exists($data, 'clearMediaCollection')){
+                $data->clearMediaCollection();
+            }
             $name = $data->title;
 
             $this->config->removeDataPlugins($this->config);
