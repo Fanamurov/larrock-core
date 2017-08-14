@@ -10,6 +10,7 @@
     <link href="{{asset('ico.png?2v')}}" rel="shortcut icon" />
     <link rel="stylesheet" href="/_assets/_front/_css/_min/uikit.min.css"/>
     <link rel="stylesheet" href="/_assets/_admin/_css/min/admin.min.css"/>
+    <link rel="stylesheet" href="./_assets/bower_components/noty/lib/noty.css"/>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,500,500italic,600,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
     <!--<script src="/_assets/_admin/_js/jquery-1.11.1.min.js"></script>-->

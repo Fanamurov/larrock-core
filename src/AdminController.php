@@ -29,9 +29,9 @@ class AdminController extends BaseController
     public function index()
     {
         if(array_key_exists('position', $this->config->rows)){
-            $data['data'] = $this->config->model::orderBy('position', 'DESC')->paginate(30);
+            $data['data'] = $this->config->getModel()::orderBy('position', 'DESC')->paginate(30);
         }else{
-            $data['data'] = $this->config->model::paginate(30);
+            $data['data'] = $this->config->getModel()::paginate(30);
         }
         return view('larrock::admin.admin-builder.index', $data);
     }
@@ -63,7 +63,7 @@ class AdminController extends BaseController
      */
     public function edit($id)
     {
-        $data['data'] = $this->config->model::findOrFail($id);
+        $data['data'] = $this->config->getModel()::findOrFail($id);
         $data['app'] = $this->config->tabbable($data['data']);
 
         $validator = JsValidator::make(Component::_valid_construct($this->config, 'update', $id));
@@ -92,7 +92,7 @@ class AdminController extends BaseController
             return back()->withInput($request->except('password'))->withErrors($validator);
         }
 
-        $data = $this->config->model::find($id);
+        $data = $this->config->getModel()::find($id);
         $data->fill($request->all());
         foreach ($this->config->rows as $row){
             if(in_array($row->name, $data->getFillable())){
@@ -124,7 +124,7 @@ class AdminController extends BaseController
     public function store(Request $request)
     {
         if(array_key_exists('url', $this->config->rows)){
-            if($search_blank = $this->config->model::whereUrl('novyy-material')->first()){
+            if($search_blank = $this->config->getModel()::whereUrl('novyy-material')->first()){
                 Alert::add('errorAdmin', 'Измените URL этого материала, чтобы получить возможность создать новый')->flash();
                 return redirect()->to('/admin/'. $this->config->name .'/'. $search_blank->id. '/edit');
             }
@@ -135,7 +135,7 @@ class AdminController extends BaseController
             return back()->withInput($request->except('password'))->withErrors($validator);
         }
 
-        $data = new $this->config->model();
+        $data = $this->config->getModel();
         $data->fill($request->all());
         foreach ($this->config->rows as $row){
             if(in_array($row->name, $data->getFillable())){
@@ -167,7 +167,7 @@ class AdminController extends BaseController
      */
     public function destroy(Request $request, $id)
     {
-        if($data = $this->config->model::find($id)){
+        if($data = $this->config->getModel()::find($id)){
             $data->clearMediaCollection();
             $name = $data->title;
 

@@ -143,7 +143,7 @@ class Component
         $this->rows['url'] = $row->setTab('seo', 'SEO')->setValid('max:155|required|unique:'. $this->table .',url,:id')->setCssClass('uk-width-1-1');
 
         if(method_exists(\Request::class, 'has') && !\Request::has('_jsvalidation') && \Request::has('seo_title')){
-            if( !$seo = LarrockSeo::getModel()->whereIdConnect(\Request::input('id_connect'))->whereTypeConnect(\Request::input('type_connect'))->first()){
+            if( !$seo = LarrockSeo::getModel()->whereSeoIdConnect(\Request::input('id_connect'))->whereSeoTypeConnect(\Request::input('type_connect'))->first()){
                 $seo = new Seo();
             }
             if(\Request::get('seo_title', '') !== ''){
@@ -162,7 +162,7 @@ class Component
     public function savePluginSeoData()
     {
         if( !\Request::has('_jsvalidation') && \Request::has('seo_title')){
-            if( !$seo = LarrockSeo::getModel()->whereIdConnect(\Request::input('id_connect'))->whereTypeConnect(\Request::input('type_connect'))->first()){
+            if( !$seo = LarrockSeo::getModel()->whereSeoIdConnect(\Request::input('id_connect'))->whereSeoTypeConnect(\Request::input('type_connect'))->first()){
                 $seo = LarrockSeo::getModel();
             }
             if(\Request::get('seo_title', '') !== ''){

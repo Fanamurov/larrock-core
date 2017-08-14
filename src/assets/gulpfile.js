@@ -34,7 +34,9 @@ gulp.task('watch', function () {
 });
 
 gulp.task('sass', function () {
-    gulp.src(['./public_html/_assets/_front/_css/*.scss'])
+    gulp.src([
+        './public_html/_assets/_front/_css/*.scss'
+        ])
         .pipe(changed('./public_html/_assets/_front/_css/**/**/*.scss'))
         .pipe(sass.sync().on('error', sass.logError))
         .pipe(autoprefixer({
@@ -71,7 +73,9 @@ gulp.task('sass_uikit', function () {
 
 
 gulp.task('sass_uikit_admin', function () {
-    gulp.src(['./public_html/_assets/_admin/_css/*.scss'])
+    gulp.src([
+        './public_html/_assets/_admin/_css/*.scss'
+        ])
         .pipe(changed('./public_html/_assets/_admin/_css/**/*.scss'))
         .pipe(sass.sync().on('error', sass.logError))
         .pipe(autoprefixer({
@@ -92,7 +96,7 @@ gulp.task('javascript_admin', function() {
     return gulp.src([
             './public_html/_assets/bower_components/pickadate/lib/compressed/picker.js',
             './public_html/_assets/bower_components/pickadate/lib/compressed/picker.date.js',
-            './public_html/_assets/bower_components/noty/js/noty/packaged/jquery.noty.packaged.js',
+            './public_html/_assets/bower_components/noty/lib/noty.js',
             './public_html/_assets/bower_components/jquery.cookie/jquery.cookie.js',
             './resources/assets/admin/js/backend.js',
             './resources/assets/admin/js/plugin_images.js',
@@ -107,10 +111,6 @@ gulp.task('javascript_admin', function() {
 
 gulp.task('javascript_front', function() {
     return gulp.src([
-            './public_html/_assets/bower_components/pickadate/lib/compressed/picker.js',
-            './public_html/_assets/bower_components/pickadate/lib/compressed/picker.date.js',
-            './public_html/_assets/bower_components/selectize/dist/js/standalone/selectize.min.js',
-            './public_html/_assets/bower_components/noty/js/noty/packaged/jquery.noty.packaged.min.js',
             './public_html/_assets/bower_components/jquery.cookie/jquery.cookie.js',
             './public_html/_assets/bower_components/fancybox/lib/jquery.mousewheel-3.0.6.pack.js',
             './public_html/_assets/bower_components/fancybox/source/jquery.fancybox.pack.js',
@@ -119,9 +119,12 @@ gulp.task('javascript_front', function() {
             './public_html/_assets/bower_components/fancybox/source/helpers/jquery.fancybox-buttons.js',
             './public_html/_assets/bower_components/jquery.spinner/js/jquery.spinner.js',
             './public_html/vendor/jsvalidation/js/jsvalidation.min.js',
+            './public_html/_assets/bower_components/pickadate/lib/compressed/picker.js',
+            './public_html/_assets/bower_components/pickadate/lib/compressed/picker.date.js',
             './resources/assets/front/js/frontend.js'
         ])
         .pipe(concat('front_core.min.js'))
+        .pipe(uglify())
         .pipe(removeLogs())
         .pipe(notify("Js reload: <%= file.relative %>! "+ project))
         .pipe(size({showFiles : true}))
