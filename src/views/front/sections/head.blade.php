@@ -32,7 +32,7 @@
 <link rel="stylesheet" href="/_assets/bower_components/fancybox/source/helpers/jquery.fancybox-thumbs.css"/>
 <link rel="stylesheet" href="/_assets/bower_components/pickadate/lib/compressed/themes/classic.css"/>
 <link rel="stylesheet" href="/_assets/bower_components/pickadate/lib/compressed/themes/classic.date.css"/>
-<link rel="stylesheet" href="./_assets/bower_components/noty/lib/noty.css"/>
+<link rel="stylesheet" href="/_assets/bower_components/noty/lib/noty.css"/>
 
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,500i,700&amp;subset=cyrillic" rel="stylesheet">
 @yield('styles')

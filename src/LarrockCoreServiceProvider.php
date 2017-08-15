@@ -24,7 +24,7 @@ class LarrockCoreServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/lang', 'larrock');
 
         $this->publishes([
-            __DIR__.'/lang' => resource_path('vendor/lang/larrock')
+            __DIR__.'/lang' => resource_path('lang')
         ], 'lang');
         $this->publishes([
             __DIR__.'/views' => base_path('resources/views/vendor/larrock')
@@ -33,7 +33,7 @@ class LarrockCoreServiceProvider extends ServiceProvider
             __DIR__.'/assets/resources' => resource_path('assets')
         ], 'assets');
         $this->publishes([
-            __DIR__.'/assets/public_html' => public_path('_assets')
+            __DIR__.'/assets/public_html' => public_path('')
         ], 'assets');
         $this->publishes([
             __DIR__.'/assets/gulpfile.js' => base_path('')

@@ -1,0 +1,26 @@
+.block-seofish{
+  h1{
+    font-size: 33px;
+    font-weight: 600;
+    line-height: 41px;
+    text-align: center;
+    color: $main_color;
+    margin-bottom: 36px;
+    @media (max-width: 414px){
+      font-size: 43px;
+      line-height: 49px;
+    }
+  }
+  h4{
+    font-size: 25px;
+    line-height: 30px;
+    font-weight: 700;
+    color: $main_color;
+  }
+  .block-seofish-item {
+    p{
+      font-size: 18px;
+      line-height: 27px;
+    }
+  }
+}

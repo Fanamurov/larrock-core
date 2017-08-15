@@ -1,0 +1,95 @@
+#ModalToCart-form{
+  input.editQty{
+    width: 40px;
+    font-size: 18px;
+  }
+}
+
+form.cart-page{
+  td.cost-row,
+  td.subtotal{
+    white-space: nowrap;
+  }
+  tr.total-row td,
+  tr.discount_row td{
+    border: none;
+  }
+}
+
+.moduleCart a{
+  text-decoration: none;
+}
+
+.cabinetPage{
+  .orderItem{
+    td.cost-row,
+    td.subtotal{
+      white-space: nowrap;
+    }
+  }
+}
+
+#cart-page, .orderItem{
+  .item-options{
+    font-size: 15px;
+    line-height: 22px;
+    p{
+      margin-bottom: 5px;
+      margin-top: 5px;
+      line-height: 19px;
+    }
+  }
+  table{
+    tbody tr:first-of-type td{
+      padding-top: 30px;
+    }
+    td{
+      padding-bottom: 25px;
+      &.tovar_image{
+        width: 120px;
+      }
+      &.subtotal,
+      &.cost-row{
+        width: 80px;
+      }
+      &.spinner-row{
+        width: 150px;
+      }
+    }
+    .uk-h4{
+      font-size: 18px;
+      margin-top: 0;
+    }
+    th{
+      color: #999!important;
+      font-weight: 400;
+      font-size: 15px;
+      line-height: 22px;
+      border-bottom: 1px solid #e8e8e8;
+    }
+  }
+  .button-remove-phone{
+    width: 129px;
+    margin-top: 15px;
+  }
+  .row-total{
+    .total{
+      font-size: 40px;
+      line-height: 48px;
+    }
+  }
+}
+
+textarea#address{
+  min-height: 105px;
+}
+
+.spinner-qty{
+  input{
+    height: 26px;
+    max-width: 60px;
+    text-align: center;
+    border: 1px solid #e4e4e4;
+    font-size: 15px;
+  }
+}

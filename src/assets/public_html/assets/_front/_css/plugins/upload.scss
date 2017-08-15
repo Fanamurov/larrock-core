@@ -1,0 +1,59 @@
+.jFiler-input-dragDrop{
+  .jFiler-input-text{
+    background: rgba(0, 0, 0, .05);
+    border: 3px dashed rgba(0,0,0,.5);
+    text-align: center;
+    padding: 15px;
+    cursor: pointer;
+    transition: all linear .2s;
+    min-height: 200px;
+    &:hover, &:focus{
+      transition: all linear .3s;
+      border-color: #00a8e6;
+      box-shadow: inset 0 0 20px rgba(0,0,0,.08);
+    }
+    > p{
+      padding-top: 65px;
+    }
+  }
+  &.dragged{
+    .jFiler-input-text{
+      transition: all linear .3s;
+      border-color: #00a8e6;
+      box-shadow: inset 0 0 20px rgba(0,0,0,.08);
+    }
+  }
+  .button_upload{
+    text-align: center;
+
+    button{
+      margin: 15px 0;
+      text-align: center;
+    }
+  }
+}
+
+#uploadedImages{
+  margin-top: 40px;
+}
+
+.jFiler .jFiler-items-list{
+  display: none;
+}
+
+.jFiler-items, #process-upload-modal{
+  .uk-progress-bar{
+    min-height: 10px;
+  }
+}
+#process-upload-modal-files, .jFiler-item-params{
+  margin-top: 10px;
+}
+
+.jFiler-jProgressBar{
+  height: 10px;
+  background: #e2dddd;
+  .uk-progress-bar{
+    height: 10px;
+  }
+}

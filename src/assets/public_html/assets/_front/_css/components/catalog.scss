@@ -1,0 +1,134 @@
+.uk-grid-match{
+  .catalogBlockCategory{
+    margin-bottom: 35px;
+  }
+}
+.catalogBlockCategory{
+  h3{
+    margin-top: 10px;
+    text-align: center;
+  }
+}
+
+.block-listCatalog{
+  width: 100%;
+  .uk-nav-dropdown{
+    padding-left: 0;
+    > li{
+      &.uk-active{
+        > a{
+          background: $main_color;
+          color: #fff;
+          outline: none;
+        }
+      }
+      > a{
+        padding: 0 15px;
+      }
+    }
+  }
+  > li {
+    &.uk-active {
+      > a {
+        background: $main_color;
+        border-bottom: 2px solid $main_color_red;
+        color: #fff;
+        outline: none;
+      }
+    }
+  }
+  li.current-level{
+    position: relative;
+    width: 100%;
+    margin-bottom: 15px;
+    font-size: 23px;
+
+    > span{
+      padding: 0 15px;
+    }
+
+    .uk-dropdown-bottom{
+      left: auto !important;
+      right: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      box-shadow: 1px 3px 4px darkgrey;
+    }
+  }
+}
+
+.uk-open>.uk-dropdown{
+  padding-top: 0;
+  padding-bottom: 0;
+  box-shadow: 1px 3px 4px darkgrey;
+}
+
+.catalog-filters{
+  .module-filter{
+    display: inline-block;
+    margin-right: 15px;
+    &:last-of-type{
+      margin-right: 0;
+    }
+  }
+}
+.module-filter{
+  .label{
+    font-weight: 400;
+    font-size: 16px;
+    color: grey;
+    padding: 0;
+  }
+  .uk-link{
+    text-decoration: underline;
+    padding: 0 2px;
+    font-size: 16px;
+    &:first-of-type{
+      padding-left: 0;
+    }
+    &.uk-active{
+      color: black;
+      text-decoration: none;
+      cursor: default;
+      font-weight: 500;
+    }
+  }
+}
+form#block_sorters {
+  margin-top: 10px;
+}
+
+.catalogPageCategoryItems{
+  i.uk-icon-check{
+    color: $main_color;
+  }
+  i.uk-icon-close{
+    color: $main_color_red;
+  }
+}
+
+.catalogCategories{
+  .catalogBlockCategory{
+    margin-bottom: 65px;
+    @media (min-width: 1220px){
+      width: 14.285%;
+    }
+
+    img.categoryImage{
+      padding: 0 20px;
+    }
+    h3{
+      a{
+        font-size: 20px;
+        color: black;
+      }
+    }
+
+    &:hover, &:focus{
+      cursor: pointer;
+      h3 a{
+        color: $main_color_red;
+      }
+    }
+  }
+}

@@ -14,6 +14,7 @@ class FBElement{
     public $in_table_admin;
     public $in_table_admin_ajax_editable;
     public $help;
+    public $fillable;
 
     public $connect;
     public $attached;
@@ -154,6 +155,12 @@ class FBElement{
     public function setUserSelect()
     {
         $this->user_select = TRUE;
+        return $this;
+    }
+
+    public function setFillable()
+    {
+        $this->fillable = TRUE;
         return $this;
     }
 }

@@ -1,0 +1,31 @@
+header{
+  @media (max-width: 414px) {
+    .uk-margin-large-bottom {
+      margin-bottom: 25px!important;
+    }
+  }
+
+  .logo-container{
+    margin: 25px 0;
+  }
+  img.logo{
+    width: 200px;
+  }
+
+  .logo-link{
+    @media (max-width: 414px) {
+      display: block;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  }
+  > .uk-container-center{
+    background: #FFFFFF;
+  }
+
+  .header-links {
+    margin-top: 50px;
+    font-size: 20px;
+    line-height: 23px;
+  }
+}

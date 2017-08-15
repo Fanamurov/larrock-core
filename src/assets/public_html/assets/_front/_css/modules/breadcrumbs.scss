@@ -1,0 +1,47 @@
+.uk-breadcrumb{
+  padding: 0;
+  background: transparent;
+  font-size: 20px;
+  line-height: 27px;
+
+  white-space: nowrap;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  z-index: 2;
+
+  &::after{
+    content: '';
+    background: linear-gradient(90deg,rgba(255, 255, 255, 0) 0,rgb(255, 255, 255) 70%,rgb(255, 255, 255));
+    width: 70px;
+    height: 40px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 3;
+  }
+
+  h1, h2, h3, h4, h5{
+    display: inline-block;
+    font-size: 23px;
+    line-height: 27px;
+    margin: 0;
+    color: $main_color_red;
+  }
+  h1{
+    font-size: 27px;
+  }
+  h2, h3, h4, h5{
+    margin-top: 3px;
+  }
+  a{
+    color: $main_color_red;
+    text-decoration: underline;
+  }
+  >li:nth-child(n+2):before {
+    content: "/";
+    display: inline-block;
+    margin: 0 8px 0 0;
+    font-size: 15px;
+  }
+}

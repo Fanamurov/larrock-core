@@ -8,4 +8,19 @@
             @endif
         @endforeach
     </ol>
+
+    @if(isset(collect($breadcrumbs)->last()->current_level))
+        <div class="uk-button-dropdown dropdown-breadcrumbs" data-uk-dropdown="{mode: 'click'}">
+            <button class="uk-button"><i class="uk-icon-caret-down"></i></button>
+            <div class="uk-dropdown uk-dropdown-bottom">
+                <ul class="uk-nav uk-nav-dropdown">
+                    <li class="uk-text-center uk-text-bold">15 материалов раздела:</li>
+                    <li class="uk-nav-divider"></li>
+                    @foreach(collect($breadcrumbs)->last()->current_level as $item)
+                        <li><a href="{{ $item->full_url }}">{{ $item->title }}</a></li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    @endif
 @endif

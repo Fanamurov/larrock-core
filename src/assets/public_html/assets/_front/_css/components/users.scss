@@ -1,0 +1,107 @@
+.sociatite-auth{
+  .uk-h3{
+    margin-bottom: 7px;
+  }
+  div{
+    padding: 0 2px;
+  }
+}
+
+#collapseEditProfile{
+  padding-bottom: 40px;
+}
+
+.cabinetPage{
+  .orderItem{
+    margin-bottom: 90px;
+    &:last-of-type{
+      margin-bottom: 0;
+    }
+  }
+
+  .uk-h2{
+    background: $main_color;
+    padding: 10px;
+    color: white;
+    small.uk-text-muted{
+      font-size: 15px;
+      line-height: 19px;
+      font-weight: 400;
+      color: white !important;
+    }
+  }
+
+  .user-buttons{
+    button{
+      margin-right: 10px;
+    }
+    .uk-button{
+      margin-top: 2px;
+    }
+  }
+
+  .order-status{
+    position: relative;
+    margin-top: 5px;
+    p{
+      font-size: 17px;
+      padding-top: 6px;
+      margin-bottom: 5px;
+    }
+    .cancel-order{
+      @media (min-width: 667px) {
+        position: absolute;
+        right: 15px;
+        top: 12px;
+      }
+    }
+  }
+
+  .order-pay{
+    position: relative;
+    font-size: 17px;
+    margin-top: 0;
+    margin-bottom: 0;
+    background: $main_color_red;
+    color: white;
+
+    p.success-pay{
+      font-size: 40px;
+      line-height: 48px;
+      font-weight: 600;
+    }
+    p{
+      font-size: 17px;
+      padding-top: 1px;
+      margin-bottom: 5px;
+      margin-top: 0;
+    }
+    p.not-pay{
+      padding-top: 20px;
+    }
+    .total{
+      font-size: 40px;
+      line-height: 48px;
+    }
+    form.form-ya-kassa{
+      button{
+        margin-top: 10px;
+        width: 131px;
+      }
+    }
+    .text-order-pay{
+      span{
+        margin-bottom: 0;
+      }
+    }
+    .uk-text-muted{
+      font-size: 15px;
+      line-height: 19px;
+      color: white !important;
+    }
+  }
+
+  table{
+    margin-top: 40px;
+  }
+}

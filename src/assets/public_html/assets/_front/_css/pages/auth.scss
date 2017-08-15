@@ -1,0 +1,27 @@
+.loginPage{
+  p.uk-h2, h2{
+    font-size: 22px;
+    line-height: 26px;
+    margin-bottom: 35px;
+    font-weight: 400;
+  }
+  label.uk-form-label, label{
+    font-size: 15px;
+  }
+  button[type=submit]{
+    margin-top: 10px;
+  }
+  .block-register{
+    button[type=submit]{
+      margin-top: 15px;
+    }
+  }
+  .lost-password{
+    display: block;
+    font-size: 15px;
+    padding-top: 20px;
+  }
+  .uk-form-row{
+    margin-bottom: 20px;
+  }
+}
