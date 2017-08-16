@@ -333,7 +333,7 @@ class Component
         if($config->plugins_backend){
             foreach ($config->plugins_backend as $key_plugin => $value_plugin){
                 if($key_plugin === 'seo'){
-                    if($seo = LarrockSeo::getModel()->whereIdConnect(\Request::input('id_connect'))->whereTypeConnect(\Request::input('type_connect'))->first()){
+                    if($seo = LarrockSeo::getModel()->whereSeoIdConnect(\Request::input('id_connect'))->whereSeoTypeConnect(\Request::input('type_connect'))->first()){
                         $seo->delete();
                     }
                 }
