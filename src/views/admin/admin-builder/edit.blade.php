@@ -6,7 +6,11 @@
         <div class="add-panel uk-margin-bottom uk-text-right">
             <a class="uk-button" href="#modal-help" data-uk-modal="{target:'#modal-help'}"><i class="uk-icon-question"></i></a>
             @if(isset($data->get_category))
-                <a class="uk-button uk-button-primary" href="/admin/{{ $app->name }}/create?category={{ $data->get_category->first()->id }}">Добавить другой материал</a>
+                @if(isset($data->get_category->id) && $data->get_category->id)
+                    <a class="uk-button uk-button-primary" href="/admin/{{ $app->name }}/create?category={{ $data->get_category->id }}">Добавить другой материал</a>
+                @else
+                    <a class="uk-button uk-button-primary" href="/admin/{{ $app->name }}/create?category={{ $data->get_category->first()->id }}">Добавить другой материал</a>
+                @endif
             @else
                 <a class="uk-button uk-button-primary" href="/admin/{{ $app->name }}/create">Добавить другой материал</a>
             @endif

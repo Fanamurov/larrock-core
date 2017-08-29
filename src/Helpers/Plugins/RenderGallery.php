@@ -17,11 +17,8 @@ class RenderGallery
         foreach($matches['type'] as $key => $match){
             $name = $matches['name'][$key];
             //Собираем изображения под каждую найденную галерею
-            if(isset($modelResult->getImages)){
-                $modelResult['images'] = $modelResult->getImages;
-            }
             $matched_images['images'] = [];
-            foreach($modelResult['images'] as $image){
+            foreach($modelResult->getImages as $image){
                 if($image->getCustomProperty('gallery') === $matches['name'][$key]){
                     $matched_images['images'][] = $image;
                 }
@@ -33,11 +30,8 @@ class RenderGallery
         foreach($matches['type'] as $key => $match){
             $name = $matches['name'][$key];
             //Собираем изображения под каждую найденную галерею
-            if(isset($modelResult->getImages)){
-                $modelResult['images'] = $modelResult->getImages;
-            }
             $matched_images['images'] = [];
-            foreach($modelResult['images'] as $image){
+            foreach($modelResult->getImages as $image){
                 if($image->getCustomProperty('gallery') === $matches['name'][$key]){
                     $matched_images['images'][] = $image;
                 }
@@ -61,7 +55,7 @@ class RenderGallery
             $name = $matches['name'][$key];
             //Собираем изображения под каждую найденную галерею
             $matched_images['files'] = [];
-            foreach($modelResult['files'] as $image){
+            foreach($modelResult->getFiles as $image){
                 if($image->getCustomProperty('gallery') === $matches['name'][$key]){
                     $matched_images['files'][] = $image;
                 }

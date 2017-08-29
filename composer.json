@@ -38,5 +38,12 @@
             "name": "Alexandr Fanamurov",
             "email": "fanamurov@ya.ru"
         }
-    ]
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Larrock\\Core\\LarrockCoreServiceProvider"
+            ]
+        }
+    }
 }

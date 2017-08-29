@@ -276,7 +276,7 @@ $(document).ready(function(){
         importcss_append: true,
         language : 'ru',
         toolbar_items_size: 'small',
-        toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent " +
+        toolbar: "undo redo | bold italic | alignleft aligncenter alignright | bullist numlist outdent " +
         "indent | link image media pastetext | fullpage | forecolor backcolor | template | code | defis nonbreaking hr | photonews | typo",
         imagetools_toolbar: "rotateleft rotateright | flipv fliph | editimage imageoptions",
         fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
