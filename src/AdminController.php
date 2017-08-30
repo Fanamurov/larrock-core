@@ -167,12 +167,32 @@ class AdminController extends BaseController
      */
     public function destroy(Request $request, $id)
     {
+        if($request->has('ids') && is_array($request->get('ids'))){
+            foreach ($request->get('ids') as $id){
+                $this->destroyElement($id);
+            }
+            Alert::add('successAdmin', 'Удалено '. count($request->get('ids')) .' элементов')->flash();
+            return back();
+        }
+
+        $this->destroyElement($id);
+        if($request->get('place') === 'material'){
+            return Redirect::to('/admin/'. $this->config->name);
+        }
+        return back();
+    }
+
+    /**
+     * Remove id element
+     * @param $id
+     */
+    protected function destroyElement($id)
+    {
         if($data = $this->config->getModel()::find($id)){
             if(method_exists($data, 'clearMediaCollection')){
                 $data->clearMediaCollection();
             }
             $name = $data->title;
-
             $this->config->removeDataPlugins($this->config);
 
             if($data->delete()){
@@ -184,9 +204,5 @@ class AdminController extends BaseController
         }else{
             Alert::add('errorAdmin', 'Такого материала больше нет')->flash();
         }
-        if($request->get('place') === 'material'){
-            return Redirect::to('/admin/'. $this->config->name);
-        }
-        return back();
     }
 }

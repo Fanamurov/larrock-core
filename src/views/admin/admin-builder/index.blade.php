@@ -21,6 +21,11 @@
 
     @if(isset($data))
         <div class="uk-margin-large-bottom">
+            <form id="massiveAction" class="uk-alert uk-alert-warning massive_action uk-hidden" method="post" action="/admin/{{ $app->name }}/0">
+                {{ method_field('DELETE') }}
+                {{ csrf_field() }}
+                <p>Выделено: <span>0</span> элементов. <button type="submit" class="uk-button uk-button-danger please_conform">Удалить</button></p>
+            </form>
             <table class="uk-table uk-table-striped uk-form">
                 <thead>
                 <tr>
@@ -40,13 +45,14 @@
                 @foreach($data as $data_value)
                     <tr>
                         <td width="55">
-                            <a href="/admin/{{ $app->name }}/{{ $data_value->id }}/edit">
+                            <input form="massiveAction" id="id{{ $data_value->id }}" type="checkbox" name="ids[]" value="{{ $data_value->id }}" class="elementId uk-hidden">
+                            <div class="actionSelect{{ $data_value->id }} actionSelect" onclick="selectIdItem({{ $data_value->id }})">
                                 @if($app->plugins_backend && array_key_exists('images', $app->plugins_backend) && $image = $data_value->getMedia('images')->sortByDesc('order_column')->first())
                                     <img style="width: 55px" src="{{ $image->getUrl('110x110') }}">
                                 @else
                                     <i class="icon-padding icon-color uk-icon-picture-o" title="Фото не прикреплено"></i>
                                 @endif
-                            </a>
+                            </div>
                         </td>
                         @if(isset($app->rows['title']))
                             <td>

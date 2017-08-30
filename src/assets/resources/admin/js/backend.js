@@ -722,3 +722,15 @@ function rebuild_sitemap() {
 function rebuild_rss() {
     hidden_action('/admin/rss/generate', false, false, false, false, false);
 }
+
+function selectIdItem(id) {
+    $('input#id'+id).prop('checked', !$('input#id'+id).prop('checked'));
+    var count_selected = $('input.elementId:checked').length;
+    if(count_selected > 0){
+        $('.massive_action').removeClass('uk-hidden');
+    }else{
+        $('.massive_action').addClass('uk-hidden');
+    }
+    $('.massive_action').find('span').html(count_selected);
+    $('.actionSelect'+id).toggleClass('uk-icon-check');
+}
