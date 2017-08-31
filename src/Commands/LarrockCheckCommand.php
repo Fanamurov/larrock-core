@@ -112,10 +112,5 @@ class LarrockCheckCommand extends Command
         }else{
             $this->error('.env SITE_NAME not found');
         }
-        if(env('DB_SOCKET')){
-            $this->info('DB_SOCKET: '. env('DB_SOCKET') .' (OK)');
-        }else{
-            $this->line('.env DB_SOCKET not found for MAMP (DB_SOCKET=/Applications/MAMP/tmp/mysql/mysql.sock)');
-        }
     }
 }

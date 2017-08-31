@@ -2,19 +2,35 @@
 @import "/_assets/bower_components/pickadate/lib/themes/classic.date.css";
 //@import "/_assets/bower_components/pickadate/lib/themes/classic.time.css";
 
+.dashboard-page{
+  .uk-panel{
+    border: 1px solid #d2d2d2;
+    padding: 15px;
+  }
+}
+
 .actionSelect{
   position: relative;
+  cursor: pointer;
+  &:hover, &:focus{
+    opacity: .7;
+    transition: .4s all linear;
+  }
   &.uk-icon-check:before{
     font-size: 30px;
     position: absolute;
     color: #1d99c8;
-    background: rgba(255,255,255, .5);
+    background: rgba(255,255,255, .9);
     display: inline-block;
     width: 100%;
     height: 100%;
     padding-top: 5px;
     text-align: center;
   }
+}
+
+.uk-table-striped tbody tr.uk-alert{
+  background: #ebf7fd !important;
 }
 
 .sheet_content{

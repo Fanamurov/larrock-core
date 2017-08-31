@@ -39,6 +39,17 @@
             @yield('content')
         </section>
 
+        <footer class="uk-container uk-container-center uk-margin-large-top">
+            <span>Larrock-core:</span>
+            <a href="https://github.com/Fanamurov/larrock-core" target="_blank">
+                <img src="https://poser.pugx.org/fanamurov/larrock-core/version" alt="Latest Stable Version">
+                <img src="https://poser.pugx.org/fanamurov/larrock-core/downloads" alt="Total downloads">
+                <img src="https://poser.pugx.org/fanamurov/larrock-core/license" alt="License">
+            </a><br/>
+            <span>Project wiki <a href="https://github.com/Fanamurov/larrock-core/wiki" target="_blank">available on GitHub</a></span>.<br/>
+            <span>Commercial development and support of sites on LarrockCMS - <a href="http://martds.ru" target="_blank">MartDS</a>.</span>
+        </footer>
+
         <!-- Mainly scripts -->
         <script src="/_assets/bower_components/uikit/js/uikit.js"></script>
         <script src="/_assets/bower_components/uikit/js/components/accordion.min.js"></script>

@@ -1,11 +1,11 @@
 <?php
 
-use Larrock\ComponentPages\AdminPageController;
+use Larrock\Core\AdminDashboardController;
 use Larrock\Core\AdminAjax;
 
 Route::group(['prefix' => 'admin', 'middleware'=> ['web', 'level:2', 'LarrockAdminMenu', 'SaveAdminPluginsData']], function(){
     Route::get('/', [
-        'as' => 'admin.home', 'uses' => AdminPageController::class .'@index'
+        'as' => 'admin.home', 'uses' => AdminDashboardController::class .'@index'
     ]); //Роут главной страницы админки
 
     Route::post('ajax/EditRow', AdminAjax::class .'@EditRow');

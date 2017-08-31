@@ -1,4 +1,5 @@
 # Laravel Larrock CMS
+[![Latest Stable Version](https://poser.pugx.org/fanamurov/larrock-core/version)](https://packagist.org/packages/fanamurov/larrock-core) [![Total Downloads](https://poser.pugx.org/fanamurov/larrock-core/downloads)](https://packagist.org/packages/fanamurov/larrock-core) [![Latest Unstable Version](https://poser.pugx.org/fanamurov/larrock-core/v/unstable)](//packagist.org/packages/fanamurov/larrock-core) [![License](https://poser.pugx.org/fanamurov/larrock-core/license)](https://packagist.org/packages/fanamurov/larrock-core)
 
 ---
 CMS for Laravel framework v. >= 5.4

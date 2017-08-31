@@ -732,5 +732,5 @@ function selectIdItem(id) {
         $('.massive_action').addClass('uk-hidden');
     }
     $('.massive_action').find('span').html(count_selected);
-    $('.actionSelect'+id).toggleClass('uk-icon-check');
+    $('.actionSelect'+id).toggleClass('uk-icon-check').parentsUntil('tr').parent().toggleClass('uk-alert');
 }
