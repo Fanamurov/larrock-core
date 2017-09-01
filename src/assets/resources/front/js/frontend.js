@@ -312,44 +312,24 @@ $(document).ready(function(){
     $("#toTop").scrollToTop();
 });
 
-/* http://ned.im/noty/#/about */
-function noty_show(type, message, container){
-    if(container){
-        if(type === 'alert'){
-            container.noty({
-                theme: 'relax',
-                layout: 'center',
-                text: message,
-                type: 'alert',
-                modal: true
-            })
-        }else{
-            container.noty({
-                theme: 'relax',
-                layout: 'topRight',
-                text: message,
-                type: type,
-                timeout: 2500
-            })
-        }
+function noty_show(type, message){
+    if(type === 'error' || type === 'alert'){
+        UIkit.notify({
+            message : '<i class="uk-icon-bug"></i> '+ message,
+            status  : 'danger',
+            timeout : 0,
+            pos     : 'top-center'
+        });
     }else{
-        if(type === 'alert'){
-            noty({
-                theme: 'relax',
-                layout: 'center',
-                text: message,
-                type: 'alert',
-                modal: true
-            })
-        }else{
-            noty({
-                theme: 'relax',
-                layout: 'topRight',
-                text: message,
-                type: type,
-                timeout: 2500
-            })
+        if(type === 'message'){
+            type = 'info';
         }
+        UIkit.notify({
+            message : '<i class="uk-icon-check"></i> '+ message,
+            status  : type,
+            timeout : 3000,
+            pos     : 'top-right'
+        });
     }
 }
 

@@ -15,7 +15,7 @@
                     @include('larrock::front.modules.cart.moduleSplash')
                 @endif
                 @if(file_exists(base_path(). '/vendor/fanamurov/larrock-catalog'))
-                    @include('larrock::front.modules.search.catalog')
+                    @include('larrock::front.modules.search.catalog-autocomplite')
                 @endif
             </div>
         </div>

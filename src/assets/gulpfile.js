@@ -77,8 +77,6 @@ gulp.task('sass_uikit', function () {
  */
 gulp.task('libs_styles', function () {
     gulp.src([
-        './public_html/_assets/bower_components/noty/src/noty.scss',
-        './public_html/_assets/bower_components/noty/src/themes/relax.scss',
         './public_html/_assets/bower_components/fancybox/source/jquery.fancybox.css',
         './public_html/_assets/bower_components/fancybox/source/helpers/jquery.fancybox-buttons.css',
         './public_html/_assets/bower_components/fancybox/source/helpers/jquery.fancybox-thumbs.css',
@@ -132,7 +130,6 @@ gulp.task('javascript_admin', function() {
     return gulp.src([
             './public_html/_assets/bower_components/pickadate/lib/compressed/picker.js',
             './public_html/_assets/bower_components/pickadate/lib/compressed/picker.date.js',
-            './public_html/_assets/bower_components/noty/lib/noty.js',
             './public_html/_assets/bower_components/jquery.cookie/jquery.cookie.js',
             './resources/assets/admin/js/backend.js',
             './resources/assets/admin/js/plugin_images.js',
