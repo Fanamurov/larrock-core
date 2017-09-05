@@ -14,7 +14,7 @@
         "nicolaslopezj/searchable": "^1.9",
         "roumen/feed": "^2.10",
         "roumen/sitemap": "^2.6",
-        "spatie/laravel-medialibrary": "^6.0",
+        "spatie/laravel-medialibrary": "^5.0",
         "kix/mdash": "^0.5.4",
         "fanamurov/larrock-menu": "^0.2",
         "fanamurov/larrock-users": "^0.2",
