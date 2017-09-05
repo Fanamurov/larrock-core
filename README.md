@@ -50,8 +50,6 @@ CMS for Laravel framework v. >= 5.5
  /**  LARROCK CORE DEPENDS */
 /**  https://github.com/prologuephp/alerts */
  Prologue\Alerts\AlertsServiceProvider::class,
- /**  http://laravel-breadcrumbs.davejamesmiller.com/en/latest/start.html#install-laravel-breadcrumbs */
- DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
  Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
  /**  https://github.com/barryvdh/laravel-debugbar */
  Barryvdh\Debugbar\ServiceProvider::class,
@@ -66,7 +64,6 @@ CMS for Laravel framework v. >= 5.5
   ```php
   /**  LARROCK CORE DEPENDS */
   'Alert' => Prologue\Alerts\Facades\Alert::class,
-  'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
   ```
 
 4. Publish views, migrations etc.
