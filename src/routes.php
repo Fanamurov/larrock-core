@@ -3,6 +3,10 @@
 use Larrock\Core\AdminDashboardController;
 use Larrock\Core\AdminAjax;
 
+Route::get('/sitemap.xml', function() {
+    return Response::view('larrock::front.sitemap', ['data' => config('larrock-sitemap')])->header('Content-Type', 'application/xml');
+});
+
 Route::group(['prefix' => 'admin', 'middleware'=> ['web', 'level:2', 'LarrockAdminMenu', 'SaveAdminPluginsData']], function(){
     Route::get('/', [
         'as' => 'admin.home', 'uses' => AdminDashboardController::class .'@index'

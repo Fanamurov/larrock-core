@@ -41,6 +41,9 @@ class LarrockCoreServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/config/larrock-core-adminmenu.php' => config_path('larrock-core-adminmenu.php')
         ], 'config');
+        $this->publishes([
+        __DIR__.'/config/larrock-sitemap.php' => config_path('larrock-sitemap.php')
+        ], 'config');
     }
 
     /**
@@ -74,10 +77,8 @@ class LarrockCoreServiceProvider extends ServiceProvider
         }
 
         $this->app->bind('command.larrock:check', LarrockCheckCommand::class);
-        $this->app->bind('command.larrock:write', LarrockWriteCommand::class);
         $this->commands([
-            'command.larrock:check',
-            'command.larrock:write',
+            'command.larrock:check'
         ]);
     }
 }
