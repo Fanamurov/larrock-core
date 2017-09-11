@@ -563,7 +563,45 @@ $(document).ready(function(){
         $(this).addClass('checked');
         $('input[name^=delete]:visible').attr('checked', 'checked');
     });
+
+    sortable_element();
 });
+
+function sortable_element() {
+    $('tbody.uk-sortable').on('change.uk.sortable', function (event, s_object, el) {
+        if(el){
+            var new_position = 0;
+            var uptown_position = undefined;
+            var downtown_position = undefined;
+
+            var current_position = parseInt(el.find('input[name=position]').val());
+            if(el.prev().find('a.uk-h4').text().length > 0){
+                uptown_position = parseInt(el.prev().find('input[name=position]').val());
+            }
+            if(el.next().find('a.uk-h4').text().length > 0){
+                downtown_position = parseInt(el.next().find('input[name=position]').val());
+            }
+
+            /*console.log(el.find('a.uk-h4').text() +': '+ current_position);
+            console.log(el.prev().find('a.uk-h4').text() +': '+ uptown_position);
+            console.log(el.next().find('a.uk-h4').text() +': '+ downtown_position);*/
+
+            if(uptown_position || uptown_position === 0){
+                new_position = --uptown_position;
+                if((downtown_position || downtown_position === 0) && new_position < downtown_position){
+                    new_position = downtown_position;
+                }
+            }else{
+                if(downtown_position || downtown_position === 0){
+                    new_position = ++downtown_position;
+                }
+            }
+            if(new_position !== current_position){
+                el.find('input[name=position]').val(new_position).trigger('change');
+            }
+        }
+    });
+}
 
 function ajax_edit_row() {
     /** Input для редактирования поля */
@@ -637,20 +675,6 @@ function hidden_action(url, send_data, good_message, button, redirect_url, clear
     });
 }
 
-function typographLight(text, input) {
-    $.ajax({
-        type: "POST",
-        data: { text: text },
-        dataType: 'json',
-        url: "/admin/ajax/TypographLight",
-        success: function (data) {
-            if (data.text) {
-                input.val(data.text);
-            }
-        }
-    });
-}
-
 /**
  * Уведомления в сплывающих окнах от процессов
  * string @param type  Тип события (good, error)
@@ -713,14 +737,6 @@ function rebuild_cost() {
 
         $('#ModalToCart-form').find('.cost').html(parseFloat(cost*kolvo).toFixed(2));
     })
-}
-
-function rebuild_sitemap() {
-    hidden_action('/admin/sitemap/generate', false, false, false, false, false);
-}
-
-function rebuild_rss() {
-    hidden_action('/admin/rss/generate', false, false, false, false, false);
 }
 
 function selectIdItem(id) {

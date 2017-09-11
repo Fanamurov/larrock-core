@@ -41,7 +41,7 @@
                     @include('larrock::admin.admin-builder.additional-rows-th')
                 </tr>
                 </thead>
-                <tbody>
+                <tbody class="uk-sortable" data-uk-sortable="{handleClass:'uk-sortable-handle'}">
                 @foreach($data as $data_value)
                     <tr>
                         <td width="55">
@@ -81,6 +81,7 @@
                                         <input type="text" value="{{ $data_value->{$row->name} }}" name="{{ $row->name }}"
                                                class="ajax_edit_row form-control" data-row_where="id" data-value_where="{{ $data_value->id }}"
                                                data-table="{{ $app->table }}">
+                                        <i class="uk-sortable-handle uk-icon uk-icon-bars uk-margin-small-right" title="Перенести материал по весу"></i>
                                     </td>
                                 @endif
                             @endif

@@ -1,11 +1,36 @@
-@import "/_assets/bower_components/pickadate/lib/themes/classic.css";
-@import "/_assets/bower_components/pickadate/lib/themes/classic.date.css";
-//@import "/_assets/bower_components/pickadate/lib/themes/classic.time.css";
-
 .dashboard-page{
   .uk-panel{
-    border: 1px solid #d2d2d2;
+    border: 1px solid #e8e8e8;
     padding: 15px;
+  }
+  .packages-list{
+    i.uk-icon-plug {
+      font-size: 13px;
+      padding-right: 3px;
+    }
+    .uk-panel{
+      h3{
+        padding-bottom: 3px;
+        a{
+          text-transform: capitalize;
+          font-size: 16px;
+        }
+      }
+      p i{
+        font-size: 13px;
+        line-height: 18px;
+        display: inline-block;
+      }
+    }
+  }
+}
+
+.plugin-position{
+  position: relative;
+  i.uk-sortable-handle{
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 }
 

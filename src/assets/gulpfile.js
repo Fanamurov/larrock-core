@@ -4,7 +4,7 @@
 //npm install --save-dev gulp-sass -- NOT
 //npm install --save-dev gulp-sass gulp-cssnano gulp-autoprefixer gulp-bless gulp-concat gulp-notify gulp-removelogs gulp-uglify gulp-rename gulp-changed gulp-filesize gulp-imagemin imagemin-pngquant
 
-var project = 'larrock'; //Название проекта
+var project = 'mchs'; //Название проекта
 
 var gulp = require('gulp');
 var sass = require('gulp-sass');
@@ -81,7 +81,9 @@ gulp.task('libs_styles', function () {
         './public_html/_assets/bower_components/fancybox/source/helpers/jquery.fancybox-buttons.css',
         './public_html/_assets/bower_components/fancybox/source/helpers/jquery.fancybox-thumbs.css',
         './public_html/_assets/bower_components/pickadate/lib/compressed/themes/default.css',
-        './public_html/_assets/bower_components/pickadate/lib/compressed/themes/default.date.css'
+        './public_html/_assets/bower_components/pickadate/lib/compressed/themes/default.date.css',
+        './public_html/_assets/bower_components/pickadate/lib/themes/classic.css',
+        './public_html/_assets/bower_components/pickadate/lib/themes/classic.date.css'
     ])
         .pipe(changed('./public_html/_assets/bower_components/**/**/**/**/*.scss'))
         .pipe(sass.sync().on('error', sass.logError))

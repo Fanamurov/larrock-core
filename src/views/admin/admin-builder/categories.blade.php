@@ -47,7 +47,7 @@
                     @include('larrock::admin.admin-builder.additional-rows-th')
                 </tr>
                 </thead>
-                <tbody>
+                <tbody class="uk-sortable" data-uk-sortable="{handleClass:'uk-sortable-handle'}">
                 @if(isset($category))
                     @include('larrock::admin.category.include-create-easy', array('parent' => $category->id, 'component' => $app->name))
                 @else
@@ -99,7 +99,7 @@
                         @include('larrock::admin.admin-builder.additional-rows-th')
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="uk-sortable" data-uk-sortable="{handleClass:'uk-sortable-handle'}">
                     @if(count($data) === 0)
                         <div class="uk-alert uk-alert-warning">Материалов еще нет</div>
                     @else
@@ -141,6 +141,7 @@
                                                 <input type="text" value="{{ $data_value->{$row->name} }}" name="{{ $row->name }}"
                                                        class="ajax_edit_row form-control" data-row_where="id" data-value_where="{{ $data_value->id }}"
                                                        data-table="{{ $app->table }}">
+                                                <i class="uk-sortable-handle uk-icon uk-icon-bars uk-margin-small-right" title="Перенести материал по весу"></i>
                                             </td>
                                         @endif
                                     @endif
@@ -191,7 +192,7 @@
                         @include('larrock::admin.admin-builder.additional-rows-th')
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="uk-sortable" data-uk-sortable="{handleClass:'uk-sortable-handle'}">
                     @include('larrock::admin.category.include-create-easy', array('parent' => $category->id, 'component' => $app->name))
                     @include('larrock::admin.category.include-list-categories', array('data' => $category->get_child))
                     </tbody>

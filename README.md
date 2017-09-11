@@ -2,7 +2,9 @@
 [![Latest Stable Version](https://poser.pugx.org/fanamurov/larrock-core/version)](https://packagist.org/packages/fanamurov/larrock-core) [![Total Downloads](https://poser.pugx.org/fanamurov/larrock-core/downloads)](https://packagist.org/packages/fanamurov/larrock-core) [![Latest Unstable Version](https://poser.pugx.org/fanamurov/larrock-core/v/unstable)](//packagist.org/packages/fanamurov/larrock-core) [![License](https://poser.pugx.org/fanamurov/larrock-core/license)](https://packagist.org/packages/fanamurov/larrock-core)
 
 ---
-CMS for Laravel framework v. >= 5.5
+LarrockCMS for **Laravel framework >= 5.5** and **Mysql >=5.7**, **php >= 7.0**
+
+Other versions: LarrockCMS v.0.1.x for Laravel 5.4, Mysql 5.6, php 7.0
 
 #### Core and main components:
   - fanamurov/larrock-menu
