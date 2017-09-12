@@ -11,6 +11,8 @@
         <link rel="stylesheet" href="/_assets/_front/_css/_min/uikit.min.css"/>
         <link rel="stylesheet" href="/_assets/_admin/_css/min/admin.min.css"/>
         <link rel="stylesheet" href="/_assets/bower_components/noty/lib/noty.css"/>
+        <link rel="stylesheet" href="/_assets/bower_components/uikit/css/components/sortable.min.css"/>
+        <link rel="stylesheet" href="/_assets/bower_components/uikit/css/components/sortable.almost-flat.min.css"/>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,400italic,500,500italic,600,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
         <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
         <link rel="stylesheet" href="/_assets/bower_components/selectize/dist/css/selectize.bootstrap3.css"/>
@@ -39,8 +41,8 @@
             @yield('content')
         </section>
 
-        <footer class="uk-container uk-container-center uk-margin-large-top">
-            <span>Larrock-core:</span>
+        <footer class="uk-container uk-container-center uk-margin-large-top uk-margin-large-bottom uk-text-muted">
+            <span>Larrock-core: {{ Cache::get('coreVersionInstall') }}</span>
             <a href="https://github.com/Fanamurov/larrock-core" target="_blank">
                 <img src="https://poser.pugx.org/fanamurov/larrock-core/version" alt="Latest Stable Version">
                 <img src="https://poser.pugx.org/fanamurov/larrock-core/downloads" alt="Total downloads">
@@ -54,7 +56,9 @@
         <script src="/_assets/bower_components/uikit/js/uikit.js"></script>
         <script src="/_assets/bower_components/uikit/js/components/accordion.min.js"></script>
         <script src="/_assets/bower_components/uikit/js/components/tooltip.min.js"></script>
+        <script src="/_assets/bower_components/uikit/js/components/sortable.min.js"></script>
         <script src="/_assets/bower_components/uikit/js/components/notify.min.js"></script>
+        <script src="/_assets/bower_components/uikit/js/components/grid.min.js"></script>
         <script src="/_assets/bower_components/uikit/js/core/modal.min.js"></script>
 
         <link href="/_assets/bower_components/jquery.filer/css/jquery.filer.css" type="text/css" rel="stylesheet" />

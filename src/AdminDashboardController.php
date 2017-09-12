@@ -21,6 +21,14 @@ class AdminDashboardController extends AdminController
             return $filtered;
         });
 
+        Cache::remember('coreVersionInstall', 1440, function() use ($data){
+            foreach ($data['coreVersions'] as $item){
+                if($item->name === 'fanamurov/larrock-core'){
+                    return $item->version;
+                }
+            }
+        });
+
         $data['full_packages_list'] = [
             'fanamurov/larrock-admin-search' => 'Search content for admin panel larrockCMS',
             'fanamurov/larrock-admin-seo' => 'SEO component for larrockCMS',
@@ -42,6 +50,21 @@ class AdminDashboardController extends AdminController
         foreach ($data['coreVersions'] as $item){
             unset($data['full_packages_list'][$item->name]);
         }
+
+        $data['toDashboard'] = $this->componentToDashboard();
+
         return view('larrock::admin.dashboard.dashboard', $data);
+    }
+
+    protected function componentToDashboard()
+    {
+        $data = [];
+        $components = config('larrock-to-dashboard.components');
+        if(is_array($components)){
+            foreach ($components as $item){
+                $data[] = $item->toDashboard();
+            }
+        }
+        return $data;
     }
 }
