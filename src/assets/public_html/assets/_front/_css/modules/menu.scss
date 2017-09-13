@@ -1,5 +1,4 @@
 section#top_menu{
-  background: #cccce0;
   .uk-navbar{
     background: none;
     text-align: center;
@@ -23,20 +22,22 @@ section#top_menu{
       }
 
       a{
+        font-family: 'Roboto', Open Sans, sans-serif;
+        background-color: white;
         color: black;
         font-size: 19px;
         font-weight: 500;
         border-radius: 25px;
       }
       &.uk-active > a{
-        background-color: white;
-        color: $main_color;
+        background-color: $color_link;
+        color: white;
       }
 
       &:hover, &:focus{
         a{
-          background-color: white;
-          color: $main_color;
+          background-color: $color_link;
+          color: white;
         }
       }
     }

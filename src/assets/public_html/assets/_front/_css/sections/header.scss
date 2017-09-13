@@ -1,4 +1,6 @@
 header{
+  background: url("/_assets/_front/_images/bg/bg_footer.png") left top repeat transparent;
+
   @media (max-width: 414px) {
     .uk-margin-large-bottom {
       margin-bottom: 25px!important;
@@ -8,9 +10,6 @@ header{
   .logo-container{
     margin: 25px 0;
   }
-  img.logo{
-    width: 200px;
-  }
 
   .logo-link{
     @media (max-width: 414px) {
@@ -18,9 +17,6 @@ header{
       text-align: center;
       margin-bottom: 10px;
     }
-  }
-  > .uk-container-center{
-    background: #FFFFFF;
   }
 
   .header-links {

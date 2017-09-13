@@ -1,0 +1,38 @@
+.page_description{
+  @include list-mart;
+
+  h1{
+    margin-bottom: 35px;
+  }
+
+  h2{
+    font-weight: 600;
+    font-size: 29px;
+    line-height: 35px;
+  }
+
+  h3{
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 30px;
+  }
+}
+
+.page-kontakty{
+  table{
+    margin-top: 15px;
+    tr td{
+      &:first-of-type{
+        color: grey;
+        text-align: right;
+        font-style: italic;
+        font-size: 14px;
+        line-height: 18px;
+        padding-top: 14px;
+        &::after{
+          content: ':';
+        }
+      }
+    }
+  }
+}

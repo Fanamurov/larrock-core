@@ -26,16 +26,16 @@
     font-size: 23px;
     line-height: 27px;
     margin: 0;
-    color: $main_color_red;
+    color: $color_link;
   }
   h1{
-    font-size: 27px;
+    color: black;
   }
   h2, h3, h4, h5{
     margin-top: 3px;
   }
   a{
-    color: $main_color_red;
+    color: $color_link;
     text-decoration: underline;
   }
   >li:nth-child(n+2):before {

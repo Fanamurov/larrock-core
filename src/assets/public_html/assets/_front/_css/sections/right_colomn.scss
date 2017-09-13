@@ -1,0 +1,36 @@
+section#right_colomn {
+  position: relative;
+  padding-left: 25px;
+
+  &:before{
+    position: absolute;
+    left: -15px;
+    top: 0;
+    bottom: 35px;
+    right: 0;
+    content: "";
+    border-left: 10px solid grey;
+    margin-top: 45px;
+  }
+
+  > div{
+    height: 100%;
+
+    > div{
+      margin-top: 45px;
+      margin-left: 0;
+      position: relative;
+      z-index: 4;
+    }
+  }
+
+  .modules-list > *{
+    margin-bottom: 65px;
+    margin-left: 15px;
+    margin-right: 15px;
+
+    &:last-child{
+      margin-bottom: 0;
+    }
+  }
+}

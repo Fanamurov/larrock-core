@@ -1,4 +1,4 @@
-$color_link: #020166;
+$color_link: #ff3300;
 $color_link_hover: #be1318;
 
 $main_color: #020166;
@@ -90,7 +90,7 @@ a.admin_edit {
   }
 }
 
-a{
+a, .uk-link{
   color: $color_link;
   text-decoration: underline;
   &:hover, &:focus{
@@ -130,7 +130,7 @@ a{
 }
 
 html{
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   color: black;
 }
 
@@ -145,7 +145,7 @@ html{
 h1, h2, h3, h4, h5, h6,
 .uk-h1, .uk-h2, .uk-h3 , .uk-h4, .uk-h5, .uk-h6,
 .h1, .h2, .h3, .h4, .h5, .h6{
-  font-family: 'Roboto Condensed', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   color: black;
   font-weight: 500;
 }
@@ -179,6 +179,10 @@ h1, h2, h3, h4, h5, h6,
   font-weight: 400;
 }
 
+.uk-pagination-previous{
+  float: none;
+}
+
 a#toTop {
   display: none;
   position: fixed;
@@ -194,30 +198,22 @@ a#toTop {
 /** ASIABUS **/
 body{
   background: url("/_assets/_front/_images/bg/bg.png") repeat transparent;
-  font-family: Roboto,sans-serif;
   font-weight: 400;
   font-size: 18px;
   line-height: 28px;
+}
+
+section#main{
+  > .uk-container{
+    background: white;
+    padding-top: 50px;
+  }
 }
 
 .uk-container.uk-container-center{
   padding: 0 70px;
   @media (max-width: 768px) {
     padding: 0 35px;
-  }
-}
-
-.uslugi-list{
-  a{
-    display: block;
-    color: $main_color;
-    line-height: 25px;
-    text-align: center;
-    &.uk-text-center{
-      font-weight: 500;
-      max-width: 172px;
-      margin: 10px auto 0 auto;
-    }
   }
 }
 
@@ -235,133 +231,6 @@ body{
   height: 36px;
   display: block;
   width: 100%;
-}
-
-.one-coloumn-template{
-  h1{
-    font-weight: 800;
-    font-size: 37px;
-    color: #464646;
-  }
-}
-
-.page-kontakty{
-  p{
-    line-height: 35px;
-  }
-}
-
-
-#form-zapis{
-  &.uk-form-horizontal{
-    .uk-form-label {
-      font-size: 15px;
-      line-height: 24px;
-      width: 38%;
-      color: grey;
-
-      @media (max-width: 768px) {
-        width: 100%;
-      }
-
-      &.agree-label {
-        width: 100%;
-        text-align: right;
-      }
-    }
-    input, select{
-      width: 58%;
-      margin-left: 4%;
-      font-size: 15px;
-      @media (max-width: 768px) {
-        width: 100%;
-        margin-left: 0;
-      }
-      &[type=checkbox]{
-        margin-left: 5%;
-        width: auto;
-        @media (max-width: 768px) {
-          margin-left: 0;
-        }
-      }
-    }
-  }
-  .uk-form-width-large {
-    width: 350px;
-  }
-}
-
-
-//Модуль отзывов
-section#reviews{
-  a.uk-slidenav {
-    display: block;
-    color: #b5b5b5;
-    &.uk-slidenav-next {
-      right: -80px;
-    }
-    &.uk-slidenav-previous {
-      left: -100px;
-    }
-  }
-  .uk-dotnav{
-    margin-top: 20px;
-    padding-bottom: 20px;
-  }
-  .uk-dotnav>*>*{
-    width: 10px;
-    height: 10px;
-  }
-  .uk-push-1-5{
-    @media (max-width: 767px){
-      margin-left: 11%;
-    }
-  }
-  p{
-    font-family: 'Roboto Condensed', sans-serif;
-    font-weight: 300;
-    font-size: 17px;
-    line-height: 25px;
-
-    &.uk-h2{
-      color: $main_color;
-      font-size: 55px;
-      line-height: 65px;
-      font-weight: 800;
-      margin-bottom: 40px;
-
-      @media (max-width: 1199px){
-        font-size: 50px;
-        line-height: 58px;
-      }
-
-      @media (max-width: 1024px){
-        font-size: 30px;
-        line-height: 36px;
-      }
-
-      @media (max-width: 479px){
-        font-size: 39px;
-        line-height: 45px;
-      }
-
-      i{
-        color: #E2000F;
-        font-style: normal;
-      }
-    }
-  }
-  i{
-    font-style: italic;
-  }
-  #reviews-grid.no-action{
-    > li{
-      display: block !important;
-    }
-  }
-  a.uk-slidenav {
-    text-decoration: none;
-  }
 }
 
 .uk-button.uk-button-primary.uk-button-large {
@@ -393,10 +262,34 @@ section#reviews{
   }
 }
 
-.uk-pagination>li>a, .uk-pagination>li>span{
-  font-size: 16px;
-  padding: 5px 6px;
-  line-height: 19px;
+.uk-pagination>li{
+  &.uk-disabled{
+    opacity: .5;
+  }
+  > a, > span{
+    background: url('/_assets/_front/_images/bg/bg_grad.png') repeat-x scroll bottom center transparent;
+    border: medium none;
+    font-size: 12px;
+    line-height: 28px;
+    padding: 0 23px;
+    color: #000000;
+    margin-right: 4px;
+    border-radius: 4px;
+    box-shadow: 0 0 3px rgba(0,0,0,0.25);
+  }
+  &.uk-disabled>span{
+    background-color: transparent;
+  }
+  &:not(.uk-active):not(.uk-disabled){
+    > a, > span{
+      &:hover, &:focus{
+        background: #f5f5f5;
+      }
+    }
+  }
+  &.uk-active>span{
+    background: $color_link;
+  }
 }
 
 .uk-table td, .uk-table th {
@@ -426,6 +319,7 @@ body [class^="flaticon-"]:before, body [class*=" flaticon-"]:before{
 
 @import "./sections/header";
 @import "./sections/footer";
+@import "./sections/right_colomn";
 
 @import "./modules/menu";
 @import "./modules/seofish";
@@ -441,3 +335,4 @@ body [class^="flaticon-"]:before, body [class*=" flaticon-"]:before{
 @import "./components/cart";
 @import "./components/users";
 @import "./components/feed";
+@import "./components/pages";

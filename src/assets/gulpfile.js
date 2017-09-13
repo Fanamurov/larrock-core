@@ -2,7 +2,7 @@
 //npm install --global gulp-cli *if need*
 //npm install --save-dev gulp
 //npm install --save-dev gulp-sass -- NOT
-//npm install --save-dev gulp-sass gulp-cssnano gulp-autoprefixer gulp-bless gulp-concat gulp-notify gulp-removelogs gulp-uglify gulp-rename gulp-changed gulp-filesize gulp-imagemin imagemin-pngquant
+//npm install --save-dev gulp-sass gulp-cssnano gulp-autoprefixer gulp-bless gulp-concat gulp-notify gulp-removelogs gulp-uglify gulp-rename gulp-changed gulp-filesize gulp-imagemin gulp-image-resize imagemin-pngquant
 
 var project = 'mchs'; //Название проекта
 
@@ -20,6 +20,7 @@ var changed = require('gulp-changed');
 var size = require('gulp-filesize');
 var imagemin = require('gulp-imagemin');
 var pngquant = require('imagemin-pngquant');
+var imageResize = require('gulp-image-resize');
 
 gulp.task('default', function() {
     gulp.start('sass_uikit_admin', 'sass', 'sass_uikit', 'javascript_admin', 'javascript_front','watch', 'libs_styles');
@@ -175,4 +176,17 @@ gulp.task('imagemin', function () {
             use: [pngquant()]
         }))
         .pipe(gulp.dest('./public_html/media/'));
+});
+
+gulp.task('create_favicons', function () {
+    gulp.src('./public_html/ico.png')
+        .pipe(imageResize({
+            width : 100,
+            height : 100,
+            crop : false,
+            upscale : true,
+            format: 'png'
+        }))
+        .pipe(rename({suffix: '-110x110'} ))
+        .pipe(gulp.dest('./public_html'));
 });

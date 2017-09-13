@@ -56,3 +56,20 @@ form.form-search-autocomplite{
     }
   }
 }
+
+form.form-search.uk-form.form-search-autocomplite {
+  max-width: 400px;
+
+  .selectize-control.single .selectize-input, .selectize-dropdown.single {
+    border-color: #dadada;
+    border-radius: 5px;
+  }
+  .selectize-input.items.not-full.has-options {
+    box-shadow: none;
+    background: white;
+  }
+  button.uk-button{
+    border-radius: 0 5px 5px 0;
+    background-color: grey;
+  }
+}

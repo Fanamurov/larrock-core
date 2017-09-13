@@ -1,32 +1,31 @@
 footer{
-  background: $main_color;
-  color: white;
-
+  margin-top: 55px;
   > .uk-container-center{
-    background: $main_color;
-    color: #fff;
+    background: url("/_assets/_front/_images/bg/bg_footer.png") right top repeat transparent;
+    color: black;
     min-height: 175px;
   }
   .larrock-block-tekst_v_podvale{
-    padding-top: 80px;
+    padding-top: 55px;
     @media (max-width: 768px) {
       padding-top: 40px;
     }
   }
 
   a {
-    color: white;
+    color: black;
   }
 
   .uk-h2{
-    color: white;
-    font-size: 42px;
-    line-height: 45px;
+    color: black;
+    font-size: 32px;
+    line-height: 38px;
   }
 
   .footer-copyright{
     padding-top: 15px;
     padding-right: 50px;
+    margin-bottom: 25px;
     @media (max-width: 425px) {
       padding-right: 0;
     }
@@ -34,7 +33,7 @@ footer{
     a {
       font-size: 14px;
       font-weight: 300;
-      color: white;
+      color: black;
     }
   }
   @media (max-width: 425px) {

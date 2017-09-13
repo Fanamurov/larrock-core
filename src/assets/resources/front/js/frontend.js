@@ -10,10 +10,6 @@ $(document).ready(function(){
         $('#block_sorters').submit();
     });
 
-    //$('.catalogBlockCategory').find('div').matchHeight();
-    //$('.catalogBlockItem').matchHeight();
-    //$('.matchHeight').matchHeight();
-
     $(".fancybox").fancybox({
         helpers : {
             thumbs  : {
@@ -73,9 +69,6 @@ $(document).ready(function(){
         }
     });
 
-    //$('.typeahead').typeahead();
-    //$('*[data-toggle=tooltip]').tooltip();
-
     $('input[name=date], input.date').pickadate({
         monthSelector: true,
         yearSelector: true,
@@ -86,34 +79,29 @@ $(document).ready(function(){
         format: 'yyyy-mm-dd'
     });
 
-    /*
-     * Универсальный обработчик для выделения блока как ссылки
-     * Ищет внутри блока ссылку и присваивает ее всему блоку
-     */
+    /** Ищет внутри блока ссылку и присваивает ее всему блоку */
     $('.link_block').click(function(){window.location = $(this).find('a').attr('href');});
+
+    /** Ищет в элементе аттрибут data-href и делает блок ссылкой */
     $('.link_block_this').click(function(){window.location = $(this).attr('data-href');});
 
-    $('.show-please').click(function(){
-        var target = $(this).attr('data-target');
-        var focus_element = $(this).attr('data-focus');
-        $('.'+ target).removeClass('hidden');
-        $('.'+ focus_element).focus();
-        $(this).remove();
-    });
-
-    /** Conform alert. Уверены что хотите сделать это?) */
-    $('.please_conform').on('click', function () {
-        var href = $(this).attr('href');
-        return confirm('Уверены?');
-    });
-
-    $('.change_limit:not(.active)').click(function(){
+    /**
+     * LarrockCatalog
+     * Изменение параметров каталога (или любых других через контроллер Ajax)
+     *
+     * attr data-option - метод
+     * attr data-value - передаваемое значение
+     * attr data-type - другое передаваемое значение
+     */
+    $('.change_option_ajax:not(.uk-active)').click(function () {
+        var option = $(this).attr('data-option');
         noty_show('message', 'Страница обновляется...');
         $.ajax({
-            url: '/ajax/editPerPage',
+            url: '/ajax/'+ option,
             type: 'POST',
             data: {
-                q: $(this).attr('data-value')
+                q: $(this).attr('data-value'),
+                type: $(this).attr('data-type')
             },
             error: function() {
                 alert('ERROR!');
@@ -124,42 +112,10 @@ $(document).ready(function(){
         })
     });
 
-    $('.change_sort_cost:not(.active)').click(function(){
-        noty_show('message', 'Страница обновляется...');
-        $.ajax({
-            url: '/ajax/sort',
-            type: 'POST',
-            data: {
-                q: $(this).attr('data-value'),
-                type: $(this).attr('data-type')
-            },
-            error: function() {
-                alert('ERROR!');
-            },
-            success: function() {
-                location.reload();
-            }
-        })
-    });
-
-    $('.change_catalog_template:not(.active)').click(function(){
-        noty_show('message', 'Страница обновляется...');
-        $.ajax({
-            url: '/ajax/vid',
-            type: 'POST',
-            data: {
-                q: $(this).attr('data-value')
-            },
-            error: function() {
-                alert('ERROR!');
-            },
-            success: function() {
-                location.reload();
-            }
-        })
-    });
-
-    /* Cart */
+    /**
+     * LarrockCart
+     * Вызов модального окна для добавления товара в корзину
+     */
     $('.add_to_cart, .action_add_to_cart').click(function(){
         $('#ModalToCart').remove();
         $.ajax({
@@ -181,6 +137,13 @@ $(document).ready(function(){
         return false;
     });
 
+    /**
+     * LarrockCart
+     * Добавление товара в корзину
+     * Использование: присваиваем html-элементу класс add_to_cart_fast и добавляем аттрибут data-id c ID товара
+     *
+     * attr data-id ID товара
+     */
     $('.add_to_cart_fast').click(function(){
         $.ajax({
             url: '/ajax/cartAdd',
@@ -195,8 +158,8 @@ $(document).ready(function(){
             },
             success: function(res) {
                 if(res.status === 'success'){
-                    $('.cart-empty').addClass('hidden');
-                    $('.cart-show').removeClass('hidden');
+                    $('.cart-empty').addClass('uk-hidden');
+                    $('.cart-show').removeClass('uk-hidden');
                     $('.total_cart').html(res.total);
                     $('.total_discount_cart').html(res.total_discount);
                     if(parseInt(res.total_discount) < 1){
@@ -216,6 +179,12 @@ $(document).ready(function(){
 
     submit_to_cart();
 
+    /**
+     * LarrockCart
+     * Удаление элемента корзины
+     *
+     * attr data-rowid - rowID элемента корзины
+     */
     $('.removeCartItem').click(function(){
         var rowid = $(this).attr('data-rowid');
         $.ajax({
@@ -240,31 +209,13 @@ $(document).ready(function(){
         });
     });
 
-    $('#ModalToCart-form').find('.input-group-qty').spinner('changing', function(e, newVal, oldVal) {
-        var rowid = $(this).attr('data-rowid');
-        var qty = newVal;
-        if(qty > 0){
-            $.ajax({
-                url: '/ajax/cartQty',
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    rowid: rowid,
-                    qty: qty
-                },
-                error: function() {
-                    noty_show('alert', 'Кол-во не изменено');
-                },
-                success: function(res) {
-                    $('.total').html(res.total);
-                    $('tr[data-rowid='+ rowid +']').find('.subtotal span').html(res.subtotal);
-                    noty_show('success', 'Кол-во изменено');
-                }
-            });
-        }
-    });
-    //.input-group-qty
-
+    /**
+     * LarrockCart
+     * Изменение количества товара в корзине в модальном окне
+     *
+     * attr data-rowid - rowID элемента корзины
+     * attr qty - Нужное количество товара (input value)
+     */
     $('.editQty').change(function(){
         var rowid = $(this).attr('data-rowid');
         var qty = $(this).val();
@@ -310,9 +261,19 @@ $(document).ready(function(){
             });
             b.click(function(b){b.preventDefault();a("body, html").animate({scrollTop:0},d.speed)})})}})(jQuery);
     $("#toTop").scrollToTop();
+
+    $('#modalNotify').click(function () {
+        $('#modalNotify').removeClass('uk-open');
+    });
 });
 
+/**
+ * Всплывающие уведомления в интерфейсе
+ * @param type
+ * @param message
+ */
 function noty_show(type, message){
+    $('#modalNotify').addClass('uk-open').addClass('uk-display-block');
     if(type === 'error' || type === 'alert'){
         UIkit.notify({
             message : '<i class="uk-icon-bug"></i> '+ message,
@@ -320,17 +281,19 @@ function noty_show(type, message){
             timeout : 0,
             pos     : 'top-center'
         });
+
     }else{
-        if(type === 'message'){
-            type = 'info';
-        }
         UIkit.notify({
             message : '<i class="uk-icon-check"></i> '+ message,
-            status  : type,
+            status  : 'primary',
             timeout : 3000,
             pos     : 'top-right'
         });
     }
+
+    setTimeout(function () {
+        $('#modalNotify').removeClass('uk-open').removeClass('uk-display-block');
+    }, 3000);
 }
 
 function submit_to_cart() {
@@ -361,8 +324,8 @@ function submit_to_cart() {
             },
             success: function(res) {
                 if(res.status === 'success'){
-                    $('.cart-empty').hide();
-                    $('.cart-show').removeClass('hidden');
+                    $('.cart-empty').addClass('uk-hidden');
+                    $('.cart-show').removeClass('uk-hidden');
                     $('.total_cart').html(res.total);
                     $('.total_discount_cart').html(res.total_discount);
                     if(parseInt(res.total_discount) < 1){
@@ -385,48 +348,16 @@ function submit_to_cart() {
     });
 }
 
-/*function valid_modal_cart(min_kolvo) {
- $("#ModalToCart-form").validate({
- rules: {
- kolvo: {
- required: true,
- min: parseInt(min_kolvo)
- }
- },
- messages: {
- kolvo: {
- min: "Минимальная партия для заказа "+ min_kolvo
- }
- }
- });
- }*/
-
 function rebuild_cost() {
-    /*$('.cart_item_row').each(function () {
-        var nalicie = parseInt($(this).find('.nalichie').attr('data-count'));
-        var current_qty = parseInt($(this).find('.editQty').val());
-        if(nalicie <= current_qty){
-         $(this).find('.addon-what').hide();
-         }else{
-         $(this).find('.addon-what').show();
-         }
-         if(current_qty === 1){
-         $(this).find('.addon-x').hide();
-         }else{
-         $(this).find('.addon-x').show();
-         }
-    });*/
-
     $("#modal-spinner")
-        .spinner('changing', function(e, newVal, oldVal) {
+        .spinner('changing', function(e, newVal) {
             var cost = parseFloat($('#ModalToCart-form').find('.cost').attr('data-cost'));
             $('#ModalToCart-form').find('.cost').html(parseFloat(cost*newVal).toFixed(2));
         });
 
     $(".spinner-qty")
-        .spinner('changing', function(e, newVal, oldVal) {
+        .spinner('changing', function(e, newVal) {
             var qty = newVal;
-            var cost = parseFloat($(this).attr('data-cost'));
             var rowid = $(this).attr('data-rowid');
             if(qty > 0){
                 $.ajax({
