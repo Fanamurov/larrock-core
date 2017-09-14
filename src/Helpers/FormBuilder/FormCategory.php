@@ -43,7 +43,6 @@ class FormCategory extends FBElement {
         }
         if($get_options = $model->get(['id', 'parent', 'level', 'title'])){
             foreach($get_options as $get_options_value){
-                $list_categories[] = $get_options_value;
                 $row_settings->options->push($get_options_value);
             }
         }

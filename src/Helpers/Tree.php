@@ -37,7 +37,7 @@ class Tree{
 	 */
 	public function createTree(&$list, $parent, $level = 1){
 		$tree = array();
-		foreach ($parent as $k=>$l){
+		foreach ($parent as $l){
 			$l->level = $level;
 			if(isset($list[$l->id])){
 				$l->children = $this->createTree($list, $list[$l->id], ++$level);

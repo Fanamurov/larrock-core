@@ -223,13 +223,17 @@ class Component
     public function savePluginAnonsToModuleData($request)
     {
         if( !\Request::has('_jsvalidation') && (\Request::has('anons_merge') || !empty(\Request::has('anons_description')))){
+            if( !config('larrock.feed.anonsCategory')){
+                \Alert::add('errorAdmin', 'larrock.feed.anonsCategory не задан. Анонс создан не будет')->flash();
+                return TRUE;
+            }
             $anons = LarrockFeed::getModel();
             $anons->title = \Request::get('title');
             $anons->url = 'anons_'. \Request::get('id_connect') .''. random_int(1,9999);
-            $anons->category = $this->getRows()['anons_category'];
-            $anons->user_id = 1; //TODO: Временно, переписать
+            $anons->category = LarrockFeed::getConfig()->settings['anons_category'];
+            $anons->user_id = \Auth::id();
             $anons->active = 1;
-            $anons->position = LarrockFeed::getModel()->whereCategory($categoryAnons)->max('position') +1;
+            $anons->position = LarrockFeed::getModel()->whereCategory(LarrockFeed::getConfig()->settings['anons_category'])->max('position') +1;
 
             if(\Request::has('anons_merge')){
                 $original = LarrockFeed::getModel()->whereId(\Request::get('id_connect'))->first();
@@ -291,7 +295,7 @@ class Component
         }
         foreach($this->tabs as $tab_key => $tab_value){
             $render = '';
-            foreach($this->rows as $row_key => $row_value){
+            foreach($this->rows as $row_value){
                 $class_name = get_class($row_value);
                 $load_class = new $class_name(NULL, NULL);
 
