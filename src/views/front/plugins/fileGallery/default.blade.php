@@ -8,8 +8,7 @@
                     <img src="/_assets/_front/_images/icons/icon_docs_64.png" alt="file attach"><span>{{ $file->file_name }}</span>
                 @endif
             </a>
-            <div class="clearfix"></div>
         </div>
-        <div class="clearfix"></div>
     @endforeach
 </div>
+<div class="uk-clearfix"></div>

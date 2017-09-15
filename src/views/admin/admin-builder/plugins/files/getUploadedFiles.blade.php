@@ -8,21 +8,21 @@
                 <div class="uk-grid">
                     <div class="uk-width-1-1 uk-width-medium-3-10">
                         <label>Группа для галереи:</label>
-                        <input class="uk-width-1-1 param-file ajax_edit_media" type="text" value="{{ $file_item->custom_properties['gallery'] or '' }}"
+                        <input class="uk-width-1-1 param-file ajax_edit_media_files" type="text" value="{{ $file_item->custom_properties['gallery'] or '' }}"
                                data-model_type="{!! $file_item->model_type !!}"
                                data-id="{{ $file_item->id }}" data-row="param"
                                placeholder="Галерея">
                     </div>
                     <div class="uk-width-1-1 uk-width-medium-5-10">
                         <label>Alt/description:</label>
-                        <input class="uk-width-1-1 description-file ajax_edit_media" type="text" value="{{ $file_item->custom_properties['alt'] or '' }}"
+                        <input class="uk-width-1-1 description-file ajax_edit_media_files" type="text" value="{{ $file_item->custom_properties['alt'] or '' }}"
                                data-model_type="{!! $file_item->model_type !!}"
                                data-id="{{ $file_item->id }}" data-row="description"
                                placeholder="Alt/description">
                     </div>
                     <div class="uk-width-1-1 uk-width-medium-2-10 plugin-position">
                         <label>Вес:</label>
-                        <input class="uk-width-1-1 position-file ajax_edit_media" type="text" value="{{ $file_item->order_column or '0' }}"
+                        <input class="uk-width-1-1 position-file ajax_edit_media_files" type="text" value="{{ $file_item->order_column or '0' }}"
                                data-model_type="{!! $file_item->model_type !!}"
                                data-id="{{ $file_item->id }}" data-row="position"
                                placeholder="Вес">

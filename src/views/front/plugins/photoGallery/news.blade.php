@@ -8,3 +8,4 @@
         </div>
     @endforeach
 </div>
+<div class="uk-clearfix"></div>

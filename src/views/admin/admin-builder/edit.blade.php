@@ -36,7 +36,7 @@
         @endif
     </div>
 
-    <ul class="uk-tab uk-margin-large-top" data-uk-tab="{connect:'#tab-content, #tab-content-plugins'}">
+    <ul class="uk-tab uk-margin-large-top" data-uk-switcher="{connect:'#tab-content, #tab-content-plugins'}">
         @foreach($app->tabs as $tabs_key => $tabs_value)
             <li class="@if($loop->first) uk-active @endif">
                 <a href="">{{ $tabs_value }}</a>
@@ -45,7 +45,7 @@
                 @if(array_key_exists('images', $app->plugins_backend))
                     @include('larrock::admin.admin-builder.plugins.images.tab-title')
                 @endif
-                @if(array_key_exists('images', $app->plugins_backend))
+                @if(array_key_exists('files', $app->plugins_backend))
                     @include('larrock::admin.admin-builder.plugins.files.tab-title')
                 @endif
             @endif
@@ -80,7 +80,7 @@
                     @if(array_key_exists('images', $app->plugins_backend))
                         @include('larrock::admin.admin-builder.plugins.images.tab-data')
                     @endif
-                    @if(array_key_exists('images', $app->plugins_backend))
+                    @if(array_key_exists('files', $app->plugins_backend))
                         @include('larrock::admin.admin-builder.plugins.files.tab-data')
                     @endif
                 @endif
