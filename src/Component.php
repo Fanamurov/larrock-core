@@ -84,10 +84,6 @@ class Component
         if(empty($this->name)){
             return abort('Конфиг компонента не заполнен');
         }
-
-        //Вызываем middleware сохранения данных плагинов
-        $this->middleware(SaveAdminPluginsData::class);
-
         return $this;
     }
 
@@ -129,6 +125,10 @@ class Component
         return $this;
     }
 
+    /**
+     * Используется через SaveAdminPluginsData Middleware (Core)
+     * @param $request
+     */
     public function savePluginsData($request)
     {
         $this->savePluginSeoData($request);
@@ -153,31 +153,22 @@ class Component
         $row = new FormInput('url', 'URL материала');
         $this->rows['url'] = $row->setTab('seo', 'SEO')->setValid('max:155|required|unique:'. $this->table .',url,:id')->setCssClass('uk-width-1-1');
 
-        if(method_exists(\Request::class, 'has') && !\Request::has('_jsvalidation') && \Request::has('seo_title')){
-            if( !$seo = LarrockSeo::getModel()->whereSeoIdConnect(\Request::input('id_connect'))->whereSeoTypeConnect(\Request::input('type_connect'))->first()){
-                $seo = new Seo();
-            }
-            if(\Request::get('seo_title', '') !== ''){
-                if($seo->fill(\Request::all())->save()){
-                    \Alert::add('successAdmin', 'SEO обновлено')->flash();
-                }
-            }else{
-                $seo->delete($seo->id);
-                \Alert::add('successAdmin', 'SEO удалено')->flash();
-            }
-        }
-
         return $this;
     }
 
-    public function savePluginSeoData()
+    public function savePluginSeoData($request)
     {
-        if( !\Request::has('_jsvalidation') && \Request::has('seo_title')){
-            if( !$seo = LarrockSeo::getModel()->whereSeoIdConnect(\Request::input('id_connect'))->whereSeoTypeConnect(\Request::input('type_connect'))->first()){
+        if( !$request->has('_jsvalidation') && $request->has('seo_title')){
+            if( !$seo = LarrockSeo::getModel()->whereSeoIdConnect($request->get('id_connect'))->whereSeoTypeConnect($request->get('type_connect'))->first()){
                 $seo = LarrockSeo::getModel();
             }
-            if(\Request::get('seo_title', '') !== ''){
-                if($seo->fill(\Request::all())->save()){
+            if($request->get('seo_title', '') !== ''){
+                $seo->seo_id_connect = $request->get('id_connect');
+                $seo->seo_title = $request->get('seo_title');
+                $seo->seo_description = $request->get('seo_description');
+                $seo->seo_keywords = $request->get('seo_keywords');
+                $seo->seo_type_connect = $request->get('type_connect');
+                if($seo->save()){
                     \Alert::add('successAdmin', 'SEO обновлено')->flash();
                 }
             }else{
