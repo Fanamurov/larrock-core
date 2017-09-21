@@ -1,10 +1,10 @@
 # Laravel Larrock CMS
-[![Latest Stable Version](https://poser.pugx.org/fanamurov/larrock-core/version)](https://packagist.org/packages/fanamurov/larrock-core) [![Total Downloads](https://poser.pugx.org/fanamurov/larrock-core/downloads)](https://packagist.org/packages/fanamurov/larrock-core) [![Latest Unstable Version](https://poser.pugx.org/fanamurov/larrock-core/v/unstable)](//packagist.org/packages/fanamurov/larrock-core) [![License](https://poser.pugx.org/fanamurov/larrock-core/license)](https://packagist.org/packages/fanamurov/larrock-core) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1a0fb19f2e024607a1d40260c8baa5e7)](https://www.codacy.com/app/Fanamurov/larrock-core?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Fanamurov/larrock-core&amp;utm_campaign=Badge_Grade)
+[![Latest Stable Version](https://poser.pugx.org/fanamurov/larrock-core/version)](https://packagist.org/packages/fanamurov/larrock-core) [![Total Downloads](https://poser.pugx.org/fanamurov/larrock-core/downloads)](https://packagist.org/packages/fanamurov/larrock-core) [![License](https://poser.pugx.org/fanamurov/larrock-core/license)](https://packagist.org/packages/fanamurov/larrock-core) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1a0fb19f2e024607a1d40260c8baa5e7)](https://www.codacy.com/app/Fanamurov/larrock-core?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Fanamurov/larrock-core&amp;utm_campaign=Badge_Grade)
 
 ---
 LarrockCMS for **Laravel framework >= 5.5** and **Mysql >=5.7**, **php >= 7.0**
 
-Other versions: LarrockCMS v.0.1.x for Laravel 5.4, Mysql 5.6, php 7.0
+*Other versions: LarrockCMS v.0.1.x for Laravel 5.4, Mysql 5.6, php 7.0*
 
 #### Core and main components:
   - fanamurov/larrock-menu
@@ -20,6 +20,7 @@ Other versions: LarrockCMS v.0.1.x for Laravel 5.4, Mysql 5.6, php 7.0
 - "barryvdh/laravel-debugbar": "~2.0",
 - "barryvdh/laravel-ide-helper": "~2.1",
 - "proengsoft/laravel-jsvalidation": "^1.5",
+- "albertcht/invisible-recaptcha": "^1.7",
 - "prologue/alerts": "^0.4.1",
 - "davejamesmiller/laravel-breadcrumbs": "^4.0",
 - "intervention/image": "^2.3",
@@ -47,40 +48,19 @@ Other versions: LarrockCMS v.0.1.x for Laravel 5.4, Mysql 5.6, php 7.0
   $ composer require fanamurov/larrock-core
   ```
 
-3. Add the ServiceProvider to the providers array in app/config/app.php
-  ```php
- /**  LARROCK CORE DEPENDS */
-/**  https://github.com/prologuephp/alerts */
- Prologue\Alerts\AlertsServiceProvider::class,
- Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
- /**  https://github.com/barryvdh/laravel-debugbar */
- Barryvdh\Debugbar\ServiceProvider::class,
-
- /**  LARROCK COMPONENT USERS DEPENDS */
- /**  https://github.com/ultraware/roles */
- Ultraware\Roles\RolesServiceProvider::class,
-        
-  ```
-
-  aliases:
-  ```php
-  /**  LARROCK CORE DEPENDS */
-  'Alert' => Prologue\Alerts\Facades\Alert::class,
-  ```
-
-4. Publish views, migrations etc.
+3. Publish views, migrations etc.
   ```sh
   $ php artisan vendor:publish
   ```
        
-5. Run artisan command:
+4. Run artisan command:
   ```sh
   $ php artisan larrock:check
   ```
   And follow the tips for setting third-party dependencies
   
   
-6. Run Larrock migrations
+5. Run Larrock migrations
   Laravel 5.4: Specified key was too long error (https://laravel-news.com/laravel-5-4-key-too-long-error)
   **AppServiceProvider.php**
   
@@ -112,7 +92,7 @@ Other versions: LarrockCMS v.0.1.x for Laravel 5.4, Mysql 5.6, php 7.0
   }
   ```
   
-##BOWER COMPONENTS FOR TEMPLATE
+### ASSETS: BOWER COMPONENTS FOR TEMPLATES
 ```sh
 cd /public_html/_assets
 bower install fancybox
@@ -128,7 +108,7 @@ bower install tinymce
 bower install uikit
 ```
 
-##START
+## START
 http://yousite/admin
 Login: admin@larrock-cms.ru
 Password: password

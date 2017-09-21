@@ -144,7 +144,7 @@ function add_to_cart_fast() {
     $('.add_to_cart_fast').click(function(){
         var qty = 1;
         if(parseInt($(this).attr('data-id')) > 0){
-            qty = parseInt($(this).attr('data-id'));
+            qty = parseInt($(this).attr('data-qty'));
         }
         $.ajax({
             url: '/ajax/cartAdd',

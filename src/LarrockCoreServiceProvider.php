@@ -24,7 +24,7 @@ class LarrockCoreServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/lang', 'larrock');
 
         $this->publishes([
-            __DIR__.'/lang' => resource_path('lang')
+            __DIR__.'/lang' => resource_path('lang/vendor/larrock')
         ], 'lang');
         $this->publishes([
             __DIR__.'/views' => base_path('resources/views/vendor/larrock')
