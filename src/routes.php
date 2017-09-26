@@ -30,3 +30,7 @@ Route::group(['prefix' => 'admin', 'middleware'=> ['web', 'level:2', 'LarrockAdm
     Route::post('ajax/TypographLight', AdminAjax::class .'@TypographLight');
     Route::post('ajax/Translit', AdminAjax::class .'@Translit');
 });
+
+Route::get('/sitemap.xml', function() {
+    return Response::view('larrock::front.sitemap', ['data' => config('larrock-sitemap')])->header('Content-Type', 'application/xml');
+});

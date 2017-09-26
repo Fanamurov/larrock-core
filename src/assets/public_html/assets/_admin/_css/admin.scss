@@ -25,6 +25,33 @@
   }
 }
 
+.link_block_this, .pointer{
+  cursor: pointer;
+}
+
+td.row-position{
+  position: relative;
+  i.uk-sortable-handle{
+    position: absolute;
+    top: 16px;
+    right: 0;
+  }
+}
+
+td.row-edit, td.row-delete{
+  a.uk-button, .uk-button{
+    height: 30px;
+    line-height: 30px;
+    font-size: 13px;
+  }
+}
+
+.btn-group_switch_ajax{
+  button{
+    height: 30px;
+  }
+}
+
 .plugin-position{
   position: relative;
   i.uk-sortable-handle{
@@ -407,7 +434,7 @@ label{
 }
 .jFiler-item-thumb-image{
   img{
-  max-width: 100%;
+	max-width: 100%;
   }
 }
 .jFiler-items ul li{
@@ -432,29 +459,29 @@ label{
 }
 .jFiler, #uploadedImages{
   .input-group-addon{
-  border: none;
-  padding-left: 0;
-  width: 158px;
-  text-align: right;
-  font-style: italic;
+	border: none;
+	padding-left: 0;
+	width: 158px;
+	text-align: right;
+	font-style: italic;
   }
   .input-group{
-  width: 90%;
+	width: 90%;
   }
   .url_link{
-  padding-left: 126px;
-  font-size: 14px;
-  span{
-    font-style: italic;
-  }
+	padding-left: 126px;
+	font-size: 14px;
+	span{
+	  font-style: italic;
+	}
   }
   .jFiler-input-choose-btn.blue{
-  color: #428bca;
-  &:hover,
-  &:focus{
-    background: #428bca;
-    color: white;
-  }
+	color: #428bca;
+	&:hover,
+	&:focus{
+	  background: #428bca;
+	  color: white;
+	}
   }
 }
 
@@ -473,18 +500,18 @@ label{
 
 .ibox-content{
   .jFiler-items-grid .jFiler-item .jFiler-item-container .jFiler-item-thumb {
-  border: none;
+	border: none;
   }
   .jFiler-items-grid .jFiler-item .jFiler-item-container .jFiler-item-info{
-  background: none;
-  position: relative;
-  display: none;
+	background: none;
+	position: relative;
+	display: none;
   }
   .jFiler-item .jFiler-item-container .jFiler-item-thumb img{
-  max-width: 100%;
+	max-width: 100%;
   }
   .jFiler-items-grid .jFiler-item-trash-action:hover{
-  color: white;
+	color: white;
   }
 }
 
@@ -577,8 +604,8 @@ input:-ms-input-placeholder {
   opacity: .7;
   &:hover,
   &:focus{
-  opacity: 1;
-  background-color: #c5c5c5;
+	opacity: 1;
+	background-color: #c5c5c5;
   }
 }
 .edit_position_new input{
@@ -589,8 +616,8 @@ input:-ms-input-placeholder {
   text-decoration: none;
   border-bottom: 1px dotted #0088cc;
   &:hover, &:focus{
-  text-decoration: none;
-  border-bottom: 1px dotted #005580;
+	text-decoration: none;
+	border-bottom: 1px dotted #005580;
   }
 }
 .mce-panel{
@@ -832,3 +859,5 @@ body#clean_template{
   color: black !important;
   background: blanchedalmond !important;
 }
+
+@import "uikit-buttons-modify";

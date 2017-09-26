@@ -601,6 +601,74 @@ function sortable_element() {
             }
         }
     });
+
+    $('.uk-sortable-img-plugin').on('change.uk.sortable', function (event, s_object, el) {
+        if(el){
+            var new_position = 0;
+            var uptown_position = undefined;
+            var downtown_position = undefined;
+
+            var current_position = parseInt(el.find('input.position-image').val());
+            if(el.prev().find('input.param-image').val()){
+                uptown_position = parseInt(el.prev().find('input.position-image').val());
+            }
+            if(el.next().find('input.param-image').val()){
+                downtown_position = parseInt(el.next().find('input.position-image').val());
+            }
+
+            /*console.log(el.find('input.param-image').val() +': '+ current_position);
+            console.log(el.prev().find('input.param-image').val() +': '+ uptown_position);
+            console.log(el.next().find('input.param-image').val() +': '+ downtown_position);*/
+
+            if(uptown_position || uptown_position === 0){
+                new_position = --uptown_position;
+                if((downtown_position || downtown_position === 0) && new_position < downtown_position){
+                    new_position = downtown_position;
+                }
+            }else{
+                if(downtown_position || downtown_position === 0){
+                    new_position = ++downtown_position;
+                }
+            }
+            if(new_position !== current_position){
+                el.find('input.position-image').val(new_position).trigger('change');
+            }
+        }
+    });
+
+    $('.uk-sortable-file-plugin').on('change.uk.sortable', function (event, s_object, el) {
+        if(el){
+            var new_position = 0;
+            var uptown_position = undefined;
+            var downtown_position = undefined;
+
+            var current_position = parseInt(el.find('input.position-file').val());
+            if(el.prev().find('input.param-file').val()){
+                uptown_position = parseInt(el.prev().find('input.position-file').val());
+            }
+            if(el.next().find('input.param-file').val()){
+                downtown_position = parseInt(el.next().find('input.position-file').val());
+            }
+
+            /*console.log(el.find('input.param-image').val() +': '+ current_position);
+            console.log(el.prev().find('input.param-image').val() +': '+ uptown_position);
+            console.log(el.next().find('input.param-image').val() +': '+ downtown_position);*/
+
+            if(uptown_position || uptown_position === 0){
+                new_position = --uptown_position;
+                if((downtown_position || downtown_position === 0) && new_position < downtown_position){
+                    new_position = downtown_position;
+                }
+            }else{
+                if(downtown_position || downtown_position === 0){
+                    new_position = ++downtown_position;
+                }
+            }
+            if(new_position !== current_position){
+                el.find('input.position-file').val(new_position).trigger('change');
+            }
+        }
+    });
 }
 
 function ajax_edit_row() {

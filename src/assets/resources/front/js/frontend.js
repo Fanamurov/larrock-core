@@ -161,7 +161,11 @@ function add_to_cart_fast() {
                 if(res.status === 'success'){
                     $('.cart-empty').addClass('uk-hidden');
                     $('.cart-show').removeClass('uk-hidden');
-                    $('.total_cart').html(res.total);
+                    if(parseFloat(res.total) < 1){
+                        $('.cart-text').html('В корзине товаров: '+ res.count);
+                    }else{
+                        $('.cart-text').html('В корзине на сумму <span class="total_cart text">'+ res.total +'</span> р.');
+                    }
                     $('.total_discount_cart').html(res.total_discount);
                     if(parseInt(res.total_discount) < 1){
                         $('.moduleCart-discount_row').hide();
@@ -198,7 +202,7 @@ function removeCartItem() {
                 alert('ERROR!');
             },
             success: function(res) {
-                if(res < 1){
+                if(parseInt(res) < 1){
                     location.reload();
                 }else{
                     $('tr[data-rowid='+ rowid +']').remove();
@@ -243,7 +247,6 @@ function editQty() {
                     }else{
                         $('.discount_row').show();
                     }
-                    noty_show('success', 'Кол-во изменено');
                 }
             });
         }
@@ -353,8 +356,8 @@ $(document).ready(function(){
     (function(a){a.fn.scrollToTop=function(c){var d={speed:800};c&&a.extend(d,{speed:c});
         return this.each(function(){var b=a(this);
             a(window).scroll(function() {
-                var x = a(this).scrollTop();
-                $('body').css('background-position', parseInt(-x * 2 / 10) + 'px '+ parseInt(-x * 2 / 10) + 'px');
+                /*var x = a(this).scrollTop();
+                $('body').css('background-position', parseInt(-x * 2 / 10) + 'px '+ parseInt(-x * 2 / 10) + 'px');*/
                 if(100 < a(this).scrollTop()){
                     b.fadeIn();
                 }else{

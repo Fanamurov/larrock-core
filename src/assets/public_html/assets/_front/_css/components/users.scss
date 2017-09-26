@@ -17,10 +17,15 @@
     &:last-of-type{
       margin-bottom: 0;
     }
+    @media(max-width: 1024px){
+      &.uk-margin-large-top{
+        margin-top: 20px !important;
+      }
+    }
   }
 
   .uk-h2{
-    background: $main_color;
+    background: $color_link;
     padding: 10px;
     color: white;
     small.uk-text-muted{
@@ -32,6 +37,9 @@
   }
 
   .user-buttons{
+    @media(max-width: 1024px){
+      margin-top: 20px;
+    }
     button{
       margin-right: 10px;
     }
@@ -62,8 +70,11 @@
     font-size: 17px;
     margin-top: 0;
     margin-bottom: 0;
-    background: $main_color_red;
-    color: white;
+    background: url("/_assets/_front/_images/bg/bg_footer.png") right top transparent repeat;
+    @media(max-width: 1024px){
+      background: #fffcb1;
+    }
+    color: black;
 
     p.success-pay{
       font-size: 40px;
@@ -97,7 +108,7 @@
     .uk-text-muted{
       font-size: 15px;
       line-height: 19px;
-      color: white !important;
+      color: black !important;
     }
   }
 

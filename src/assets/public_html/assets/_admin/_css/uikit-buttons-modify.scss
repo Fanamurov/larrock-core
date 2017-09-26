@@ -1,0 +1,320 @@
+/* ========================================================================
+   Component: Button
+ ========================================================================== */
+/*
+ * Removes inner padding and border in Firefox 4+.
+ */
+.uk-button::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+/*
+ * 1. Correct inability to style clickable `input` types in iOS.
+ * 2. Remove margins in Chrome, Safari and Opera.
+ * 3. Remove borders for `button`.
+ * 4. Address `overflow` set to `hidden` in IE 8/9/10/11.
+ * 5. Correct `font` properties and `color` not being inherited for `button`.
+ * 6. Address inconsistent `text-transform` inheritance which is only inherit in Firefox and IE
+ * 7. Style
+ * 8. `line-height` is used to create a height
+ * 9. `min-height` is necessary for `input` elements in Firefox and Opera because `line-height` is not working.
+ * 10. Reset button group whitespace hack
+ * 11. Required for `a`.
+ */
+.uk-button {
+  /* 1 */
+  -webkit-appearance: none;
+  /* 2 */
+  margin: 0;
+  /* 3 */
+  border: none;
+  /* 4 */
+  overflow: visible;
+  /* 5 */
+  font: inherit;
+  color: #444;
+  /* 6 */
+  text-transform: none;
+  /* 7 */
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 0 12px;
+  background: #f7f7f7;
+  vertical-align: middle;
+  /* 8 */
+  line-height: 28px;
+  /* 9 */
+  min-height: 30px;
+  /* 10 */
+  font-size: 1rem;
+  /* 11 */
+  text-decoration: none;
+  text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+  background-origin: border-box;
+  background-image: -webkit-linear-gradient(top, #fff, #eee);
+  background-image: linear-gradient(to bottom, #fff, #eee);
+  border-radius: 4px;
+  text-shadow: 0 1px 0 #fff;
+}
+.uk-button:not(:disabled) {
+  cursor: pointer;
+}
+/*
+ * Hover
+ * 1. Apply hover style also to focus state
+ * 2. Remove default focus style
+ * 3. Required for `a` elements
+ */
+.uk-button:hover,
+.uk-button:focus {
+  background-color: #fafafa;
+  color: #444;
+  /* 2 */
+  outline: none;
+  /* 3 */
+  text-decoration: none;
+  background-image: none;
+}
+/* Active */
+.uk-button:active,
+.uk-button.uk-active {
+  background-color: #f5f5f5;
+  color: #444;
+  border-color: rgba(0, 0, 0, 0.2);
+  border-top-color: rgba(0, 0, 0, 0.3);
+  background-image: none;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+/* Color modifiers
+ ========================================================================== */
+/*
+ * Modifier: `uk-button-primary`
+ */
+.uk-button-primary {
+  background-color: #009dd8;
+  color: #fff;
+  background-image: -webkit-linear-gradient(top, #00b4f5, #008dc5);
+  background-image: linear-gradient(to bottom, #00b4f5, #008dc5);
+  border-color: rgba(0, 0, 0, 0.2);
+  border-bottom-color: rgba(0, 0, 0, 0.4);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+}
+/* Hover */
+.uk-button-primary:hover,
+.uk-button-primary:focus {
+  background-color: #00aff2;
+  color: #fff;
+  background-image: none;
+}
+/* Active */
+.uk-button-primary:active,
+.uk-button-primary.uk-active {
+  background-color: #008abf;
+  color: #fff;
+  background-image: none;
+  border-color: rgba(0, 0, 0, 0.2);
+  border-top-color: rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+/*
+ * Modifier: `uk-button-success`
+ */
+.uk-button-success {
+  background-color: #82bb42;
+  color: #fff;
+  background-image: -webkit-linear-gradient(top, #9fd256, #6fac34);
+  background-image: linear-gradient(to bottom, #9fd256, #6fac34);
+  border-color: rgba(0, 0, 0, 0.2);
+  border-bottom-color: rgba(0, 0, 0, 0.4);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+}
+/* Hover */
+.uk-button-success:hover,
+.uk-button-success:focus {
+  background-color: #8fce48;
+  color: #fff;
+  background-image: none;
+}
+/* Active */
+.uk-button-success:active,
+.uk-button-success.uk-active {
+  background-color: #76b430;
+  color: #fff;
+  background-image: none;
+  border-color: rgba(0, 0, 0, 0.2);
+  border-top-color: rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+/*
+ * Modifier: `uk-button-danger`
+ */
+.uk-button-danger {
+  background-color: #d32c46;
+  color: #fff;
+  background-image: -webkit-linear-gradient(top, #ee465a, #c11a39);
+  background-image: linear-gradient(to bottom, #ee465a, #c11a39);
+  border-color: rgba(0, 0, 0, 0.2);
+  border-bottom-color: rgba(0, 0, 0, 0.4);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+}
+/* Hover */
+.uk-button-danger:hover,
+.uk-button-danger:focus {
+  background-color: #e33551;
+  color: #fff;
+  background-image: none;
+}
+/* Active */
+.uk-button-danger:active,
+.uk-button-danger.uk-active {
+  background-color: #c91c37;
+  color: #fff;
+  background-image: none;
+  border-color: rgba(0, 0, 0, 0.2);
+  border-top-color: rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+/* Disabled state
+ * Overrides also the color modifiers
+ ========================================================================== */
+/* Equal for all button types */
+.uk-button:disabled {
+  background-color: #fafafa;
+  color: #999;
+  border-color: rgba(0, 0, 0, 0.2);
+  background-image: none;
+  box-shadow: none;
+  text-shadow: 0 1px 0 #fff;
+}
+/* Modifier: `uk-button-link`
+ ========================================================================== */
+/* Reset */
+.uk-button-link,
+.uk-button-link:hover,
+.uk-button-link:focus,
+.uk-button-link:active,
+.uk-button-link.uk-active,
+.uk-button-link:disabled {
+  border-color: transparent;
+  background: none;
+  box-shadow: none;
+  text-shadow: none;
+}
+/* Color */
+.uk-button-link {
+  color: #07D;
+}
+.uk-button-link:hover,
+.uk-button-link:focus,
+.uk-button-link:active,
+.uk-button-link.uk-active {
+  color: #059;
+  text-decoration: underline;
+}
+.uk-button-link:disabled {
+  color: #999;
+}
+/* Focus */
+.uk-button-link:focus {
+  outline: 1px dotted;
+}
+/* Size modifiers
+ ========================================================================== */
+.uk-button-mini {
+  min-height: 20px;
+  padding: 0 6px;
+  line-height: 18px;
+  font-size: 11px;
+}
+.uk-button-small {
+  min-height: 25px;
+  padding: 0 10px;
+  line-height: 23px;
+  font-size: 12px;
+}
+.uk-button-large {
+  min-height: 40px;
+  padding: 0 15px;
+  line-height: 38px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+/* Sub-object `uk-button-group`
+ ========================================================================== */
+/*
+ * 1. Behave like buttons
+ * 2. Create position context for dropdowns
+ * 3. Remove whitespace between child elements when using `inline-block`
+ * 4. Prevent buttons from wrapping
+ * 5. Remove whitespace between child elements when using `inline-block`
+ */
+.uk-button-group {
+  /* 1 */
+  display: inline-block;
+  vertical-align: middle;
+  /* 2 */
+  position: relative;
+  /* 3 */
+  font-size: 0.001px;
+  /* 4 */
+  white-space: nowrap;
+}
+.uk-button-group > * {
+  display: inline-block;
+}
+/* 5 */
+.uk-button-group .uk-button {
+  vertical-align: top;
+}
+/* Sub-object: `uk-button-dropdown`
+ ========================================================================== */
+/*
+ * 1. Behave like buttons
+ * 2. Create position context for dropdowns
+ */
+.uk-button-dropdown {
+  /* 1 */
+  display: inline-block;
+  vertical-align: middle;
+  /* 2 */
+  position: relative;
+}
+/* Sub-object `uk-button-group`
+     ========================================================================== */
+/*
+     * Reset border-radius
+     */
+.uk-button-group > .uk-button:not(:first-child):not(:last-child),
+.uk-button-group > div:not(:first-child):not(:last-child) .uk-button {
+  border-radius: 0;
+}
+.uk-button-group > .uk-button:first-child,
+.uk-button-group > div:first-child .uk-button {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.uk-button-group > .uk-button:last-child,
+.uk-button-group > div:last-child .uk-button {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+/*
+     * Collapse border
+     */
+.uk-button-group > .uk-button:nth-child(n+2),
+.uk-button-group > div:nth-child(n+2) .uk-button {
+  margin-left: -1px;
+}
+/*
+     * Create position context to superimpose the successor elements border
+     * Known issue: If you use an `a` element as button and an icon inside,
+     * the active state will not work if you click the icon inside the button
+     * Workaround: Just use a `button` or `input` element as button
+     */
+.uk-button-group .uk-button:hover,
+.uk-button-group .uk-button:active,
+.uk-button-group .uk-button.uk-active {
+  position: relative;
+}

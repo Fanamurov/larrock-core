@@ -23,16 +23,13 @@
 
   h1, h2, h3, h4, h5{
     display: inline-block;
-    font-size: 23px;
+    font-size: 20px;
     line-height: 27px;
     margin: 0;
     color: $color_link;
   }
   h1{
     color: black;
-  }
-  h2, h3, h4, h5{
-    margin-top: 3px;
   }
   a{
     color: $color_link;

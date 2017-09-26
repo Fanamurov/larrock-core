@@ -1,5 +1,5 @@
 header{
-  background: url("/_assets/_front/_images/bg/bg_footer.png") left top repeat transparent;
+  background: url("/_assets/_front/_images/bg/bg_header.png") left top repeat transparent;
 
   @media (max-width: 414px) {
     .uk-margin-large-bottom {
@@ -23,5 +23,9 @@ header{
     margin-top: 50px;
     font-size: 20px;
     line-height: 23px;
+    @media (max-width: 768px) {
+      margin-top: 20px;
+      margin-bottom: 15px;
+    }
   }
 }

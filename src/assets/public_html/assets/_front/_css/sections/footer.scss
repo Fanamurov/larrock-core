@@ -1,19 +1,23 @@
 footer{
   margin-top: 55px;
-  > .uk-container-center{
-    background: url("/_assets/_front/_images/bg/bg_footer.png") right top repeat transparent;
-    color: black;
-    min-height: 175px;
-  }
-  .larrock-block-tekst_v_podvale{
-    padding-top: 55px;
-    @media (max-width: 768px) {
-      padding-top: 40px;
-    }
+  @media (max-width: 768px) {
+    margin-top: 25px;
   }
 
-  a {
+  > .uk-container-center{
+    background: url("/_assets/_front/_images/bg/bg_footer.png") right top no-repeat #f7f7f7;
     color: black;
+    min-height: 304px;
+    @media (max-width: 768px) {
+      background: url("/_assets/_front/_images/bg/bg_footer.png") left top no-repeat #f7f7f7;
+    }
+  }
+  .footer-text{
+    padding-top: 15px;
+  }
+
+  a{
+    color: $color_link;
   }
 
   .uk-h2{
@@ -23,23 +27,31 @@ footer{
   }
 
   .footer-copyright{
-    padding-top: 15px;
-    padding-right: 50px;
+    padding-top: 30px;
     margin-bottom: 25px;
-    @media (max-width: 425px) {
-      padding-right: 0;
+    position: relative;
+
+    > div{
+      position: absolute;
+      bottom: -5px;
+      right: 170px;
+      @media (max-width: 881px) {
+        right: 0;
+      }
     }
 
-    a {
+    a{
       font-size: 14px;
       font-weight: 300;
       color: black;
+      line-height: 21px;
+      display: inline-block;
     }
   }
-  @media (max-width: 425px) {
-    .uk-push-1-2.uk-width-1-2{
-      left: 0;
-      width: 100%;
+  .larrock-block-tekst_v_podvale{
+    line-height: 35px;
+    @media (min-width: 1024px) {
+      margin-left: 84px;
     }
   }
 }

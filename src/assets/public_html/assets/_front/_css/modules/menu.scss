@@ -12,6 +12,11 @@ section#top_menu{
       display: inline-block;
       float: none;
 
+      @media (max-width: 768px) {
+        width: 100%;
+        margin-bottom: 3px;
+      }
+
       &:last-of-type{
         margin-right: 0;
       }
@@ -28,6 +33,9 @@ section#top_menu{
         font-size: 19px;
         font-weight: 500;
         border-radius: 25px;
+        @media (max-width: 768px) {
+          border-radius: 0;
+        }
       }
       &.uk-active > a{
         background-color: $color_link;
@@ -50,61 +58,7 @@ section#top_menu{
     button.uk-button {
       font-size: 25px;
       min-height: 49px;
-    }
-  }
-}
-
-section#default_menu{
-  background: #cccce0;
-  .uk-navbar{
-    background: none;
-    text-align: center;
-  }
-  ul.uk-navbar-nav{
-    padding: 10px 0;
-    float: none;
-
-    > li{
-      margin-right: 25px;
-      display: inline-block;
-      float: none;
-
-      &:last-of-type{
-        margin-right: 0;
-      }
-      @media (max-width: 425px) {
-        margin-right: 0;
-        display: block;
-        width: 100%;
-      }
-
-      a{
-        color: black;
-        font-size: 19px;
-        font-weight: 500;
-        border-radius: 25px;
-      }
-      &.uk-active > a{
-        background-color: white;
-        color: $main_color;
-      }
-
-      &:hover, &:focus{
-        a{
-          background-color: white;
-          color: $main_color;
-        }
-      }
-    }
-  }
-
-  @media (max-width: 425px) {
-    .uk-container.uk-container-center {
-      padding: 0;
-    }
-    button.uk-button {
-      font-size: 25px;
-      min-height: 49px;
+      margin-bottom: 15px;
     }
   }
 }

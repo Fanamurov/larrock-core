@@ -9,3 +9,38 @@
     }
   }
 }
+#form-backphone{
+  p.uk-h3{
+    font-size: 22px;
+    text-transform: uppercase;
+    color: #000;
+    letter-spacing: 3px;
+    font-weight: 700;
+    margin-bottom: 25px;
+  }
+  label{
+    font-size: 17px;
+  }
+  input{
+    font-size: 15px;
+  }
+  .agree-label{
+    font-size: 14px;
+    line-height: 19px;
+    display: inline-block;
+    input{
+      float: left;
+      margin-right: 5px;
+      margin-top: 4px;
+    }
+    span{
+      display: block;
+      margin-left: 18px;
+    }
+  }
+}
+
+.g-recaptcha{
+  overflow: hidden;
+  border-right: 1px solid #d6d6d6;
+}
