@@ -5,6 +5,9 @@ namespace Larrock\Core\Helpers;
 use Illuminate\Support\Arr;
 
 class Tree{
+
+    protected $activeCategory;
+
 	/**
 	 * Построение дерева объектов по определенному полю(по-умолчанию parent)
 	 *
@@ -47,4 +50,30 @@ class Tree{
 		}
 		return $tree;
 	}
+
+    /**
+     * Вспомогательный метод для получения массива все опубликованных разделов уровнем переданных в $categories и выше
+     *
+     * @param $categories \Eloquent
+     * @return mixed
+     */
+	public function listActiveCategories($categories){
+	    $this->iterateActiveCategories($categories);
+	    return $this->activeCategory;
+    }
+
+    /**
+     * Выборка опубликованных разделов, включая связи
+     *
+     * @param $categories
+     */
+    protected function iterateActiveCategories($categories)
+    {
+        foreach ($categories as $category){
+            $this->activeCategory[] = $category->id;
+            if(isset($category->get_childActive)){
+                $this->listActiveCategories($category->get_childActive);
+            }
+        }
+    }
 }

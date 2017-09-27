@@ -60,8 +60,7 @@ function rebuild_cost() {
                         }else{
                             $('.discount_row').hide();
                         }
-                        $('tr[data-rowid='+ rowid +']').find('.subtotal span').html(parseFloat(res.subtotal).toFixed(2));
-                        noty_show('success', 'Количество изменено');
+                        $('tr[data-rowid='+ rowid +']').find('.subtotal span.subtotal').html(parseFloat(res.subtotal).toFixed(2));
                     }
                 });
             }
@@ -261,58 +260,6 @@ function link_block() {
     $('.link_block_this').click(function(){window.location = $(this).attr('data-href');});
 }
 
-function searchCatalog() {
-    /* http://maxoffsky.com/code-blog/laravel-shop-tutorial-3-implementing-smart-search/ */
-    /* https://github.com/selectize/selectize.js/blob/master/docs/usage.md */
-    $('select#searchCatalog').selectize({
-        valueField: 'url_to_search',
-        labelField: 'title',
-        searchField: ['title'],
-        maxOptions: 10,
-        options: [],
-        create: false,
-        persist: false,
-        optgroups: [
-            {value: 'product', label: 'Товары'},
-            {value: 'category', label: 'Разделы'}
-        ],
-        optgroupField: 'class_element',
-        optgroupOrder: ['product','category'],
-        render: {
-            option: function(item, escape) {
-                return '<div class="search">' +escape(item.title)+'</div>';
-            }
-        },
-        load: function(query, callback) {
-            this.clearOptions();
-            if (!query.length) return callback();
-            $.ajax({
-                url: 'http://'+window.location.hostname+'/search/catalog',
-                type: 'GET',
-                dataType: 'json',
-                data: {
-                    q: query
-                },
-                error: function() {
-                    noty_show('danger', 'Поиск не работает');
-                    callback();
-                },
-                success: function(res) {
-                    if(res.length < 1){
-                        noty_show('message', 'По данному слову ничего не найдено');
-                    }
-                    callback(res);
-                }
-            });
-        },
-        onChange: function(){
-            noty_show('message', 'Переход к результатам поиска');
-            window.location = this.items[0];
-            //window.location = '/search/catalog/serp/'+ query;
-        }
-    });
-}
-
 $(document).ready(function(){
     $.ajaxSetup({
         headers: {
@@ -326,7 +273,6 @@ $(document).ready(function(){
     removeCartItem();
     editQty();
     link_block();
-    searchCatalog();
 
     $('.showModalLoading').click(function () {
         UIkit.modal("#modalProgress").show();
