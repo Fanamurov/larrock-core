@@ -4,7 +4,7 @@
         xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
     <url>
         <loc>{{ env('APP_URL') }}</loc>
-        <lastmod>{{ Carbon\Carbon::now()->format('Y-m-d') }}</lastmod>
+        <lastmod>{{ Carbon\Carbon::now()->format('Y-m-d\TH:i:sP') }}</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
@@ -13,7 +13,7 @@
             @foreach($componentItem->createSitemap() as $item)
                 <url>
                     <loc>{{ env('APP_URL') }}{{ $item->fullUrl }}</loc>
-                    <lastmod>{{ $item->updated_at }}</lastmod>
+                    <lastmod>{{ Carbon\Carbon::parse($item->updated_at)->format('Y-m-d\TH:i:sP')  }}</lastmod>
                     <changefreq>monthly</changefreq>
                     <priority>1.0</priority>
                 </url>
