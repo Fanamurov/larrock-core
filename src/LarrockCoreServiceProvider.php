@@ -39,10 +39,9 @@ class LarrockCoreServiceProvider extends ServiceProvider
             __DIR__.'/assets/gulpfile.js' => base_path('')
         ], 'assets');
         $this->publishes([
-            __DIR__.'/config/larrock-core-adminmenu.php' => config_path('larrock-core-adminmenu.php')
-        ], 'config');
-        $this->publishes([
-        __DIR__.'/config/larrock-sitemap.php' => config_path('larrock-sitemap.php')
+            __DIR__.'/config/larrock-core-adminmenu.php' => config_path('larrock-core-adminmenu.php'),
+            __DIR__.'/config/larrock-sitemap.php' => config_path('larrock-sitemap.php'),
+            __DIR__.'/config/larrock-to-dashboard.php' => config_path('larrock-to-dashboard.php'),
         ], 'config');
     }
 
