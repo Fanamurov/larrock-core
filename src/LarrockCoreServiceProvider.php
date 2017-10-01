@@ -57,6 +57,8 @@ class LarrockCoreServiceProvider extends ServiceProvider
         $this->app['router']->aliasMiddleware('SaveAdminPluginsData', SaveAdminPluginsData::class);
 
         $this->mergeConfigFrom( __DIR__.'/config/larrock-core-adminmenu.php', 'larrock-core-adminmenu');
+        $this->mergeConfigFrom( __DIR__.'/config/larrock-sitemap.php', 'larrock-sitemap');
+        $this->mergeConfigFrom( __DIR__.'/config/larrock-to-dashboard.php', 'larrock-to-dashboard');
 
         if ( !class_exists('CreateConfigTable')){
             // Publish the migration
