@@ -5,6 +5,7 @@ namespace Larrock\Core;
 use Illuminate\Support\ServiceProvider;
 use Larrock\Core\Commands\LarrockCheckCommand;
 use Larrock\Core\Commands\LarrockWriteCommand;
+use Larrock\Core\Commands\LarrockUpdateEnvCommand;
 use Larrock\Core\Middleware\AdminMenu;
 use Larrock\Core\Middleware\GetSeo;
 use Larrock\Core\Middleware\VerifyLevel;
