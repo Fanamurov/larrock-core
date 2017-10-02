@@ -40,5 +40,7 @@
                 "Larrock\\Core\\LarrockCoreServiceProvider"
             ]
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable" : true
 }
