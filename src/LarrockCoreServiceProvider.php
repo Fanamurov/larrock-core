@@ -78,8 +78,10 @@ class LarrockCoreServiceProvider extends ServiceProvider
         }
 
         $this->app->bind('command.larrock:check', LarrockCheckCommand::class);
+        $this->app->bind('command.larrock:updateEnv', LarrockUpdateEnvCommand::class);
         $this->commands([
-            'command.larrock:check'
+            'command.larrock:check',
+            'command.larrock:updateEnv'
         ]);
     }
 }
