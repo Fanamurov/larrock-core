@@ -277,7 +277,7 @@ $(document).ready(function(){
         language : 'ru',
         toolbar_items_size: 'small',
         toolbar: "undo redo | bold italic | alignleft aligncenter alignright | bullist numlist outdent " +
-        "indent | link image media pastetext | fullpage | forecolor backcolor | template | code | defis nonbreaking hr | photonews | typo",
+        "indent | link image media pastetext | fullpage | forecolor backcolor | template | code | defis nonbreaking hr | photonews | typo | forms.consult forms.zayavka forms.rachet forms.skidka",
         imagetools_toolbar: "rotateleft rotateright | flipv fliph | editimage imageoptions",
         fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
         style_formats: [
@@ -338,32 +338,68 @@ $(document).ready(function(){
                     });
                 }
             });
+            editor.addButton('forms.consult', {
+                text: 'Форма.Консультация',
+                title: 'Вставка шортката',
+                icon: false,
+                onclick: function() {
+                    editor.insertContent('{{forms.consult}}');
+                }
+            });
+            editor.addButton('forms.zayavka', {
+                text: 'Форма.Заявка',
+                title: 'Вставка шортката',
+                icon: false,
+                onclick: function() {
+                    editor.insertContent('{{forms.zayavka}}');
+                }
+            });
+            editor.addButton('forms.rachet', {
+                text: 'Форма.Рассчет',
+                title: 'Вставка шортката',
+                icon: false,
+                onclick: function() {
+                    editor.insertContent('{{forms.rachet}}');
+                }
+            });
+            editor.addButton('forms.skidka', {
+                text: 'Форма.Промокод',
+                title: 'Вставка шортката',
+                icon: false,
+                onclick: function() {
+                    editor.insertContent('{{forms.skidka}}');
+                }
+            });
         },
         templates: [
             {
                 title: 'Вставка фото-галереи :: Новости (Одно большое, другие маленькие)',
                 description: 'Вставьте после знака "=" имя группы картинок',
-                content: '{Фото[news]=}'},
+                content: '{Фото[news]='+ $('input[name=url]').val() +'}'},
+            {
+                title: 'Вставка фото-галереи без FancyBox :: Новости (Одно большое, другие маленькие)',
+                description: 'Вставьте после знака "=" имя группы картинок',
+                content: '{Фото[nonFancy]='+ $('input[name=url]').val() +'}'},
             {
                 title: 'Вставка фото-галереи :: Большие фото с описаниями',
                 description: 'Вставьте после знака "=" имя группы картинок',
-                content: '{Фото[newsDescription]=}'},
+                content: '{Фото[newsDescription]='+ $('input[name=url]').val() +'}'},
             {
                 title: 'Вставка фото-галереи :: Одинаковые блоки',
                 description: 'Вставьте после знака "=" имя группы картинок',
-                content: '{Фото[blocks]=}'},
+                content: '{Фото[blocks]='+ $('input[name=url]').val() +'}'},
             {
                 title: 'Вставка фото-галереи :: Большие фото',
                 description: 'Вставьте после знака "=" имя группы картинок',
-                content: '{Фото[blocksBig]=}'},
+                content: '{Фото[blocksBig]='+ $('input[name=url]').val() +'}'},
             {
                 title: 'Вставка фото-галереи :: Сертификаты (небольшие фото с описаниями)',
                 description: 'Вставьте после знака "=" имя группы картинок',
-                content: '{Фото[sert]=}'},
+                content: '{Фото[sert]='+ $('input[name=url]').val() +'}'},
             {
                 title: 'Вставка фото-галереи :: Вывод одинаковыми блоками',
                 description: 'Вставьте после знака "=" имя группы картинок',
-                content: '{Фото[customШиринаxВысота]=}'},
+                content: '{Фото[customШиринаxВысота]='+ $('input[name=url]').val() +'}'},
             {
                 title: 'Вставка списка разделов сайта',
                 description: 'Вставьте после знака "=" URL категории (вставятся и потомки)',
@@ -371,11 +407,11 @@ $(document).ready(function(){
             {
                 title: 'Вставка материалов из документации',
                 description: 'Вставьте после знака "=" URL категории',
-                content: '{Документы[default]=}'},
+                content: '{Документы[default]='+ $('input[name=url]').val() +'}'},
             {
                 title: 'Вставка прикрепленных к материалу файлов',
                 description: 'Вставьте после знака "=" имя группы файлов',
-                content: '{Файлы[default]=}'},
+                content: '{Файлы[default]='+ $('input[name=url]').val() +'}'},
             {
                 title: 'Вставка файлов из директории',
                 description: 'Вставьте после знака "=" имя папки в /public/files/',
@@ -563,113 +599,7 @@ $(document).ready(function(){
         $(this).addClass('checked');
         $('input[name^=delete]:visible').attr('checked', 'checked');
     });
-
-    sortable_element();
 });
-
-function sortable_element() {
-    $('tbody.uk-sortable').on('change.uk.sortable', function (event, s_object, el) {
-        if(el){
-            var new_position = 0;
-            var uptown_position = undefined;
-            var downtown_position = undefined;
-
-            var current_position = parseInt(el.find('input[name=position]').val());
-            if(el.prev().find('a.uk-h4').text().length > 0){
-                uptown_position = parseInt(el.prev().find('input[name=position]').val());
-            }
-            if(el.next().find('a.uk-h4').text().length > 0){
-                downtown_position = parseInt(el.next().find('input[name=position]').val());
-            }
-
-            /*console.log(el.find('a.uk-h4').text() +': '+ current_position);
-            console.log(el.prev().find('a.uk-h4').text() +': '+ uptown_position);
-            console.log(el.next().find('a.uk-h4').text() +': '+ downtown_position);*/
-
-            if(uptown_position || uptown_position === 0){
-                new_position = --uptown_position;
-                if((downtown_position || downtown_position === 0) && new_position < downtown_position){
-                    new_position = downtown_position;
-                }
-            }else{
-                if(downtown_position || downtown_position === 0){
-                    new_position = ++downtown_position;
-                }
-            }
-            if(new_position !== current_position){
-                el.find('input[name=position]').val(new_position).trigger('change');
-            }
-        }
-    });
-
-    $('.uk-sortable-img-plugin').on('change.uk.sortable', function (event, s_object, el) {
-        if(el){
-            var new_position = 0;
-            var uptown_position = undefined;
-            var downtown_position = undefined;
-
-            var current_position = parseInt(el.find('input.position-image').val());
-            if(el.prev().find('input.param-image').val()){
-                uptown_position = parseInt(el.prev().find('input.position-image').val());
-            }
-            if(el.next().find('input.param-image').val()){
-                downtown_position = parseInt(el.next().find('input.position-image').val());
-            }
-
-            /*console.log(el.find('input.param-image').val() +': '+ current_position);
-            console.log(el.prev().find('input.param-image').val() +': '+ uptown_position);
-            console.log(el.next().find('input.param-image').val() +': '+ downtown_position);*/
-
-            if(uptown_position || uptown_position === 0){
-                new_position = --uptown_position;
-                if((downtown_position || downtown_position === 0) && new_position < downtown_position){
-                    new_position = downtown_position;
-                }
-            }else{
-                if(downtown_position || downtown_position === 0){
-                    new_position = ++downtown_position;
-                }
-            }
-            if(new_position !== current_position){
-                el.find('input.position-image').val(new_position).trigger('change');
-            }
-        }
-    });
-
-    $('.uk-sortable-file-plugin').on('change.uk.sortable', function (event, s_object, el) {
-        if(el){
-            var new_position = 0;
-            var uptown_position = undefined;
-            var downtown_position = undefined;
-
-            var current_position = parseInt(el.find('input.position-file').val());
-            if(el.prev().find('input.param-file').val()){
-                uptown_position = parseInt(el.prev().find('input.position-file').val());
-            }
-            if(el.next().find('input.param-file').val()){
-                downtown_position = parseInt(el.next().find('input.position-file').val());
-            }
-
-            /*console.log(el.find('input.param-image').val() +': '+ current_position);
-            console.log(el.prev().find('input.param-image').val() +': '+ uptown_position);
-            console.log(el.next().find('input.param-image').val() +': '+ downtown_position);*/
-
-            if(uptown_position || uptown_position === 0){
-                new_position = --uptown_position;
-                if((downtown_position || downtown_position === 0) && new_position < downtown_position){
-                    new_position = downtown_position;
-                }
-            }else{
-                if(downtown_position || downtown_position === 0){
-                    new_position = ++downtown_position;
-                }
-            }
-            if(new_position !== current_position){
-                el.find('input.position-file').val(new_position).trigger('change');
-            }
-        }
-    });
-}
 
 function ajax_edit_row() {
     /** Input для редактирования поля */
@@ -743,6 +673,20 @@ function hidden_action(url, send_data, good_message, button, redirect_url, clear
     });
 }
 
+function typographLight(text, input) {
+    $.ajax({
+        type: "POST",
+        data: { text: text },
+        dataType: 'json',
+        url: "/admin/ajax/TypographLight",
+        success: function (data) {
+            if (data.text) {
+                input.val(data.text);
+            }
+        }
+    });
+}
+
 /**
  * Уведомления в сплывающих окнах от процессов
  * string @param type  Тип события (good, error)
@@ -807,14 +751,10 @@ function rebuild_cost() {
     })
 }
 
-function selectIdItem(id) {
-    $('input#id'+id).prop('checked', !$('input#id'+id).prop('checked'));
-    var count_selected = $('input.elementId:checked').length;
-    if(count_selected > 0){
-        $('.massive_action').removeClass('uk-hidden');
-    }else{
-        $('.massive_action').addClass('uk-hidden');
-    }
-    $('.massive_action').find('span').html(count_selected);
-    $('.actionSelect'+id).toggleClass('uk-icon-check').parentsUntil('tr').parent().toggleClass('uk-alert');
+function rebuild_sitemap() {
+    hidden_action('/admin/sitemap/generate', false, false, false, false, false);
+}
+
+function rebuild_rss() {
+    hidden_action('/admin/rss/generate', false, false, false, false, false);
 }
