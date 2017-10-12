@@ -27,13 +27,6 @@ LarrockCMS for **Laravel framework >= 5.5** and **Mysql >=5.7**, **php >= 7.0**
 - "nicolaslopezj/searchable": "^1.9",
 - "spatie/laravel-medialibrary": "^6.0.0",
 - "kix/mdash": "^0.5.4",
-- "laravel/socialite": "^3.0",
-- "jhaoda/socialite-odnoklassniki": "^3.0",
-- "socialiteproviders/google": "^3.0",
-- "socialiteproviders/instagram": "^3.0",
-- "socialiteproviders/twitter": "^3.0",
-- "socialiteproviders/vkontakte": "^3.0",
-- "socialiteproviders/yandex": "^3.0",
 - "ultraware/roles": "^5.4"
 
 ## INSTALL
