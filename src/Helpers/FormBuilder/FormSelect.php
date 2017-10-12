@@ -8,6 +8,7 @@ class FormSelect extends FBElement {
 
     public $options;
     public $option_title;
+    public $allowCreate;
 
     public function setOptions($options)
     {
@@ -21,9 +22,15 @@ class FormSelect extends FBElement {
         return $this;
     }
 
+    public function setAllowCreate()
+    {
+        $this->allowCreate = TRUE;
+        return $this;
+    }
+
     public function render($row_settings, $data)
     {
-        if( !isset($data->{$row_settings->name}) && $row_settings->default){
+        if( !isset($data->{$row_settings->name}) && $row_settings->default && $row_settings->default !== NULL){
             $data->{$row_settings->name} = $row_settings->default;
         }
 
@@ -35,11 +42,15 @@ class FormSelect extends FBElement {
             }
             $model = new $row_settings->connect->model;
             $get_options_query = $model;
-            if(isset($row_settings->connect->where_key)){
+            if(isset($row_settings->connect->where_key) && $row_settings->connect->where_key){
                 $get_options_query = $get_options_query->where($row_settings->connect->where_key, '=', $row_settings->connect->where_value);
             }
 
-            if($get_options = $get_options_query->groupBy([$row_settings->name])->get()){
+            if(isset($row_settings->connect->group_by) && $row_settings->connect->group_by){
+                $get_options_query = $get_options_query->groupBy([$row_settings->connect->group_by]);
+            }
+
+            if($get_options = $get_options_query->get()){
                 foreach($get_options as $get_options_value){
                     $row_settings->options->push($get_options_value);
                 }

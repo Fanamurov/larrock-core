@@ -4,7 +4,9 @@
         @if($row_settings->help)
             <span class="uk-form-help-block">({{ $row_settings->help }})</span>
         @endif
-        <div class="uk-float-right"><span class="uk-button uk-button-small new_list" data-row-name="{{ $row_key }}">Создать</span></div>
+        @if($row_settings->allowCreate)
+            <div class="uk-float-right"><span class="uk-button uk-button-small new_list" data-row-name="{{ $row_key }}">Создать</span></div>
+        @endif
     </label>
     <select name="{{ $row_key }}" id="{{ $row_key }}" class="{{ $row_settings->css_class }}">
         <option></option>

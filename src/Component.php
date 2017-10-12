@@ -84,6 +84,10 @@ class Component
         if(empty($this->name)){
             return abort('Конфиг компонента не заполнен');
         }
+
+        //Вызываем middleware сохранения данных плагинов
+        $this->middleware(SaveAdminPluginsData::class);
+
         return $this;
     }
 
@@ -125,10 +129,6 @@ class Component
         return $this;
     }
 
-    /**
-     * Используется через SaveAdminPluginsData Middleware (Core)
-     * @param $request
-     */
     public function savePluginsData($request)
     {
         $this->savePluginSeoData($request);
@@ -153,22 +153,31 @@ class Component
         $row = new FormInput('url', 'URL материала');
         $this->rows['url'] = $row->setTab('seo', 'SEO')->setValid('max:155|required|unique:'. $this->table .',url,:id')->setCssClass('uk-width-1-1');
 
+        if(method_exists(\Request::class, 'has') && !\Request::has('_jsvalidation') && \Request::has('seo_title')){
+            if( !$seo = LarrockSeo::getModel()->whereSeoIdConnect(\Request::input('id_connect'))->whereSeoTypeConnect(\Request::input('type_connect'))->first()){
+                $seo = new Seo();
+            }
+            if(\Request::get('seo_title', '') !== ''){
+                if($seo->fill(\Request::all())->save()){
+                    \Alert::add('successAdmin', 'SEO обновлено')->flash();
+                }
+            }else{
+                $seo->delete($seo->id);
+                \Alert::add('successAdmin', 'SEO удалено')->flash();
+            }
+        }
+
         return $this;
     }
 
-    public function savePluginSeoData($request)
+    public function savePluginSeoData()
     {
-        if( !$request->has('_jsvalidation') && $request->has('seo_title')){
-            if( !$seo = LarrockSeo::getModel()->whereSeoIdConnect($request->get('id_connect'))->whereSeoTypeConnect($request->get('type_connect'))->first()){
+        if( !\Request::has('_jsvalidation') && \Request::has('seo_title')){
+            if( !$seo = LarrockSeo::getModel()->whereSeoIdConnect(\Request::input('id_connect'))->whereSeoTypeConnect(\Request::input('type_connect'))->first()){
                 $seo = LarrockSeo::getModel();
             }
-            if($request->get('seo_title', '') !== ''){
-                $seo->seo_id_connect = $request->get('id_connect');
-                $seo->seo_title = $request->get('seo_title');
-                $seo->seo_description = $request->get('seo_description');
-                $seo->seo_keywords = $request->get('seo_keywords');
-                $seo->seo_type_connect = $request->get('type_connect');
-                if($seo->save()){
+            if(\Request::get('seo_title', '') !== ''){
+                if($seo->fill(\Request::all())->save()){
                     \Alert::add('successAdmin', 'SEO обновлено')->flash();
                 }
             }else{
@@ -214,17 +223,13 @@ class Component
     public function savePluginAnonsToModuleData($request)
     {
         if( !\Request::has('_jsvalidation') && (\Request::has('anons_merge') || !empty(\Request::has('anons_description')))){
-            if( !config('larrock.feed.anonsCategory')){
-                \Alert::add('errorAdmin', 'larrock.feed.anonsCategory не задан. Анонс создан не будет')->flash();
-                return TRUE;
-            }
             $anons = LarrockFeed::getModel();
             $anons->title = \Request::get('title');
             $anons->url = 'anons_'. \Request::get('id_connect') .''. random_int(1,9999);
-            $anons->category = LarrockFeed::getConfig()->settings['anons_category'];
-            $anons->user_id = \Auth::id();
+            $anons->category = $this->getRows()['anons_category'];
+            $anons->user_id = 1; //TODO: Временно, переписать
             $anons->active = 1;
-            $anons->position = LarrockFeed::getModel()->whereCategory(LarrockFeed::getConfig()->settings['anons_category'])->max('position') +1;
+            $anons->position = LarrockFeed::getModel()->whereCategory($categoryAnons)->max('position') +1;
 
             if(\Request::has('anons_merge')){
                 $original = LarrockFeed::getModel()->whereId(\Request::get('id_connect'))->first();
@@ -269,6 +274,17 @@ class Component
         return $rules;
     }
 
+    /**
+     * @param $option
+     * @param $config
+     * @return $this
+     */
+    public function overrideComponent($option, $config)
+    {
+        $this->{$option} = $config;
+        return $this;
+    }
+
 
     /**
      * Вывод данные полей компонента для табов
@@ -286,7 +302,7 @@ class Component
         }
         foreach($this->tabs as $tab_key => $tab_value){
             $render = '';
-            foreach($this->rows as $row_value){
+            foreach($this->rows as $row_key => $row_value){
                 $class_name = get_class($row_value);
                 $load_class = new $class_name(NULL, NULL);
 
