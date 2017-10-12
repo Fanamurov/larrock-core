@@ -99,11 +99,12 @@ class FBElement{
         return $this;
     }
 
-    public function setConnect($model, $relation_name = NULL)
+    public function setConnect($model, $relation_name = NULL, $group_by = NULL)
     {
         $this->connect = collect();
         $this->connect->model = $model;
         $this->connect->relation_name = $relation_name;
+        $this->connect->group_by = $group_by;
         return $this;
     }
 
