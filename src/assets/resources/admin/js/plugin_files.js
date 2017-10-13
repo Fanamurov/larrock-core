@@ -4,7 +4,6 @@ $(document).ready(function() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-
     ajax_bind_actions_files();
     FileApiFile();
 });
@@ -18,17 +17,19 @@ function getUploadedFiles(model_id, model_type) {
             $('#uploadedFiles').html(data);
             ajax_bind_actions_files();
         },
-        error: function (data) {
+        error: function () {
             alert('Не удалось загрузить прикрепленные фотографии');
         }
     });
 }
 
 function FileApiFile() {
+    var choose = document.getElementById('files');
+
     if (FileAPI.support.dnd) {
-        $('#drag-n-drop').show();
-        $(document).dnd(function (over) {
-            $('#drop-zone').toggle(over);
+        $('#drag-n-drop-file').show();
+        $('#choose_file').dnd(function (over) {
+            $('#drop-zone-file').toggle(over);
         }, function (files) {
             start_uploadFiles(files);
         });
@@ -46,7 +47,7 @@ function start_uploadFiles(files) {
 
         // Загружаем файлы
         FileAPI.upload({
-            url: '/admin/ajax/UploadImage',
+            url: '/admin/ajax/UploadFile',
             files: {files: files},
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

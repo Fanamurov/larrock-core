@@ -11,10 +11,10 @@
             @endif
             <div class="js-fileapi-wrapper upload-btn" id="choose">
                 <div class="upload-btn__txt">Выберите файлы для загрузки</div>
-                <input name="files" type="file" accept="image/*" multiple />
-                <div id="drag-n-drop" class="drag-n-drop-message" style="display: none">или перетащите сюда файлы мышкой</div>
+                <input id="images" name="files" type="file" accept="image/*" multiple />
+                <div id="drag-n-drop-image" class="drag-n-drop-message" style="display: none">или перетащите сюда файлы мышкой</div>
             </div>
-            <div id="drop-zone" class="b-dropzone" style="display: none">
+            <div id="drop-zone-image" class="b-dropzone" style="display: none">
                 <div class="b-dropzone__bg"></div>
                 <div class="b-dropzone__txt">Вставка изображений</div>
             </div>

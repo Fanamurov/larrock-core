@@ -441,30 +441,31 @@ label{
 }
 .b-dropzone{
   background: rgba(128, 128, 128, 0.47);
-  position: fixed;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
   color: white;
   font-size: 18px;
-  z-index: 10;
+  z-index: 1;
 
   .b-dropzone__txt{
     margin: 0 auto;
-    margin-top: 30%;
     text-align: center;
     border: 2px dashed #fff;
     padding: 20px;
-    margin-left: 20%;
-    margin-right: 20%;
     background: #e0e0e0;
     color: #797979;
   }
 }
-#uploadedImages{
+
+#uploadedImages,
+#uploadedFiles{
   margin-top: 45px;
 }
+
+#uploadedFiles{
+  .plugin-position label{
+    text-align: left;
+  }
+}
+
 li#tabimages{
   #images{
     > *{
@@ -515,8 +516,8 @@ input:-ms-input-placeholder {
   opacity: .7;
   &:hover,
   &:focus{
-  opacity: 1;
-  background-color: #c5c5c5;
+	opacity: 1;
+	background-color: #c5c5c5;
   }
 }
 .edit_position_new input{
@@ -527,8 +528,8 @@ input:-ms-input-placeholder {
   text-decoration: none;
   border-bottom: 1px dotted #0088cc;
   &:hover, &:focus{
-  text-decoration: none;
-  border-bottom: 1px dotted #005580;
+	text-decoration: none;
+	border-bottom: 1px dotted #005580;
   }
 }
 .mce-panel{

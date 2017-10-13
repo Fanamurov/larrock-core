@@ -8,14 +8,14 @@
                             data-model_id="{{ $data->id }}" data-model_type="{{ $app->model }}">Удалить все файлы</button>
                 </label>
             @endif
-            <div class="js-fileapi-wrapper upload-btn" id="choose">
+            <div class="js-fileapi-wrapper upload-btn" id="choose_file">
                 <div class="upload-btn__txt">Выберите файлы для загрузки</div>
-                <input name="files" type="file" accept="image/*" multiple />
-                <div id="drag-n-drop" class="drag-n-drop-message" style="display: none">или перетащите сюда файлы мышкой</div>
+                <input id="files" name="files" type="file" multiple />
+                <div id="drag-n-drop-file" class="drag-n-drop-message" style="display: none">или перетащите сюда файлы мышкой</div>
             </div>
-            <div id="drop-zone" class="b-dropzone" style="display: none">
+            <div id="drop-zone-file" class="b-dropzone" style="display: none">
                 <div class="b-dropzone__bg"></div>
-                <div class="b-dropzone__txt">Вставка изображений</div>
+                <div class="b-dropzone__txt">Вставка файлов</div>
             </div>
             <div class="uk-progress uk-progress-striped uk-active uk-progress-upload-file" style="display: none">
                 <div class="uk-progress-bar" style="width: 40%;">40%</div>

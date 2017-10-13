@@ -18,17 +18,18 @@ function getUploadedImages(model_id, model_type) {
             $('#uploadedImages').html(data);
             ajax_bind_actions();
         },
-        error: function (data) {
+        error: function () {
             alert('Не удалось загрузить прикрепленные фотографии');
         }
     });
 }
 
 function FileApiPhoto() {
+    var choose = document.getElementById('images');
     if (FileAPI.support.dnd) {
-        $('#drag-n-drop').show();
-        $(document).dnd(function (over) {
-            $('#drop-zone').toggle(over);
+        $('#drag-n-drop-image').show();
+        $('#choose').dnd(function (over) {
+            $('#drop-zone-image').toggle(over);
         }, function (files) {
             start_uploadImages(files);
         });
@@ -58,13 +59,6 @@ function start_uploadImages(files) {
             });
         });
         if (files.length) {
-            // Создаем предпросмотр 100x100
-            FileAPI.each(files, function (file) {
-                FileAPI.Image(file).preview(100).get(function (err, img) {
-                    images.appendChild(img);
-                });
-            });
-
             $('.uk-progress-upload-image').show();
 
             // Загружаем файлы
