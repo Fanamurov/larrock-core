@@ -2,6 +2,9 @@
     "name": "fanamurov/larrock-core",
     "description": "Core components for LarrockCMS",
     "type": "library",
+    "keywords": ["larrock", "larrockCMS", "laravel", "laravel5", "laravel55", "laravel-admin", 
+        "cms", "php7", "larrock-core", "larrock-menu", "larrock-users", "larrock-pages", 
+        "larrock-blocks", "larrock-contact", "larrock-admin-seo", "larrock-admin-search"],
     "require": {
         "php": ">=7.0.0",
         "barryvdh/laravel-debugbar": "~2.0",
@@ -31,7 +34,9 @@
     "authors": [
         {
             "name": "Alexandr Fanamurov",
-            "email": "fanamurov@ya.ru"
+            "email": "fanamurov@ya.ru",
+            "homepage": "https://github.com/Fanamurov/",
+            "role": "Developer"
         }
     ],
     "extra": {
