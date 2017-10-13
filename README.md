@@ -126,7 +126,7 @@ cd /public_html/_assets
 bower install fancybox
 bower install jquery-validation
 bower install jquery.cookie
-bower install jquery.filer
+bower install fileapi
 bower install jquery.spinner
 bower install microplugin
 bower install pickadate

@@ -1,3 +1,3 @@
 <li class="tabfiles">
-    <a href="">Файлы [{{ count($data->getFiles) }}]</a>
+    <a href="">Файлы [<span class="countUploadedFiles">{{ count($data->getFiles) }}</span>]</a>
 </li>

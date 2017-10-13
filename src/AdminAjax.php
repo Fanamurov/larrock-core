@@ -2,10 +2,6 @@
 
 namespace Larrock\Core;
 
-use App\Components\CatalogComponent;
-use App\Models\Cart;
-use App\Models\Catalog;
-use App\Models\Orders;
 use EMT\EMTypograph;
 use File;
 use Illuminate\Http\Request;
@@ -67,37 +63,33 @@ class AdminAjax extends Controller
 			/** @noinspection MkdirRaceConditionInspection */
             File::makeDirectory(public_path('image_cache'), 0755, true);
 		}
-		$images = $request->file('images');
+		$images_value = $request->file('images');
 		$model = $request->get('model_type');
 		$model_name = class_basename($request->get('model_type'));
 		$model_id = $request->get('model_id');
 		$resize_original = $request->get('resize_original');
-		foreach($images as $images_value){
-			if($images_value->isValid()){
-				$image_name = mb_strimwidth($model_name .'-'. $model_id .'-'.str_slug($images_value->getClientOriginalName()), 0, 150) .'.'. $images_value->getClientOriginalExtension();
-				if($resize_original === '1'){
-                    Image::make($images_value->getRealPath())
-                        ->resize(800, NULL, function ($constraint) {
-                            $constraint->aspectRatio();
-                            $constraint->upsize();
-                        })
-                        ->save(public_path() .'/image_cache/'. $image_name);
-                }else{
-                    Image::make($images_value->getRealPath())
-                        ->save(public_path() .'/image_cache/'. $image_name);
-                }
+        if($images_value->isValid()){
+            $image_name = mb_strimwidth($model_name .'-'. $model_id .'-'.str_slug($images_value->getClientOriginalName()), 0, 150) .'.'. $images_value->getClientOriginalExtension();
+            if($resize_original === '1'){
+                Image::make($images_value->getRealPath())
+                    ->resize(800, NULL, function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    })
+                    ->save(public_path() .'/image_cache/'. $image_name);
+            }else{
+                Image::make($images_value->getRealPath())
+                    ->save(public_path() .'/image_cache/'. $image_name);
+            }
 
-				$content = $model::find($model_id);
-				//Сохраняем фото под именем имямодели-idмодели-транслит(название картинки)
-				$content->addMedia(public_path() .'/image_cache/'. $image_name)->withCustomProperties([
-                    'alt' => 'photo', 'gallery' => $content->url
-                ])->toMediaLibrary('images');
-			}else{
-				return response()->json(['status' => 'error', 'message' => $images_value->getClientOriginalName() .' не валиден'], 300);
-			}
-		}
-
-		return response()->json(['status' => 'success', 'message' => 'Все фото успешно загружены']);
+            $content = $model::find($model_id);
+            //Сохраняем фото под именем имямодели-idмодели-транслит(название картинки)
+            $content->addMedia(public_path() .'/image_cache/'. $image_name)->withCustomProperties([
+                'alt' => 'photo', 'gallery' => $content->url
+            ])->toMediaCollection('images');
+            return response()->json(['status' => 'success', 'message' => $images_value->getClientOriginalName() .' успешно загружен']);
+        }
+        return response()->json(['status' => 'error', 'message' => $images_value->getClientOriginalName() .' не валиден'], 300);
 	}
 
 	/**
@@ -146,8 +138,21 @@ class AdminAjax extends Controller
 	{
 		$model = $request->get('model');
 		$model::find($request->get('model_id'))->deleteMedia($request->get('id'));
+		Cache::clear();
 		return response()->json(['status' => 'success', 'message' => 'Файл удален']);
 	}
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+	public function DeleteAllImagesByMaterial(Request $request)
+    {
+        $model = $request->get('model');
+        $model::find($request->get('model_id'))->clearMediaCollection('images');
+        Cache::clear();
+        return response()->json(['status' => 'success', 'message' => 'Файлы удалены']);
+    }
 
     /**
      * @param Request $request
@@ -169,24 +174,20 @@ class AdminAjax extends Controller
      */
 	public function UploadFile(Request $request)
 	{
-		$files = $request->file('files');
+		$files_value = $request->file('files');
         $model = $request->get('model_type');
         $model_name = class_basename($request->get('model_type'));
         $model_id = $request->get('model_id');
-		foreach($files as $files_value){
-			if($files_value->isValid()){
-				$file_name = $model_name .'-'. $model_id .'-'.str_slug($files_value->getClientOriginalName()) .'.'. $files_value->getClientOriginalExtension();
-				$files_value->move(public_path() .'/media/', $file_name);
-				$content = $model::find($model_id);
-                $content->addMedia(public_path() .'/media/'. $file_name)->withCustomProperties([
-                    'alt' => 'file', 'gallery' => $content->url
-                ])->toMediaLibrary('files');
-			}else{
-				return response()->json(['status' => 'error', 'message' => $files_value->getClientOriginalName() .' не валиден'], 300);
-			}
-		}
-
-		return response()->json(['status' => 'success', 'message' => 'Все файлы успешно загружены']);
+        if($files_value->isValid()){
+            $file_name = $model_name .'-'. $model_id .'-'.str_slug($files_value->getClientOriginalName()) .'.'. $files_value->getClientOriginalExtension();
+            $files_value->move(public_path() .'/media/', $file_name);
+            $content = $model::find($model_id);
+            $content->addMedia(public_path() .'/media/'. $file_name)->withCustomProperties([
+                'alt' => 'file', 'gallery' => $content->url
+            ])->toMediaCollection('files');
+            return response()->json(['status' => 'success', 'message' => $files_value->getClientOriginalName() .' успешно загружен']);
+        }
+        return response()->json(['status' => 'error', 'message' => $files_value->getClientOriginalName() .' не валиден'], 300);
 	}
 
     /**
@@ -199,6 +200,18 @@ class AdminAjax extends Controller
         $model::find($request->get('model_id'))->deleteMedia($request->get('id'));
 		return response()->json(['status' => 'success', 'message' => 'Файл удален']);
 	}
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function DeleteAllFilesByMaterial(Request $request)
+    {
+        $model = $request->get('model');
+        $model::find($request->get('model_id'))->clearMediaCollection('files');
+        Cache::clear();
+        return response()->json(['status' => 'success', 'message' => 'Файлы удалены']);
+    }
 
     /**
      * @param Request $request

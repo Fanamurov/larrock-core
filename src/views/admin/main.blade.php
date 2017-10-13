@@ -10,7 +10,6 @@
         <link href="{{asset('ico.png?2v')}}" rel="shortcut icon" />
         <link rel="stylesheet" href="/_assets/_front/_css/_min/uikit.min.css"/>
         <link rel="stylesheet" href="/_assets/_admin/_css/min/admin.min.css"/>
-        <link rel="stylesheet" href="/_assets/bower_components/noty/lib/noty.css"/>
         <link rel="stylesheet" href="/_assets/bower_components/uikit/css/components/sortable.min.css"/>
         <link rel="stylesheet" href="/_assets/bower_components/uikit/css/components/sortable.almost-flat.min.css"/>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,400italic,500,500italic,600,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
@@ -60,15 +59,19 @@
         <script src="/_assets/bower_components/uikit/js/components/notify.min.js"></script>
         <script src="/_assets/bower_components/uikit/js/components/grid.min.js"></script>
         <script src="/_assets/bower_components/uikit/js/core/modal.min.js"></script>
-
-        <link href="/_assets/bower_components/jquery.filer/css/jquery.filer.css" type="text/css" rel="stylesheet" />
-        <link href="/_assets/bower_components/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css" type="text/css" rel="stylesheet" />
-
-        <script src="/_assets/bower_components/jquery.filer/js/jquery.filer.min.js"></script>
         <script src="/_assets/bower_components/tinymce/tinymce.min.js"></script>
         <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
         <script src="{{asset('_assets/_admin/_js/back_core.min.js')}}"></script>
         @if(isset($validator)) {!! $validator !!} @endif
+        <script>
+            window.FileAPI = {
+                debug: false   // debug mode, see Console
+                , cors: false    // if used CORS, set `true`
+                , media: false   // if used WebCam, set `true`
+                , staticPath: '/_assets/bower_components/fileapi/dist/' // path to '*.swf'
+            }
+        </script>
+        <script src="/_assets/bower_components/fileapi/dist/FileAPI.min.js"></script>
         @stack('scripts')
     </body>
 </html>

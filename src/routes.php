@@ -18,13 +18,14 @@ Route::group(['prefix' => 'admin', 'middleware'=> ['web', 'level:2', 'LarrockAdm
     Route::post('ajax/UploadImage', AdminAjax::class .'@UploadImage');
     Route::post('ajax/GetUploadedImage', AdminAjax::class .'@GetUploadedImage');
     Route::post('ajax/DeleteUploadedImage', AdminAjax::class .'@DeleteUploadedImage');
+    Route::post('ajax/DeleteAllImagesByMaterial', AdminAjax::class .'@DeleteAllImagesByMaterial');
     Route::post('ajax/CustomProperties', AdminAjax::class .'@CustomProperties');
-
 
     Route::post('ajax/UploadFile', AdminAjax::class .'@UploadFile');
     Route::post('ajax/GetUploadedFile', AdminAjax::class .'@GetUploadedFile');
     Route::post('ajax/getFileParams', AdminAjax::class .'@getFileParams');
     Route::post('ajax/DeleteUploadedFile', AdminAjax::class .'@DeleteUploadedFile');
+    Route::post('ajax/DeleteAllFilesByMaterial', AdminAjax::class .'@DeleteAllFilesByMaterial');
 
     Route::post('ajax/Typograph', AdminAjax::class .'@Typograph');
     Route::post('ajax/TypographLight', AdminAjax::class .'@TypographLight');

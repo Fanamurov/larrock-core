@@ -424,96 +424,56 @@ label{
   }
 }
 
-.ibox-content .jFiler{
-  font-family: "open sans","Helvetica Neue",Helvetica,Arial,sans-serif;
-  font-size: 13px;
-}
-.ibox-content .jFiler-items-grid .jFiler-item .jFiler-item-container{
-  border: none;
-  box-shadow: none;
-}
-.jFiler-item-thumb-image{
-  img{
-	max-width: 100%;
-  }
-}
-.jFiler-items ul li{
-  padding-bottom: 30px;
-}
-.jFiler-item-assets ul li{
-  padding-bottom: 0;
-}
-.jFiler-items-grid .jFiler-item .jFiler-item-container .jFiler-item-assets .jFiler-jProgressBar{
-  width: 100% !important;
-  margin-left: 0 !important;
-}
-.jFiler-jProgressBar{
-  height: 21px !important;
-}
-.jFiler-jProgressBar .bar{
-  transition: all 10.3s ease;
-  &.waiting{
-    transition: all .5s ease;
-    background-color: #49980f;
-  }
-}
-.jFiler, #uploadedImages{
-  .input-group-addon{
-	border: none;
-	padding-left: 0;
-	width: 158px;
-	text-align: right;
-	font-style: italic;
-  }
-  .input-group{
-	width: 90%;
-  }
-  .url_link{
-	padding-left: 126px;
-	font-size: 14px;
-	span{
-	  font-style: italic;
-	}
-  }
-  .jFiler-input-choose-btn.blue{
-	color: #428bca;
-	&:hover,
-	&:focus{
-	  background: #428bca;
-	  color: white;
-	}
-  }
-}
+/** FileAPI **/
+.js-fileapi-wrapper{
+  background: #f3f3f3;
+  text-align: center;
+  padding: 50px 0;
+  border: 2px dashed #dddddd;
+  font-size: 20px;
+  line-height: 25px;
+  margin-top: 15px;
 
-.jFiler-input-dragDrop{
-  &.dragged{
-    transition: all linear .3s;
-    border-color: #00a8e6;
-    box-shadow: inset 0 0 20px rgba(0,0,0,.08);
+  .drag-n-drop-message{
+    font-size: 14px;
+    margin-top: 7px;
   }
 }
-.jFiler-theme-dragdropbox .jFiler-input-text h3 {
-  margin-top: 14px;
+.b-dropzone{
+  background: rgba(128, 128, 128, 0.47);
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  color: white;
   font-size: 18px;
-  margin-bottom: 0;
+  z-index: 10;
+
+  .b-dropzone__txt{
+    margin: 0 auto;
+    margin-top: 30%;
+    text-align: center;
+    border: 2px dashed #fff;
+    padding: 20px;
+    margin-left: 20%;
+    margin-right: 20%;
+    background: #e0e0e0;
+    color: #797979;
+  }
+}
+#uploadedImages{
+  margin-top: 45px;
+}
+li#tabimages{
+  #images{
+    > *{
+      padding: 25px;
+      opacity: .4;
+    }
+  }
 }
 
-.ibox-content{
-  .jFiler-items-grid .jFiler-item .jFiler-item-container .jFiler-item-thumb {
-	border: none;
-  }
-  .jFiler-items-grid .jFiler-item .jFiler-item-container .jFiler-item-info{
-	background: none;
-	position: relative;
-	display: none;
-  }
-  .jFiler-item .jFiler-item-container .jFiler-item-thumb img{
-	max-width: 100%;
-  }
-  .jFiler-items-grid .jFiler-item-trash-action:hover{
-	color: white;
-  }
-}
 
 textarea::-webkit-input-placeholder {
   /* WebKit browsers */
@@ -546,55 +506,6 @@ input:-ms-input-placeholder {
   font-style: italic;
 }
 
-
-.pace {
-  pointer-events: none;
-  user-select: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  transform: translate3d(0, -50px, 0);
-  transition: transform .5s ease-out;
-}
-
-.pace.pace-active {
-  transform: translate3d(0, 0, 0);
-}
-
-.pace .pace-progress {
-  display: block;
-  position: fixed;
-  z-index: 2000;
-  top: 0;
-  right: 100%;
-  width: 100%;
-  height: 10px;
-  background: #29d;
-  pointer-events: none;
-}
-
-@-webkit-keyframes pace-spinner {
-  0% { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
-}
-@-moz-keyframes pace-spinner {
-  0% { -moz-transform: rotate(0deg); transform: rotate(0deg); }
-  100% { -moz-transform: rotate(360deg); transform: rotate(360deg); }
-}
-@-o-keyframes pace-spinner {
-  0% { -o-transform: rotate(0deg); transform: rotate(0deg); }
-  100% { -o-transform: rotate(360deg); transform: rotate(360deg); }
-}
-@-ms-keyframes pace-spinner {
-  0% { -ms-transform: rotate(0deg); transform: rotate(0deg); }
-  100% { -ms-transform: rotate(360deg); transform: rotate(360deg); }
-}
-@keyframes pace-spinner {
-  0% { transform: rotate(0deg);}
-  100% { transform: rotate(360deg);}
-}
-
 .switch{
   display: inline-block;
   padding-bottom: 3px;
@@ -604,8 +515,8 @@ input:-ms-input-placeholder {
   opacity: .7;
   &:hover,
   &:focus{
-	opacity: 1;
-	background-color: #c5c5c5;
+  opacity: 1;
+  background-color: #c5c5c5;
   }
 }
 .edit_position_new input{
@@ -616,8 +527,8 @@ input:-ms-input-placeholder {
   text-decoration: none;
   border-bottom: 1px dotted #0088cc;
   &:hover, &:focus{
-	text-decoration: none;
-	border-bottom: 1px dotted #005580;
+  text-decoration: none;
+  border-bottom: 1px dotted #005580;
   }
 }
 .mce-panel{
@@ -859,5 +770,307 @@ body#clean_template{
   color: black !important;
   background: blanchedalmond !important;
 }
+
+/*! UIkit 2.27.4 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/* ========================================================================
+   Component: Progress
+ ========================================================================== */
+/*
+ * 1. Clearing
+ * 2. Vertical alignment if text is used
+ */
+.uk-progress {
+  box-sizing: border-box;
+  height: 20px;
+  margin-bottom: 15px;
+  background: #eee;
+  /* 1 */
+  overflow: hidden;
+  /* 2 */
+  line-height: 20px;
+}
+/*
+ * Add margin if adjacent element
+ */
+* + .uk-progress {
+  margin-top: 15px;
+}
+/* Sub-object: `uk-progress-bar`
+ ========================================================================== */
+/*
+ * 1. Transition
+ * 2. Needed for text
+ */
+.uk-progress-bar {
+  width: 0;
+  height: 100%;
+  background: #00a8e6;
+  float: left;
+  /* 1 */
+  -webkit-transition: width 0.6s ease;
+  transition: width 0.6s ease;
+  /* 2 */
+  font-size: 12px;
+  color: #fff;
+  text-align: center;
+}
+/* Size modifiers
+ ========================================================================== */
+/* Mini */
+.uk-progress-mini {
+  height: 6px;
+}
+/* Small */
+.uk-progress-small {
+  height: 12px;
+}
+/* Color modifiers
+ ========================================================================== */
+.uk-progress-success .uk-progress-bar {
+  background-color: #8cc14c;
+}
+.uk-progress-warning .uk-progress-bar {
+  background-color: #faa732;
+}
+.uk-progress-danger .uk-progress-bar {
+  background-color: #da314b;
+}
+/* Modifier: `uk-progress-striped`
+ ========================================================================== */
+.uk-progress-striped .uk-progress-bar {
+  background-image: -webkit-linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-size: 30px 30px;
+}
+/*
+ * Animation
+ */
+.uk-progress-striped.uk-active .uk-progress-bar {
+  -webkit-animation: uk-progress-bar-stripes 2s linear infinite;
+  animation: uk-progress-bar-stripes 2s linear infinite;
+}
+@-webkit-keyframes uk-progress-bar-stripes {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 30px 0;
+  }
+}
+@keyframes uk-progress-bar-stripes {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 30px 0;
+  }
+}
+/*! UIkit 2.27.4 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/* ========================================================================
+   Component: Progress
+ ========================================================================== */
+/*
+ * 1. Clearing
+ * 2. Vertical alignment if text is used
+ */
+.uk-progress {
+  box-sizing: border-box;
+  height: 20px;
+  margin-bottom: 15px;
+  background: #f7f7f7;
+  /* 1 */
+  overflow: hidden;
+  /* 2 */
+  line-height: 20px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.07), inset 0 2px 2px rgba(0, 0, 0, 0.07);
+  border-radius: 4px;
+}
+/*
+ * Add margin if adjacent element
+ */
+* + .uk-progress {
+  margin-top: 15px;
+}
+/* Sub-object: `uk-progress-bar`
+ ========================================================================== */
+/*
+ * 1. Transition
+ * 2. Needed for text
+ */
+.uk-progress-bar {
+  width: 0;
+  height: 100%;
+  background: #009dd8;
+  float: left;
+  /* 1 */
+  -webkit-transition: width 0.6s ease;
+  transition: width 0.6s ease;
+  /* 2 */
+  font-size: 12px;
+  color: #fff;
+  text-align: center;
+  background-image: -webkit-linear-gradient(top, #00b4f5, #008dc5);
+  background-image: linear-gradient(to bottom, #00b4f5, #008dc5);
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+}
+/* Size modifiers
+ ========================================================================== */
+/* Mini */
+.uk-progress-mini {
+  height: 6px;
+}
+/* Small */
+.uk-progress-small {
+  height: 12px;
+}
+/* Color modifiers
+ ========================================================================== */
+.uk-progress-success .uk-progress-bar {
+  background-color: #82bb42;
+  background-image: -webkit-linear-gradient(top, #9fd256, #6fac34);
+  background-image: linear-gradient(to bottom, #9fd256, #6fac34);
+}
+.uk-progress-warning .uk-progress-bar {
+  background-color: #f9a124;
+  background-image: -webkit-linear-gradient(top, #fbb450, #f89406);
+  background-image: linear-gradient(to bottom, #fbb450, #f89406);
+}
+.uk-progress-danger .uk-progress-bar {
+  background-color: #d32c46;
+  background-image: -webkit-linear-gradient(top, #ee465a, #c11a39);
+  background-image: linear-gradient(to bottom, #ee465a, #c11a39);
+}
+/* Modifier: `uk-progress-striped`
+ ========================================================================== */
+.uk-progress-striped .uk-progress-bar {
+  background-image: -webkit-linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-size: 30px 30px;
+}
+/*
+ * Animation
+ */
+.uk-progress-striped.uk-active .uk-progress-bar {
+  -webkit-animation: uk-progress-bar-stripes 2s linear infinite;
+  animation: uk-progress-bar-stripes 2s linear infinite;
+}
+@-webkit-keyframes uk-progress-bar-stripes {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 30px 0;
+  }
+}
+@keyframes uk-progress-bar-stripes {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 30px 0;
+  }
+}
+/* Size modifiers
+     ========================================================================== */
+.uk-progress-mini,
+.uk-progress-small {
+  border-radius: 500px;
+}
+
+/*! UIkit 2.27.4 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/* ========================================================================
+   Component: Notify
+ ========================================================================== */
+/*
+ * Message container for positioning
+ */
+.uk-notify {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1040;
+  box-sizing: border-box;
+  width: 350px;
+}
+/* Position modifiers
+========================================================================== */
+.uk-notify-top-right,
+.uk-notify-bottom-right {
+  left: auto;
+  right: 10px;
+}
+.uk-notify-top-center,
+.uk-notify-bottom-center {
+  left: 50%;
+  margin-left: -175px;
+}
+.uk-notify-bottom-left,
+.uk-notify-bottom-right,
+.uk-notify-bottom-center {
+  top: auto;
+  bottom: 10px;
+}
+/* Responsiveness
+========================================================================== */
+/* Phones portrait and smaller */
+@media (max-width: 479px) {
+  /*
+     * Fit in small screen
+     */
+  .uk-notify {
+    left: 10px;
+    right: 10px;
+    width: auto;
+    margin: 0;
+  }
+}
+/* Sub-object: `uk-notify-message`
+========================================================================== */
+.uk-notify-message {
+  position: relative;
+  margin-bottom: 10px;
+  padding: 15px;
+  background: #444;
+  color: #fff;
+  font-size: 16px;
+  line-height: 22px;
+  cursor: pointer;
+}
+/* Close in notify
+ ========================================================================== */
+.uk-notify-message > .uk-close {
+  visibility: hidden;
+  float: right;
+}
+.uk-notify-message:hover > .uk-close {
+  visibility: visible;
+}
+/* Modifier: `uk-notify-message-primary`
+ ========================================================================== */
+.uk-notify-message-primary {
+  background: #ebf7fd;
+  color: #2d7091;
+}
+/* Modifier: `uk-notify-message-success`
+ ========================================================================== */
+.uk-notify-message-success {
+  background: #f2fae3;
+  color: #659f13;
+}
+/* Modifier: `uk-notify-message-warning`
+ ========================================================================== */
+.uk-notify-message-warning {
+  background: #fffceb;
+  color: #e28327;
+}
+/* Modifier: `uk-notify-message-danger`
+ ========================================================================== */
+.uk-notify-message-danger {
+  background: #fff1f0;
+  color: #d85030;
+}
+
+
 
 @import "uikit-buttons-modify";

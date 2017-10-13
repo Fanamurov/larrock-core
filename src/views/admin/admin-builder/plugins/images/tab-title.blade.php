@@ -1,3 +1,3 @@
 <li class="tabimages">
-    <a href="">Фото [{{count($data->getImages)}}]</a>
+    <a href="">Фото [<span class="countUploadedImages">{{count($data->getImages)}}</span>]</a>
 </li>

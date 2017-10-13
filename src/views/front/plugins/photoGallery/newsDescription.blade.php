@@ -5,7 +5,7 @@
                href="{{ $image->getUrl() }}" title="{{ strip_tags($image->getCustomProperty('alt', 'фото')) }}">
                 <img src="{{ $image->getUrl() }}" alt="{{ $image->getCustomProperty('alt', 'фото') }}" class="max-width">
             </a>
-            <a class="fancybox uk-margin-top uk-display-inline-block" rel="fancybox-{{ $image->getCustomProperty('gallery') }}"
+            <a class="fancybox uk-margin-top uk-display-inline-block" rel="fancybox-{{ $image->getCustomProperty('gallery') }}_link"
                href="{{ $image->getUrl() }}" title="{{ strip_tags($image->getCustomProperty('alt', 'фото')) }}">
                 {!! $image->getCustomProperty('alt') !!}
             </a>

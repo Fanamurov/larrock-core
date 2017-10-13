@@ -1,12 +1,27 @@
 @if(isset($data->getFiles))
-    <li class="tab-pane" id="tabfiles">
+    <li id="tabfiles">
         <div class="form-group">
-            <form action="/admin/ajax/UploadFile" method="post" enctype="multipart/form-data" id="plugin_file">
-                <input type="file" name="files[]" id="upload_file_filer" multiple="multiple">
-                <input type="submit" value="Submit" class="uk-button uk-button-primary uk-hidden">
-            </form>
+            <label class="uk-form-label uk-width-1-1 uk-text-right" style="display: block">
+            @if(count($data->getFiles) > 0)
+                <label class="uk-form-label uk-width-1-1 uk-text-right uk-margin-top" style="display: block">
+                    <button id="clearFiles" type="button" class="uk-button uk-button-danger"
+                            data-model_id="{{ $data->id }}" data-model_type="{{ $app->model }}">Удалить все файлы</button>
+                </label>
+            @endif
+            <div class="js-fileapi-wrapper upload-btn" id="choose">
+                <div class="upload-btn__txt">Выберите файлы для загрузки</div>
+                <input name="files" type="file" accept="image/*" multiple />
+                <div id="drag-n-drop" class="drag-n-drop-message" style="display: none">или перетащите сюда файлы мышкой</div>
+            </div>
+            <div id="drop-zone" class="b-dropzone" style="display: none">
+                <div class="b-dropzone__bg"></div>
+                <div class="b-dropzone__txt">Вставка изображений</div>
+            </div>
+            <div class="uk-progress uk-progress-striped uk-active uk-progress-upload-file" style="display: none">
+                <div class="uk-progress-bar" style="width: 40%;">40%</div>
+            </div>
             <div id="uploadedFiles" data-model_id="{{ $data->id }}" data-model_type="{{ $app->model }}">
-                @include('larrock::admin.admin-builder.plugins.files.getUploadedFiles', ['data' => $data->getFiles])
+                @include('larrock::admin.admin-builder.plugins.files.getUploadedFiles', ['data' => $data->getFiles, 'app' => $app])
             </div>
         </div>
     </li>

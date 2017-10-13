@@ -210,7 +210,6 @@ $(document).ready(function(){
         if(count_rows > 0){
             var form = $('.import_row:first');
             var tr = form.find('tr');
-            last_sheet = sheet;
 
             progress_bar
                 .css('width', progress_percent +'%')
@@ -228,7 +227,6 @@ $(document).ready(function(){
                     current_category_import = data.category_id;
                     current_level_import = data.category_level;
                     current_title_import = data.category_title;
-                    //notify_show('success', 'Строка импортирована');
                     importXLS();
                 },
                 error: function()
@@ -252,7 +250,8 @@ $(document).ready(function(){
     tinymce.init({
         selector: "textarea:not(.not-editor)",
         menu: {
-            format: {title: 'Format', items: 'bold italic underline strikethrough superscript subscript | formats | removeformat'},
+            format: {title: 'Format', items: 'bold italic underline strikethrough superscript subscript | removeformat'},
+            headers: {'title': 'Стили UiKit', items: 'formats | removeformat'},
             table: {title: 'Table', items: 'inserttable tableprops deletetable | cell row column'}
         },
         height: editor_height,
@@ -274,7 +273,7 @@ $(document).ready(function(){
         content_css: "/_assets/_front/_css/_min/uikit.min.css,/_assets/_admin/_css/tinymce.css",
         content_style: "table {width: 100%}",
         importcss_append: true,
-        language : 'ru',
+        language_url : '/_assets/_admin/_js/tinymce.ru.js',
         toolbar_items_size: 'small',
         toolbar: "undo redo | bold italic | alignleft aligncenter alignright | bullist numlist outdent " +
         "indent | link image media pastetext | fullpage | forecolor backcolor | template | code | defis nonbreaking hr | photonews | typo | forms.consult forms.zayavka forms.rachet forms.skidka",

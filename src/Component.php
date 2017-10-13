@@ -213,7 +213,7 @@ class Component
 
     public function savePluginAnonsToModuleData($request)
     {
-        if( !\Request::has('_jsvalidation') && (\Request::has('anons_merge') || !empty(\Request::has('anons_description')))){
+        if( !\Request::has('_jsvalidation') && (\Request::has('anons_merge') || !empty(\Request::get('anons_description')))){
             if( !config('larrock.feed.anonsCategory')){
                 \Alert::add('errorAdmin', 'larrock.feed.anonsCategory не задан. Анонс создан не будет')->flash();
                 return TRUE;
@@ -238,7 +238,7 @@ class Component
             }else{
                 \Alert::add('errorAdmin', 'Анонс не добавлен')->flash();
             }
-        };
+        }
         return TRUE;
     }
 

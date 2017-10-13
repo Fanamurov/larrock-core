@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).ready(function() {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -6,129 +6,111 @@ $(document).ready(function(){
     });
 
     ajax_bind_actions();
+    FileApiPhoto();
+});
 
-    function getUploadedImages(model_id, model_type, el)
-    {
-        $.ajax({
-            data: {model_id: model_id, model_type: model_type},
-            type: "POST",
-            url: "/admin/ajax/GetUploadedImage",
-            success: function (data) {
-                $('#uploadedImages').html(data);
-                ajax_bind_actions();
-                el.slideUp('slow');
-            },
-            error: function (data) {
-                alert('Не удалось загрузить прикрепленные фотографии');
-            }
+function getUploadedImages(model_id, model_type) {
+    $.ajax({
+        data: {model_id: model_id, model_type: model_type},
+        type: "POST",
+        url: "/admin/ajax/GetUploadedImage",
+        success: function (data) {
+            $('#uploadedImages').html(data);
+            ajax_bind_actions();
+        },
+        error: function (data) {
+            alert('Не удалось загрузить прикрепленные фотографии');
+        }
+    });
+}
+
+function FileApiPhoto() {
+    if (FileAPI.support.dnd) {
+        $('#drag-n-drop').show();
+        $(document).dnd(function (over) {
+            $('#drop-zone').toggle(over);
+        }, function (files) {
+            start_uploadImages(files);
         });
     }
 
-    load_image_plugin();
-    function load_image_plugin()
-    {
-        if ($.fn.filer) {
-            /* Image upload http://filer.grandesign.md/#download */
-            $('#upload_image_filer').filer({
-                changeInput: '<div class="jFiler-input-dragDrop">' +
-                '<div class="jFiler-input-inner">' +
-                '<div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div>' +
-                '<div class="jFiler-input-text"><h3>Перетащите фото сюда</h3> ' +
-                '<span style="display:inline-block; margin: 15px 0">или</span></div>' +
-                '<a class="jFiler-input-choose-btn blue">Выберите фото из проводника</a></div></div>',
-                showThumbs: true,
-                theme: "dragdropbox",
-                addMore: true,
-                files: [],
-                templates: {
-                    box: '<ul class="jFiler-items-list jFiler-items-grid"></ul>',
-                    item: '<li class="jFiler-item uk-width-2-10">\
-                    <div class="jFiler-item-container">\
-                        <div class="jFiler-item-inner uk-thumbnail">\
-                            <div class="jFiler-item-thumb uk-width-2-10">\
-                                <div class="jFiler-item-status"></div>\
-                                {{fi-image}}\
-                            </div>\
-                            <div class="jFiler-item-params col-xs-9" data-image="{{fi-name}}">\
-                                <div class="jFiler-item-assets jFiler-row">\
-                                    <ul>\
-                                        <li>Загрузка фото {{fi-name | limitTo: 25}} [{{fi-size2}}]: {{fi-progressBar}}</li>\
-                                        <li><i class="uk-icon-spin uk-icon-refresh"></i> Обработка фото</li>\
-                                    </ul>\
-                                </div>\
-                            </div>\
-                        </div>\
-                    </div>\
-                </li>',
-                    progressBar: '<div class="bar">Загрузка</div>',
-                    itemAppendToEnd: false,
-                    removeConfirmation: true,
-                    _selectors: {
-                        list: '.jFiler-items-list',
-                        item: '.jFiler-item',
-                        progressBar: '.bar',
-                        remove: '.jFiler-item-trash-action'
-                    }
+    FileAPI.event.on(choose, 'change', function (evt) {
+        var files = FileAPI.getFiles(evt); // Retrieve file list
+        start_uploadImages(files);
+    });
+}
+
+function start_uploadImages(files) {
+    var resize_original = $('input[name=resize_original]:checked').val();
+
+    FileAPI.filterFiles(files, function (file, info/**Object*/) {
+        if (/^image/.test(file.type)) {
+            return info.width >= 30 && info.height >= 30;
+        }
+        return false;
+    }, function (files/**Array*/, rejected/**Array*/) {
+        $.each(rejected, function (key, value) {
+            UIkit.notify({
+                message: '<i class="uk-icon-bug"></i> Файл ' + value.name + ' отклонен',
+                status: 'danger',
+                timeout: 0,
+                pos: 'top-right'
+            });
+        });
+        if (files.length) {
+            // Создаем предпросмотр 100x100
+            FileAPI.each(files, function (file) {
+                FileAPI.Image(file).preview(100).get(function (err, img) {
+                    images.appendChild(img);
+                });
+            });
+
+            $('.uk-progress-upload-image').show();
+
+            // Загружаем файлы
+            FileAPI.upload({
+                url: '/admin/ajax/UploadImage',
+                files: {images: files},
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                dragDrop: {
-                    dragEnter: null,
-                    dragLeave: null,
-                    drop: null
+                data: {
+                    model_id: $('#uploadedImages').attr('data-model_id'),
+                    model_type: $('#uploadedImages').attr('data-model_type'),
+                    resize_original: resize_original
                 },
-                uploadFile: {
-                    url: "/admin/ajax/UploadImage",
-                    data: {
-                        model_id: $('#uploadedImages').attr('data-model_id'),
-                        model_type: $('#uploadedImages').attr('data-model_type'),
-                        resize_original: $('input[name=resize_original]').val(),
-                    },
-                    type: 'POST',
-                    enctype: 'multipart/form-data',
-                    success: function(data, el){
-                        //var parent = el.find(".jFiler-jProgressBar").parent();
-                        el.find(".jFiler-jProgressBar").find('.bar').addClass('waiting').html('Обработка фото');
-                        el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
-                            //$("<div class=\"jFiler-item-others uk-text-success\"><i class=\"uk-icon-check\"></i> Загружено</div>").hide().appendTo(parent).fadeIn("slow");
-                            getUploadedImages($('#uploadedImages').attr('data-model_id'), $('#uploadedImages').attr('data-model_type'), el);
-                        });
-                    },
-                    error: function(el){
-                        var parent = el.find(".jFiler-jProgressBar").parent();
-                        el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
-                            $("<div class=\"jFiler-item-others text-error\"><i class=\"uk-icon-bug\"></i> Ошибка</div>").hide().appendTo(parent).fadeIn("slow");
-                        });
-                    },
-                    statusCode: null,
-                    onProgress: function () {
-                    },
-                    onComplete: function () {
+                progress: function (evt/**Object*/, file/**Object*/, xhr/**Object*/, options/**Object*/) {
+                    var pr = evt.loaded / evt.total * 100;
+                    $('.uk-progress-upload-image').find('.uk-progress-bar').width(pr +'%').html(pr +'%');
+                },
+                complete: function (err, xhr) {
+                    var answer = $.parseJSON(xhr.responseText);
+                    if (!err) {
+                        // All files successfully uploaded.
+                        getUploadedImages($('#uploadedImages').attr('data-model_id'), $('#uploadedImages').attr('data-model_type'));
+                        $('#images').hide();
+                        var countUploadedImages = parseInt($('.countUploadedImages').html());
+                        $('.countUploadedImages').html(++countUploadedImages);
                         UIkit.notify({
-                            message : '<i class="uk-icon-check"></i> Загрузка файлов окончена',
-                            status  : 'success',
-                            timeout : 0,
-                            pos     : 'top-right'
+                            message: '<i class="uk-icon-check"></i> ' + answer.message,
+                            status: 'info',
+                            timeout: 3000,
+                            pos: 'top-right'
+                        });
+                    } else {
+                        UIkit.notify({
+                            message: '<i class="uk-icon-bug"></i> Ошибка: ' + answer.message,
+                            status: 'danger',
+                            timeout: 0,
+                            pos: 'top-right'
                         });
                     }
-                },
-                captions: {
-                    button: "Choose Files",
-                    feedback: "Choose files To Upload",
-                    feedback2: "files were chosen",
-                    drop: "Drop file here to Upload",
-                    removeConfirmation: "Are you sure you want to remove this file?",
-                    errors: {
-                        filesLimit: "Только {{fi-limit}} файлов может быть загружено.",
-                        filesType: "Для загрузки разрешены только файлы картинок.",
-                        filesSize: "{{fi-name}} слишком большой! Введено ограничение на размер файла в {{fi-fileMaxSize}} MB.",
-                        filesSizeAll: "Общий объем файлов больше разрешенного! Пожалуйста, загружайте за раз не более {{fi-maxSize}} MB."
-                    }
-                },
-                afterShow: null
+                    $('.uk-progress-upload-image').hide();
+                }
             });
         }
-    }
-    /* End image upload */
-});
+    });
+}
 
 function ajax_bind_actions()
 {
@@ -140,11 +122,13 @@ function ajax_bind_actions()
             data: {id: id, model: model, model_id: model_id},
             type: "POST",
             url: "/admin/ajax/DeleteUploadedImage",
-            success: function (data) {
+            success: function () {
                 $('#image-'+ id).hide('slow');
+                var countUploadedImages = parseInt($('.countUploadedImages').html());
+                $('.countUploadedImages').html(--countUploadedImages);
                 notify_show('success', 'Фото удалено');
             },
-            error: function (data) {
+            error: function () {
                 notify_show('danger', 'Фото не удалено');
             }
         });
@@ -159,11 +143,29 @@ function ajax_bind_actions()
             data: {alt: alt, gallery: gallery, position: position, id: id},
             type: "POST",
             url: "/admin/ajax/CustomProperties",
-            success: function (data) {
+            success: function () {
                 notify_show('success', 'Данные сохранены');
             },
-            error: function (data) {
+            error: function () {
                 notify_show('danger', 'Дополнительные параметры не сохранены');
+            }
+        });
+    });
+    
+    $('#clearImages').click(function () {
+        var model = $(this).attr('data-model_type');
+        var model_id = $(this).attr('data-model_id');
+        $.ajax({
+            data: {model: model, model_id: model_id},
+            type: "POST",
+            url: "/admin/ajax/DeleteAllImagesByMaterial",
+            success: function () {
+                $('#uploadedImages').html('');
+                $('.countUploadedImages').html(0);
+                notify_show('success', 'Все фото материала удалены');
+            },
+            error: function () {
+                notify_show('danger', 'Фотографии удалить не удалось');
             }
         });
     });
