@@ -23,6 +23,7 @@ class LarrockCoreServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/routes.php');
         $this->loadViewsFrom(__DIR__.'/views', 'larrock');
         $this->loadTranslationsFrom(__DIR__.'/lang', 'larrock');
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
 
         $this->publishes([
             __DIR__.'/lang' => resource_path('lang/vendor/larrock')
@@ -60,23 +61,6 @@ class LarrockCoreServiceProvider extends ServiceProvider
         $this->mergeConfigFrom( __DIR__.'/config/larrock-core-adminmenu.php', 'larrock-core-adminmenu');
         $this->mergeConfigFrom( __DIR__.'/config/larrock-sitemap.php', 'larrock-sitemap');
         $this->mergeConfigFrom( __DIR__.'/config/larrock-to-dashboard.php', 'larrock-to-dashboard');
-
-        if ( !class_exists('CreateConfigTable')){
-            // Publish the migration
-            $timestamp = date('Y_m_d_His', time());
-
-            $this->publishes([
-                __DIR__.'/database/migrations/0000_00_00_000000_create_config_table.php' => database_path('migrations/'.$timestamp.'_create_config_table.php')
-            ], 'migrations');
-        }
-        if ( !class_exists('CreateSeoTable')){
-            // Publish the migration
-            $timestamp = date('Y_m_d_His', time());
-
-            $this->publishes([
-                __DIR__.'/database/migrations/0000_00_00_000000_create_seo_table.php' => database_path('migrations/'.$timestamp.'_create_seo_table.php')
-            ], 'migrations');
-        }
 
         $this->app->bind('command.larrock:check', LarrockCheckCommand::class);
         $this->app->bind('command.larrock:updateEnv', LarrockUpdateEnvCommand::class);

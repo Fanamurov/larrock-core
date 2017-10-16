@@ -9,8 +9,8 @@ class AdminDashboardController extends AdminController
 {
     public function index()
     {
-        //Cache::forget('coreVersion');
         $data['coreVersions'] = Cache::remember('coreVersion', 1440, function(){
+            $filtered = [];
             if($file = \File::get(base_path('composer.lock'))){
                 $json = json_decode($file);
                 $packages = collect($json->packages);

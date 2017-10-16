@@ -169,11 +169,11 @@ class Component
                 $seo->seo_keywords = $request->get('seo_keywords');
                 $seo->seo_type_connect = $request->get('type_connect');
                 if($seo->save()){
-                    \Alert::add('successAdmin', 'SEO обновлено')->flash();
+                    \Session::push('message.success', 'SEO обновлено');
                 }
             }else{
                 $seo->delete($seo->id);
-                \Alert::add('successAdmin', 'SEO удалено')->flash();
+                \Session::push('message.success', 'SEO удалено');
             }
         }
         return TRUE;
@@ -215,7 +215,7 @@ class Component
     {
         if( !\Request::has('_jsvalidation') && (\Request::has('anons_merge') || !empty(\Request::get('anons_description')))){
             if( !config('larrock.feed.anonsCategory')){
-                \Alert::add('errorAdmin', 'larrock.feed.anonsCategory не задан. Анонс создан не будет')->flash();
+                \Session::push('message.danger', 'larrock.feed.anonsCategory не задан. Анонс создан не будет');
                 return TRUE;
             }
             $anons = LarrockFeed::getModel();
@@ -234,9 +234,9 @@ class Component
             }
 
             if($anons->save()){
-                \Alert::add('successAdmin', 'Анонс добавлен')->flash();
+                \Session::push('message.success', 'Анонс добавлен');
             }else{
-                \Alert::add('errorAdmin', 'Анонс не добавлен')->flash();
+                \Session::push('message.danger', 'Анонс не добавлен');
             }
         }
         return TRUE;

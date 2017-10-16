@@ -7,12 +7,11 @@
     <meta name="author" content="MartDS">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>@yield('title', 'Admin') - Larrock Admin</title>
-    <link href="{{asset('ico.png?2v')}}" rel="shortcut icon" />
+    <link href="/_assets/_admin/_images/logo-hand-black.png" rel="shortcut icon" />
     <link rel="stylesheet" href="/_assets/_front/_css/_min/uikit.min.css"/>
     <link rel="stylesheet" href="/_assets/_admin/_css/min/admin.min.css"/>
-    <link rel="stylesheet" href="./_assets/bower_components/noty/lib/noty.css"/>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,500,500italic,600,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
-    <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
 <body>
 <section id="print_content">

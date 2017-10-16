@@ -6,12 +6,14 @@
         </div>
     @endforeach
 @endif
-@foreach (Alert::getMessages() as $type => $messages)
-    @foreach ($messages as $message)
-        @php if($type === 'error'){ $type = 'danger';} @endphp
-        <div class="uk-alert uk-alert-{{ $type }} alert-dismissable">
-            <a href="" class="uk-alert-close uk-close"></a>
-            {!! $message !!}
-        </div>
+@if(Session::has('message') && is_array(Session::get('message')))
+    @foreach(Session::get('message') as $type => $messages)
+        @foreach($messages as $message)
+            <div class="uk-alert uk-alert-{{ $type }} alert-dismissable">
+                @if($type === 'danger') <i class="uk-icon-bug"></i> @else <i class="uk-icon-check"></i> @endif
+                    {{ $message }} <a href="" class="uk-alert-close uk-close uk-float-right"></a>
+            </div>
+        @endforeach
     @endforeach
-@endforeach
+    @php(\Illuminate\Support\Facades\Session::forget('message'))
+@endif

@@ -14,6 +14,7 @@ use Lang;
 use Redirect;
 use Validator;
 use View;
+use Session;
 
 class AdminController extends BaseController
 {
@@ -106,12 +107,12 @@ class AdminController extends BaseController
         }
 
         if($data->save()){
-            Alert::add('successAdmin', 'Материал '. $request->input('title') .' изменен')->flash();
+            Session::push('message.success', 'Материал '. $request->input('title') .' изменен');
             \Cache::flush();
             return back();
         }
 
-        Alert::add('errorAdmin', 'Материал '. $request->input('title') .' не изменен')->flash();
+        Session::push('message.danger', 'Материал '. $request->input('title') .' не изменен');
         return back()->withInput();
     }
 
@@ -125,7 +126,7 @@ class AdminController extends BaseController
     {
         if(array_key_exists('url', $this->config->rows)){
             if($search_blank = $this->config->getModel()::whereUrl('novyy-material')->first()){
-                Alert::add('errorAdmin', 'Измените URL этого материала, чтобы получить возможность создать новый')->flash();
+                Session::push('message.danger', 'Измените URL этого материала, чтобы получить возможность создать новый');
                 return redirect()->to('/admin/'. $this->config->name .'/'. $search_blank->id. '/edit');
             }
         }
@@ -150,11 +151,11 @@ class AdminController extends BaseController
 
         if($data->save()){
             \Cache::flush();
-            Alert::add('successAdmin', 'Материал '. $request->input('title') .' добавлен')->flash();
+            Session::push('message.success', 'Материал '. $request->input('title') .' добавлен');
             return Redirect::to('/admin/'. $this->config->name .'/'. $data->id .'/edit')->withInput();
         }
 
-        Alert::add('errorAdmin', 'Материал '. $request->input('title') .' не добавлен')->flash();
+        Session::push('message.danger', 'Материал '. $request->input('title') .' не добавлен');
         return back()->withInput();
     }
 
@@ -171,7 +172,7 @@ class AdminController extends BaseController
             foreach ($request->get('ids') as $id){
                 $this->destroyElement($id);
             }
-            Alert::add('successAdmin', 'Удалено '. count($request->get('ids')) .' элементов')->flash();
+            Session::push('message.success', 'Удалено '. count($request->get('ids')) .' элементов');
             return back();
         }
 
@@ -197,12 +198,12 @@ class AdminController extends BaseController
 
             if($data->delete()){
                 \Cache::flush();
-                Alert::add('successAdmin', Lang::get('larrock::apps.delete.success', ['name' => $name]))->flash();
+                Session::push('message.success', Lang::get('larrock::apps.delete.success', ['name' => $name]));
             }else{
-                Alert::add('errorAdmin', Lang::get('larrock::apps.delete.error', ['name' => $name]))->flash();
+                Session::push('message.danger', Lang::get('larrock::apps.delete.error', ['name' => $name]));
             }
         }else{
-            Alert::add('errorAdmin', 'Такого материала больше нет')->flash();
+            Session::push('message.danger', 'Такого материала больше нет');
         }
     }
 }
