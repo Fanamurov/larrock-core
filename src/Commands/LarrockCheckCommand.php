@@ -72,6 +72,13 @@ class LarrockCheckCommand extends Command
                 .'. Please change config/laravel-medialibrary.php to custom_path_generator_class => Larrock\Core\Helpers\CustomPathGenerator::class');
         }
 
+        if(config('laravel-medialibrary.custom_url_generator_class') === \Larrock\Core\Helpers\MediaUrlGenerator::class){
+            $this->info('Medialibrary: custom url (OK)');
+        }else{
+            $this->error('Medialibrary custom_url_generator_class '. config('laravel-medialibrary.custom_url_generator_class')
+                .'. Please change config/laravel-medialibrary.php to custom_url_generator_class => Larrock\Core\Helpers\MediaUrlGenerator::class');
+        }
+
         if(config('filesystems.disks.media.driver') === 'local'){
             $this->info('Medialibrary: disk media driver (OK)');
         }else{
