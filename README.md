@@ -38,7 +38,6 @@
 - "[barryvdh/laravel-ide-helper](https://github.com/barryvdh/laravel-ide-helper)": "~2.1",
 - "[proengsoft/laravel-jsvalidation](https://github.com/proengsoft/laravel-jsvalidation)": "^1.5",
 - "[albertcht/invisible-recaptcha](https://github.com/albertcht/invisible-recaptcha)": "^1.7",
-- "[prologue/alerts](https://github.com/prologuephp/alerts)": "^0.4.1",
 - "[davejamesmiller/laravel-breadcrumbs](https://github.com/davejamesmiller/laravel-breadcrumbs)": "^4.0",
 - "[intervention/image](https://github.com/Intervention/image)": "^2.3",
 - "[nicolaslopezj/searchable](https://github.com/nicolaslopezj/searchable)": "^1.9",
@@ -64,15 +63,8 @@
   ```php
   'providers' => [
     ...
-    \Prologue\Alerts\AlertsServiceProvider::class,
     Ultraware\Roles\RolesServiceProvider::class,
     ...
-  ]
-  
-  'aliases' => [
-      ...
-      'Alert' => \Prologue\Alerts\Facades\Alert::class,
-      ...
   ]
   ```
 
