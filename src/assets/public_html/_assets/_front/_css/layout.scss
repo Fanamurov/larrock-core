@@ -333,6 +333,33 @@ a.admin_edit {
   font-size: 80%;
 }
 
+@media all and (min-width: 800px) {
+  .fancybox-thumbs {
+    top: auto;
+    width: auto;
+    bottom: 0;
+    left: 0;
+    right : 0;
+    height: 95px;
+    padding: 10px;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  .fancybox-show-thumbs .fancybox-inner {
+    right: 0;
+    bottom: 95px;
+  }
+}
+
+.uk-open > .uk-dropdown {
+  animation-name: uk-fade-top;
+}
+
+#modalProgress{
+  width: 100% !important;
+}
+
 
 @import "./sections/header";
 @import "./sections/footer";
@@ -345,7 +372,6 @@ a.admin_edit {
 @import "./modules/forms";
 
 @import "./plugins/gallery";
-@import "./plugins/upload";
 
 @import "./pages/auth";
 @import "./components/catalog";

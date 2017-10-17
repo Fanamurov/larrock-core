@@ -6,7 +6,7 @@
 <meta name="description" content="@yield('title')">
 <meta name="author" content="MartDS">
 @yield('meta')
-<link rel="icon" type="image/png" sizes="16x16" href="/ico.png">
+<link href="/_assets/_admin/_images/logo-hand-black.png" rel="shortcut icon" />
 <link rel="stylesheet" href="/_assets/_front/_css/_min/uikit.min.css"/>
 <link rel="stylesheet" href="/_assets/_front/_css/_min/libs.min.css"/>
 <link rel="stylesheet" href="/_assets/_front/_css/_min/front.min.css"/>

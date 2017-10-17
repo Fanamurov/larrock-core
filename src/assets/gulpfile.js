@@ -2,9 +2,9 @@
 //npm install --global gulp-cli *if need*
 //npm install --save-dev gulp
 //npm install --save-dev gulp-sass -- NOT
-//npm install --save-dev gulp-sass gulp-cssnano gulp-autoprefixer gulp-bless gulp-concat gulp-notify gulp-removelogs gulp-uglify gulp-rename gulp-changed gulp-filesize gulp-imagemin gulp-image-resize imagemin-pngquant
+//npm install --save-dev gulp-sass gulp-cssnano gulp-autoprefixer gulp-bless gulp-concat gulp-notify gulp-removelogs gulp-uglify gulp-rename gulp-changed gulp-filesize gulp-imagemin imagemin-pngquant
 
-var project = 'mchs'; //Название проекта
+var project = 'larrock55'; //Название проекта
 
 var gulp = require('gulp');
 var sass = require('gulp-sass');
@@ -20,7 +20,6 @@ var changed = require('gulp-changed');
 var size = require('gulp-filesize');
 var imagemin = require('gulp-imagemin');
 var pngquant = require('imagemin-pngquant');
-var imageResize = require('gulp-image-resize');
 
 gulp.task('default', function() {
     gulp.start('sass_uikit_admin', 'sass', 'sass_uikit', 'javascript_admin', 'javascript_front','watch', 'libs_styles');
@@ -78,13 +77,11 @@ gulp.task('sass_uikit', function () {
  */
 gulp.task('libs_styles', function () {
     gulp.src([
-        './public_html/_assets/bower_components/fancybox/source/jquery.fancybox.css',
-        './public_html/_assets/bower_components/fancybox/source/helpers/jquery.fancybox-buttons.css',
-        './public_html/_assets/bower_components/fancybox/source/helpers/jquery.fancybox-thumbs.css',
+        './public_html/_assets/bower_components/noty/src/noty.scss',
+        './public_html/_assets/bower_components/noty/src/themes/relax.scss',
+        './public_html/_assets/bower_components/fancybox/dist/jquery.fancybox.css',
         './public_html/_assets/bower_components/pickadate/lib/compressed/themes/default.css',
-        './public_html/_assets/bower_components/pickadate/lib/compressed/themes/default.date.css',
-        './public_html/_assets/bower_components/pickadate/lib/themes/classic.css',
-        './public_html/_assets/bower_components/pickadate/lib/themes/classic.date.css'
+        './public_html/_assets/bower_components/pickadate/lib/compressed/themes/default.date.css'
     ])
         .pipe(changed('./public_html/_assets/bower_components/**/**/**/**/*.scss'))
         .pipe(sass.sync().on('error', sass.logError))
@@ -100,13 +97,6 @@ gulp.task('libs_styles', function () {
         .pipe(gulp.dest('./public_html/_assets/_front/_css/_min'))
         .pipe(removeLogs())
         .pipe(notify("Scss reload: <%= file.relative %>! "+ project));
-
-    gulp.src([
-        './public_html/_assets/bower_components/fancybox/source/**/**/*.png',
-        './public_html/_assets/bower_components/fancybox/source/**/**/*.gif'
-    ])
-        .pipe(changed('./public_html/_assets/bower_components/fancybox/source/**/**/**'))
-        .pipe(gulp.dest('./public_html/_assets/_front/_css/_min'));
 });
 
 gulp.task('sass_uikit_admin', function () {
@@ -133,6 +123,7 @@ gulp.task('javascript_admin', function() {
     return gulp.src([
             './public_html/_assets/bower_components/pickadate/lib/compressed/picker.js',
             './public_html/_assets/bower_components/pickadate/lib/compressed/picker.date.js',
+            './public_html/_assets/bower_components/noty/lib/noty.js',
             './public_html/_assets/bower_components/jquery.cookie/jquery.cookie.js',
             './resources/assets/admin/js/backend.js',
             './resources/assets/admin/js/plugin_images.js',
@@ -148,12 +139,7 @@ gulp.task('javascript_admin', function() {
 gulp.task('javascript_front', function() {
     return gulp.src([
             './public_html/_assets/bower_components/jquery.cookie/jquery.cookie.js',
-            './public_html/_assets/bower_components/fancybox/lib/jquery.mousewheel-3.0.6.pack.js',
-            './public_html/_assets/bower_components/fancybox/source/jquery.fancybox.pack.js',
-            './public_html/_assets/bower_components/fancybox/source/helpers/jquery.fancybox-thumbs.js',
-            './public_html/_assets/bower_components/fancybox/source/helpers/jquery.fancybox-media.js',
-            './public_html/_assets/bower_components/fancybox/source/helpers/jquery.fancybox-buttons.js',
-            './public_html/_assets/bower_components/jquery.spinner/js/jquery.spinner.js',
+            './public_html/_assets/bower_components/fancybox/dist/jquery.fancybox.js',
             './public_html/vendor/jsvalidation/js/jsvalidation.min.js',
             './public_html/_assets/bower_components/pickadate/lib/compressed/picker.js',
             './public_html/_assets/bower_components/pickadate/lib/compressed/picker.date.js',
@@ -176,17 +162,4 @@ gulp.task('imagemin', function () {
             use: [pngquant()]
         }))
         .pipe(gulp.dest('./public_html/media/'));
-});
-
-gulp.task('create_favicons', function () {
-    gulp.src('./public_html/ico.png')
-        .pipe(imageResize({
-            width : 100,
-            height : 100,
-            crop : false,
-            upscale : true,
-            format: 'png'
-        }))
-        .pipe(rename({suffix: '-110x110'} ))
-        .pipe(gulp.dest('./public_html'));
 });

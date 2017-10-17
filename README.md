@@ -1,4 +1,5 @@
 
+
 [LarrockCMS](https://github.com/Fanamurov/larrock-core) - это CMS основанная на php-фреймворке Laravel поставляемая в формате composer-пакетов.
 
 [![Latest Stable Version](https://poser.pugx.org/fanamurov/larrock-core/v/stable)](https://packagist.org/packages/fanamurov/larrock-core) [![Total Downloads](https://poser.pugx.org/fanamurov/larrock-core/downloads)](https://packagist.org/packages/fanamurov/larrock-core) [![License](https://poser.pugx.org/fanamurov/larrock-core/license)](https://packagist.org/packages/fanamurov/larrock-core) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1a0fb19f2e024607a1d40260c8baa5e7)](https://www.codacy.com/app/Fanamurov/larrock-core?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Fanamurov/larrock-core&amp;utm_campaign=Badge_Grade)
@@ -81,18 +82,6 @@
   
   
 6. Run Larrock migrations
-  Laravel 5.4: Specified key was too long error (https://laravel-news.com/laravel-5-4-key-too-long-error)
-  **AppServiceProvider.php**
-  
-  ```php
-  use Illuminate\Support\Facades\Schema;
-  
-  public function boot()
-  {
-      Schema::defaultStringLength(191);
-  }
-  ```
-  
   ```sh
   $ php artisan migrate
   ```
@@ -132,3 +121,21 @@ bower install uikit
 http://yousite/admin
 Login: admin@larrock-cms.ru
 Password: password
+
+
+----------
+
+
+## FAQ
+Laravel 5.4: Specified key was too long error (https://laravel-news.com/laravel-5-4-key-too-long-error)
+
+  **AppServiceProvider.php**
+  
+  ```php
+  use Illuminate\Support\Facades\Schema;
+  
+  public function boot()
+  {
+      Schema::defaultStringLength(191);
+  }
+  ```

@@ -1,6 +1,7 @@
 <!-- Mainly scripts -->
 <script src="/_assets/bower_components/uikit/js/uikit.min.js"></script>
 <script src="/_assets/bower_components/uikit/js/components/grid.min.js"></script>
+<script src="/_assets/bower_components/uikit/js/components/notify.min.js"></script>
 <script src="/_assets/bower_components/uikit/js/core/modal.min.js"></script>
 <script src="/_assets/bower_components/selectize/dist/js/standalone/selectize.min.js"></script>
 <script src="/_assets/_front/_js/front_core.min.js"></script>

@@ -267,6 +267,37 @@ $(document).ready(function(){
         }
     });
 
+    $("[data-fancybox], .fancybox").fancybox({
+        infobar : true,
+        buttons : [
+            'slideShow',
+            'fullScreen',
+            'thumbs',
+            'close'
+        ],
+        hash: true,
+        thumbs : {
+            autoStart   : true,   // Display thumbnails on opening
+            hideOnClose : true     // Hide thumbnail grid when closing animation starts
+        },
+        lang : 'ru',
+        i18n : {
+            'ru' : {
+                CLOSE       : 'Закрыть',
+                NEXT        : 'Дальше',
+                PREV        : 'Назад',
+                ERROR       : 'The requested content cannot be loaded. <br/> Please try again later.',
+                PLAY_START  : 'Начать слайдшоу',
+                PLAY_STOP   : 'Пауза',
+                FULL_SCREEN : 'В полный экран',
+                THUMBS      : 'Превью'
+            }
+        },
+        caption : function() {
+            return $(this).data('caption') || $(this).attr('title') || '';
+        }
+    });
+
     add_to_cart();
     add_to_cart_fast();
     change_option_ajax();
@@ -276,15 +307,6 @@ $(document).ready(function(){
 
     $('.showModalLoading').click(function () {
         UIkit.modal("#modalProgress").show();
-    });
-
-    $(".fancybox").fancybox({
-        helpers : {
-            thumbs  : {
-                width   : 50,
-                height  : 50
-            }
-        }
     });
 
     $('input[name=date], input.date').pickadate({
