@@ -81,7 +81,9 @@
                                         <input type="text" value="{{ $data_value->{$row->name} }}" name="{{ $row->name }}"
                                                class="ajax_edit_row form-control" data-row_where="id" data-value_where="{{ $data_value->id }}"
                                                data-table="{{ $app->table }}">
-                                        <i class="uk-sortable-handle uk-icon uk-icon-bars uk-margin-small-right" title="Перенести материал по весу"></i>
+                                        @if($row->name === 'position')
+                                            <i class="uk-sortable-handle uk-icon uk-icon-bars uk-margin-small-right" title="Перенести материал по весу"></i>
+                                        @endif
                                     </td>
                                 @endif
                             @endif

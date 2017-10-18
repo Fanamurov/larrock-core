@@ -1,5 +1,3 @@
-
-
 [LarrockCMS](https://github.com/Fanamurov/larrock-core) - это CMS основанная на php-фреймворке Laravel поставляемая в формате composer-пакетов.
 
 [![Latest Stable Version](https://poser.pugx.org/fanamurov/larrock-core/v/stable)](https://packagist.org/packages/fanamurov/larrock-core) [![Total Downloads](https://poser.pugx.org/fanamurov/larrock-core/downloads)](https://packagist.org/packages/fanamurov/larrock-core) [![License](https://poser.pugx.org/fanamurov/larrock-core/license)](https://packagist.org/packages/fanamurov/larrock-core) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1a0fb19f2e024607a1d40260c8baa5e7)](https://www.codacy.com/app/Fanamurov/larrock-core?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Fanamurov/larrock-core&amp;utm_campaign=Badge_Grade)
@@ -10,7 +8,9 @@
 
 **Внимание! LarrockCMS версии >=0.2.x требует Mysql версии не ниже 5.7! Для работы с более старыми версиями используйте ветку 0.1.x.**
 
-**Компоненты поставляемые вместе с главным пакетом larrock-core:**
+***
+
+### Компоненты поставляемые вместе с главным пакетом larrock-core:
 
 * [![Latest Stable Version](https://poser.pugx.org/fanamurov/larrock-menu/v/stable)](https://packagist.org/packages/fanamurov/larrock-menu) [fanamurov/larrock-menu](https://github.com/Fanamurov/larrock-menu) - управление меню сайта
 * [![Latest Stable Version](https://poser.pugx.org/fanamurov/larrock-users/v/stable)](https://packagist.org/packages/fanamurov/larrock-users) [fanamurov/larrock-users](https://github.com/Fanamurov/larrock-users) - пользователи, права и роли
@@ -20,7 +20,7 @@
 * [![Latest Stable Version](https://poser.pugx.org/fanamurov/larrock-admin-seo/v/stable)](https://packagist.org/packages/fanamurov/larrock-admin-seo) [fanamurov/larrock-admin-seo](https://github.com/Fanamurov/larrock-admin-seo) - управление seo-данными компонентов
 * [![Latest Stable Version](https://poser.pugx.org/fanamurov/larrock-admin-search/v/stable)](https://packagist.org/packages/fanamurov/larrock-core) [fanamurov/larrock-admin-search](https://github.com/Fanamurov/larrock-admin-search) - поиск по материалам компонентов в админке
 
-**Другие компоненты:**
+### Другие компоненты:
 
 * [![Latest Stable Version](https://poser.pugx.org/fanamurov/larrock-catalog/v/stable)](https://packagist.org/packages/fanamurov/larrock-catalog) [fanamurov/larrock-catalog](https://github.com/Fanamurov/larrock-catalog) - каталог товаров
 * [![Latest Stable Version](https://poser.pugx.org/fanamurov/larrock-cart/v/stable)](https://packagist.org/packages/fanamurov/larrock-cart) [fanamurov/larrock-cart](https://github.com/Fanamurov/larrock-cart) - корзина покупок, сохранение заказов, оплаты
@@ -33,7 +33,7 @@
 
 ***
 
-#### Other depends
+### Зависимости компонентов
 - "php": ">=7.0.0",
 - "[barryvdh/laravel-debugbar](https://github.com/barryvdh/laravel-debugbar)": "~2.0",
 - "[barryvdh/laravel-ide-helper](https://github.com/barryvdh/laravel-ide-helper)": "~2.1",
@@ -47,20 +47,21 @@
 - "[ultraware/roles](https://github.com/ultraware/roles)": "^5.4"
 
 
+
 # INSTALL LARROCK CMS
 
-1. Install laravel:
+1. **Install laravel**
   ```sh
   $ composer create-project --prefer-dist laravel/laravel=5.5.* larrock
   ```
 
-2. Install Larrock core over Laravel:
+2. **Install LarrockСore**
   ```sh
   $ cd larrock
   $ composer require fanamurov/larrock-core
   ```
 
-3. Add Alerts and Role package (/config/app.php)
+3. **Add Role package** (```/config/app.php```)
   ```php
   'providers' => [
     ...
@@ -69,29 +70,21 @@
   ]
   ```
 
-4. Publish views, migrations etc.
+4. **Publish views, migrations etc.**
   ```sh
   $ php artisan vendor:publish
-  ```
-       
-5. Run artisan command:
-  ```sh
   $ php artisan larrock:updateEnv
   $ php artisan larrock:check
   ```
   
-  
-6. Run Larrock migrations
+5. **Run migrations and add default admin user**
   ```sh
   $ php artisan migrate
-  ```
-  Add admin user
-  ```sh
   $ php artisan db:seed --class="Larrock\ComponentUsers\Database\Seeds\UsersTableSeeder"
   ```
 
-7. Medialibrary files deleting (Корректное удаление файлов с нашей системой хранения)
-  /vendor/spatie/laravel-medialibrary/src/Filesystem.php
+6. **Medialibrary files deleting** (Корректное удаление файлов с нашей системой хранения)
+  ```/vendor/spatie/laravel-medialibrary/src/Filesystem.php```
   ```php
   public function removeFiles(Media $media)
   {
@@ -127,7 +120,7 @@ Password: password
 
 
 ## FAQ
-Laravel 5.4: Specified key was too long error (https://laravel-news.com/laravel-5-4-key-too-long-error)
+Laravel 5.4: [Specified key was too long error](https://laravel-news.com/laravel-5-4-key-too-long-error)
 
   **AppServiceProvider.php**
   
