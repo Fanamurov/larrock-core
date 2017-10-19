@@ -1,3 +1,5 @@
+
+
 [LarrockCMS](https://github.com/Fanamurov/larrock-core) - это CMS основанная на php-фреймворке Laravel поставляемая в формате composer-пакетов.
 
 [![Latest Stable Version](https://poser.pugx.org/fanamurov/larrock-core/v/stable)](https://packagist.org/packages/fanamurov/larrock-core) [![Total Downloads](https://poser.pugx.org/fanamurov/larrock-core/downloads)](https://packagist.org/packages/fanamurov/larrock-core) [![License](https://poser.pugx.org/fanamurov/larrock-core/license)](https://packagist.org/packages/fanamurov/larrock-core) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1a0fb19f2e024607a1d40260c8baa5e7)](https://www.codacy.com/app/Fanamurov/larrock-core?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Fanamurov/larrock-core&amp;utm_campaign=Badge_Grade)
@@ -83,16 +85,12 @@
   $ php artisan db:seed --class="Larrock\ComponentUsers\Database\Seeds\UsersTableSeeder"
   ```
 
-6. **Medialibrary files deleting** (Корректное удаление файлов с нашей системой хранения)
-  ```/vendor/spatie/laravel-medialibrary/src/Filesystem.php```
-  ```php
-  public function removeFiles(Media $media)
-  {
-    $pathGenerator = PathGeneratorFactory::create();
-    $this->filesystem->disk($media->disk)->deleteDirectory($pathGenerator->getPathForConversions($media));
-    $this->filesystem->disk($media->disk)->delete($pathGenerator->getPath($media) .'/'. $media->file_name);
-  }
+
+## Installation of other components LarrockCMS 
+  ```sh
+  $ php artisan larrock:manager
   ```
+  **composer required!**
   
 ### ASSETS: BOWER COMPONENTS FOR TEMPLATES
 ```sh

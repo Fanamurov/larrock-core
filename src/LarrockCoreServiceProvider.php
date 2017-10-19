@@ -4,6 +4,7 @@ namespace Larrock\Core;
 
 use Illuminate\Support\ServiceProvider;
 use Larrock\Core\Commands\LarrockCheckCommand;
+use Larrock\Core\Commands\LarrockManagerCommand;
 use Larrock\Core\Commands\LarrockWriteCommand;
 use Larrock\Core\Commands\LarrockUpdateEnvCommand;
 use Larrock\Core\Middleware\AdminMenu;
@@ -64,9 +65,11 @@ class LarrockCoreServiceProvider extends ServiceProvider
 
         $this->app->bind('command.larrock:check', LarrockCheckCommand::class);
         $this->app->bind('command.larrock:updateEnv', LarrockUpdateEnvCommand::class);
+        $this->app->bind('command.larrock:manager', LarrockManagerCommand::class);
         $this->commands([
             'command.larrock:check',
-            'command.larrock:updateEnv'
+            'command.larrock:updateEnv',
+            'command.larrock:manager'
         ]);
     }
 }
