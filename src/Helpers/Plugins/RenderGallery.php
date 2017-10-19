@@ -11,7 +11,7 @@ class RenderGallery
      */
     public function renderGallery($modelResult)
     {
-        $re = "/{Фото\\[(?P<type>[a-zA-Z0-9-_]+)]=(?P<name>[a-zA-Z0-9-_]+)}/";
+        $re = "/{Фото\\[(?P<type>[a-zA-Z0-9-_а-яА-Я\s]+)]=(?P<name>[a-zA-Z0-9-_а-яА-Я\s]+)}/u";
 
         if(isset($modelResult->short)){
             preg_match_all($re, $modelResult->short, $matches);
@@ -55,7 +55,7 @@ class RenderGallery
      */
     public function renderFilesGallery($modelResult)
     {
-        $re = "/{Файлы\\[(?P<type>[a-zA-Z0-9-_]+)]=(?P<name>[a-zA-Z0-9-_]+)}/";
+        $re = "/{Файлы\\[(?P<type>[a-zA-Z0-9-_а-яА-Я\s]+)]=(?P<name>[a-zA-Z0-9-_а-яА-Я\s]+)}/u";
 
         if(isset($modelResult->short)){
             preg_match_all($re, $modelResult->short, $matches);
