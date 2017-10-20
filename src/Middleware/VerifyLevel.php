@@ -4,6 +4,7 @@ namespace Larrock\Core\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use Session;
 use Ultraware\Roles\Exceptions\LevelDeniedException;
 use Alert;
 
@@ -40,8 +41,8 @@ class VerifyLevel
             return $next($request);
         }
 
-		Alert::add('error', 'У вас недостаточный уровень для выполнения операции')->flash();
-		return redirect('/login');
+        Session::push('message.danger', 'У вас недостаточный уровень для выполнения операции');
+        return redirect('/login');
 
         //throw new LevelDeniedException($level);
     }
