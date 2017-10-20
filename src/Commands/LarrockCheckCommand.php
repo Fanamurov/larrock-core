@@ -21,16 +21,6 @@ class LarrockCheckCommand extends Command
     protected $description = 'Check current Larrock core install';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed
@@ -39,7 +29,7 @@ class LarrockCheckCommand extends Command
     {
         $this->line('=== Check Laravel config ===');
 
-        if(config('database.connections.mysql.strict') === false){
+        if(config('database.connections.mysql.strict') !== true){
             $this->info('Mysql Strict: OFF (OK)');
         }else{
             $this->error('Mysql Strict: ON. Please change to false');
@@ -65,25 +55,24 @@ class LarrockCheckCommand extends Command
             $this->error('Jsvalidation.view: '. config('jsvalidation.view') .'. Please change config/jsvalidation.php to larrock::jsvalidation.uikit');
         }
 
-        if(config('laravel-medialibrary.custom_path_generator_class') === \Larrock\Core\Helpers\CustomPathGenerator::class){
+        if(config('medialibrary.custom_path_generator_class') === \Larrock\Core\Helpers\CustomPathGenerator::class){
             $this->info('Medialibrary: custom path (OK)');
         }else{
             $this->error('Medialibrary custom_path_generator_class '. config('laravel-medialibrary.custom_path_generator_class')
-                .'. Please change config/laravel-medialibrary.php to custom_path_generator_class => Larrock\Core\Helpers\CustomPathGenerator::class');
+                .'. Please change config/medialibrary.php to custom_path_generator_class => Larrock\Core\Helpers\CustomPathGenerator::class');
         }
 
-        if(config('laravel-medialibrary.custom_url_generator_class') === \Larrock\Core\Helpers\MediaUrlGenerator::class){
+        if(config('medialibrary.custom_url_generator_class') === \Larrock\Core\Helpers\MediaUrlGenerator::class){
             $this->info('Medialibrary: custom url (OK)');
         }else{
-            $this->error('Medialibrary custom_url_generator_class '. config('laravel-medialibrary.custom_url_generator_class')
-                .'. Please change config/laravel-medialibrary.php to custom_url_generator_class => Larrock\Core\Helpers\MediaUrlGenerator::class');
+            $this->error('Medialibrary custom_url_generator_class '. config('medialibrary.custom_url_generator_class')
+                .'. Please change config/medialibrary.php to custom_url_generator_class => Larrock\Core\Helpers\MediaUrlGenerator::class');
         }
 
-        if(config('filesystems.disks.media.driver') === 'local'){
+        if(config('filesystems.disks.media')){
             $this->info('Medialibrary: disk media driver (OK)');
         }else{
-            $this->error('Medialibrary filesystems.disks.media.driver '. config('filesystems.disks.media.driver')
-                .'. Please change config/filesystems.php to disks.media.driver => local');
+            $this->error('Please add Medialibrary filesystems.disks.media');
         }
         if(config('filesystems.disks.media.root') === base_path() .'/public_html/media'){
             $this->info('Medialibrary: disk media root (OK)');
@@ -102,7 +91,7 @@ class LarrockCheckCommand extends Command
         if(env('MAIL_DRIVER') === 'mail'){
             $this->info('MAIL_DRIVER: '. env('MAIL_DRIVER') .' (OK)');
         }else{
-            $this->error('.env MAIL_DRIVER: '. env('MAIL_DRIVER'));
+            $this->error('.env MAIL_DRIVER: '. env('MAIL_DRIVER') .'. Maybe mail?');
         }
         if(env('MAIL_TO_ADMIN_NAME')){
             $this->info('MAIL_TO_ADMIN_NAME: '. env('MAIL_TO_ADMIN_NAME') .' (OK)');
