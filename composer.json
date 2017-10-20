@@ -15,13 +15,13 @@
         "nicolaslopezj/searchable": "^1.9",
         "spatie/laravel-medialibrary": "^6.0.0",
         "kix/mdash": "^0.5.4",
-        "fanamurov/larrock-menu": "^0.2",
-        "fanamurov/larrock-users": "^0.2",
-        "fanamurov/larrock-pages": "^0.2",
-        "fanamurov/larrock-blocks": "^0.2",
-        "fanamurov/larrock-contact": "^0.2",
-        "fanamurov/larrock-admin-seo": "^0.2",
-        "fanamurov/larrock-admin-search": "^0.2"
+        "fanamurov/larrock-menu": "^0.3",
+        "fanamurov/larrock-users": "^0.3",
+        "fanamurov/larrock-pages": "^0.3",
+        "fanamurov/larrock-blocks": "^0.3",
+        "fanamurov/larrock-contact": "^0.3",
+        "fanamurov/larrock-admin-seo": "^0.3",
+        "fanamurov/larrock-admin-search": "^0.3"
     },
     "autoload": {
         "psr-4": {
@@ -45,7 +45,5 @@
                 "Larrock\\Core\\LarrockCoreServiceProvider"
             ]
         }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable" : true
+    }
 }

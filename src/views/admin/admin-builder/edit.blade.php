@@ -1,5 +1,5 @@
 @extends('larrock::admin.main')
-@section('title') {{ $app->name }} admin @endsection
+@section('title') {{ $data->title }} || {{ $app->name }} admin @endsection
 
 @section('content')
     <div class="container-head uk-margin-bottom">
