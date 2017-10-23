@@ -16,6 +16,10 @@
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <link rel="stylesheet" href="/_assets/bower_components/selectize/dist/css/selectize.bootstrap3.css"/>
         <script src="/_assets/bower_components/selectize/dist/js/standalone/selectize.min.js"></script>
+        <link rel="stylesheet" href="/_assets/bower_components/fancybox/dist/jquery.fancybox.css">
+        <link rel="stylesheet" href="/_assets/bower_components/pickadate/lib/compressed/themes/default.css">
+        <link rel="stylesheet" href="/_assets/bower_components/pickadate/lib/compressed/themes/default.date.css">
+        <link rel="stylesheet" href="/_assets/bower_components/pickadate/lib/compressed/themes/default.time.css">
     </head>
     <body>
         <section id="top_menu">

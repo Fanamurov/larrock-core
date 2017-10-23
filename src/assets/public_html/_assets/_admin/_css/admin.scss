@@ -516,8 +516,8 @@ input:-ms-input-placeholder {
   opacity: .7;
   &:hover,
   &:focus{
-	opacity: 1;
-	background-color: #c5c5c5;
+  opacity: 1;
+  background-color: #c5c5c5;
   }
 }
 .edit_position_new input{
@@ -528,8 +528,8 @@ input:-ms-input-placeholder {
   text-decoration: none;
   border-bottom: 1px dotted #0088cc;
   &:hover, &:focus{
-	text-decoration: none;
-	border-bottom: 1px dotted #005580;
+  text-decoration: none;
+  border-bottom: 1px dotted #005580;
   }
 }
 .mce-panel{
@@ -1072,6 +1072,8 @@ body#clean_template{
   color: #d85030;
 }
 
-
+.picker--opened .picker__holder {
+  height: 100% !important;
+}
 
 @import "uikit-buttons-modify";

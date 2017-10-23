@@ -77,8 +77,6 @@ gulp.task('sass_uikit', function () {
  */
 gulp.task('libs_styles', function () {
     gulp.src([
-        './public_html/_assets/bower_components/noty/src/noty.scss',
-        './public_html/_assets/bower_components/noty/src/themes/relax.scss',
         './public_html/_assets/bower_components/fancybox/dist/jquery.fancybox.css',
         './public_html/_assets/bower_components/pickadate/lib/compressed/themes/default.css',
         './public_html/_assets/bower_components/pickadate/lib/compressed/themes/default.date.css'

@@ -145,6 +145,15 @@
                                                     <i class="uk-sortable-handle uk-icon uk-icon-bars uk-margin-small-right" title="Перенести материал по весу"></i>
                                                 @endif
                                             </td>
+                                        @elseif(get_class($row) === 'Larrock\Core\Helpers\FormBuilder\FormSelect')
+                                            <td class="uk-hidden-small">
+                                                <select class="ajax_edit_row form-control" data-row_where="id" data-value_where="{{ $data_value->id }}"
+                                                        data-table="{{ $app->table }}" data-row="{{ $row->name }}">
+                                                    @foreach($row->options as $option)
+                                                        <option @if($option === $data_value->{$row->name}) selected @endif value="{{ $option }}">{{ $option }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
                                         @endif
                                     @endif
                                     @if($row->in_table_admin)

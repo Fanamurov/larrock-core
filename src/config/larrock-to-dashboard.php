@@ -11,6 +11,9 @@ if(file_exists(base_path(). '/vendor/fanamurov/larrock-pages')){
 if(file_exists(base_path(). '/vendor/fanamurov/larrock-blocks')){
     $components[] = new \Larrock\ComponentBlocks\BlocksComponent();
 }
+if(file_exists(base_path(). '/vendor/fanamurov/larrock-contact')){
+    $components[] = new \Larrock\ComponentContact\ContactComponent();
+}
 
 return [
     'components' => $components
