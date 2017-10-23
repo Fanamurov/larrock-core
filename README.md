@@ -63,23 +63,14 @@
   $ composer require fanamurov/larrock-core
   ```
 
-3. **Add Role package** (```/config/app.php```)
-  ```php
-  'providers' => [
-    ...
-    Ultraware\Roles\RolesServiceProvider::class,
-    ...
-  ]
-  ```
-
-4. **Publish views, migrations etc.**
+3. **Publish views, migrations etc.**
   ```sh
   $ php artisan vendor:publish
   $ php artisan larrock:updateEnv
   $ php artisan larrock:check
   ```
   
-5. **Run migrations and add default admin user**
+4. **Run migrations and add default admin user**
   ```sh
   $ php artisan migrate
   $ php artisan db:seed --class="Larrock\ComponentUsers\Database\Seeds\UsersTableSeeder"
@@ -112,21 +103,3 @@ bower install uikit
 http://yousite/admin
 Login: admin@larrock-cms.ru
 Password: password
-
-
-----------
-
-
-## FAQ
-Laravel 5.4: [Specified key was too long error](https://laravel-news.com/laravel-5-4-key-too-long-error)
-
-  **AppServiceProvider.php**
-  
-  ```php
-  use Illuminate\Support\Facades\Schema;
-  
-  public function boot()
-  {
-      Schema::defaultStringLength(191);
-  }
-  ```
