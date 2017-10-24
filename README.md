@@ -80,7 +80,7 @@
   
 ### ASSETS: BOWER COMPONENTS FOR TEMPLATES
 ```sh
-cd /public_html/_assets
+cd public_html/_assets
 bower install fancybox
 bower install jquery-validation
 bower install jquery.cookie

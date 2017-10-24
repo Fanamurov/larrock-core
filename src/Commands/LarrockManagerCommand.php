@@ -42,12 +42,12 @@ class LarrockManagerCommand extends Command
             $this->info('Install all packages LarrockCMS');
             foreach ($packages as $package){
                 if($package !== 'all'){
-                    $this->info('composer require larrock/fanamurov/'. $package);
+                    $this->info('composer require fanamurov/'. $package);
                     echo shell_exec('composer require fanamurov/'. $package);
                 }
             }
         }else{
-            $this->info('composer require larrock/fanamurov/'. $name);
+            $this->info('composer require fanamurov/'. $name);
             echo shell_exec('composer require fanamurov/'. $name);
         }
 

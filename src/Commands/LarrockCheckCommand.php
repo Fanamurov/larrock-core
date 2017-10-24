@@ -46,13 +46,19 @@ class LarrockCheckCommand extends Command
         if(config('breadcrumbs.view') === 'larrock::front.modules.breadcrumbs.breadcrumbs'){
             $this->info('Breadcrumbs.view: larrock (OK)');
         }else{
-            $this->error('Breadcrumbs.view: '. config('jsvalidation.view') .'. Please change config/breadcrumbs.php to larrock::front.modules.breadcrumbs.breadcrumbs');
+            $this->error('Breadcrumbs.view: '. config('breadcrumbs.view') .'. Please change config/breadcrumbs.php to larrock::front.modules.breadcrumbs.breadcrumbs');
         }
 
         if(config('jsvalidation.view') === 'larrock::jsvalidation.uikit'){
             $this->info('Jsvalidation.view: uikit (OK)');
         }else{
             $this->error('Jsvalidation.view: '. config('jsvalidation.view') .'. Please change config/jsvalidation.php to larrock::jsvalidation.uikit');
+        }
+
+        if(config('jsvalidation.disable_remote_validation') === true){
+            $this->info('Jsvalidation.disable_remote_validation: (OK)');
+        }else{
+            $this->error('Jsvalidation.disable_remote_validation not true. Please change config/jsvalidation.php to true');
         }
 
         if(config('medialibrary.custom_path_generator_class') === \Larrock\Core\Helpers\CustomPathGenerator::class){

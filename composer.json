@@ -7,10 +7,9 @@
         "larrock-blocks", "larrock-contact", "larrock-admin-seo", "larrock-admin-search"],
     "require": {
         "php": ">=7.0.0",
-        "barryvdh/laravel-debugbar": "~2.0",
-        "barryvdh/laravel-ide-helper": "~2.1",
+        "barryvdh/laravel-debugbar": "~3.0",
+        "barryvdh/laravel-ide-helper": "~2.4",
         "proengsoft/laravel-jsvalidation": "^2.0",
-        "prologue/alerts": "^0.4.1",
         "davejamesmiller/laravel-breadcrumbs": "4.*",
         "nicolaslopezj/searchable": "^1.9",
         "spatie/laravel-medialibrary": "^6.0.0",
