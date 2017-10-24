@@ -45,5 +45,10 @@
                 "Larrock\\Core\\LarrockCoreServiceProvider"
             ]
         }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "@php -r \"file_exists('public_html/index.php') || rename('public', 'public_html');\""
+        ]
     }
 }
