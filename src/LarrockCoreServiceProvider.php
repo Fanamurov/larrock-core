@@ -5,12 +5,12 @@ namespace Larrock\Core;
 use Illuminate\Support\ServiceProvider;
 use Larrock\Core\Commands\LarrockCheckCommand;
 use Larrock\Core\Commands\LarrockManagerCommand;
-use Larrock\Core\Commands\LarrockWriteCommand;
 use Larrock\Core\Commands\LarrockUpdateEnvCommand;
 use Larrock\Core\Middleware\AdminMenu;
-use Larrock\Core\Middleware\GetSeo;
 use Larrock\Core\Middleware\VerifyLevel;
 use Larrock\Core\Middleware\SaveAdminPluginsData;
+use Spatie\MediaLibrary\Filesystem\Filesystem;
+use Larrock\Core\Helpers\MediaFilesystem;
 
 class LarrockCoreServiceProvider extends ServiceProvider
 {
@@ -71,5 +71,7 @@ class LarrockCoreServiceProvider extends ServiceProvider
             'command.larrock:updateEnv',
             'command.larrock:manager'
         ]);
+
+        $this->app->bind(Filesystem::class, MediaFilesystem::class);
     }
 }
