@@ -30,7 +30,7 @@ class LarrockManagerCommand extends Command
         $this->info('=== LarrockCMS Manager ===');
 
         $packages = [
-            'larrock-catalog', 'larrock-cart', 'larrock-discount',
+            'larrock-catalog', 'larrock-cart', 'larrock-wizard', 'larrock-discount',
             'larrock-feed', 'larrock-category', 'larrock-reviews', 'larrock-smartbanners',
             'larrock-menu', 'larrock-users', 'larrock-pages', 'larrock-blocks', 'larrock-contact',
             'larrock-admin-seo', 'larrock-admin-search', 'all'
@@ -42,12 +42,12 @@ class LarrockManagerCommand extends Command
             $this->info('Install all packages LarrockCMS');
             foreach ($packages as $package){
                 if($package !== 'all'){
-                    $this->info('Install fanamurov/'. $package);
+                    $this->info('composer require larrock/fanamurov/'. $package);
                     echo shell_exec('composer require fanamurov/'. $package);
                 }
             }
         }else{
-            $this->info('Install fanamurov/'. $name);
+            $this->info('composer require larrock/fanamurov/'. $name);
             echo shell_exec('composer require fanamurov/'. $name);
         }
 

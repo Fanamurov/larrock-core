@@ -40,7 +40,6 @@
 - "[proengsoft/laravel-jsvalidation](https://github.com/proengsoft/laravel-jsvalidation)": "^1.5",
 - "[albertcht/invisible-recaptcha](https://github.com/albertcht/invisible-recaptcha)": "^1.7",
 - "[davejamesmiller/laravel-breadcrumbs](https://github.com/davejamesmiller/laravel-breadcrumbs)": "^4.0",
-- "[intervention/image](https://github.com/Intervention/image)": "^2.3",
 - "[nicolaslopezj/searchable](https://github.com/nicolaslopezj/searchable)": "^1.9",
 - "[spatie/laravel-medialibrary](https://github.com/spatie/laravel-medialibrary)": "^6.0.0",
 - "[kix/mdash](https://github.com/kix/mdash-bundle)": "^0.5.4"
