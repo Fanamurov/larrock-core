@@ -26,6 +26,11 @@ class LarrockCoreServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/lang', 'larrock');
         $this->loadMigrationsFrom(__DIR__.'/database/migrations');
 
+        $public_path = public_path();
+        if(substr($public_path, -6) === 'public'){
+            $public_path .= '_html';
+        }
+
         $this->publishes([
             __DIR__.'/lang' => resource_path('lang/vendor/larrock')
         ], 'lang');
@@ -33,14 +38,13 @@ class LarrockCoreServiceProvider extends ServiceProvider
             __DIR__.'/views' => base_path('resources/views/vendor/larrock')
         ], 'views');
         $this->publishes([
-            __DIR__.'/assets/resources' => resource_path('assets')
+            __DIR__.'/assets/resources' => resource_path('assets'),
+            __DIR__.'/assets/public_html' => $public_path,
+            __DIR__.'/assets/gulpfile' => base_path()
         ], 'assets');
         $this->publishes([
-            __DIR__.'/assets/public_html' => public_path('')
-        ], 'assets');
-        $this->publishes([
-            __DIR__.'/assets/gulpfile.js' => base_path('')
-        ], 'assets');
+            __DIR__.'/assets/policy' => $public_path
+        ], 'doc');
         $this->publishes([
             __DIR__.'/config/larrock-core-adminmenu.php' => config_path('larrock-core-adminmenu.php'),
             __DIR__.'/config/larrock-sitemap.php' => config_path('larrock-sitemap.php'),

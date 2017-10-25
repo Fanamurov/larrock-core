@@ -61,18 +61,25 @@ class LarrockCheckCommand extends Command
             $this->error('Jsvalidation.disable_remote_validation not true. Please change config/jsvalidation.php to true');
         }
 
-        if(config('medialibrary.custom_path_generator_class') === \Larrock\Core\Helpers\CustomPathGenerator::class){
-            $this->info('Medialibrary: custom path (OK)');
+        /* Medialibrary */
+        $this->line('=== Check Medialibrary config ===');
+        if(config('medialibrary.default_filesystem') === 'media'){
+            $this->info('Medialibrary: disk media driver (OK)');
         }else{
-            $this->error('Medialibrary custom_path_generator_class '. config('laravel-medialibrary.custom_path_generator_class')
-                .'. Please change config/medialibrary.php to custom_path_generator_class => Larrock\Core\Helpers\CustomPathGenerator::class');
+            $this->error('Please change medialibrary.default_filesystem to "media"');
         }
-
         if(config('medialibrary.custom_url_generator_class') === \Larrock\Core\Helpers\MediaUrlGenerator::class){
             $this->info('Medialibrary: custom url (OK)');
         }else{
             $this->error('Medialibrary custom_url_generator_class '. config('medialibrary.custom_url_generator_class')
                 .'. Please change config/medialibrary.php to custom_url_generator_class => Larrock\Core\Helpers\MediaUrlGenerator::class');
+        }
+
+        if(config('medialibrary.custom_path_generator_class') === \Larrock\Core\Helpers\CustomPathGenerator::class){
+            $this->info('Medialibrary: custom path (OK)');
+        }else{
+            $this->error('Medialibrary custom_path_generator_class '. config('laravel-medialibrary.custom_path_generator_class')
+                .'. Please change config/medialibrary.php to custom_path_generator_class => Larrock\Core\Helpers\CustomPathGenerator::class');
         }
 
         if(config('filesystems.disks.media')){

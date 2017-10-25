@@ -59,14 +59,21 @@
   $ composer require fanamurov/larrock-core
   ```
 
-3. **Publish views, migrations etc.**
+3. **Rename ```public``` directory and add to ```index.php``` before ```$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);```**
+ ```php
+$app->bind('path.public', function() {
+    return __DIR__;
+});
+```
+
+4. **Publish views, migrations etc.**
   ```sh
   $ php artisan vendor:publish
   $ php artisan larrock:updateEnv
   $ php artisan larrock:check
   ```
   
-4. **Run migrations and add default admin user**
+5. **Run migrations and add default admin user**
   ```sh
   $ php artisan migrate
   $ php artisan db:seed --class="Larrock\ComponentUsers\Database\Seeds\UsersTableSeeder"
@@ -76,6 +83,10 @@
 ## Installation of other components LarrockCMS (composer required!)
   ```sh
   $ php artisan larrock:manager
+  ```
+  or use composer
+  ```sh
+  $ composer require fanamurov/larrock-*name*
   ```
   
 ### ASSETS: BOWER COMPONENTS FOR TEMPLATES
