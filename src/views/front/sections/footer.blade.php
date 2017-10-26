@@ -3,9 +3,7 @@
         <div class="uk-grid uk-grid-small uk-position-relative">
             <div class="uk-width-1-1 footer-text">
                 <a href="/"><img class="logo" src="/_assets/_front/_images/logo.png" srcset="/_assets/_front/_images/logo@2x.png 2x"></a>
-                @if(isset($tekst_v_podvale))
-                    {!! $tekst_v_podvale->description !!}
-                @endif
+                @renderBlock(tekst_v_podvale)
             </div>
             <div class="footer-copyright uk-width-1-1 uk-text-right">
                 <div class="uk-text-nowrap">

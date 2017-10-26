@@ -17,7 +17,7 @@ class MediaUrlGenerator extends BaseUrlGenerator
      */
     public function getUrl(): string
     {
-        $url = '/media'. $this->getBaseMediaDirectoryUrl().'/'.$this->getPathRelativeToRoot();
+        $url = $this->getBaseMediaDirectoryUrl().'/'.$this->getPathRelativeToRoot();
 
         $url = $this->makeCompatibleForNonUnixHosts($url);
 
