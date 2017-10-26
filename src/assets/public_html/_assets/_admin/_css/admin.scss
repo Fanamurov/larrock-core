@@ -25,6 +25,11 @@
   }
 }
 
+
+.mce-btn.mce-active, .mce-btn.mce-active:hover, .mce-btn.mce-active:focus, .mce-btn.mce-active:active{
+  background: #555c66 !important;
+}
+
 .link_block_this, .pointer{
   cursor: pointer;
 }

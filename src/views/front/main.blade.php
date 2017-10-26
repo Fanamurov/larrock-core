@@ -28,16 +28,7 @@
                             <span class="devider_top"></span>
                             <div class="modules-list">
                                 @yield('front.modules.list.catalog')
-                                @if(isset($prays_na_skachivanie))
-                                    @include('larrock::front.modules.html.text', ['data' => $prays_na_skachivanie])
-                                @endif
                                 @include('larrock::front.modules.forms.backphone')
-                                @if(isset($obyavlenie1))
-                                    @include('larrock::front.modules.html.text', ['data' => $obyavlenie1])
-                                @endif
-                                @if(isset($obyavlenie2))
-                                    @include('larrock::front.modules.html.text', ['data' => $obyavlenie2])
-                                @endif
                                 @if(isset($FeedAnons))
                                     @include('vendor.larrock.front.modules.list.news', ['data' => $FeedAnons])
                                 @endif
