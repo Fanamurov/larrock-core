@@ -21,11 +21,12 @@ class RenderPlugins
         preg_match_all($re, $this->rendered_html, $matches);
         foreach($matches['type'] as $key => $match){
             $name = $matches['name'][$key];
-            $matched_block = LarrockBlocks::getModel()->find($matches['name'][$key]);
-            $this->rendered_html = preg_replace('/<p>{Блок\\[\\w+\\X+]='.$name.'}<\/p>/',
-                view('larrock::front.plugins.renderBlock.'. $match, ['data' => $matched_block])->render(), $this->rendered_html);
-            $this->rendered_html = preg_replace('/{Блок\\[\\w+\\X+]='.$name.'}/',
-                view('larrock::front.plugins.renderBlock.'. $match, ['data' => $matched_block])->render(), $this->rendered_html);
+            if($matched_block = LarrockBlocks::getModel()->whereUrl($matches['name'][$key])->first()){
+                $this->rendered_html = preg_replace('/<p>{Блок\\[\\w+\\X+]='.$name.'}<\/p>/',
+                    view('larrock::front.plugins.renderBlock.'. $match, ['data' => $matched_block])->render(), $this->rendered_html);
+                $this->rendered_html = preg_replace('/{Блок\\[\\w+\\X+]='.$name.'}/',
+                    view('larrock::front.plugins.renderBlock.'. $match, ['data' => $matched_block])->render(), $this->rendered_html);
+            }
         }
         return $this;
     }
