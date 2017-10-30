@@ -36,12 +36,27 @@
             @if(Session::has('message') && is_array(Session::get('message')))
                 @foreach(Session::get('message') as $type => $messages)
                     @foreach($messages as $message)
-                        <div class="uk-alert uk-alert-{{ $type }} alert-dismissable">
-                            @if($type === 'danger') <i class="uk-icon-bug"></i> @else <i class="uk-icon-check"></i> @endif
-                            {{ $message }} <a href="" class="uk-alert-close uk-close uk-float-right"></a>
-                        </div>
+                        @if($type === 'dangerDestroy')
+                            <div class="uk-alert uk-alert-danger alert-dismissable">
+                                <i class="uk-icon-bug"></i>
+                                {{ $message }}
+                                <form action="/admin/{{ Session::get('destroyCategory')[0] }}" method="post">
+                                    <input name="_method" type="hidden" value="DELETE">
+                                    <input type="hidden" name="allowDestroy" value="true">
+                                    {{ csrf_field() }}
+                                    <button type="submit" class="uk-button uk-button-small uk-button-danger please_conform uk-margin-top">Продолжить удаление</button>
+                                </form>
+                                <a href="" class="uk-alert-close uk-close uk-float-right"></a>
+                            </div>
+                        @else
+                            <div class="uk-alert uk-alert-{{ $type }} alert-dismissable">
+                                @if($type === 'danger') <i class="uk-icon-bug"></i> @else <i class="uk-icon-check"></i> @endif
+                                {{ $message }} <a href="" class="uk-alert-close uk-close uk-float-right"></a>
+                            </div>
+                        @endif
                     @endforeach
                 @endforeach
+                @php(\Illuminate\Support\Facades\Session::forget('destroyCategory'))
                 @php(\Illuminate\Support\Facades\Session::forget('message'))
             @endif
             @yield('content')
