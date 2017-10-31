@@ -168,11 +168,12 @@ class Component
 
     public function savePluginSeoData($request)
     {
-        if( !$request->has('_jsvalidation') && $request->has('seo_title')){
-            if( !$seo = LarrockSeo::getModel()->whereSeoIdConnect($request->get('id_connect'))->whereSeoTypeConnect($request->get('type_connect'))->first()){
-                $seo = LarrockSeo::getModel();
-            }
-            if($request->get('seo_title', '') !== ''){
+        if( !$request->has('_jsvalidation') && ($request->has('seo_title') || $request->get('seo_description') || $request->get('seo_seo_keywords'))){
+            $seo = LarrockSeo::getModel()->whereSeoIdConnect($request->get('id_connect'))->whereSeoTypeConnect($request->get('type_connect'))->first();
+            if( !empty($request->get('seo_title')) || !empty($request->get('seo_description')) || !empty($request->get('seo_keywords'))){
+                if( !$seo){
+                    $seo = LarrockSeo::getModel();
+                }
                 $seo->seo_id_connect = $request->get('id_connect');
                 $seo->seo_title = $request->get('seo_title');
                 $seo->seo_description = $request->get('seo_description');
@@ -182,8 +183,10 @@ class Component
                     \Session::push('message.success', 'SEO обновлено');
                 }
             }else{
-                $seo->delete($seo->id);
-                \Session::push('message.success', 'SEO удалено');
+                if($seo){
+                    $seo->delete($seo->id);
+                    \Session::push('message.success', 'SEO удалено');
+                }
             }
         }
         return TRUE;

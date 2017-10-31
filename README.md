@@ -18,7 +18,7 @@
 * [![Latest Stable Version](https://poser.pugx.org/fanamurov/larrock-blocks/v/stable)](https://packagist.org/packages/fanamurov/larrock-blocks) [fanamurov/larrock-blocks](https://github.com/Fanamurov/larrock-blocks) - блоки для вывода в шаблоне
 * [![Latest Stable Version](https://poser.pugx.org/fanamurov/larrock-contact/v/stable)](https://packagist.org/packages/fanamurov/larrock-contact) [fanamurov/larrock-contact](https://github.com/Fanamurov/larrock-contact) - вывод, обработка, отправка форм
 * [![Latest Stable Version](https://poser.pugx.org/fanamurov/larrock-admin-seo/v/stable)](https://packagist.org/packages/fanamurov/larrock-admin-seo) [fanamurov/larrock-admin-seo](https://github.com/Fanamurov/larrock-admin-seo) - управление seo-данными компонентов
-* [![Latest Stable Version](https://poser.pugx.org/fanamurov/larrock-admin-search/v/stable)](https://packagist.org/packages/fanamurov/larrock-core) [fanamurov/larrock-admin-search](https://github.com/Fanamurov/larrock-admin-search) - поиск по материалам компонентов в админке
+* [![Latest Stable Version](https://poser.pugx.org/fanamurov/larrock-search/v/stable)](https://packagist.org/packages/fanamurov/larrock-search) [fanamurov/larrock-search](https://github.com/Fanamurov/larrock-search) - поиск по материалам компонентов
 
 ### Другие компоненты:
 

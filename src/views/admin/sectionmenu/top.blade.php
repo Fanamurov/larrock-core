@@ -15,10 +15,6 @@
                         {!! $item !!}
                     @endforeach
                     <li class="uk-nav-header">Система</li>
-                    @if(file_exists(base_path(). '/vendor/fanamurov/larrock-sitemap'))
-                        <li><a href="#" onclick="rebuild_sitemap(); return false">Перегенерировать /sitemap.xml</a></li>
-                        <li><a href="#" onclick="rebuild_rss(); return false">Перегенерировать /feed.rss</a></li>
-                    @endif
                     @if(file_exists(public_path(). '/external/adminer.php'))
                         <li><a target="_blank" href="/external/adminer.php">DB</a></li>
                     @endif
@@ -29,15 +25,12 @@
             </div>
         </li>
     </ul>
-    @if(file_exists(base_path(). '/vendor/fanamurov/larrock-admin-search'))
+    @if(isset($searchSiteAdmin))
         <div class="uk-navbar-content uk-hidden-small">
-            <form class="uk-form uk-margin-remove uk-display-inline-block" action="/admin/search" method="get">
-                <input type="text" class="uk-form-controls" placeholder="Что ищем?" name="text" value="{{ Request::get('text') }}">
-                <button type="submit" class="uk-button" title="Поиск по сайту"><i class="uk-icon-search"></i></button>
-            </form>
+            {!! $searchSiteAdmin !!}
         </div>
     @endif
-    <div class="uk-navbar-content uk-navbar-flip">
+    <div class="uk-navbar-content uk-navbar-flip uk-text-right">
         <a href="/" target="_blank" class="uk-button">К сайту</a>
         <a class="uk-button" href="{{ url('/logout') }}">Выйти</a>
     </div>
