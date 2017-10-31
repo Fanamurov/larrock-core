@@ -58,6 +58,11 @@ class Component
         return $this->model;
     }
 
+    public function getTable()
+    {
+        return $this->table;
+    }
+
     public function getRows()
     {
         return $this->rows;
@@ -135,6 +140,11 @@ class Component
         $this->savePluginAnonsToModuleData($request);
     }
 
+    /**
+     * Подключение плагина SEO
+     * 
+     * @return $this
+     */
     public function addPluginSeo()
     {
         $row = new FormInput('seo_title', 'Title материала');
@@ -211,6 +221,12 @@ class Component
         return $this;
     }
 
+    /**
+     * Создание анонса новости
+     *
+     * @param $request
+     * @return bool
+     */
     public function savePluginAnonsToModuleData($request)
     {
         if( !\Request::has('_jsvalidation') && (\Request::has('anons_merge') || !empty(\Request::get('anons_description')))){
@@ -323,6 +339,11 @@ class Component
         }
     }
 
+    /**
+     * Удаление данных плагинов
+     *
+     * @param $config
+     */
     public function removeDataPlugins($config)
     {
         if($config->plugins_backend){
@@ -378,6 +399,8 @@ class Component
     }
 
     /**
+     * Перезапись конфига компонента (например внутри контроллера)
+     *
      * @param $option
      * @param $config
      * @return $this
@@ -388,23 +411,53 @@ class Component
         return $this;
     }
 
+    /**
+     * Разрешить поиск по материалам компонента
+     *
+     * @return $this
+     */
     public function isSearchable()
     {
         $this->searchable = TRUE;
         return $this;
     }
 
+    /**
+     * Формирование пунктов меню компонента в админке
+     *
+     * @return string
+     */
     public function renderAdminMenu()
     {
         return '';
     }
 
+    /**
+     * Метод встаивания данных компонента в карту сайта sitemap.xml
+     *
+     * @return null
+     */
     public function createSitemap()
     {
         return NULL;
     }
 
+    /**
+     * Метод встаивания данных компонента в rss-feed
+     *
+     * @return null
+     */
     public function createRSS()
+    {
+        return NULL;
+    }
+
+    /**
+     * Данные для поиска по материалам компонента
+     *
+     * @return null
+     */
+    public function search()
     {
         return NULL;
     }

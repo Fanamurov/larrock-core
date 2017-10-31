@@ -20,7 +20,7 @@
         "fanamurov/larrock-blocks": "^0.3",
         "fanamurov/larrock-contact": "^0.3",
         "fanamurov/larrock-admin-seo": "^0.3",
-        "fanamurov/larrock-admin-search": "^0.3"
+        "fanamurov/larrock-search": "^0.3"
     },
     "autoload": {
         "psr-4": {
