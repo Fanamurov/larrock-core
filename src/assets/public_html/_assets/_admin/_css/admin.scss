@@ -25,9 +25,37 @@
   }
 }
 
+form.form-search-autocomplite .selectize-dropdown-content{
+  > div {
+    padding: 8px;
+  }
+  span.uk-label {
+    display: block;
+    font-size: 17px;
+  }
+  span.caption {
+    display: block;
+    font-style: italic;
+    padding-top: 1px;
+  }
+}
 
-.mce-btn.mce-active, .mce-btn.mce-active:hover, .mce-btn.mce-active:focus, .mce-btn.mce-active:active{
-  background: #555c66 !important;
+.mce-btn.mce-active button, .mce-btn.mce-active:hover button, .mce-btn.mce-active i, .mce-btn.mce-active:hover i {
+  color: #1d99c8 !important;
+}
+
+nav.uk-navbar{
+  .uk-navbar-content{
+    width: 250px;
+    form#search-autocomplite-full{
+      position: relative;
+      top: -36px;
+
+      .selectize-dropdown{
+        width: 350px !important;
+      }
+    }
+  }
 }
 
 .link_block_this, .pointer{
