@@ -46,16 +46,22 @@ class LarrockUpdateEnvCommand extends Command
             \File::put(base_path('.env'), $current_env ."\n\nLARROCK VARS=PLACED");
         }
 
+        if( !env('MAIL_FROM_ADDRESS')){
+            $current_env = \File::get(base_path('.env'));
+            \File::put(base_path('.env'), $current_env ."\nMAIL_FROM_ADDRESS=admin@larrock-cms.ru");
+            $this->info('MAIL_FROM_ADDRESS not found. Add "admin@larrock-cms.ru"');
+        }
+
         if( !env('MAIL_TO_ADMIN')){
             $current_env = \File::get(base_path('.env'));
             \File::put(base_path('.env'), $current_env ."\nMAIL_TO_ADMIN=admin@larrock-cms.ru");
             $this->info('MAIL_TO_ADMIN not found. Add "admin@larrock-cms.ru"');
         }
 
-        if( !env('MAIL_TO_ADMIN_NAME')){
+        if( !env('MAIL_FROM_NAME')){
             $current_env = \File::get(base_path('.env'));
-            \File::put(base_path('.env'), $current_env ."\nMAIL_TO_ADMIN_NAME='LARROCK'");
-            $this->info('MAIL_TO_ADMIN_NAME not found. Add "LARROCK"');
+            \File::put(base_path('.env'), $current_env ."\nMAIL_FROM_NAME='LARROCK'");
+            $this->info('MAIL_FROM_NAME not found. Add "LARROCK"');
         }
 
         if( !env('SITE_NAME')){

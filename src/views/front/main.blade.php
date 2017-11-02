@@ -3,7 +3,7 @@
 <head>
     @include('larrock::front.sections.head')
 </head>
-<body class="@yield('body_class')">
+<body class="@yield('body_class') @if(auth()->user() && auth()->user()->level() === 3) adminMode @endif">
 <div class="body-container">
     <div class="uk-container uk-container-center">
         @include('larrock::front.sections.header')
