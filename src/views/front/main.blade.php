@@ -28,7 +28,6 @@
                             <span class="devider_top"></span>
                             <div class="modules-list">
                                 @yield('front.modules.list.catalog')
-                                @include('larrock::front.modules.forms.backphone')
                                 @if(isset($FeedAnons))
                                     @include('vendor.larrock.front.modules.list.news', ['data' => $FeedAnons])
                                 @endif
