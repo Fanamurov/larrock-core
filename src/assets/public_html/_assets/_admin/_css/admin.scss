@@ -25,6 +25,60 @@
   }
 }
 
+.fancybox-slide>.fancybox-loading {
+  -webkit-animation: afancy .8s infinite linear !important;
+  animation: afancy .8s infinite linear !important;
+}
+
+@-webkit-keyframes afancy {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg)
+  }
+
+  to {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg)
+  }
+}
+
+@keyframes afancy {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg)
+  }
+
+  to {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg)
+  }
+}
+
+.uk-progress-striped.uk-active .uk-progress-bar {
+  -webkit-animation: auk 2s linear infinite !important;
+  animation: auk 2s linear infinite !important;
+}
+
+@-webkit-keyframes auk {
+  0% {
+    background-position: 0 0
+  }
+
+  to {
+    background-position: 30px 0
+  }
+}
+
+@keyframes auk {
+  0% {
+    background-position: 0 0
+  }
+
+  to {
+    background-position: 30px 0
+  }
+}
+
 form.form-search-autocomplite .selectize-dropdown-content{
   > div {
     padding: 8px;

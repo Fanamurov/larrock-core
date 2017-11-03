@@ -17,6 +17,9 @@ $main_color_red: #f30;
 	  &:last-of-type {
 		padding-bottom: 0;
 	  }
+      li{
+        left: auto;
+      }
 	}
 	> ul{
 	  padding-left: 25px;
@@ -29,12 +32,12 @@ $main_color_red: #f30;
 }
 
 html{
+  background: url("/_assets/_front/_images/bg/bg.png") repeat transparent;
   font-family: 'Open Sans', sans-serif;
   color: black;
 }
 
 body{
-  background: url("/_assets/_front/_images/bg/bg.png") repeat transparent;
   font-weight: 400;
   font-size: 18px;
   line-height: 28px;
@@ -43,8 +46,9 @@ body{
 .body-container{
   > .uk-container.uk-container-center{
     background: white;
-    box-shadow: 0 0 30px #c2c2c2;
     padding: 0;
+    margin-top: 10px;
+    border-radius: 5px;
   }
 }
 
@@ -351,6 +355,58 @@ a.admin_edit {
     bottom: 95px;
   }
 }
+.fancybox-slide>.fancybox-loading {
+  -webkit-animation: afancy .8s infinite linear !important;
+  animation: afancy .8s infinite linear !important;
+}
+
+@-webkit-keyframes afancy {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg)
+  }
+
+  to {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg)
+  }
+}
+
+@keyframes afancy {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg)
+  }
+
+  to {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg)
+  }
+}
+.uk-progress-striped.uk-active .uk-progress-bar {
+  -webkit-animation: auk 2s linear infinite !important;
+  animation: auk 2s linear infinite !important;
+}
+
+@-webkit-keyframes auk {
+  0% {
+    background-position: 0 0
+  }
+
+  to {
+    background-position: 30px 0
+  }
+}
+
+@keyframes auk {
+  0% {
+    background-position: 0 0
+  }
+
+  to {
+    background-position: 30px 0
+  }
+}
 
 .uk-open > .uk-dropdown {
   animation-name: uk-fade-top;
@@ -358,6 +414,11 @@ a.admin_edit {
 
 #modalProgress{
   width: 100% !important;
+}
+
+.highlight pre, pre code{
+  background: #f5f2f0;
+  font: 14px/20px Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
 }
 
 
@@ -381,3 +442,5 @@ a.admin_edit {
 @import "./components/pages";
 
 @import "uikit-buttons-modify";
+
+//@import "./wiki/wiki";
