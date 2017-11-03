@@ -2,7 +2,7 @@
     @foreach($data as $image_value)
         <div class="uk-grid uk-form uk-form-stacked" id="image-{{ $image_value->id }}">
             <div class="uk-width-1-2 uk-width-medium-1-10">
-                <img src="{{ $image_value->getUrl('110x110') }}" alt="Фото" class="all-width uk-text-right">
+                <a data-fancybox data-caption="{{ $image_value->custom_properties['gallery'] or '' }}" href="{{ $image_value->getUrl() }}"><img src="{{ $image_value->getUrl('110x110') }}" alt="Фото" class="all-width uk-text-right"></a>
             </div>
             <div class="uk-width-1-2 uk-width-medium-8-10">
                 <div class="uk-grid">

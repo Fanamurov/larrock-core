@@ -20,6 +20,8 @@
         <link rel="stylesheet" href="/_assets/bower_components/pickadate/lib/compressed/themes/default.css">
         <link rel="stylesheet" href="/_assets/bower_components/pickadate/lib/compressed/themes/default.date.css">
         <link rel="stylesheet" href="/_assets/bower_components/pickadate/lib/compressed/themes/default.time.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.25/jquery.fancybox.min.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.25/jquery.fancybox.min.js"></script>
     </head>
     <body>
         <section id="top_menu">

@@ -44,6 +44,8 @@ class RenderPlugins
                     $matched_images['images'][] = $image;
                 }
             }
+            $this->rendered_html = preg_replace('/<p>{Фото\\[\\w+\\X+]='.$name.'}<\/p>/',
+                view('larrock::front.plugins.photoGallery.'. $match, $matched_images)->render(), $this->rendered_html);
             $this->rendered_html = preg_replace('/{Фото\\[\\w+\\X+]='.$name.'}/',
                 view('larrock::front.plugins.photoGallery.'. $match, $matched_images)->render(), $this->rendered_html);
         }
@@ -63,6 +65,8 @@ class RenderPlugins
                     $matched_files['files'][] = $image;
                 }
             }
+            $this->rendered_html = preg_replace('/<p>{Файлы\\[\\w+\\X+]='.$name.'}<\/p>/',
+                view('larrock::front.plugins.fileGallery.'. $match, $matched_files)->render(), $this->rendered_html);
             $this->rendered_html = preg_replace('/{Файлы\\[\\w+\\X+]='.$name.'}/',
                 view('larrock::front.plugins.fileGallery.'. $match, $matched_files)->render(), $this->rendered_html);
         }
