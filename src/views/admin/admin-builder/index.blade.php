@@ -22,7 +22,7 @@
     @if(isset($data))
         <div class="uk-margin-large-bottom">
             <form id="massiveAction" class="uk-alert uk-alert-warning massive_action uk-hidden" method="post" action="/admin/{{ $app->name }}/0">
-                <select name="ids[]" multiple>
+                <select name="ids[]" multiple class="uk-hidden">
                     @foreach($data as $item)
                         <option value="{{ $item->id }}">{{ $item->id }}</option>
                     @endforeach
