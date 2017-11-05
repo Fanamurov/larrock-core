@@ -9,7 +9,7 @@ use Larrock\Core\Commands\LarrockUpdateEnvCommand;
 use Larrock\Core\Middleware\AdminMenu;
 use Larrock\Core\Middleware\VerifyLevel;
 use Larrock\Core\Middleware\SaveAdminPluginsData;
-use Spatie\MediaLibrary\Filesystem\Filesystem;
+use Spatie\MediaLibrary\Filesystem\DefaultFilesystem;
 use Larrock\Core\Helpers\MediaFilesystem;
 
 class LarrockCoreServiceProvider extends ServiceProvider
@@ -76,6 +76,6 @@ class LarrockCoreServiceProvider extends ServiceProvider
             'command.larrock:manager'
         ]);
 
-        $this->app->bind(Filesystem::class, MediaFilesystem::class);
+        $this->app->bind(DefaultFilesystem::class, MediaFilesystem::class);
     }
 }
