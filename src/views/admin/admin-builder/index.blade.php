@@ -22,6 +22,11 @@
     @if(isset($data))
         <div class="uk-margin-large-bottom">
             <form id="massiveAction" class="uk-alert uk-alert-warning massive_action uk-hidden" method="post" action="/admin/{{ $app->name }}/0">
+                <select name="ids[]" multiple>
+                    @foreach($data as $item)
+                        <option value="{{ $item->id }}">{{ $item->id }}</option>
+                    @endforeach
+                </select>
                 {{ method_field('DELETE') }}
                 {{ csrf_field() }}
                 <p>Выделено: <span>0</span> элементов. <button type="submit" class="uk-button uk-button-danger please_conform">Удалить</button></p>
@@ -45,7 +50,6 @@
                 @foreach($data as $data_value)
                     <tr>
                         <td width="55">
-                            <input form="massiveAction" id="id{{ $data_value->id }}" type="checkbox" name="ids[]" value="{{ $data_value->id }}" class="elementId uk-hidden">
                             <div class="actionSelect{{ $data_value->id }} actionSelect" onclick="selectIdItem({{ $data_value->id }})">
                                 @if($app->plugins_backend && array_key_exists('images', $app->plugins_backend) && $image = $data_value->getMedia('images')->sortByDesc('order_column')->first())
                                     <img style="width: 55px" src="{{ $image->getUrl('110x110') }}">

@@ -298,7 +298,9 @@ $(document).ready(function(){
 
             {title: 'Blocks', items: [
                 {title: 'p', block: 'p'},
-                {title: 'Увеличенный блок', block: 'blockquote'}
+                {title: 'Увеличенный блок', block: 'blockquote'},
+                {title: 'code', block: 'code'},
+                {title: 'pre', block: 'pre'}
             ]}
         ],
         setup: function(editor) {
@@ -380,11 +382,7 @@ $(document).ready(function(){
             {
                 title: 'Вставка файлов из директории',
                 description: 'Вставьте после знака "=" имя папки в /public/files/',
-                content: '{Файлы[directory]=}'},
-            {
-                title: 'Вставка блока LarrockBlocks',
-                description: 'Вставьте после знака "=" url блока',
-                content: '{Блок[default]=}'}
+                content: '{Файлы[directory]=}'}
         ]
     });
     //Типограф
@@ -500,6 +498,7 @@ $(document).ready(function(){
 
     /** Input для редактирования поля */
     ajax_edit_row();
+    sort_rows();
 
     $('.btn-group_switch_ajax').find('button').click(function(){
         $(this).parent().find('button').addClass('uk-button-outline');
@@ -584,6 +583,44 @@ function ajax_edit_row() {
         var event = 'edit';
         var data = { value_where: value_where, row_where: row_where, value: value, row: row, event: event, table: table };
         //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
+        hidden_action('/admin/ajax/EditRow', data, false, false, false, true);
+    });
+}
+
+/**
+ * Сортировка материалов по весу через плагин uikit sortable
+ */
+function sort_rows() {
+    $('tbody.uk-sortable').on('change.uk.sortable', function(e, fn, el) {
+        var old_position = parseInt($(el).find('input[name=position]').val());
+        var next_position = parseInt($(el).next().find('input[name=position]').val());
+        var prev_position = parseInt($(el).prev().find('input[name=position]').val());
+        var new_position = 0;
+        if(next_position > old_position){
+            if(prev_position > old_position){
+                new_position = --prev_position;
+            }else{
+                new_position = ++next_position;
+            }
+        }else{
+            new_position = --prev_position;
+        }
+        $(el).find('input[name=position]').val(new_position);
+
+        var element = $(el).find('input[name=position]');
+        var row = $(element).attr('name');
+        if(row === undefined){
+            row = $(el).attr('data-row');
+        }
+        var event = 'edit';
+        var data = {
+            value_where: $(element).attr('data-value_where'),
+            row_where: $(element).attr('data-row_where'),
+            value: new_position,
+            row: row,
+            event: event,
+            table: $(element).attr('data-table')
+        };
         hidden_action('/admin/ajax/EditRow', data, false, false, false, true);
     });
 }
@@ -720,10 +757,18 @@ function rebuild_cost() {
     })
 }
 
-function rebuild_sitemap() {
-    hidden_action('/admin/sitemap/generate', false, false, false, false, false);
-}
-
-function rebuild_rss() {
-    hidden_action('/admin/rss/generate', false, false, false, false, false);
+function selectIdItem(id) {
+    $('.actionSelect'+id).toggleClass('uk-icon-check');
+    var countSelected = $('.actionSelect.uk-icon-check').length;
+    if(countSelected > 0){
+        $('form#massiveAction').find('span').html(countSelected);
+        $('form#massiveAction').removeClass('uk-hidden');
+    }else{
+        $('form#massiveAction').addClass('uk-hidden');
+    }
+    if($('select[name="ids[]"]').find('option[value='+ id +']:selected').val()){
+        $('select[name="ids[]"]').find('option[value='+ id +']').prop('selected', false);
+    }else{
+        $('select[name="ids[]"]').find('option[value='+ id +']').prop('selected', true);
+    }
 }
