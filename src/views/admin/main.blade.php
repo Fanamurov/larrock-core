@@ -85,7 +85,7 @@
         <script src="/_assets/bower_components/uikit/js/core/modal.min.js"></script>
         <script src="/_assets/bower_components/tinymce/tinymce.min.js"></script>
         <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
-        <script src="{{asset('_assets/_admin/_js/back_core.min.js')}}"></script>
+        <script src="/_assets/_admin/_js/min/back_core.min.js"></script>
         @if(isset($validator)) {!! $validator !!} @endif
         <script>
             window.FileAPI = {

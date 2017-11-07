@@ -44,4 +44,26 @@ trait GetFilesAndImages{
         });
         return $value;
     }
+
+    public function getFirstImage110Attribute()
+    {
+        $value = Cache::remember(sha1('image_f110_category'. $this->id .'_'. $this->modelName), 1440, function() {
+            if($get_image = $this->getMedia('images')->sortByDesc('order_column')->first()){
+                return $get_image->getUrl('110x110');
+            }
+            return '/_assets/_front/_images/empty_big.png';
+        });
+        return $value;
+    }
+
+    public function getFirstImage140Attribute()
+    {
+        $value = Cache::remember(sha1('image_f140_category'. $this->id .'_'. $this->modelName), 1440, function() {
+            if($get_image = $this->getMedia('images')->sortByDesc('order_column')->first()){
+                return $get_image->getUrl('140x140');
+            }
+            return '/_assets/_front/_images/empty_big.png';
+        });
+        return $value;
+    }
 }

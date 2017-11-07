@@ -1,8 +1,7 @@
+//Install Yarn:
+//https://yarnpkg.com/en/docs/install
 //Install Gulp:
-//npm install --global gulp-cli *if need*
-//npm install --save-dev gulp
-//npm install --save-dev gulp-sass -- NOT
-//npm install --save-dev gulp-sass gulp-cssnano gulp-autoprefixer gulp-bless gulp-concat gulp-notify gulp-removelogs gulp-uglify gulp-rename gulp-changed gulp-filesize gulp-imagemin imagemin-pngquant
+//yarn add gulp-cli gulp gulp-sass gulp-cssnano gulp-autoprefixer gulp-bless gulp-concat gulp-notify gulp-removelogs gulp-uglify gulp-rename gulp-changed gulp-filesize gulp-imagemin imagemin-pngquant
 
 var project = 'larrock55'; //Название проекта
 
@@ -22,7 +21,7 @@ var imagemin = require('gulp-imagemin');
 var pngquant = require('imagemin-pngquant');
 
 gulp.task('default', function() {
-    gulp.start('sass_uikit_admin', 'sass', 'sass_uikit', 'javascript_admin', 'javascript_front','watch', 'libs_styles');
+    gulp.start('sass_uikit_admin', 'sass', 'sass_uikit', 'javascript_admin', 'javascript_front', 'libs_styles', 'watch');
 });
 
 gulp.task('watch', function () {
@@ -123,15 +122,15 @@ gulp.task('javascript_admin', function() {
             './public_html/_assets/bower_components/pickadate/lib/compressed/picker.date.js',
             './public_html/_assets/bower_components/noty/lib/noty.js',
             './public_html/_assets/bower_components/jquery.cookie/jquery.cookie.js',
-            './resources/assets/admin/js/backend.js',
-            './resources/assets/admin/js/plugin_images.js',
-            './resources/assets/admin/js/plugin_files.js'
+            './public_html/_assets/_admin/_js/backend.js',
+            './public_html/_assets/_admin/_js/plugin_images.js',
+            './public_html/_assets/_admin/_js/plugin_files.js'
         ])
         .pipe(concat('back_core.min.js'))
         .pipe(removeLogs())
         .pipe(notify("Js reload: <%= file.relative %>! "+ project))
         .pipe(size({showFiles : true}))
-        .pipe(gulp.dest('./public_html/_assets/_admin/_js'));
+        .pipe(gulp.dest('./public_html/_assets/_admin/_js/min'));
 });
 
 gulp.task('javascript_front', function() {
@@ -141,14 +140,14 @@ gulp.task('javascript_front', function() {
             './public_html/vendor/jsvalidation/js/jsvalidation.min.js',
             './public_html/_assets/bower_components/pickadate/lib/compressed/picker.js',
             './public_html/_assets/bower_components/pickadate/lib/compressed/picker.date.js',
-            './resources/assets/front/js/frontend.js'
+            './public_html/_assets/_front/_js/frontend.js'
         ])
         .pipe(concat('front_core.min.js'))
         .pipe(uglify())
         .pipe(removeLogs())
         .pipe(notify("Js reload: <%= file.relative %>! "+ project))
         .pipe(size({showFiles : true}))
-        .pipe(gulp.dest('./public_html/_assets/_front/_js'));
+        .pipe(gulp.dest('./public_html/_assets/_front/_js/min'));
 });
 
 gulp.task('imagemin', function () {

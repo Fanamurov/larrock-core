@@ -35,10 +35,12 @@ class LarrockCoreServiceProvider extends ServiceProvider
             __DIR__.'/lang' => resource_path('lang/vendor/larrock')
         ], 'lang');
         $this->publishes([
-            __DIR__.'/views' => base_path('resources/views/vendor/larrock')
-        ], 'views');
+            __DIR__.'/views/front' => base_path('resources/views/vendor/larrock/front')
+        ], 'views-front-core');
         $this->publishes([
-            __DIR__.'/assets/resources' => resource_path('assets'),
+            __DIR__.'/views/admin' => base_path('resources/views/vendor/larrock/admin')
+        ], 'views-admin-core');
+        $this->publishes([
             __DIR__.'/assets/public_html' => $public_path,
             __DIR__.'/assets/gulpfile' => base_path()
         ], 'assets');
@@ -73,7 +75,8 @@ class LarrockCoreServiceProvider extends ServiceProvider
         $this->commands([
             'command.larrock:check',
             'command.larrock:updateEnv',
-            'command.larrock:manager'
+            'command.larrock:manager',
+            'command.larrock:addAdmin'
         ]);
 
         $this->app->bind(DefaultFilesystem::class, MediaFilesystem::class);

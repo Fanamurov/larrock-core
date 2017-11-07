@@ -603,7 +603,11 @@ function sort_rows() {
                 new_position = ++next_position;
             }
         }else{
-            new_position = --prev_position;
+            if(prev_position){
+                new_position = --prev_position;
+            }else{
+                new_position = ++next_position;
+            }
         }
         $(el).find('input[name=position]').val(new_position);
 
