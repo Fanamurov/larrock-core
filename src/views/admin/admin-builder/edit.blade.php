@@ -96,6 +96,13 @@
                 <input name="id_connect" type="hidden" value="{{ $data->id }}">
                 <input name="type_connect" type="hidden" value="{{ $app->name }}">
                 <input name="place" type="hidden" value="material">
+                @if(isset($data->get_category))
+                    @if(isset($data->get_category->id) && $data->get_category->id)
+                        <input name="category_item" type="hidden" value="{{ $data->get_category->id }}">
+                    @else
+                        <input name="category_item" type="hidden" value="{{ $data->get_category->first()->id }}">
+                    @endif
+                @endif
                 {{ csrf_field() }}
                 <button type="submit" class="uk-button uk-button-danger uk-button-large please_conform">Удалить материал</button>
             </form>

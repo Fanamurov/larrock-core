@@ -16,7 +16,7 @@ use Validator;
 use View;
 use Session;
 
-class AdminController extends BaseController
+class AdminControllerDeprecated extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 

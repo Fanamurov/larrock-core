@@ -18,7 +18,12 @@
                         @if(Request::old($row_key, $data->{$row_key}) === $options_key) selected @endif
                     @endif
                     @endisset>
-                {{ $options_value->{$row_settings->option_title} }}</option>
+                @if($row_settings->option_title)
+                    {{ $options_value->{$row_settings->option_title} }}
+                @else
+                    {{ $options_value }}
+                @endif
+            </option>
         @endforeach
     </select>
 </div>

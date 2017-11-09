@@ -33,7 +33,7 @@ class LarrockManagerCommand extends Command
             'larrock-catalog', 'larrock-cart', 'larrock-wizard', 'larrock-discount',
             'larrock-feed', 'larrock-category', 'larrock-reviews', 'larrock-smartbanners',
             'larrock-menu', 'larrock-users', 'larrock-pages', 'larrock-blocks', 'larrock-contact',
-            'larrock-admin-seo', 'larrock-admin-search', 'all'
+            'larrock-admin-seo', 'larrock-search', 'all'
         ];
 
         $name = $this->choice('What to install/update?', $packages);
