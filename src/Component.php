@@ -458,9 +458,10 @@ class Component
     /**
      * Данные для поиска по материалам компонента
      *
+     * @param null|bool $admin Если TRUE - дял поиска будут доступны вообще все элементы (не только опубликованные)
      * @return null
      */
-    public function search()
+    public function search($admin)
     {
         return NULL;
     }
