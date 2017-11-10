@@ -106,10 +106,10 @@ class LarrockCheckCommand extends Command
         }else{
             $this->error('.env MAIL_DRIVER: '. env('MAIL_DRIVER') .'. Maybe mail?');
         }
-        if(env('MAIL_TO_ADMIN_NAME')){
-            $this->info('MAIL_TO_ADMIN_NAME: '. env('MAIL_TO_ADMIN_NAME') .' (OK)');
+        if(env('MAIL_FROM_NAME')){
+            $this->info('MAIL_FROM_NAME: '. env('MAIL_FROM_NAME') .' (OK)');
         }else{
-            $this->error('.env MAIL_TO_ADMIN_NAME not found (sitename for emails)');
+            $this->error('.env MAIL_FROM_NAME not found (sitename for emails)');
         }
         if(env('MAIL_STOP', false) === false){
             $this->info('MAIL_STOP: '. env('MAIL_STOP') .'. Mails may be send (OK)');
