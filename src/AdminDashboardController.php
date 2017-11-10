@@ -3,9 +3,9 @@
 namespace Larrock\Core;
 
 use Cache;
-use Larrock\Core\AdminController;
+use Illuminate\Routing\Controller;
 
-class AdminDashboardController extends AdminController
+class AdminDashboardController extends Controller
 {
     public function index()
     {
