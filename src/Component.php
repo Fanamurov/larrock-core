@@ -19,6 +19,7 @@ class Component
     public $description;
     public $table;
     public $rows;
+    public $customMediaConversions;
 
     /** @var Model */
     public $model;
@@ -196,6 +197,18 @@ class Component
     {
         $this->plugins_backend['images'] = 'images';
         return $this;
+    }
+
+    /**
+     * Метод для добавления в модель новых пресетов картинок для Medialibrary
+     * @param $conversions
+     */
+    public function addCustomMediaConversions($conversions)
+    {
+        if( !is_array($conversions)){
+            return abort(403, 'addCustomMediaConversions должно быть массивом');
+        }
+        $this->customMediaConversions = $conversions;
     }
 
     public function addPluginFiles()
