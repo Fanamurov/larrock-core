@@ -16,8 +16,8 @@ trait GetFilesAndImages{
             ->height(140)->width(140)
             ->performOnCollections('images');
 
-        if($this->component->customMediaConversions){
-            foreach ($this->component->customMediaConversions as $conversion){
+        if($this->config->customMediaConversions){
+            foreach ($this->config->customMediaConversions as $conversion){
                 $explode = explode('x', $conversion);
                 $this->addMediaConversion($conversion)
                     ->height($explode[0])->width($explode[1])
@@ -28,22 +28,22 @@ trait GetFilesAndImages{
 
     public function getFiles()
     {
-        return $this->hasMany('Spatie\MediaLibrary\Media', 'model_id', 'id')->where([['model_type', '=', $this->component->model], ['collection_name', '=', 'files']])->orderBy('order_column', 'DESC');
+        return $this->hasMany('Spatie\MediaLibrary\Media', 'model_id', 'id')->where([['model_type', '=', $this->config->model], ['collection_name', '=', 'files']])->orderBy('order_column', 'DESC');
     }
 
     public function getImages()
     {
-        return $this->hasMany('Spatie\MediaLibrary\Media', 'model_id', 'id')->where([['model_type', '=', $this->component->model], ['collection_name', '=', 'images']])->orderBy('order_column', 'DESC');
+        return $this->hasMany('Spatie\MediaLibrary\Media', 'model_id', 'id')->where([['model_type', '=', $this->config->model], ['collection_name', '=', 'images']])->orderBy('order_column', 'DESC');
     }
 
     public function getFirstImage()
     {
-        return $this->hasOne('Spatie\MediaLibrary\Media', 'model_id', 'id')->where([['model_type', '=', $this->component->model], ['collection_name', '=', 'images']])->orderBy('order_column', 'DESC');
+        return $this->hasOne('Spatie\MediaLibrary\Media', 'model_id', 'id')->where([['model_type', '=', $this->config->model], ['collection_name', '=', 'images']])->orderBy('order_column', 'DESC');
     }
 
     public function getFirstImageAttribute()
     {
-        $value = Cache::remember(sha1('image_f_category'. $this->id .'_'. $this->component->model), 1440, function() {
+        $value = Cache::remember(sha1('image_f_category'. $this->id .'_'. $this->config->model), 1440, function() {
             if($get_image = $this->getMedia('images')->sortByDesc('order_column')->first()){
                 return $get_image->getUrl();
             }
@@ -54,7 +54,7 @@ trait GetFilesAndImages{
 
     public function getFirstImage110Attribute()
     {
-        $value = Cache::remember(sha1('image_f110_category'. $this->id .'_'. $this->component->model), 1440, function() {
+        $value = Cache::remember(sha1('image_f110_category'. $this->id .'_'. $this->config->model), 1440, function() {
             if($get_image = $this->getMedia('images')->sortByDesc('order_column')->first()){
                 return $get_image->getUrl('110x110');
             }
@@ -65,7 +65,7 @@ trait GetFilesAndImages{
 
     public function getFirstImage140Attribute()
     {
-        $value = Cache::remember(sha1('image_f140_category'. $this->id .'_'. $this->component->model), 1440, function() {
+        $value = Cache::remember(sha1('image_f140_category'. $this->id .'_'. $this->config->model), 1440, function() {
             if($get_image = $this->getMedia('images')->sortByDesc('order_column')->first()){
                 return $get_image->getUrl('140x140');
             }
