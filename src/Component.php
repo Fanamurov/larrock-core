@@ -74,6 +74,17 @@ class Component
         return Component::_valid_construct($this);
     }
 
+    public function getFillableRows()
+    {
+        $fillable_rows = [];
+        foreach ($this->rows as $key => $row){
+            if($row->fillable){
+                $fillable_rows[] = $key;
+            }
+        }
+        return $fillable_rows;
+    }
+
     public function addFillableUserRows($rows)
     {
         $fillable_rows = $rows;

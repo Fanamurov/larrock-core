@@ -1,9 +1,10 @@
 //Install Yarn:
 //https://yarnpkg.com/en/docs/install
+//brew install yarn
 //Install Gulp:
 //yarn add gulp-cli gulp gulp-sass gulp-cssnano gulp-autoprefixer gulp-bless gulp-concat gulp-notify gulp-removelogs gulp-uglify gulp-rename gulp-changed gulp-filesize gulp-imagemin imagemin-pngquant
 
-var project = 'larrock55'; //Название проекта
+var project = 'wiki'; //Название проекта
 
 var gulp = require('gulp');
 var sass = require('gulp-sass');
@@ -21,15 +22,19 @@ var imagemin = require('gulp-imagemin');
 var pngquant = require('imagemin-pngquant');
 
 gulp.task('default', function() {
-    gulp.start('sass_uikit_admin', 'sass', 'sass_uikit', 'javascript_admin', 'javascript_front', 'libs_styles', 'watch');
+    gulp.start('watch');
+});
+
+gulp.task('reload', function() {
+    gulp.start('sass_uikit_admin', 'sass', 'sass_uikit', 'javascript_admin', 'javascript_front', 'libs_styles');
 });
 
 gulp.task('watch', function () {
     gulp.watch('./public_html/_assets/_admin/_css/**/*.scss', ['sass_uikit_admin']);
     gulp.watch('./public_html/_assets/_front/_css/**/**/*.scss', ['sass']);
     gulp.watch('./public_html/_assets/bower_components/uikit/scss/**/**/*.scss', ['sass_uikit']);
-    gulp.watch(['./resources/assets/admin/js/**/*.js', '!./resources/assets/admin/js/min/*'], ['javascript_admin']);
-    gulp.watch(['./resources/assets/front/js/**/*.js', '!./resources/assets/front/js/min/*'], ['javascript_front']);
+    gulp.watch(['./public_html/_assets/_admin/_js/**/*.js', '!./public_html/_assets/_admin/_js/min/*'], ['javascript_admin']);
+    gulp.watch(['./public_html/_assets/_admin/_js/**/*.js', '!./public_html/_assets/_front/_js/min/*'], ['javascript_front']);
     gulp.watch(['./public_html/_assets/bower_components/**/**/**/**'], ['libs_styles']);
 });
 

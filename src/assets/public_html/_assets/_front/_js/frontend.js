@@ -12,7 +12,6 @@ function noty_show(type, message){
             timeout : 0,
             pos     : 'top-center'
         });
-
     }else{
         UIkit.notify({
             message : '<i class="uk-icon-check"></i> '+ message,
@@ -141,6 +140,7 @@ function change_option_ajax() {
  */
 function add_to_cart_fast() {
     $('.add_to_cart_fast').click(function(){
+        noty_show('message', 'Добавляем в корзину');
         var qty = 1;
         if(parseInt($(this).attr('data-id')) > 0){
             qty = parseInt($(this).attr('data-qty'));
