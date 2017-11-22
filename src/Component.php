@@ -142,6 +142,24 @@ class Component
         return $this;
     }
 
+    public function combineFrontMiddlewares($user_middlewares = NULL)
+    {
+        $middleware = ['web', 'GetSeo'];
+        if(file_exists(base_path(). '/vendor/fanamurov/larrock-menu')){
+            $middleware[] = 'AddMenuFront';
+        }
+        if(file_exists(base_path(). '/vendor/fanamurov/larrock-blocks')){
+            $middleware[] = 'AddBlocksTemplate';
+        }
+        if(file_exists(base_path(). '/vendor/fanamurov/larrock-discount')){
+            $middleware[] = 'DiscountsShare';
+        }
+        if($user_middlewares){
+            array_merge($middleware, $user_middlewares);
+        }
+        return array_unique($middleware);
+    }
+
     /**
      * Используется через SaveAdminPluginsData Middleware (Core)
      * @param $request
