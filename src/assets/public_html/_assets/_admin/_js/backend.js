@@ -572,7 +572,6 @@ $(document).ready(function(){
 function ajax_edit_row() {
     /** Input для редактирования поля */
     $('.ajax_edit_row').on('change', function(){
-        alert($(this).attr('name'));
         var value_where = $(this).attr('data-value_where');
         var row_where = $(this).attr('data-row_where');
         var value = $(this).val();

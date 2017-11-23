@@ -9,6 +9,10 @@
     font-weight: 600;
     font-size: 29px;
     line-height: 35px;
+    margin-top: 50px;
+    &:first-of-type{
+      margin-top: 25px;
+    }
   }
 
   h3{

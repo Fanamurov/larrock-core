@@ -105,3 +105,35 @@ form#form-orderFull{
     line-height: 35px;
   }
 }
+
+.motivate-container{
+  @include list-mart;
+
+  ul.motivate_list{
+    li{
+      font-size: 90%;
+
+      > p:first-of-type{
+        display: inline;
+      }
+    }
+  }
+}
+
+.discount-row-text{
+  font-size: 90%;
+  font-style: italic;
+  > p:first-of-type{
+    display: inline;
+  }
+}
+
+.discount_row{
+  p.row-total{
+    font-size: 130%;
+    font-weight: 700;
+    .uk-h1{
+      font-weight: 700;
+    }
+  }
+}
