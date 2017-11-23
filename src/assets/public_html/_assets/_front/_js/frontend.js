@@ -260,6 +260,26 @@ function link_block() {
     $('.link_block_this').click(function(){window.location = $(this).attr('data-href');});
 }
 
+function checkKuponDiscount() {
+    var keyword = $('input[name=kupon]').val();
+    $.ajax({
+        url: '/ajax/checkKuponDiscount',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            keyword: keyword
+        },
+        error: function() {
+            noty_show('alert', 'Такого купона нет');
+            $('.kupon_text').slideUp().html();
+        },
+        success: function(res) {
+            noty_show('success', 'Купон "'+ keyword +'" будет применен');
+            $('.kupon_text').slideDown().html(res.message);
+        }
+    });
+}
+
 $(document).ready(function(){
     $.ajaxSetup({
         headers: {
