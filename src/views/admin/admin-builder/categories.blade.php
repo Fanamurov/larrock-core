@@ -68,13 +68,18 @@
 
     @if(isset($data))
         @if(count($data) === 0)
-            @if(isset($category->get_child) && $category->get_child === 0)
-                <div class="uk-alert uk-alert-warning">Материалов еще нет</div>
-            @endif
-            @if( !isset($categories))
-                <div class="uk-alert uk-alert-warning">Материалов еще нет</div>
-            @endif
+            <div class="uk-alert uk-alert-warning">Материалов еще нет</div>
         @else
+            <form id="massiveActionMaterials" class="uk-alert uk-alert-warning massive_action uk-hidden" method="post" action="/admin/{{ $app->name }}/0">
+                <select name="ids[]" multiple class="uk-hidden">
+                    @foreach($data as $item)
+                        <option value="{{ $item->id }}">{{ $item->id }}</option>
+                    @endforeach
+                </select>
+                {{ method_field('DELETE') }}
+                {{ csrf_field() }}
+                <p>Выделено: <span>0</span> элементов. <button type="submit" class="uk-button uk-button-danger please_conform">Удалить</button></p>
+            </form>
             <p class="uk-h4">Материалы:</p>
             <div class="uk-margin-large-bottom">
                 <table class="uk-table uk-table-striped uk-form">
@@ -106,13 +111,13 @@
                         @foreach($data as $data_value)
                             <tr>
                                 <td width="55">
-                                    <a href="/admin/{{ $app->name }}/{{ $data_value->id }}/edit">
+                                    <div class="actionSelect{{ $data_value->id }} actionSelect" onclick="selectIdItem({{ $data_value->id }})" data-target="massiveActionMaterials">
                                         @if($app->plugins_backend && array_key_exists('images', $app->plugins_backend) && $image = $data_value->getMedia('images')->sortByDesc('order_column')->first())
                                             <img style="width: 55px" src="{{ $image->getUrl('110x110') }}">
                                         @else
                                             <i class="icon-padding icon-color uk-icon-picture-o" title="Фото не прикреплено"></i>
                                         @endif
-                                    </a>
+                                    </div>
                                 </td>
                                 @if(isset($app->rows['title']))
                                     <td>

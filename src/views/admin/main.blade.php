@@ -71,7 +71,7 @@
                 <img src="https://poser.pugx.org/fanamurov/larrock-core/downloads" alt="Total downloads">
                 <img src="https://poser.pugx.org/fanamurov/larrock-core/license" alt="License">
             </a><br/>
-            <span>Project wiki <a href="https://github.com/Fanamurov/larrock-core/wiki" target="_blank">available on GitHub</a></span>.<br/>
+            <span>Project wiki <a href="http://larrock-cms.ru" target="_blank">available on larrock-cms.ru</a></span>.<br/>
             <span>Commercial development and support of sites on LarrockCMS - <a href="http://martds.ru" target="_blank">MartDS</a>.</span>
         </footer>
 

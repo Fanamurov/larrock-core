@@ -2,13 +2,12 @@
 //https://yarnpkg.com/en/docs/install
 //brew install yarn
 //Install Gulp:
-//yarn add gulp-cli gulp gulp-sass gulp-cssnano gulp-autoprefixer gulp-bless gulp-concat gulp-notify gulp-removelogs gulp-uglify gulp-rename gulp-changed gulp-filesize gulp-imagemin imagemin-pngquant
+//yarn add gulp-cli gulp gulp-sass gulp-csso gulp-autoprefixer gulp-bless gulp-concat gulp-notify gulp-removelogs gulp-uglify gulp-rename gulp-changed gulp-filesize gulp-imagemin imagemin-pngquant
 
 var project = 'larrock'; //Название проекта
 
 var gulp = require('gulp');
 var sass = require('gulp-sass');
-var nano = require('gulp-cssnano');
 var autoprefixer = require('gulp-autoprefixer');
 var bless = require('gulp-bless');
 var concat = require('gulp-concat');
@@ -20,6 +19,7 @@ var changed = require('gulp-changed');
 var size = require('gulp-filesize');
 var imagemin = require('gulp-imagemin');
 var pngquant = require('imagemin-pngquant');
+var csso = require('gulp-csso');
 
 gulp.task('default', function() {
     gulp.start('watch');
@@ -40,7 +40,7 @@ gulp.task('watch', function () {
 
 gulp.task('sass', function () {
     gulp.src([
-        './public_html/_assets/_front/_css/*.scss'
+        './public_html/_assets/_front/_css/layout.scss'
         ])
         .pipe(changed('./public_html/_assets/_front/_css/**/**/*.scss'))
         .pipe(sass.sync().on('error', sass.logError))
@@ -49,7 +49,7 @@ gulp.task('sass', function () {
             cascade: true
         }))
         .pipe(bless())
-        .pipe(nano())
+        .pipe(csso())
         .pipe(rename({suffix: '.min'} ))
         .pipe(concat('front.min.css'))
         .pipe(size({showFiles : true}))
@@ -67,7 +67,7 @@ gulp.task('sass_uikit', function () {
             cascade: true
         }))
         .pipe(bless())
-        .pipe(nano())
+        .pipe(csso())
         .pipe(rename({suffix: '.min'} ))
         .pipe(concat('uikit.min.css'))
         .pipe(size({showFiles : true}))
@@ -92,7 +92,7 @@ gulp.task('libs_styles', function () {
             cascade: true
         }))
         .pipe(bless())
-        .pipe(nano())
+        .pipe(csso())
         .pipe(rename({suffix: '.min'} ))
         .pipe(concat('libs.min.css'))
         .pipe(size({showFiles : true}))
@@ -112,7 +112,7 @@ gulp.task('sass_uikit_admin', function () {
             cascade: true
         }))
         .pipe(bless())
-        .pipe(nano())
+        .pipe(csso())
         .pipe(rename({suffix: '.min'} ))
         .pipe(concat('admin.min.css'))
         .pipe(size({showFiles : true}))

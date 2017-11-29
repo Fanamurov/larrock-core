@@ -587,6 +587,7 @@ function ajax_edit_row() {
     });
 }
 
+
 /**
  * Сортировка материалов по весу через плагин uikit sortable
  */
