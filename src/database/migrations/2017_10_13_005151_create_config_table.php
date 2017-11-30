@@ -19,6 +19,8 @@ class CreateConfigTable extends Migration {
 			$table->text('value');
 			$table->char('type');
 			$table->timestamps();
+
+            $table->index(['name', 'type']);
 		});
 	}
 

@@ -22,6 +22,8 @@ class CreateSeoTable extends Migration {
 			$table->string('seo_url_connect')->nullable();
 			$table->string('seo_type_connect');
 			$table->timestamps();
+
+            $table->index(['seo_id_connect', 'seo_url_connect']);
 		});
 	}
 

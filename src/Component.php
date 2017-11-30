@@ -9,6 +9,7 @@ use Larrock\Core\Helpers\FormBuilder\FormInput;
 use Larrock\Core\Helpers\FormBuilder\FormTextarea;
 use Illuminate\Database\Eloquent\Model;
 use JsValidator;
+use Larrock\Core\Models\Link;
 use View;
 use Illuminate\Http\Request;
 
@@ -115,7 +116,7 @@ class Component
     {
         $row = new FormInput('position', 'Вес');
         $this->rows['position'] = $row->setTab('other', 'Дата, вес, активность')->setValid('integer')
-            ->setDefaultValue(0)->setInTableAdminAjaxEditable();
+            ->setDefaultValue(0)->setInTableAdminAjaxEditable()->setFillable();
         return $this;
     }
 
@@ -123,7 +124,7 @@ class Component
     {
         $row = new FormCheckbox('active', 'Опубликован');
         $this->rows['active'] = $row->setTab('other', 'Дата, вес, активность')->setChecked()
-            ->setValid('integer|max:1')->setDefaultValue(1)->setInTableAdminAjaxEditable();
+            ->setValid('integer|max:1')->setDefaultValue(1)->setInTableAdminAjaxEditable()->setFillable();
         return $this;
     }
 
@@ -168,6 +169,7 @@ class Component
     {
         $this->savePluginSeoData($request);
         $this->savePluginAnonsToModuleData($request);
+        $this->saveLinkData($request);
     }
 
     /**
@@ -191,7 +193,8 @@ class Component
         $this->plugins_backend['seo']['rows'] = $rows_plugin;
 
         $row = new FormInput('url', 'URL материала');
-        $this->rows['url'] = $row->setTab('seo', 'SEO')->setValid('max:155|required|unique:'. $this->table .',url,:id')->setCssClass('uk-width-1-1');
+        $this->rows['url'] = $row->setTab('seo', 'SEO')
+            ->setValid('max:155|required|unique:'. $this->table .',url,:id')->setCssClass('uk-width-1-1')->setFillable();
 
         return $this;
     }
@@ -217,6 +220,39 @@ class Component
                     $seo->delete($seo->id);
                     \Session::push('message.success', 'SEO удалено');
                 }
+            }
+        }
+        return TRUE;
+    }
+
+    /**
+     * Сохранение связей данных компонента (FormTagsLink)
+     * @param $request
+     * @return bool
+     */
+    public function saveLinkData($request): bool
+    {
+        if( !$request->has('_jsvalidation') && $request->get('link')){
+            $modelParent = $request->get('modelParent');
+            $modelParentId = $request->get('modelParentId');
+            $modelChild = $request->get('modelChild');
+            $link = $request->get('link');
+
+            //Удаляем старые связи
+            $model = new Link();
+            $model->whereIdParent($modelParentId)->whereModelParent($modelParent)->whereModelChild($modelChild)->delete();
+
+            if($modelParent && $modelParentId && $modelChild && $link && \is_array($link) ){
+                $link = $request->get('link');
+                foreach ($link as $value){
+                    $model = new Link();
+                    $model->id_parent = $request->get('modelParentId');
+                    $model->model_parent = $request->get('modelParent');
+                    $model->model_child = $request->get('modelChild');
+                    $model->id_child = $value;
+                    $model->save();
+                }
+                \Session::push('message.success', 'Связи обновлены');
             }
         }
         return TRUE;
@@ -330,7 +366,6 @@ class Component
         return $rules;
     }
 
-
     /**
      * Вывод данные полей компонента для табов
      * @param $data
@@ -398,6 +433,22 @@ class Component
                         $seo->delete();
                     }
                 }
+            }
+        }
+        $this->removeLinkData($config);
+    }
+
+    /**
+     * Удаление данных связей при удалении материала
+     * @param $config
+     */
+    public function removeLinkData($config)
+    {
+        foreach($config->rows as $row){
+            if(get_class($row) === 'Larrock\Core\Helpers\FormBuilder\FormTagsLink'){
+                //Удаляем старые связи
+                $model = new Link();
+                $model->whereIdParent(\Request::input('id_connect'))->whereModelParent($row->modelParent)->whereModelChild($row->modelChild)->delete();
             }
         }
     }
