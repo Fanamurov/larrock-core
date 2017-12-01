@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 use JsValidator;
 use Larrock\Core\Models\Link;
 use View;
-use Illuminate\Http\Request;
 
 class Component
 {
@@ -143,9 +142,18 @@ class Component
         return $this;
     }
 
+    /**
+     * Метод объявления использования middleware для компонентов.
+     * Вызывается из конструктора класса контроллера компонента через $this->middleware(Компонент::combineFrontMiddlewares());
+     * @param null $user_middlewares
+     * @return array
+     */
     public function combineFrontMiddlewares($user_middlewares = NULL)
     {
         $middleware = ['web', 'GetSeo'];
+        if($config = config('larrock.middlewares.front')){
+            array_merge($middleware, $config);
+        }
         if(file_exists(base_path(). '/vendor/fanamurov/larrock-menu')){
             $middleware[] = 'AddMenuFront';
         }
@@ -154,6 +162,24 @@ class Component
         }
         if(file_exists(base_path(). '/vendor/fanamurov/larrock-discount')){
             $middleware[] = 'DiscountsShare';
+        }
+        if($user_middlewares){
+            array_merge($middleware, $user_middlewares);
+        }
+        return array_unique($middleware);
+    }
+
+    /**
+     * Метод объявления использования middleware для компонентов.
+     * Вызывается из конструктора класса контроллера компонента через $this->middleware(Компонент::combineAdminMiddlewares());
+     * @param null $user_middlewares
+     * @return array
+     */
+    public function combineAdminMiddlewares($user_middlewares = NULL)
+    {
+        $middleware = ['web', 'level:2', 'LarrockAdminMenu', 'SaveAdminPluginsData', 'SiteSearchAdmin'];
+        if($config = config('larrock.middlewares.admin')){
+            array_merge($middleware, $config);
         }
         if($user_middlewares){
             array_merge($middleware, $user_middlewares);

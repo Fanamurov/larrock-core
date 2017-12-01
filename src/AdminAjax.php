@@ -13,6 +13,11 @@ use Larrock\Core\Helpers\Plugins\Typograf;
 
 class AdminAjax extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(\LarrockPages::combineAdminMiddlewares());
+    }
+
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse

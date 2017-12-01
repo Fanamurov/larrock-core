@@ -7,6 +7,11 @@ use Illuminate\Routing\Controller;
 
 class AdminDashboardController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(\LarrockPages::combineAdminMiddlewares());
+    }
+
     public function index()
     {
         $data['coreVersions'] = Cache::remember('coreVersion', 1440, function(){
