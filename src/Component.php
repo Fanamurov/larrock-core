@@ -152,7 +152,7 @@ class Component
     {
         $middleware = ['web', 'GetSeo'];
         if($config = config('larrock.middlewares.front')){
-            array_merge($middleware, $config);
+            $middleware = array_merge($middleware, $config);
         }
         if(file_exists(base_path(). '/vendor/fanamurov/larrock-menu')){
             $middleware[] = 'AddMenuFront';
@@ -164,7 +164,7 @@ class Component
             $middleware[] = 'DiscountsShare';
         }
         if($user_middlewares){
-            array_merge($middleware, $user_middlewares);
+            $middleware = array_merge($middleware, $user_middlewares);
         }
         return array_unique($middleware);
     }
@@ -179,10 +179,10 @@ class Component
     {
         $middleware = ['web', 'level:2', 'LarrockAdminMenu', 'SaveAdminPluginsData', 'SiteSearchAdmin'];
         if($config = config('larrock.middlewares.admin')){
-            array_merge($middleware, $config);
+            $middleware = array_merge($middleware, $config);
         }
         if($user_middlewares){
-            array_merge($middleware, $user_middlewares);
+            $middleware = array_merge($middleware, $user_middlewares);
         }
         return array_unique($middleware);
     }

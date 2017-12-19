@@ -28,8 +28,8 @@
                             <span class="devider_top"></span>
                             <div class="modules-list">
                                 @yield('front.modules.list.catalog')
-                                @if(isset($FeedAnons))
-                                    @include('vendor.larrock.front.modules.list.news', ['data' => $FeedAnons])
+                                @if(isset($anons) && count($anons) > 0)
+                                    @include('vendor.larrock.front.modules.list.news', ['data' => $anons])
                                 @endif
                                 @if(isset($RandomCatalogItems))
                                     @include('larrock::front.modules.list.random_catalog_items', $RandomCatalogItems)

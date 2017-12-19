@@ -141,7 +141,6 @@ gulp.task('javascript_admin', function() {
 gulp.task('javascript_front', function() {
     return gulp.src([
             './public_html/_assets/bower_components/jquery.cookie/jquery.cookie.js',
-            './public_html/_assets/bower_components/fancybox/dist/jquery.fancybox.js',
             './public_html/vendor/jsvalidation/js/jsvalidation.min.js',
             './public_html/_assets/bower_components/pickadate/lib/compressed/picker.js',
             './public_html/_assets/bower_components/pickadate/lib/compressed/picker.date.js',

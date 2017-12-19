@@ -47,6 +47,7 @@ trait AdminMethodsStore{
             }
         }
 
+        unset($data->config);
         if($data->save()){
             $this->config->actionAttach($this->config, $data, $request);
             \Cache::flush();
