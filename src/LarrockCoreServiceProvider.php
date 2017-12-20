@@ -51,6 +51,7 @@ class LarrockCoreServiceProvider extends ServiceProvider
             __DIR__.'/config/larrock-core-adminmenu.php' => config_path('larrock-core-adminmenu.php'),
             __DIR__.'/config/larrock-sitemap.php' => config_path('larrock-sitemap.php'),
             __DIR__.'/config/larrock-to-dashboard.php' => config_path('larrock-to-dashboard.php'),
+            __DIR__.'/config/larrock.php' => config_path('larrock.php'),
         ], 'config');
     }
 
@@ -68,6 +69,7 @@ class LarrockCoreServiceProvider extends ServiceProvider
         $this->mergeConfigFrom( __DIR__.'/config/larrock-core-adminmenu.php', 'larrock-core-adminmenu');
         $this->mergeConfigFrom( __DIR__.'/config/larrock-sitemap.php', 'larrock-sitemap');
         $this->mergeConfigFrom( __DIR__.'/config/larrock-to-dashboard.php', 'larrock-to-dashboard');
+        $this->mergeConfigFrom( __DIR__.'/config/larrock.php', 'larrock');
 
         $this->app->bind('command.larrock:check', LarrockCheckCommand::class);
         $this->app->bind('command.larrock:updateEnv', LarrockUpdateEnvCommand::class);
