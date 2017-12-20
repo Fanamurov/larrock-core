@@ -1,4 +1,5 @@
 <nav class="uk-navbar">
+    <a href="#my-id" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas></a>
     <a href="/admin" class="uk-navbar-brand">
         <img src="/_assets/_admin/_images/hand-with-white-outline-forming-a-rock-on-symbol.png"> L!ROCK
     </a>
@@ -26,7 +27,7 @@
         </li>
     </ul>
     @if(isset($searchSiteAdmin))
-        <div class="uk-navbar-content uk-hidden-small">
+        <div class="uk-navbar-content uk-hidden-small searchSiteAdmin">
             {!! $searchSiteAdmin !!}
         </div>
     @endif
@@ -35,7 +36,6 @@
         <a class="uk-button" href="{{ url('/logout') }}">Выйти</a>
     </div>
 
-    <a href="#my-id" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas></a>
     <div id="my-id" class="uk-offcanvas">
         <div class="uk-offcanvas-bar">
             <form class="uk-form uk-margin uk-margin-top uk-margin-left uk-margin-right" action="/admin/search" method="get">
@@ -55,10 +55,6 @@
                                 {!! $item !!}
                             @endforeach
                             <li class="uk-nav-header">Система</li>
-                            @if(file_exists(base_path(). '/vendor/fanamurov/larrock-sitemap'))
-                                <li><a href="#" onclick="rebuild_sitemap(); return false">Перегенерировать /sitemap.xml</a></li>
-                                <li><a href="#" onclick="rebuild_rss(); return false">Перегенерировать /feed.rss</a></li>
-                            @endif
                             @if(file_exists(public_path(). '/external/adminer.php'))
                                 <li><a target="_blank" href="/external/adminer.php">DB</a></li>
                             @endif
