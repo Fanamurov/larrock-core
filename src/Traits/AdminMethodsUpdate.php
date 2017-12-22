@@ -7,8 +7,8 @@ use Larrock\Core\Component;
 use Validator;
 use Session;
 
-trait AdminMethodsUpdate{
-
+trait AdminMethodsUpdate
+{
     /**
      * @var Component
      */

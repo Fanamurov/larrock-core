@@ -5,7 +5,9 @@
     <div class="container-head uk-margin-bottom">
         <div class="add-panel uk-margin-bottom uk-text-right">
             <a class="uk-button" href="#modal-help" data-uk-modal="{target:'#modal-help'}"><i class="uk-icon-question"></i></a>
-            <a class="uk-button uk-button-primary" href="/admin/{{ $app->name }}/create">Добавить материал</a>
+            @if(isset($allowCreate))
+                <a class="uk-button uk-button-primary" href="/admin/{{ $app->name }}/create">Добавить материал</a>
+            @endif
         </div>
         <div id="modal-help" class="uk-modal">
             <div class="uk-modal-dialog">
@@ -21,16 +23,18 @@
 
     @if(isset($data))
         <div class="uk-margin-large-bottom">
-            <form id="massiveAction" class="uk-alert uk-alert-warning massive_action uk-hidden" method="post" action="/admin/{{ $app->name }}/0">
-                <select name="ids[]" multiple class="uk-hidden">
-                    @foreach($data as $item)
-                        <option value="{{ $item->id }}">{{ $item->id }}</option>
-                    @endforeach
-                </select>
-                {{ method_field('DELETE') }}
-                {{ csrf_field() }}
-                <p>Выделено: <span>0</span> элементов. <button type="submit" class="uk-button uk-button-danger please_conform">Удалить</button></p>
-            </form>
+            @if(isset($allowDestroy))
+                <form id="massiveAction" class="uk-alert uk-alert-warning massive_action uk-hidden" method="post" action="/admin/{{ $app->name }}/0">
+                    <select name="ids[]" multiple class="uk-hidden">
+                        @foreach($data as $item)
+                            <option value="{{ $item->id }}">{{ $item->id }}</option>
+                        @endforeach
+                    </select>
+                    {{ method_field('DELETE') }}
+                    {{ csrf_field() }}
+                    <p>Выделено: <span>0</span> элементов. <button type="submit" class="uk-button uk-button-danger please_conform">Удалить</button></p>
+                </form>
+            @endif
             <table class="uk-table uk-table-striped uk-form">
                 <thead>
                 <tr>

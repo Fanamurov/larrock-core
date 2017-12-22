@@ -6,11 +6,17 @@
         <div class="add-panel uk-margin-bottom uk-text-right">
             <a class="uk-button" href="#modal-help" data-uk-modal="{target:'#modal-help'}"><i class="uk-icon-question"></i></a>
             @if(isset($category))
-                <a class="uk-button uk-button-primary" href="/admin/category/{{ $category->id }}/edit">Изменить раздел</a>
-                <a href="#add_category" class="uk-button uk-button-primary show-please" data-target="create-category" data-focus="create-category-title">Добавить подраздел</a>
-                <a class="uk-button uk-button-primary" href="/admin/{{ $app->name }}/create?category={{ $category->id }}">Добавить материал</a>
+                @if(isset($allowEdit))
+                    <a class="uk-button uk-button-primary" href="/admin/category/{{ $category->id }}/edit">Изменить раздел</a>
+                @endif
+                @if(isset($allowCreate))
+                    <a href="#add_category" class="uk-button uk-button-primary show-please" data-target="create-category" data-focus="create-category-title">Добавить подраздел</a>
+                    <a class="uk-button uk-button-primary" href="/admin/{{ $app->name }}/create?category={{ $category->id }}">Добавить материал</a>
+                @endif
             @else
-                <a href="#add_category" class="uk-button uk-button-primary show-please" data-target="create-category" data-focus="create-category-title">Добавить раздел</a>
+                @if(isset($allowCreate))
+                    <a href="#add_category" class="uk-button uk-button-primary show-please" data-target="create-category" data-focus="create-category-title">Добавить раздел</a>
+                @endif
             @endif
         </div>
         <div id="modal-help" class="uk-modal">
@@ -70,16 +76,18 @@
         @if(count($data) === 0)
             <div class="uk-alert uk-alert-warning">Материалов еще нет</div>
         @else
-            <form id="massiveActionMaterials" class="uk-alert uk-alert-warning massive_action uk-hidden" method="post" action="/admin/{{ $app->name }}/0">
-                <select name="ids[]" multiple class="uk-hidden">
-                    @foreach($data as $item)
-                        <option value="{{ $item->id }}">{{ $item->id }}</option>
-                    @endforeach
-                </select>
-                {{ method_field('DELETE') }}
-                {{ csrf_field() }}
-                <p>Выделено: <span>0</span> элементов. <button type="submit" class="uk-button uk-button-danger please_conform">Удалить</button></p>
-            </form>
+            @if(isset($allowDestroy))
+                <form id="massiveActionMaterials" class="uk-alert uk-alert-warning massive_action uk-hidden" method="post" action="/admin/{{ $app->name }}/0">
+                    <select name="ids[]" multiple class="uk-hidden">
+                        @foreach($data as $item)
+                            <option value="{{ $item->id }}">{{ $item->id }}</option>
+                        @endforeach
+                    </select>
+                    {{ method_field('DELETE') }}
+                    {{ csrf_field() }}
+                    <p>Выделено: <span>0</span> элементов. <button type="submit" class="uk-button uk-button-danger please_conform">Удалить</button></p>
+                </form>
+            @endif
             <p class="uk-h4">Материалы:</p>
             <div class="uk-margin-large-bottom">
                 <table class="uk-table uk-table-striped uk-form">

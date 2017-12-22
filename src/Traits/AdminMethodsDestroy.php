@@ -8,8 +8,8 @@ use Larrock\Core\Component;
 use Redirect;
 use Session;
 
-trait AdminMethodsDestroy{
-
+trait AdminMethodsDestroy
+{
     /**
      * @var Component
      */

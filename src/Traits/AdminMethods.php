@@ -4,5 +4,5 @@ namespace Larrock\Core\Traits;
 
 trait AdminMethods{
     use AdminMethodsIndex, AdminMethodsCreate,
-        AdminMethodsEdit, AdminMethodsStore, AdminMethodsDestroy, AdminMethodsUpdate;
+        AdminMethodsEdit, AdminMethodsStore, AdminMethodsDestroy, AdminMethodsUpdate, ShareMethods;
 }

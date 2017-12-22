@@ -7,8 +7,8 @@ use JsValidator;
 use Larrock\Core\Component;
 use View;
 
-trait AdminMethodsEdit{
-
+trait AdminMethodsEdit
+{
     /**
      * @var Component
      */
@@ -17,8 +17,9 @@ trait AdminMethodsEdit{
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return View
+     * @throws \DaveJamesMiller\Breadcrumbs\Facades\DuplicateBreadcrumbException
      */
     public function edit($id)
     {

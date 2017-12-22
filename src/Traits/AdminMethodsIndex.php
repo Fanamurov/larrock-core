@@ -3,19 +3,18 @@
 namespace Larrock\Core\Traits;
 
 use Larrock\Core\Component;
-use View;
 
-trait AdminMethodsIndex{
+trait AdminMethodsIndex
+{
     /**
      * @var Component
      */
     protected $config;
 
-
     /**
      * Display a listing of the resource.
      *
-     * @return View
+     * @return \View
      */
     public function index()
     {

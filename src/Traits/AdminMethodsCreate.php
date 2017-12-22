@@ -4,8 +4,8 @@ namespace Larrock\Core\Traits;
 
 use Illuminate\Http\Request;
 
-trait AdminMethodsCreate{
-
+trait AdminMethodsCreate
+{
     /**
      * Creating a new resource.
      *

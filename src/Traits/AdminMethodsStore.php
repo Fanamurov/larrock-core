@@ -8,8 +8,8 @@ use Redirect;
 use Validator;
 use Session;
 
-trait AdminMethodsStore{
-
+trait AdminMethodsStore
+{
     /**
      * @var Component
      */

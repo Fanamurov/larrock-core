@@ -35,11 +35,14 @@ class RenderPlugins
     {
         $re = "/{Фото\\[(?P<type>[a-zA-Z0-9-_а-яА-Я\s]+)]=(?P<name>[a-zA-Z0-9-_а-яА-Я\s]+)}/u";
         preg_match_all($re, $this->rendered_html, $matches);
+        if(isset($matches['type'][0])){
+            $images = $this->model->getImages;
+        }
         foreach($matches['type'] as $key => $match){
             $name = $matches['name'][$key];
             //Собираем изображения под каждую найденную галерею
             $matched_images['images'] = [];
-            foreach($this->model->getImages as $image){
+            foreach($images as $image){
                 if($image->getCustomProperty('gallery') === $matches['name'][$key]){
                     $matched_images['images'][] = $image;
                 }
@@ -56,13 +59,16 @@ class RenderPlugins
     {
         $re = "/{Файлы\\[(?P<type>[a-zA-Z0-9-_а-яА-Я\s]+)]=(?P<name>[a-zA-Z0-9-_а-яА-Я\s]+)}/u";
         preg_match_all($re, $this->rendered_html, $matches);
+        if(isset($matches['type'][0])){
+            $files = $this->model->getFiles;
+        }
         foreach($matches['type'] as $key => $match){
             $name = $matches['name'][$key];
             //Собираем изображения под каждую найденную галерею
             $matched_files['files'] = [];
-            foreach($this->model->getFiles as $image){
-                if($image->getCustomProperty('gallery') === $matches['name'][$key]){
-                    $matched_files['files'][] = $image;
+            foreach($files as $file){
+                if($file->getCustomProperty('gallery') === $matches['name'][$key]){
+                    $matched_files['files'][] = $file;
                 }
             }
             $this->rendered_html = preg_replace('/<p>{Файлы\\[\\w+\\X+]='.$name.'}<\/p>/',

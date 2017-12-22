@@ -5,7 +5,7 @@
     <div class="container-head uk-margin-bottom">
         <div class="add-panel uk-margin-bottom uk-text-right">
             <a class="uk-button" href="#modal-help" data-uk-modal="{target:'#modal-help'}"><i class="uk-icon-question"></i></a>
-            @if(isset($data->get_category))
+            @if(isset($data->get_category, $allowCreate)))
                 @if(isset($data->get_category->id) && $data->get_category->id)
                     <a class="uk-button uk-button-primary" href="/admin/{{ $app->name }}/create?category={{ $data->get_category->id }}">Добавить другой материал</a>
                 @else
@@ -91,24 +91,28 @@
 
     <div class="uk-grid uk-margin-top buttons-save">
         <div class="uk-width-1-2">
-            <form class="uk-form" action="/admin/{{ $app->name }}/{{ $data->id }}" method="post" id="test">
-                <input name="_method" type="hidden" value="DELETE">
-                <input name="id_connect" type="hidden" value="{{ $data->id }}">
-                <input name="type_connect" type="hidden" value="{{ $app->name }}">
-                <input name="place" type="hidden" value="material">
-                @if(isset($data->get_category))
-                    @if(isset($data->get_category->id) && $data->get_category->id)
-                        <input name="category_item" type="hidden" value="{{ $data->get_category->id }}">
-                    @else
-                        <input name="category_item" type="hidden" value="{{ $data->get_category->first()->id }}">
+            @if(isset($allowDestroy))
+                <form class="uk-form" action="/admin/{{ $app->name }}/{{ $data->id }}" method="post" id="test">
+                    <input name="_method" type="hidden" value="DELETE">
+                    <input name="id_connect" type="hidden" value="{{ $data->id }}">
+                    <input name="type_connect" type="hidden" value="{{ $app->name }}">
+                    <input name="place" type="hidden" value="material">
+                    @if(isset($data->get_category))
+                        @if(isset($data->get_category->id) && $data->get_category->id)
+                            <input name="category_item" type="hidden" value="{{ $data->get_category->id }}">
+                        @else
+                            <input name="category_item" type="hidden" value="{{ $data->get_category->first()->id }}">
+                        @endif
                     @endif
-                @endif
-                {{ csrf_field() }}
-                <button type="submit" class="uk-button uk-button-danger uk-button-large please_conform">Удалить материал</button>
-            </form>
+                    {{ csrf_field() }}
+                    <button type="submit" class="uk-button uk-button-danger uk-button-large please_conform">Удалить материал</button>
+                </form>
+            @endif
         </div>
         <div class="uk-width-1-2 uk-text-right">
-            <button type="submit" class="uk-button uk-button-primary uk-button-large" form="edit-form-build">Сохранить</button>
+            @if(isset($allowUpdate))
+                <button type="submit" class="uk-button uk-button-primary uk-button-large" form="edit-form-build">Сохранить</button>
+            @endif
         </div>
     </div>
 
