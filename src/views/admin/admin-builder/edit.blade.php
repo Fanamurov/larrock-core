@@ -5,7 +5,7 @@
     <div class="container-head uk-margin-bottom">
         <div class="add-panel uk-margin-bottom uk-text-right">
             <a class="uk-button" href="#modal-help" data-uk-modal="{target:'#modal-help'}"><i class="uk-icon-question"></i></a>
-            @if(isset($data->get_category, $allowCreate)))
+            @if(isset($data->get_category, $allowCreate))
                 @if(isset($data->get_category->id) && $data->get_category->id)
                     <a class="uk-button uk-button-primary" href="/admin/{{ $app->name }}/create?category={{ $data->get_category->id }}">Добавить другой материал</a>
                 @else
