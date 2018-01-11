@@ -78,7 +78,7 @@ class FormTagsLink extends FBElement {
             $rows = ['id', 'title'];
             $model = new $row_settings->modelChild;
 
-            if($model->config->rows && array_key_exists('category', $model->config->rows)){
+            if($model->getConfig()->rows && array_key_exists('category', $model->getConfig()->rows)){
                 $rows[] = 'category';
                 $this->showCategory = TRUE;
             }
