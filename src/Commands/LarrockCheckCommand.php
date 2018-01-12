@@ -35,6 +35,10 @@ class LarrockCheckCommand extends Command
             $this->error('Mysql Strict: ON. Please change to false');
         }
 
+        if(env('DB_DATABASE') === 'homestad' || env('DB_USERNAME') === 'DB_USERNAME' || env('DB_PASSWORD') === 'secret'){
+            $this->info('Uses default database setting? All ok?');
+        }
+
         if(config('auth.providers.users.model') === \Larrock\ComponentUsers\Models\User::class){
             $this->info('User Model: ComponentUsers (OK)');
         }else{
@@ -104,7 +108,7 @@ class LarrockCheckCommand extends Command
         if(env('MAIL_DRIVER') === 'mail'){
             $this->info('MAIL_DRIVER: '. env('MAIL_DRIVER') .' (OK)');
         }else{
-            $this->error('.env MAIL_DRIVER: '. env('MAIL_DRIVER') .'. Maybe mail?');
+            $this->error('.env MAIL_DRIVER: '. env('MAIL_DRIVER') .'. Maybe "mail"?');
         }
         if(env('MAIL_FROM_NAME')){
             $this->info('MAIL_FROM_NAME: '. env('MAIL_FROM_NAME') .' (OK)');
