@@ -4,10 +4,11 @@ namespace Larrock\Core;
 
 use Illuminate\Support\ServiceProvider;
 use Larrock\Core\Commands\LarrockCheckCommand;
+use Larrock\Core\Commands\LarrockInstallCommand;
 use Larrock\Core\Commands\LarrockManagerCommand;
 use Larrock\Core\Commands\LarrockUpdateEnvCommand;
+use Larrock\Core\Commands\LarrockUpdateVendorConfigCommand;
 use Larrock\Core\Middleware\AdminMenu;
-use Larrock\Core\Middleware\VerifyLevel;
 use Larrock\Core\Middleware\SaveAdminPluginsData;
 use Spatie\MediaLibrary\Filesystem\DefaultFilesystem;
 use Larrock\Core\Helpers\MediaFilesystem;
@@ -62,7 +63,6 @@ class LarrockCoreServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app['router']->aliasMiddleware('level', VerifyLevel::class);
         $this->app['router']->aliasMiddleware('LarrockAdminMenu', AdminMenu::class);
         $this->app['router']->aliasMiddleware('SaveAdminPluginsData', SaveAdminPluginsData::class);
 
@@ -71,12 +71,16 @@ class LarrockCoreServiceProvider extends ServiceProvider
         $this->mergeConfigFrom( __DIR__.'/config/larrock-to-dashboard.php', 'larrock-to-dashboard');
         $this->mergeConfigFrom( __DIR__.'/config/larrock.php', 'larrock');
 
+        $this->app->bind('command.larrock:install', LarrockInstallCommand::class);
         $this->app->bind('command.larrock:check', LarrockCheckCommand::class);
         $this->app->bind('command.larrock:updateEnv', LarrockUpdateEnvCommand::class);
+        $this->app->bind('command.larrock:updateVendorConfig', LarrockUpdateVendorConfigCommand::class);
         $this->app->bind('command.larrock:manager', LarrockManagerCommand::class);
         $this->commands([
+            'command.larrock:install',
             'command.larrock:check',
             'command.larrock:updateEnv',
+            'command.larrock:updateVendorConfig',
             'command.larrock:manager',
             'command.larrock:addAdmin'
         ]);
