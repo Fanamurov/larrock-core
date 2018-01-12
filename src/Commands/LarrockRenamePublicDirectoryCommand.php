@@ -40,9 +40,11 @@ class LarrockRenamePublicDirectoryCommand extends Command
     {
         $this->line('=== Rename public directory to "public_html" ===');
 
-        if( !\File::exists(base_path('/public_html/index.php'))){
+        if( !\File::exists(base_path('public_html/index.php'))){
+            \File::copyDirectory(base_path('public'), base_path('public_html'));
+            \File::deleteDirectory(base_path('public'));
             $dir = str_replace('/Commands', '', __DIR__);
-            \File::copy($dir. '/configVendor/larrock-index-public_html.php', base_path('/public_html/index.php'));
+            \File::copy($dir. '/configVendor/larrock-index-public_html.php', base_path('public_html/index.php'));
             $this->info('Directory and index.php successfully updated');
         }else{
             $this->info('The command is not required, the directory has already changed.');
