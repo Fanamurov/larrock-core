@@ -33,6 +33,10 @@ class LarrockInstallCommand extends Command
             $this->call('larrock:updateEnv');
         }
 
+        if ($this->confirm('Сменить директорию "public" на "public_html"? (larrock:renamePublicDirectory)')) {
+            $this->call('larrock:renamePublicDirectory');
+        }
+
         if ($this->confirm('Обновить конфиги зависимостей? (larrock:updateVendorConfig)')) {
             $this->call('larrock:updateVendorConfig');
         }
