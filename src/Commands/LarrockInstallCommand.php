@@ -29,22 +29,27 @@ class LarrockInstallCommand extends Command
     {
         $this->line('=== Install LarrockCMS ===');
 
-        if ($this->confirm('Обновить .env?')) {
+        if ($this->confirm('Обновить .env? (larrock:updateEnv)')) {
             $this->call('larrock:updateEnv');
         }
 
-        if ($this->confirm('Обновить конфиги зависимостей?')) {
+        if ($this->confirm('Обновить конфиги зависимостей? (larrock:updateVendorConfig)')) {
             $this->call('larrock:updateVendorConfig');
         }
 
-        if ($this->confirm('Добавить пользователя администратора?')) {
+        if ($this->confirm('Добавить пользователя администратора? (larrock:addAdmin)')) {
             $this->call('larrock:addAdmin');
         }
 
-        if ($this->confirm('Хотите установить пакеты не входящие в ядро LarrockCMS?')) {
+        if ($this->confirm('Хотите установить пакеты не входящие в ядро LarrockCMS? (larrock:manager)')) {
             $this->call('larrock:manager');
         }
 
+        if ($this->confirm('Опубликовать ресурсы (vendor:publish)?')) {
+            $this->call('vendor:publish');
+        }
+
         $this->call('larrock:check');
+        $this->info('=== END ===');
     }
 }
