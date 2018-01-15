@@ -30,18 +30,17 @@ class AdminAjax extends Controller
 		$row = $request->get('row');
 		$table = $request->get('table');
 
-		//Получаем данные до изменения
-		if( !$old_data = DB::table($table)->where($row_where, '=', $value_where)->first([$row])){
-			return response()->json(['status' => 'error', 'message' => 'Данные не найдены']);
-		}
-
-		if($old_data->{$row} !== $value){
-			if(DB::table($table)->where($row_where, '=', $value_where)->update([$row => $value])){
-				Cache::flush();
-				return response()->json(['status' => 'success', 'message' => 'Поле '. $row .' успешно изменено']);
-			}
+        //Получаем данные до изменения
+        if( !$old_data = DB::table($table)->where($row_where, '=', $value_where)->first([$row])){
+            return response()->json(['status' => 'error', 'message' => 'Данные не найдены']);
+        }
+        if($old_data->{$row} !== $value){
+            if(DB::table($table)->where($row_where, '=', $value_where)->update([$row => $value])){
+                Cache::flush();
+                return response()->json(['status' => 'success', 'message' => 'Поле '. $row .' успешно изменено']);
+            }
             return response()->json(['status' => 'error', 'message' => 'Поле не изменено']);
-		}
+        }
         return response()->json(['status' => 'blank', 'message' => 'Передано текущее значение поля. Ничего не изменено']);
 	}
 

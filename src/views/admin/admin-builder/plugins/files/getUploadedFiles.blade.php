@@ -23,8 +23,8 @@
                     <div class="uk-width-1-1 uk-width-medium-2-10 plugin-position">
                         <label>Вес:</label>
                         <input class="uk-width-1-1 position-file ajax_edit_media_files" type="text" value="{{ $file_item->order_column or '0' }}"
-                               data-model_type="{!! $file_item->model_type !!}"
-                               data-id="{{ $file_item->id }}" data-row="position"
+                               data-model_type="{!! $image_value->model_type !!}" data-row="order_column"
+                               data-id="{{ $image_value->id }}" data-table="media" data-row_where="id" data-value_where="{{ $image_value->id }}"
                                placeholder="Вес">
                         <i class="uk-sortable-handle uk-icon uk-icon-bars uk-margin-small-right" title="Перенести материал по весу"></i>
                     </div>

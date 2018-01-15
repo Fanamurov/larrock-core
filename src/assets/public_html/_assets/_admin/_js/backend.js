@@ -279,29 +279,29 @@ $(document).ready(function(){
         fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
         style_formats: [
             {title: 'Headers', items: [
-                {title: 'h1', block: 'h1'},
-                {title: 'h2', block: 'h2'},
-                {title: 'h3', block: 'h3'},
-                {title: 'h4', block: 'h4'},
-                {title: 'h5', block: 'h5'},
-                {title: 'h6', block: 'h6'}
-            ]},
+                    {title: 'h1', block: 'h1'},
+                    {title: 'h2', block: 'h2'},
+                    {title: 'h3', block: 'h3'},
+                    {title: 'h4', block: 'h4'},
+                    {title: 'h5', block: 'h5'},
+                    {title: 'h6', block: 'h6'}
+                ]},
 
             {title: 'Headers-text', items: [
-                {title: 'стиль H1', block: 'p', classes: 'uk-h1'},
-                {title: 'стиль H2', block: 'p', classes: 'uk-h2'},
-                {title: 'стиль H3', block: 'p', classes: 'uk-h3'},
-                {title: 'стиль H4', block: 'p', classes: 'uk-h4'},
-                {title: 'стиль H5', block: 'p', classes: 'uk-h5'},
-                {title: 'стиль H6', block: 'p', classes: 'uk-h6'}
-            ]},
+                    {title: 'стиль H1', block: 'p', classes: 'uk-h1'},
+                    {title: 'стиль H2', block: 'p', classes: 'uk-h2'},
+                    {title: 'стиль H3', block: 'p', classes: 'uk-h3'},
+                    {title: 'стиль H4', block: 'p', classes: 'uk-h4'},
+                    {title: 'стиль H5', block: 'p', classes: 'uk-h5'},
+                    {title: 'стиль H6', block: 'p', classes: 'uk-h6'}
+                ]},
 
             {title: 'Blocks', items: [
-                {title: 'p', block: 'p'},
-                {title: 'Увеличенный блок', block: 'blockquote'},
-                {title: 'code', block: 'code'},
-                {title: 'pre', block: 'pre'}
-            ]}
+                    {title: 'p', block: 'p'},
+                    {title: 'Увеличенный блок', block: 'blockquote'},
+                    {title: 'code', block: 'code'},
+                    {title: 'pre', block: 'pre'}
+                ]}
         ],
         setup: function(editor) {
             editor.addButton('defis', {
@@ -592,11 +592,17 @@ function ajax_edit_row() {
  * Сортировка материалов по весу через плагин uikit sortable
  */
 function sort_rows() {
-    $('tbody.uk-sortable').on('change.uk.sortable', function(e, fn, el) {
-        var old_position = parseInt($(el).find('input[name=position]').val());
+    $('.uk-sortable').on('change.uk.sortable', function(e, fn, el) {
+        var row_element = $(el).find('input[name=position]');
+        var input_selector = 'input[name=position]';
+        if($(row_element).val() === undefined){
+            row_element = $(el).find('input[data-row=order_column]');
+            input_selector = 'input[data-row=order_column]';
+        }
+        var old_position = parseInt($(row_element).val());
         if(old_position){
-            var next_position = parseInt($(el).next().find('input[name=position]').val());
-            var prev_position = parseInt($(el).prev().find('input[name=position]').val());
+            var next_position = parseInt($(el).next().find(input_selector).val());
+            var prev_position = parseInt($(el).prev().find(input_selector).val());
             var new_position = 0;
             if(next_position > old_position){
                 if(prev_position > old_position){
@@ -611,26 +617,27 @@ function sort_rows() {
                     new_position = ++next_position;
                 }
             }
-            $(el).find('input[name=position]').val(new_position);
+            $(row_element).val(new_position);
 
-            var element = $(el).find('input[name=position]');
-            var row = $(element).attr('name');
+            var row = $(row_element).attr('name');
             if(row === undefined){
-                row = $(el).attr('data-row');
+                row = $(row_element).attr('data-row');
             }
             var event = 'edit';
+
             var data = {
-                value_where: $(element).attr('data-value_where'),
-                row_where: $(element).attr('data-row_where'),
+                value_where: $(row_element).attr('data-value_where'),
+                row_where: $(row_element).attr('data-row_where'),
                 value: new_position,
                 row: row,
                 event: event,
-                table: $(element).attr('data-table')
+                table: $(row_element).attr('data-table')
             };
             hidden_action('/admin/ajax/EditRow', data, false, false, false, true);
         }
     });
 }
+
 
 /**
  * Метод для выполнения ajax-операций
