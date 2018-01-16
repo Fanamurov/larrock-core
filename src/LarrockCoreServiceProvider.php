@@ -45,7 +45,8 @@ class LarrockCoreServiceProvider extends ServiceProvider
         ], 'views-admin-core');
         $this->publishes([
             __DIR__.'/assets/public_html' => $public_path,
-            __DIR__.'/assets/gulpfile' => base_path()
+            __DIR__.'/assets/gulpfile' => base_path(),
+            __DIR__.'/assets/bower' => base_path(),
         ], 'assets');
         $this->publishes([
             __DIR__.'/assets/policy' => $public_path

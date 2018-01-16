@@ -40,19 +40,21 @@ class LarrockAssetsCommand extends Command
     {
         $this->line('=== Install assets via bower ===');
 
-        echo shell_exec('cd public_html/_assets');
-        echo shell_exec('bower install fancybox');
-        echo shell_exec('bower install jquery-validation');
-        echo shell_exec('bower install jquery.cookie');
-        echo shell_exec('bower install fileapi');
-        echo shell_exec('bower install jquery.spinner');
-        echo shell_exec('bower install microplugin');
-        echo shell_exec('bower install pickadate');
-        echo shell_exec('bower install selectize');
-        echo shell_exec('bower install sifter');
-        echo shell_exec('bower install tinymce');
-        echo shell_exec('bower install uikit');
-        echo shell_exec('cd ../..');
-        $this->info('=== END ===');
+        $libraries = ['fancybox', 'jquery-validation', 'jquery.cookie', 'fileapi', 'jquery.spinner', 'microplugin', 'pickadate',
+            'selectize', 'sifter', 'tinymce', 'uikit'];
+
+        foreach ($libraries as $library){
+            if( !\File::exists(base_path('public_html/_assets/bower_components/'. $library))){
+                echo shell_exec('bower install '. $library);
+                if(\File::exists(base_path('public_html/_assets/bower_components/'. $library))){
+                    $this->info('=== '. $library. ' successfully installed ===');
+                }else{
+                    $this->alert('=== ERROR! '. $library. ' not installed ===');
+                }
+            }else{
+                $this->info('=== '. $library. ' already installed ===');
+            }
+        }
+        $this->info('=== END of assets ===');
     }
 }
