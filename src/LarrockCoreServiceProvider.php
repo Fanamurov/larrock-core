@@ -3,6 +3,7 @@
 namespace Larrock\Core;
 
 use Illuminate\Support\ServiceProvider;
+use Larrock\Core\Commands\LarrockAssetsCommand;
 use Larrock\Core\Commands\LarrockCheckCommand;
 use Larrock\Core\Commands\LarrockInstallCommand;
 use Larrock\Core\Commands\LarrockManagerCommand;
@@ -78,6 +79,7 @@ class LarrockCoreServiceProvider extends ServiceProvider
         $this->app->bind('command.larrock:updateVendorConfig', LarrockUpdateVendorConfigCommand::class);
         $this->app->bind('command.larrock:manager', LarrockManagerCommand::class);
         $this->app->bind('command.larrock:renamePublicDirectory', LarrockRenamePublicDirectoryCommand::class);
+        $this->app->bind('command.larrock:assets', LarrockAssetsCommand::class);
         $this->commands([
             'command.larrock:install',
             'command.larrock:check',
@@ -86,6 +88,7 @@ class LarrockCoreServiceProvider extends ServiceProvider
             'command.larrock:manager',
             'command.larrock:addAdmin',
             'command.larrock:renamePublicDirectory',
+            'command.larrock:assets',
         ]);
 
         $this->app->bind(DefaultFilesystem::class, MediaFilesystem::class);
