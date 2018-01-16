@@ -67,6 +67,12 @@
   $ php artisan larrock:install
   ```
   
+# START
+yoursite/```admin```
+
+Login: ```admin@larrock-cms.ru```
+
+Password: ```password```
 
 
 ### Manual installation of other components LarrockCMS (composer required!)
@@ -93,10 +99,3 @@ bower install sifter
 bower install tinymce
 bower install uikit
 ```
-
-# START
-yoursite/```admin```
-
-Login: ```admin@larrock-cms.ru```
-
-Password: ```password```
