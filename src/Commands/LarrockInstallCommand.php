@@ -41,16 +41,16 @@ class LarrockInstallCommand extends Command
             $this->call('larrock:updateVendorConfig');
         }
 
-        if ($this->confirm('Добавить пользователя администратора? (larrock:addAdmin)')) {
-            $this->call('larrock:addAdmin');
-        }
-
         if ($this->confirm('Хотите установить пакеты не входящие в ядро LarrockCMS? (larrock:manager)')) {
             $this->call('larrock:manager');
         }
 
         if ($this->confirm('Опубликовать ресурсы (vendor:publish)?')) {
             $this->call('vendor:publish');
+        }
+
+        if ($this->confirm('Добавить пользователя администратора? (larrock:addAdmin)')) {
+            $this->call('larrock:addAdmin');
         }
 
         $this->call('larrock:check');
