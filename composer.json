@@ -29,7 +29,7 @@
             "Larrock\\Core\\Requests\\": "src/Requests"
         }
     },
-    "license": "LGPL",
+    "license": "CC-BY-4.0",
     "authors": [
         {
             "name": "Alexandr Fanamurov",
