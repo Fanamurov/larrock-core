@@ -490,7 +490,7 @@ class Component
     public function actionAttach($config, $data, $request)
     {
         foreach ($config->rows as $row){
-            if($row->attached && ($request->getMethod() !== 'GET')){
+            if($row->attached){
                 foreach($data->{$row->connect->relation_name}()->get() as $category){
                     $data->{$row->connect->relation_name}()->detach($category);
                 }

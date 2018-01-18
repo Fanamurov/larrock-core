@@ -16,6 +16,12 @@ trait AdminMethodsStore
     protected $config;
 
     /**
+     * @var bool Разрешать ли делать редиректы
+     * Если трейт используется не в стандартных целях
+     */
+    protected $allow_redirect = TRUE;
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -24,14 +30,23 @@ trait AdminMethodsStore
     public function store(Request $request)
     {
         if(array_key_exists('url', $this->config->rows) &&
-            $search_blank = $this->config->getModel()::whereUrl('novyy-material')->first()){
-            Session::push('message.danger', 'Измените URL этого материала, чтобы получить возможность создать новый');
-            return redirect()->to('/admin/'. $this->config->name .'/'. $search_blank->id. '/edit');
+            $search_blank = $this->config->getModel()::whereUrl($request->get('url'))->first()){
+            Session::push('message.danger', 'Материал с таким URL "'. $request->get('url') .'" уже существует');
+            if($this->allow_redirect){
+                return redirect()->to('/admin/'. $this->config->name .'/'. $search_blank->id. '/edit');
+            }else{
+                return NULL;
+            }
         }
 
         $validator = Validator::make($request->all(), Component::_valid_construct($this->config->valid));
         if($validator->fails()){
-            return back()->withInput($request->except('password'))->withErrors($validator);
+            if($this->allow_redirect){
+                return back()->withInput($request->except('password'))->withErrors($validator);
+            }else{
+                Session::push('message.danger', 'Валидация данных не пройдена '. var_dump($validator));
+                return NULL;
+            }
         }
 
         $data = $this->config->getModel();
@@ -47,15 +62,22 @@ trait AdminMethodsStore
             }
         }
 
-        unset($data->config);
         if($data->save()){
             $this->config->actionAttach($this->config, $data, $request);
             \Cache::flush();
             Session::push('message.success', 'Материал '. $request->input('title') .' добавлен');
-            return Redirect::to('/admin/'. $this->config->name .'/'. $data->id .'/edit')->withInput();
+            if($this->allow_redirect){
+                return Redirect::to('/admin/'. $this->config->name .'/'. $data->id .'/edit')->withInput();
+            }else{
+                return $data;
+            }
         }
 
         Session::push('message.danger', 'Материал '. $request->input('title') .' не добавлен');
-        return back()->withInput();
+        if($this->allow_redirect){
+            return back()->withInput();
+        }
+
+        return NULL;
     }
 }
