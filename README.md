@@ -7,7 +7,7 @@
 [![Latest Stable Version](https://poser.pugx.org/fanamurov/larrock-core/v/stable)](https://packagist.org/packages/fanamurov/larrock-core) [![Total Downloads](https://poser.pugx.org/fanamurov/larrock-core/downloads)](https://packagist.org/packages/fanamurov/larrock-core) [![License](https://poser.pugx.org/fanamurov/larrock-core/license)](https://packagist.org/packages/fanamurov/larrock-core) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1a0fb19f2e024607a1d40260c8baa5e7)](https://www.codacy.com/app/Fanamurov/larrock-core?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Fanamurov/larrock-core&amp;utm_campaign=Badge_Grade)
 
 
-Распространяется под лицензией LGPL. При использовании CMS вы обязаны указать ее название в своем проекте в виде копирайта в админ-панели.
+Распространяется под лицензией CC-BY-4.0. При использовании CMS вы обязаны указать ее название в своем проекте в виде копирайта в админ-панели.
 
 В основе проекта ядро CMS (LarrockCore), устанавливаемое в дополнение к laravel версии >=5.5 и пакеты компонентов (дополнений к LarrockCore).
 
