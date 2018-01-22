@@ -35,7 +35,7 @@ class AdminDashboardController extends Controller
         });
 
         $data['full_packages_list'] = [
-            'fanamurov/larrock-admin-search' => 'Search content for admin panel larrockCMS',
+            'fanamurov/larrock-search' => 'Search content for larrockCMS',
             'fanamurov/larrock-admin-seo' => 'SEO component for larrockCMS',
             'fanamurov/larrock-blocks' => 'Template blocks component for larrockCMS',
             'fanamurov/larrock-cart' => 'Cart to catalog component for larrockCMS',
@@ -51,6 +51,7 @@ class AdminDashboardController extends Controller
             'fanamurov/larrock-smartbanners' => 'Smartbanners component for larrockCMS',
             'fanamurov/larrock-users' => 'Users component for larrockCMS',
             'fanamurov/larrock-wizard' => 'Import .xlsx price to catalog component for larrockCMS',
+            'fanamurov/larrock-yandex-kassa' => 'Yandex.Kassa SDK bridge for larrockCMS',
         ];
         foreach ($data['coreVersions'] as $item){
             unset($data['full_packages_list'][$item->name]);
