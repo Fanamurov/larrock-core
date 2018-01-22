@@ -10,7 +10,7 @@ $(document).ready(function() {
 
 function getUploadedFiles(model_id, model_type) {
     $.ajax({
-        data: {model_id: model_id, model_type: model_type},
+        data: {model_id: model_id, model_type: model_type, type: 'images'},
         type: "POST",
         url: "/admin/ajax/GetUploadedFile",
         success: function (data) {
@@ -94,9 +94,9 @@ function ajax_bind_actions_files()
         var model = $(this).attr('data-model');
         var model_id = $(this).attr('data-model_id');
         $.ajax({
-            data: {id: id, model: model, model_id: model_id},
+            data: {id: id, model: model, model_id: model_id, type: 'files'},
             type: "POST",
-            url: "/admin/ajax/DeleteUploadedFile",
+            url: "/admin/ajax/DeleteUploadedMedia",
             success: function () {
                 $('#file-'+ id).hide('slow');
                 var countUploadedImages = parseInt($('.countUploadedImages').html());
@@ -131,9 +131,9 @@ function ajax_bind_actions_files()
         var model = $(this).attr('data-model_type');
         var model_id = $(this).attr('data-model_id');
         $.ajax({
-            data: {model: model, model_id: model_id},
+            data: {model: model, model_id: model_id, type: 'files'},
             type: "POST",
-            url: "/admin/ajax/DeleteAllFilesByMaterial",
+            url: "/admin/ajax/DeleteAllUploadedMediaByType",
             success: function () {
                 $('#uploadedFiles').html('');
                 $('.countUploadedFiles').html(0);

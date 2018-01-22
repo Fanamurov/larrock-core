@@ -11,9 +11,9 @@ $(document).ready(function() {
 
 function getUploadedImages(model_id, model_type) {
     $.ajax({
-        data: {model_id: model_id, model_type: model_type},
+        data: {model_id: model_id, model_type: model_type, type: 'images'},
         type: "POST",
-        url: "/admin/ajax/GetUploadedImage",
+        url: "/admin/ajax/GetUploadedMedia",
         success: function (data) {
             $('#uploadedImages').html(data);
             ajax_bind_actions();
@@ -113,9 +113,9 @@ function ajax_bind_actions()
         var model = $(this).attr('data-model');
         var model_id = $(this).attr('data-model_id');
         $.ajax({
-            data: {id: id, model: model, model_id: model_id},
+            data: {id: id, model: model, model_id: model_id, type: 'images'},
             type: "POST",
-            url: "/admin/ajax/DeleteUploadedImage",
+            url: "/admin/ajax/DeleteUploadedMedia",
             success: function () {
                 $('#image-'+ id).hide('slow');
                 var countUploadedImages = parseInt($('.countUploadedImages').html());
@@ -150,9 +150,9 @@ function ajax_bind_actions()
         var model = $(this).attr('data-model_type');
         var model_id = $(this).attr('data-model_id');
         $.ajax({
-            data: {model: model, model_id: model_id},
+            data: {model: model, model_id: model_id, type: 'images'},
             type: "POST",
-            url: "/admin/ajax/DeleteAllImagesByMaterial",
+            url: "/admin/ajax/DeleteAllUploadedMediaByType",
             success: function () {
                 $('#uploadedImages').html('');
                 $('.countUploadedImages').html(0);
