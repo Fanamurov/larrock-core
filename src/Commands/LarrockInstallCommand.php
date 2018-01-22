@@ -29,6 +29,17 @@ class LarrockInstallCommand extends Command
     {
         $this->line('=== Install LarrockCMS ===');
 
+        if(env('DB_DATABASE') === 'homestead' || env('DB_USERNAME') === 'homestead' || env('DB_PASSWORD') === 'secret') {
+            $this->line('Параметры подключения к БД в .env-файле:');
+            $this->line('DB_DATABASE=' . env('DB_DATABASE'));
+            $this->line('DB_USERNAME=' . env('DB_USERNAME'));
+            $this->line('DB_PASSWORD=' . env('DB_PASSWORD'));
+            if ( !$this->confirm('Данные для доступа к БД верны?')) {
+                $this->error('Установка завершена некорректно. Пожалуйста, установите правильные данные для доступа к БД и повторите попытку');
+                return FALSE;
+            }
+        }
+
         if ($this->confirm('Шаг 1/8. Обновить .env? (larrock:updateEnv)')) {
             $this->call('larrock:updateEnv');
         }
@@ -49,7 +60,7 @@ class LarrockInstallCommand extends Command
             $this->call('vendor:publish');
         }
 
-        if ($this->confirm('Шаг 6/8. Опубликовать ресурсы (migrate)?')) {
+        if ($this->confirm('Шаг 6/8. Выполнить миграции БД (migrate)?')) {
             $this->call('migrate');
         }
 
