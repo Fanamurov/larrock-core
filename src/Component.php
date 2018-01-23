@@ -491,29 +491,35 @@ class Component
     {
         foreach ($config->rows as $row){
             if($row->attached){
-                foreach($data->{$row->connect->relation_name}()->get() as $category){
-                    $data->{$row->connect->relation_name}()->detach($category);
+                foreach($data->getLink($row->modelChild)->get() as $link_item){
+                    $data->getLink($row->modelChild)->detach($link_item);
                 }
 
                 if($request->has($row->name)){
                     if(is_array($request->get($row->name))){
                         foreach ($request->get($row->name) as $param){
-                            if(class_basename($row) === 'FormTagsCreate'){
-                                if( !$row->connect->model::find($param)){
-                                    if($find_param = $row->connect->model::whereTitle($param)->first()){
+                            if(isset($row->allowCreate) && $row->allowCreate){
+                                if( !$row->modelChild::find($param)){
+                                    if($find_param = $row->modelChild::whereTitle($param)->first()){
                                         $param = $find_param->id;
                                     }else{
-                                        $add_param = new $row->connect->model();
+                                        $add_param = new $row->modelChild();
                                         $add_param['title'] = $param;
                                         $add_param->save();
                                         $param = $add_param->id;
                                     }
                                 }
                             }
-                            $data->{$row->connect->relation_name}()->attach($param);
+                            $data->getLink($row->modelChild)->attach(
+                                $param,
+                                ['model_parent' => $row->modelParent, 'model_child' => $row->modelChild]
+                            );
                         }
                     }else{
-                        $data->{$row->connect->relation_name}()->attach($request->get($row->name));
+                        $data->getLink($row->modelChild)->attach(
+                            $request->get($row->name),
+                            ['model_parent' => $row->modelParent, 'model_child' => $row->modelChild]
+                        );
                     }
                 }
             }

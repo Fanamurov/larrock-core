@@ -35,4 +35,15 @@ trait GetLink{
         $this->{$childModel} = $this->hasMany(Link::class, 'id_parent')->whereModelParent($this->config->model)->whereModelChild($childModel)->get();
         return $this;
     }
+
+    /**
+     * Метод для attach() и detach()
+     * @param $childModel
+     * @return mixed
+     */
+    public function getLink($childModel)
+    {
+        return $this->belongsToMany($childModel, 'link', 'id_parent', 'id_child')
+            ->whereModelParent($this->config->getModelName())->whereModelChild($childModel);
+    }
 }

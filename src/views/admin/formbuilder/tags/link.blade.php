@@ -10,7 +10,7 @@
             name="@if($row_settings->maxItems !== 1){{ $row_key }}[]@else{{ $row_key }}@endif" id="tags_{{ $row_key }}">
             @if($selected)
                 @foreach($selected as $sel)
-                <option selected="selected" value="{{ $sel->id_child }}">{{ $sel->title }}</option>
+                <option selected="selected" value="{{ $sel->id }}">{{ $sel->title }}</option>
                 @endforeach
             @endif
         </select>

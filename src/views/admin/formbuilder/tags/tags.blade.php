@@ -6,8 +6,8 @@
         @endif
     </label>
     <div class="input-group" style="width: 100%">
-        <select @if($row_settings->max_items !== 1) multiple @endif
-            name="@if($row_settings->max_items !== 1){{ $row_key }}[]@else{{ $row_key }}@endif" id="tags_{{ $row_key }}">
+        <select @if($row_settings->maxItems !== 1) multiple @endif
+            name="@if($row_settings->maxItems !== 1){{ $row_key }}[]@else{{ $row_key }}@endif" id="tags_{{ $row_key }}">
             @if(is_array($selected))
                 @foreach($selected as $value)
                     <option selected="selected" value="{{ $value->id }}">{{ $value->title }}</option>
@@ -21,7 +21,7 @@
 
     <script type="text/javascript">
         $('#tags_{{ $row_key }}').selectize({
-            maxItems: {{ $row_settings->max_items or 'null' }},
+            maxItems: {{ $row_settings->maxItems or 'null' }},
             valueField: 'id',
             labelField: 'title',
             searchField: 'title',

@@ -2,53 +2,115 @@
 
 namespace Larrock\Core\Helpers\FormBuilder;
 
+use Illuminate\Database\Eloquent\Model;
+use Larrock\Core\Exceptions\LarrockFormBuilderRowException;
+use Larrock\Core\Models\Link;
 use View;
 
 class FormTags extends FBElement {
 
-    public $options;
-    public $model_link;
-    public $link_key;
-    public $max_items;
+    public $modelParent;
+    public $modelChild;
+    public $modelChildWhereKey;
+    public $modelChildWhereValue;
+    public $maxItems;
+    public $allowCreate = NULL;
 
-    public function setOptions($options)
+    /** @var null|bool  Задается автоматически при наличии сведения о разделе в modelParent */
+    public $showCategory;
+
+    /**
+     * Передача моделей для связывания
+     *
+     * @param Model $modelParent    Что связываем
+     * @param Model $modelChild     С чем связываем
+     * @return $this
+     */
+    public function setModels($modelParent, $modelChild)
     {
-        $this->options = $options;
+        $this->modelParent = $modelParent;
+        $this->modelChild = $modelChild;
+        $this->attached = TRUE;
         return $this;
     }
 
-    public function setModelLink($link_name, $link_key)
+    /**
+     * Условие выборки возможных элементов для связывания
+     * @param int   $key
+     * @param int|array $value
+     * @return $this
+     */
+    public function setModelChildWhere($key, $value)
     {
-        $this->model_link = $link_name;
-        $this->link_key = $link_key;
+        $this->modelChildWhereKey = $key;
+        $this->modelChildWhereValue = $value;
         return $this;
     }
 
-    public function setMaxItems($max = null)
+    /**
+     * Сколько элементов можно выбрать для связывания
+     * @param int   $count
+     * @return $this
+     */
+    public function setMaxItems($count)
     {
-        $this->max_items = $max;
+        $this->maxItems = $count;
         return $this;
     }
 
+    /**
+     * Разрешать создавать новые элементы
+     * @return $this
+     */
+    public function setAllowCreate()
+    {
+        $this->allowCreate = TRUE;
+        return $this;
+    }
+
+    /**
+     * @param $row_settings
+     * @param $data
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|string|\Symfony\Component\HttpFoundation\Response
+     * @throws LarrockFormBuilderRowException
+     */
     public function render($row_settings, $data)
     {
-        if($row_settings->connect){
-            $model = new $row_settings->connect->model;
-            if(isset($row_settings->connect->where_key)){
-                $model->where($row_settings->connect->where_key, '=', $row_settings->connect->where_value);
+        if( !$row_settings->modelParent){
+            throw LarrockFormBuilderRowException::withMessage('modelParent поля '. $row_settings->name .' не задан');
+        }
+        if($row_settings->modelChild){
+            $rows = ['id', 'title'];
+            $model = new $row_settings->modelChild;
+
+            if(method_exists($model, 'getConfig') && $model->getConfig()->rows && array_key_exists('category', $model->getConfig()->rows)){
+                $rows[] = 'category';
+                $this->showCategory = TRUE;
             }
-            $tags = $model->get();
-            $selected = collect();
-            if($data){
-                if($row_settings->connect->relation_name){
-                    $selected = $data->{$row_settings->connect->relation_name};
+
+            if($row_settings->modelChildWhereKey && $row_settings->modelChildWhereValue){
+                if(is_array($this->modelChildWhereValue)){
+                    $tags = $model->whereIn($row_settings->modelChildWhereKey, $row_settings->modelChildWhereValue)->get($rows);
                 }else{
-                    $selected = $data->{$row_settings->name};
+                    $tags = $model->where($row_settings->modelChildWhereKey, '=', $row_settings->modelChildWhereValue)->get($rows);
                 }
+            }else{
+                $tags = $model->get($rows);
+            }
+
+            $selected = NULL;
+            if($data){
+                $selected = $data->getLink($row_settings->modelChild)->get();
             }
         }else{
-            return response('Метод connect не определен');
+            throw LarrockFormBuilderRowException::withMessage('modelChild поля '. $row_settings->name .' не задан');
         }
-        return View::make('larrock::admin.formbuilder.tags.tags', ['tags' => $tags, 'data' => $data, 'row_key' => $row_settings->name, 'row_settings' => $row_settings, 'selected' => $selected])->render();
+
+        if($row_settings->allowCreate){
+            return View::make('larrock::admin.formbuilder.tags.tagsCreate', ['tags' => $tags, 'data' => $data,
+                'row_key' => $row_settings->name, 'row_settings' => $row_settings, 'selected' => $selected])->render();
+        }
+        return View::make('larrock::admin.formbuilder.tags.link', ['tags' => $tags, 'data' => $data,
+            'row_key' => $row_settings->name, 'row_settings' => $row_settings, 'selected' => $selected])->render();
     }
 }
