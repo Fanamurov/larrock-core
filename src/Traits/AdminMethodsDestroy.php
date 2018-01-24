@@ -53,10 +53,9 @@ trait AdminMethodsDestroy
                 $data->clearMediaCollection();
             }
             $name = $data->title;
-            $this->config->removeDataPlugins($this->config);
+            $this->config->removeDataPlugins($this->config, $data);
 
             if($data->delete()){
-                $this->config->actionAttach($this->config, $data, $request);
                 \Cache::flush();
                 Session::push('message.success', Lang::get('larrock::apps.delete.success', ['name' => $name]));
             }else{

@@ -2,6 +2,7 @@
 
 namespace Larrock\Core;
 
+use Illuminate\Http\Request;
 use Larrock\ComponentAdminSeo\Facades\LarrockSeo;
 use Larrock\ComponentFeed\Facades\LarrockFeed;
 use Larrock\Core\Helpers\FormBuilder\FormCheckbox;
@@ -9,6 +10,7 @@ use Larrock\Core\Helpers\FormBuilder\FormInput;
 use Larrock\Core\Helpers\FormBuilder\FormTextarea;
 use Illuminate\Database\Eloquent\Model;
 use JsValidator;
+use Larrock\Core\Helpers\MessageLarrock;
 use Larrock\Core\Models\Link;
 use View;
 
@@ -85,7 +87,11 @@ class Component
         return $fillable_rows;
     }
 
-    public function addFillableUserRows($rows)
+    /**
+     * @param array $rows
+     * @return array
+     */
+    public function addFillableUserRows(array $rows)
     {
         $fillable_rows = $rows;
         foreach ($this->rows as $key => $row){
@@ -96,21 +102,10 @@ class Component
         return $fillable_rows;
     }
 
-    protected function addPlugins()
-    {
-        if(empty($this->name)){
-            return abort('Конфиг компонента не заполнен');
-        }
-        return $this;
-    }
-
-    public function addPositionAndActive()
-    {
-        $this->addActive();
-        $this->addPosition();
-        return $this;
-    }
-
+    /**
+     * Добавление поля указания веса
+     * @return $this
+     */
     public function addPosition()
     {
         $row = new FormInput('position', 'Вес');
@@ -119,6 +114,10 @@ class Component
         return $this;
     }
 
+    /**
+     * Добавления поля для указания опубликованности
+     * @return $this
+     */
     public function addActive()
     {
         $row = new FormCheckbox('active', 'Опубликован');
@@ -127,11 +126,22 @@ class Component
         return $this;
     }
 
-    protected function addRows()
+    /**
+     * Алиас для добавления полей веса и активности
+     * @return $this
+     */
+    public function addPositionAndActive()
     {
+        $this->addActive();
+        $this->addPosition();
         return $this;
     }
 
+    /**
+     * Получение конфигурации компонента
+     * Вывод в шаблон переменной $app с конфигом компонента, переменной $validator для JSValidation
+     * @return $this
+     */
     public function shareConfig()
     {
         $this->tabs = collect();
@@ -200,7 +210,6 @@ class Component
 
     /**
      * Подключение плагина SEO
-     * 
      * @return $this
      */
     public function addPluginSeo()
@@ -225,7 +234,11 @@ class Component
         return $this;
     }
 
-    public function savePluginSeoData($request)
+    /**
+     * @param Request $request
+     * @return bool
+     */
+    public function savePluginSeoData(Request $request)
     {
         if( !$request->has('_jsvalidation') && ($request->has('seo_title') || $request->get('seo_description') || $request->get('seo_seo_keywords'))){
             $seo = LarrockSeo::getModel()->whereSeoIdConnect($request->get('id_connect'))->whereSeoTypeConnect($request->get('type_connect'))->first();
@@ -239,12 +252,12 @@ class Component
                 $seo->seo_keywords = $request->get('seo_keywords');
                 $seo->seo_type_connect = $request->get('type_connect');
                 if($seo->save()){
-                    \Session::push('message.success', 'SEO обновлено');
+                    MessageLarrock::success('SEO обновлено');
                 }
             }else{
                 if($seo){
                     $seo->delete($seo->id);
-                    \Session::push('message.success', 'SEO удалено');
+                    MessageLarrock::success('SEO удалено');
                 }
             }
         }
@@ -278,12 +291,16 @@ class Component
                     $model->id_child = $value;
                     $model->save();
                 }
-                \Session::push('message.success', 'Связи обновлены');
+                MessageLarrock::success('Связи обновлены');
             }
         }
         return TRUE;
     }
 
+    /**
+     * Подключение плагина загрузки фото
+     * @return $this
+     */
     public function addPluginImages()
     {
         $this->plugins_backend['images'] = 'images';
@@ -292,16 +309,17 @@ class Component
 
     /**
      * Метод для добавления в модель новых пресетов картинок для Medialibrary
-     * @param $conversions
+     * @param array $conversions
      */
-    public function addCustomMediaConversions($conversions)
+    public function addCustomMediaConversions(array $conversions)
     {
-        if( !is_array($conversions)){
-            return abort(403, 'addCustomMediaConversions должно быть массивом');
-        }
         $this->customMediaConversions = $conversions;
     }
 
+    /**
+     * Подключение плагина загрузки файлов
+     * @return $this
+     */
     public function addPluginFiles()
     {
         $this->plugins_backend['files'] = 'files';
@@ -322,15 +340,12 @@ class Component
         $this->rows['anons_description'] = $rows_plugin[] = $row->setTab('anons', 'Анонс')->setTypo();
 
         $this->settings['anons_category'] = $categoryAnons;
-
         $this->plugins_backend['anons']['rows'] = $rows_plugin;
-
         return $this;
     }
 
     /**
      * Создание анонса новости
-     *
      * @param $request
      * @return bool
      */
@@ -357,9 +372,9 @@ class Component
             }
 
             if($anons->save()){
-                \Session::push('message.success', 'Анонс добавлен');
+                MessageLarrock::success('Анонс добавлен');
             }else{
-                \Session::push('message.danger', 'Анонс не добавлен');
+                MessageLarrock::danger('Анонс не добавлен');
             }
         }
         return TRUE;
@@ -367,11 +382,9 @@ class Component
 
     /**
      * Вспомогательный метод построения правил валидации из конфига полей компонента
-     *
-     * @param $config
+     * @param array|object $config
      * @param string $action create|update
-     * @param null   $id
-     *
+     * @param null|string|integer   $id
      * @return array
      */
     public static function _valid_construct($config, $action = 'create', $id = NULL)
@@ -393,8 +406,8 @@ class Component
     }
 
     /**
-     * Вывод данные полей компонента для табов
-     * @param $data
+     * Вывод данных полей компонента для табов
+     * @param Model $data
      * @return $this
      */
     public function tabbable($data)
@@ -410,7 +423,7 @@ class Component
             $render = '';
             foreach($this->rows as $row_value){
                 $class_name = get_class($row_value);
-                $load_class = new $class_name(NULL, NULL);
+                $load_class = new $class_name($row_value->name, $row_value->title);
 
                 if(key($row_value->tab) === $tab_key){
                     if(method_exists($load_class, 'render')){
@@ -428,7 +441,7 @@ class Component
 
     /**
      * Присоединяем данные от плагинов
-     * @param $data
+     * @param Model $data
      */
     public function addDataPlugins($data)
     {
@@ -447,47 +460,33 @@ class Component
 
     /**
      * Удаление данных плагинов
-     *
      * @param $config
+     * @param Model $data Модель компонента с удаляемым материалом
      */
-    public function removeDataPlugins($config)
+    public function removeDataPlugins($config, $data)
     {
         if($config->plugins_backend){
             foreach ($config->plugins_backend as $key_plugin => $value_plugin){
                 if($key_plugin === 'seo'){
-                    if($seo = LarrockSeo::getModel()->whereSeoIdConnect(\Request::input('id_connect'))->whereSeoTypeConnect(\Request::input('type_connect'))->first()){
+                    if($seo = LarrockSeo::getModel()->whereSeoIdConnect(\Request::input('id_connect'))
+                        ->whereSeoTypeConnect(\Request::input('type_connect'))->first()){
                         $seo->delete();
                     }
                 }
             }
         }
-        $this->removeLinkData($config);
-    }
-
-    /**
-     * Удаление данных связей при удалении материала
-     * @param $config
-     */
-    public function removeLinkData($config)
-    {
-        foreach($config->rows as $row){
-            if(get_class($row) === 'Larrock\Core\Helpers\FormBuilder\FormTagsLink'){
-                //Удаляем старые связи
-                $model = new Link();
-                $model->whereIdParent(\Request::input('id_connect'))->whereModelParent($row->modelParent)->whereModelChild($row->modelChild)->delete();
-            }
-        }
+        $this->actionDetach($config, $data);
     }
 
     /**
      * Метод изменяет данные прикрепляемых полей при изменении/удалении/добавлении материала
      * ИСПОЛЬЗОВАНИЕ: в экшенах сохранения/удаления материалов после data->save()
      *
-     * @param mixed $config     Предсгенерированный конфиг компонента
-     * @param mixed $data       Данные материала после сохранения ($data->save())
-     * @param mixed $request    Параметры переданные в качестве запроса. Значение Request $request
+     * @param Component $config     Предсгенерированный конфиг компонента
+     * @param Model $data       Данные материала после сохранения ($data->save())
+     * @param Request $request    Параметры переданные в качестве запроса. Значение Request $request
      */
-    public function actionAttach($config, $data, $request)
+    public function actionAttach($config, $data, Request $request)
     {
         foreach ($config->rows as $row){
             if($row->attached){
@@ -527,8 +526,37 @@ class Component
     }
 
     /**
+     * Удаление данных связей при удалении материала
+     * @param object    $config     Конфиг компонента
+     * @param Model     $data       Модель компонента с удаляемым материалом
+     */
+    public function actionDetach($config, $data)
+    {
+        foreach($config->rows as $row){
+            if(isset($row->modelParent) && isset($row->modelChild)){
+                //Получаем id прилинкованных данных
+                $getLink = $data->getLink($row->modelChild)->get();
+
+                //Удаляем связи
+                $data->getLink($row->modelChild)->detach($data->id);
+
+                //Удаляем поля в modelChild если у поля указана опция deleteIfNoLink и больше связей к этому материалу нет
+                if($row->deleteIfNoLink){
+                    //Проверяем остались ли связи до modelChild от modelParent
+                    foreach ($getLink as $link){
+                        $linkModel = new Link();
+                        if( !$linkModel->whereIdChild($link->id)->whereModelChild($row->modelChild)->first()){
+                            $modelChild = new $row->modelChild();
+                            $modelChild->whereId($link->id)->delete();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * Перезапись конфига компонента (например внутри контроллера)
-     *
      * @param $option
      * @param $config
      * @return $this
@@ -541,7 +569,6 @@ class Component
 
     /**
      * Разрешить поиск по материалам компонента
-     *
      * @return $this
      */
     public function isSearchable()
@@ -552,7 +579,6 @@ class Component
 
     /**
      * Формирование пунктов меню компонента в админке
-     *
      * @return string
      */
     public function renderAdminMenu()
@@ -562,7 +588,6 @@ class Component
 
     /**
      * Метод встаивания данных компонента в карту сайта sitemap.xml
-     *
      * @return null
      */
     public function createSitemap()
@@ -572,7 +597,6 @@ class Component
 
     /**
      * Метод встаивания данных компонента в rss-feed
-     *
      * @return null
      */
     public function createRSS()
@@ -582,8 +606,7 @@ class Component
 
     /**
      * Данные для поиска по материалам компонента
-     *
-     * @param null|bool $admin Если TRUE - дял поиска будут доступны вообще все элементы (не только опубликованные)
+     * @param null|bool $admin Если TRUE - для поиска будут доступны вообще все элементы (не только опубликованные)
      * @return null
      */
     public function search($admin)

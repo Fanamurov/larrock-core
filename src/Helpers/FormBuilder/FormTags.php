@@ -9,12 +9,26 @@ use View;
 
 class FormTags extends FBElement {
 
+    /** @var Model  Модель связываемого компонента */
     public $modelParent;
+
+    /** @var Model  Модель компонента с которым связываем */
     public $modelChild;
+
+    /** @var string Ключ поля для выборки в $modelChild */
     public $modelChildWhereKey;
+
+    /** @var string Значение поля для выборки в $modelChild */
     public $modelChildWhereValue;
+
+    /** @var integer    Сколько элементов максимум можно выбрать */
     public $maxItems;
+
+    /** @var null|bool  Позволить пользователям создавать новые поля */
     public $allowCreate = NULL;
+
+    /** @var null|bool  Удалять поле из $modelChild если связей к ней нет */
+    public $deleteIfNoLink = NULL;
 
     /** @var null|bool  Задается автоматически при наличии сведения о разделе в modelParent */
     public $showCategory;
@@ -66,6 +80,15 @@ class FormTags extends FBElement {
     {
         $this->allowCreate = TRUE;
         return $this;
+    }
+
+    /**
+     * Удалять поле из $modelChild если связей к ней нет
+     * @return $this
+     */
+    public function deleteIfNoLink()
+    {
+        $this->deleteIfNoLink = TRUE;
     }
 
     /**
