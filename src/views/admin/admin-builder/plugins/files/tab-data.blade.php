@@ -2,6 +2,9 @@
     <li id="tabfiles">
         <div class="form-group">
             <label class="uk-form-label uk-width-1-1 uk-text-right" style="display: block">
+                Группа для галереи
+                <input type="text" class="uk-form-width-small" value="" name="gallery_file" placeholder="По-умолчанию url">
+            </label>
             @if(count($data->getFiles) > 0)
                 <label class="uk-form-label uk-width-1-1 uk-text-right uk-margin-top" style="display: block">
                     <button id="clearFiles" type="button" class="uk-button uk-button-danger"

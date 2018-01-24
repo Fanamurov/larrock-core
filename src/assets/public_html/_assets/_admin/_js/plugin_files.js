@@ -54,7 +54,8 @@ function start_uploadFiles(files) {
             },
             data: {
                 model_id: $('#uploadedFiles').attr('data-model_id'),
-                model_type: $('#uploadedFiles').attr('data-model_type')
+                model_type: $('#uploadedFiles').attr('data-model_type'),
+                gallery: $('input[name=gallery_file]').val()
             },
             progress: function (evt/**Object*/, file/**Object*/, xhr/**Object*/, options/**Object*/) {
                 var pr = evt.loaded / evt.total * 100;

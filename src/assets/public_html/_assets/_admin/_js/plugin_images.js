@@ -71,7 +71,8 @@ function start_uploadImages(files) {
                 data: {
                     model_id: $('#uploadedImages').attr('data-model_id'),
                     model_type: $('#uploadedImages').attr('data-model_type'),
-                    resize_original: resize_original
+                    resize_original: resize_original,
+                    gallery: $('input[name=gallery_img]').val()
                 },
                 progress: function (evt/**Object*/, file/**Object*/, xhr/**Object*/, options/**Object*/) {
                     var pr = evt.loaded / evt.total * 100;

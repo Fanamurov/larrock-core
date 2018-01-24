@@ -5,6 +5,10 @@
                 <input type="checkbox" name="resize_original" value="1"> Сжать оригинал до
                 <input type="text" class="uk-form-width-small" value="800" name="resize_original_px"> px
             </label>
+            <label class="uk-form-label uk-width-1-1 uk-text-right" style="display: block">
+                Группа для галереи
+                <input type="text" class="uk-form-width-small" value="" name="gallery_img" placeholder="По-умолчанию url">
+            </label>
             @if(count($data->getImages) > 0)
                 <label class="uk-form-label uk-width-1-1 uk-text-right uk-margin-top" style="display: block">
                     <button id="clearImages" type="button" class="uk-button uk-button-danger"
