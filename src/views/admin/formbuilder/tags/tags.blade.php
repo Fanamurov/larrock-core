@@ -8,15 +8,24 @@
     <div class="input-group" style="width: 100%">
         <select @if($row_settings->maxItems !== 1) multiple @endif
             name="@if($row_settings->maxItems !== 1){{ $row_key }}[]@else{{ $row_key }}@endif" id="tags_{{ $row_key }}">
-            @if(is_array($selected))
-                @foreach($selected as $value)
-                    <option selected="selected" value="{{ $value->id }}">{{ $value->title }}</option>
-                @endforeach
-            @endif
-            @if(is_object($selected))
-                <option selected="selected" value="{{ $selected->id }}">{{ $selected->title }}</option>
-            @endif
+            @foreach($selected as $value)
+                <option selected="selected" value="{{ $value->id }}">{{ $value->title }}</option>
+            @endforeach
         </select>
+
+        @if($row_settings->costValue)
+            <div class="uk-margin-top">
+                <p class="uk-alert uk-alert-warning">Данное поле влияет на цену товара. Стандартное поле "Цена" учитываться не будет</p>
+                <div class="uk-margin-top uk-form uk-form-horizontal">
+                    @foreach($selected as $value)
+                        <div>
+                            <label class="uk-form-label">Цена модификации «{{ $value->title }}»</label>
+                            <input type="text" name="cost_{{ $value->id }}" value="{{ $value->cost or $data->cost }}" placeholder="Цена модификации">
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endif
     </div>
 
     <script type="text/javascript">
@@ -27,7 +36,11 @@
             searchField: 'title',
             persist: false,
             createOnBlur: false,
+            @if($row_settings->allowCreate)
+            create: true,
+            @else
             create: false,
+            @endif
             plugins: ['remove_button'],
             allowEmptyOption: true,
             sortField: {

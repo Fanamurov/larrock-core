@@ -26,7 +26,11 @@ class Link extends Model
 {
     protected $table = 'link';
 
-	protected $fillable = ['id_parent', 'id_child', 'model_parent', 'model_child'];
+	protected $fillable = ['id_parent', 'id_child', 'model_parent', 'model_child', 'cost'];
+
+    protected $casts = [
+        'cost' => 'float'
+    ];
 
 	public function getFullDataChild()
     {

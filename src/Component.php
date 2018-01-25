@@ -495,6 +495,8 @@ class Component
                 }
 
                 if($request->has($row->name)){
+                    $link_params = ['model_parent' => $row->modelParent, 'model_child' => $row->modelChild];
+
                     if(is_array($request->get($row->name))){
                         foreach ($request->get($row->name) as $param){
                             if(isset($row->allowCreate) && $row->allowCreate){
@@ -509,16 +511,16 @@ class Component
                                     }
                                 }
                             }
-                            $data->getLink($row->modelChild)->attach(
-                                $param,
-                                ['model_parent' => $row->modelParent, 'model_child' => $row->modelChild]
-                            );
+
+                            //Запись дополнительных данных в таблицу связей link из FormTags
+                            if($row->costValue && $request->has('cost_'. $param)){
+                                $link_params['cost'] = $request->get('cost_'. $param);
+                            }
+
+                            $data->getLink($row->modelChild)->attach($param, $link_params);
                         }
                     }else{
-                        $data->getLink($row->modelChild)->attach(
-                            $request->get($row->name),
-                            ['model_parent' => $row->modelParent, 'model_child' => $row->modelChild]
-                        );
+                        $data->getLink($row->modelChild)->attach($request->get($row->name), $link_params);
                     }
                 }
             }

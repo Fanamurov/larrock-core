@@ -33,6 +33,9 @@ class FormTags extends FBElement {
     /** @var null|bool  Задается автоматически при наличии сведения о разделе в modelParent */
     public $showCategory;
 
+    /** @var null|bool  Поле может использоваться для создания модицикаций (для каталога) */
+    public $costValue;
+
     /**
      * Передача моделей для связывания
      *
@@ -89,6 +92,18 @@ class FormTags extends FBElement {
     public function deleteIfNoLink()
     {
         $this->deleteIfNoLink = TRUE;
+        return $this;
+    }
+
+    /**
+     * Использовать поле для создания модицикаций (для каталога)
+     * @return $this
+     */
+    public function setCostValue()
+    {
+        $this->costValue = TRUE;
+        $this->setCssClassGroup('uk-width-1-1');
+        return $this;
     }
 
     /**
@@ -102,38 +117,44 @@ class FormTags extends FBElement {
         if( !$row_settings->modelParent){
             throw LarrockFormBuilderRowException::withMessage('modelParent поля '. $row_settings->name .' не задан');
         }
-        if($row_settings->modelChild){
-            $rows = ['id', 'title'];
-            $model = new $row_settings->modelChild;
-
-            if(method_exists($model, 'getConfig') && $model->getConfig()->rows && array_key_exists('category', $model->getConfig()->rows)){
-                $rows[] = 'category';
-                $this->showCategory = TRUE;
-            }
-
-            if($row_settings->modelChildWhereKey && $row_settings->modelChildWhereValue){
-                if(is_array($this->modelChildWhereValue)){
-                    $tags = $model->whereIn($row_settings->modelChildWhereKey, $row_settings->modelChildWhereValue)->get($rows);
-                }else{
-                    $tags = $model->where($row_settings->modelChildWhereKey, '=', $row_settings->modelChildWhereValue)->get($rows);
-                }
-            }else{
-                $tags = $model->get($rows);
-            }
-
-            $selected = NULL;
-            if($data){
-                $selected = $data->getLink($row_settings->modelChild)->get();
-            }
-        }else{
+        if( !$row_settings->modelChild){
             throw LarrockFormBuilderRowException::withMessage('modelChild поля '. $row_settings->name .' не задан');
         }
 
-        if($row_settings->allowCreate){
-            return View::make('larrock::admin.formbuilder.tags.tagsCreate', ['tags' => $tags, 'data' => $data,
-                'row_key' => $row_settings->name, 'row_settings' => $row_settings, 'selected' => $selected])->render();
+        $rows = ['id', 'title'];
+        $model = new $row_settings->modelChild;
+
+        if(method_exists($model, 'getConfig') && $model->getConfig()->rows && array_key_exists('category', $model->getConfig()->rows)){
+            $rows[] = 'category';
+            $this->showCategory = TRUE;
         }
-        return View::make('larrock::admin.formbuilder.tags.link', ['tags' => $tags, 'data' => $data,
+
+        if($row_settings->modelChildWhereKey && $row_settings->modelChildWhereValue){
+            if(is_array($this->modelChildWhereValue)){
+                $tags = $model->whereIn($row_settings->modelChildWhereKey, $row_settings->modelChildWhereValue)->get($rows);
+            }else{
+                $tags = $model->where($row_settings->modelChildWhereKey, '=', $row_settings->modelChildWhereValue)->get($rows);
+            }
+        }else{
+            $tags = $model->get($rows);
+        }
+
+        $selected = NULL;
+        if($data){
+            $selected = $data->getLink($row_settings->modelChild)->get();
+            if($row_settings->costValue){
+                foreach ($selected as $key => $value){
+                    if($link = Link::whereModelParent($row_settings->modelParent)
+                        ->whereModelChild($row_settings->modelChild)
+                        ->whereIdParent($data->id)
+                        ->whereIdChild($value->id)->first(['cost'])){
+                        $selected[$key]->cost = $link->cost;
+                    }
+                }
+            }
+        }
+
+        return View::make('larrock::admin.formbuilder.tags.tags', ['tags' => $tags, 'data' => $data,
             'row_key' => $row_settings->name, 'row_settings' => $row_settings, 'selected' => $selected])->render();
     }
 }
