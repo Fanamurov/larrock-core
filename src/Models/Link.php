@@ -32,6 +32,10 @@ class Link extends Model
         'cost' => 'float'
     ];
 
+    protected $appends = [
+        'cost',
+    ];
+
 	public function getFullDataChild()
     {
         $data = new $this->model_child;
