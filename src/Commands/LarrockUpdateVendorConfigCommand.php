@@ -47,6 +47,7 @@ class LarrockUpdateVendorConfigCommand extends Command
         \File::copy($dir. '/configVendor/filesystems.php', base_path('/config/filesystems.php'));
         \File::copy($dir. '/configVendor/jsvalidation.php', base_path('/config/jsvalidation.php'));
         \File::copy($dir. '/configVendor/medialibrary.php', base_path('/config/medialibrary.php'));
+        \File::copy($dir. '/configVendor/cart.php', base_path('/config/cart.php'));
 
         $this->info('Configs successfully updated');
     }

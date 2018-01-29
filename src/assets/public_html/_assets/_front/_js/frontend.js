@@ -150,7 +150,9 @@ function add_to_cart_fast() {
             type: 'POST',
             data: {
                 id: parseInt($(this).attr('data-id')),
-                qty: qty
+                qty: qty,
+                costValueId: $(this).attr('data-costValueId'),
+                cost: $(this).attr('data-cost'),
             },
             dataType: 'json',
             error: function() {
@@ -280,6 +282,19 @@ function checkKuponDiscount() {
     });
 }
 
+/**
+ * Смена модификации товара
+ */
+function changeCostValue() {
+    $('.changeCostValue').click(function () {
+        var cost = parseFloat($(this).find('input').val());
+        var costValueId = $(this).find('input').attr('data-costValueId');
+        $('.catalogPageItem').find('.cost_value').html(cost);
+        $('.add_to_cart_fast').attr('data-cost', cost);
+        $('.add_to_cart_fast').attr('data-costValueId', costValueId);
+    });
+}
+
 $(document).ready(function(){
     $.ajaxSetup({
         headers: {
@@ -324,6 +339,7 @@ $(document).ready(function(){
     removeCartItem();
     editQty();
     link_block();
+    changeCostValue();
 
     $('.showModalLoading').click(function () {
         UIkit.modal("#modalProgress").show();
