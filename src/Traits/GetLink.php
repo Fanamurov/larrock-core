@@ -97,4 +97,32 @@ trait GetLink{
             return $values;
         });
     }
+
+    /**
+     * Получение первой цены модификации товара
+     * @return mixed
+     */
+    public function getFirstCostValueAttribute()
+    {
+        if($costValues = $this->getCostValuesAttribute()){
+            if($costValues->count() > 0){
+                return $costValues->first()->cost;
+            }
+        }
+        return $this->cost;
+    }
+
+    /**
+     * Получение ID первой цены модификации товара
+     * @return mixed
+     */
+    public function getFirstCostValueIdAttribute()
+    {
+        if($costValues = $this->getCostValuesAttribute()){
+            if($costValues->count() > 0){
+                return $costValues->first()->id;
+            }
+        }
+        return NULL;
+    }
 }
