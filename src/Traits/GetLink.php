@@ -125,4 +125,18 @@ trait GetLink{
         }
         return NULL;
     }
+
+    /**
+     * Получение title первой цены модификации товара
+     * @return mixed
+     */
+    public function getFirstCostValueTitleAttribute()
+    {
+        if($costValues = $this->getCostValuesAttribute()){
+            if($costValues->count() > 0){
+                return $costValues->first()->title;
+            }
+        }
+        return NULL;
+    }
 }
