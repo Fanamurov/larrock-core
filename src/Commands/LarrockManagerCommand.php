@@ -33,7 +33,7 @@ class LarrockManagerCommand extends Command
             'Do not install other packages', 'larrock-catalog', 'larrock-cart', 'larrock-wizard', 'larrock-discount',
             'larrock-feed', 'larrock-category', 'larrock-reviews', 'larrock-smartbanners',
             'larrock-menu', 'larrock-users', 'larrock-pages', 'larrock-blocks', 'larrock-contact',
-            'larrock-admin-seo', 'larrock-search', 'all'
+            'larrock-admin-seo', 'larrock-search', 'larrock-yandex-kassa', 'all'
         ];
 
         $name = $this->choice('What to install/update?', $packages);

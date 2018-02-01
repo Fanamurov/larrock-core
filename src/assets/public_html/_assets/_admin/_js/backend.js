@@ -763,7 +763,7 @@ function change_url_title(title, table, form){
 }
 
 function rebuild_cost() {
-    $('#ModalToCart-form').find('input[name=kolvo]').keyup(function () {
+    $('#ModalToCart-form').find('input[name=qty]').keyup(function () {
         var cost = parseFloat($('#ModalToCart-form').find('.cost').attr('data-cost'));
         var kolvo = parseInt($(this).val());
 
