@@ -61,7 +61,7 @@ trait GetLink{
         return Cache::remember($cache_key, 1140, function () use ($childModel, $modelChildWhereKey, $modelChildWhereValue) {
             $query = $this->hasMany(Link::class, 'id_parent')->whereModelParent($this->config->model)->whereModelChild($childModel);
             if($modelChildWhereKey && $modelChildWhereValue){
-                $query->where($modelChildWhereKey, '=', $modelChildWhereValue);
+                //$query->where($modelChildWhereKey, '=', $modelChildWhereValue);
             }
             if($getLink = $query->get()){
                 foreach ($getLink as $key => $item){

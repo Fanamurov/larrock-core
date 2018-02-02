@@ -16,6 +16,7 @@
         @if($row_settings->costValue)
             <div class="uk-margin-top">
                 <p class="uk-alert uk-alert-warning">Данное поле влияет на цену товара. Стандартное поле "Цена" учитываться не будет</p>
+                <p class="uk-alert uk-alert-warning">Внесение цен модификаций товара доступно после сохранения</p>
                 <div class="uk-margin-top uk-form uk-form-horizontal">
                     @foreach($selected as $value)
                         <div>
