@@ -27,6 +27,17 @@ trait GetLink{
     }
 
     /**
+     * Get link data
+     * @param $childModel
+     * @return mixed
+     */
+    public function linkParam()
+    {
+        return $this->hasMany(Link::class, 'id_parent')->whereModelParent($this->config->model)
+            ->whereModelChild('Larrock\ComponentCatalog\Models\Param');
+    }
+
+    /**
      * Get Model Component + link in attrubute
      * @param $childModel
      * @return $this
@@ -46,6 +57,15 @@ trait GetLink{
     {
         return $this->belongsToMany($childModel, 'link', 'id_parent', 'id_child')
             ->whereModelParent($this->config->getModelName())->whereModelChild($childModel);
+    }
+
+    /**
+     * Получение всех связей
+     * @return mixed
+     */
+    public function getAllLinks()
+    {
+        return $this->hasMany(Link::class, 'id_parent')->whereModelParent($this->config->model);
     }
 
     /**
