@@ -2,6 +2,7 @@
 namespace Larrock\Core\Traits;
 
 use Larrock\Core\Models\Seo;
+use Cache;
 
 trait GetSeo{
 
