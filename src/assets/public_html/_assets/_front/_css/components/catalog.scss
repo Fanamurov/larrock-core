@@ -116,6 +116,19 @@
     line-height: 19px;
     font-size: 13px;
   }
+  .changeParamValue{
+    background: #ffdf4b;
+    color: #000;
+    font-size: 80%;
+    padding: 0 8px;
+    display: inline-block;
+    cursor: pointer;
+
+    &.uk-active{
+      background: gainsboro;
+      cursor: default;
+    }
+  }
 }
 
 /* Табличный вывод */

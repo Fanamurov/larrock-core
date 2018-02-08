@@ -1,4 +1,4 @@
-.uk-breadcrumb{
+ul.uk-breadcrumb{
   padding: 0;
   background: transparent;
   font-size: 20px;
@@ -40,5 +40,9 @@
     display: inline-block;
     margin: 0 8px 0 0;
     font-size: 15px;
+  }
+
+  >li:first-of-type{
+    display: inline-block;
   }
 }
