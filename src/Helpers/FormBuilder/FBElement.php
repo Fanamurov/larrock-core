@@ -24,6 +24,7 @@ class FBElement
     public $sorted;
     /** @var string  Место где используется (в каталоге место вывода) */
     public $template;
+    public $template_admin;
 
 
     /**
@@ -208,6 +209,12 @@ class FBElement
     public function setTemplate($template)
     {
         $this->template = $template;
+        return $this;
+    }
+
+    public function setTemplateAdmin($template)
+    {
+        $this->template_admin = $template;
         return $this;
     }
 
