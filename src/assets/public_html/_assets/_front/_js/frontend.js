@@ -50,16 +50,10 @@ function rebuild_cost() {
                         noty_show('alert', 'Кол-во не изменено');
                     },
                     success: function(res) {
-                        $('.total').html(res.total);
-                        $('.total_cart').html(res.total);
-                        if(res.total_discount > 0){
-                            $('.total_discount_cart').html(parseInt(res.total).toFixed(2) - parseInt(res.total_discount).toFixed(2));
-                            $('.total_discount').html(parseFloat(res.total_discount));
-                            $('.discount_row').show();
-                        }else{
-                            $('.discount_row').hide();
-                        }
-                        $('tr[data-rowid='+ rowid +']').find('.subtotal span.subtotal').html(parseFloat(res.subtotal).toFixed(2));
+                        $('.row-total').find('.total').html(res.total);
+                        $('.row-clear-total').find('.clear-total').html(res.clear_total);
+                        $('.row-total-discount').find('.total-discount').html(res.profit);
+                        $('tr[data-rowid='+ rowid +']').find('.subtotal span.subtotal').html(res.subtotal);
                     }
                 });
             }
@@ -152,7 +146,7 @@ function add_to_cart_fast() {
                 id: parseInt($(this).attr('data-id')),
                 qty: qty,
                 costValueId: $(this).attr('data-costValueId'),
-                cost: $(this).attr('data-cost'),
+                cost: $(this).attr('data-cost')
             },
             dataType: 'json',
             error: function() {
@@ -166,12 +160,6 @@ function add_to_cart_fast() {
                         $('.cart-text').html('В корзине товаров: '+ res.count);
                     }else{
                         $('.cart-text').html('В корзине на сумму <span class="total_cart text">'+ res.total +'</span> р.');
-                    }
-                    $('.total_discount_cart').html(res.total_discount);
-                    if(parseInt(res.total_discount) < 1){
-                        $('.moduleCart-discount_row').hide();
-                    }else{
-                        $('.moduleCart-discount_row').show();
                     }
                     noty_show('message', res.message);
                 }
@@ -216,44 +204,6 @@ function removeCartItem() {
     });
 }
 
-/**
- * LarrockCart
- * Изменение количества товара в корзине в модальном окне
- *
- * attr data-rowid - rowID элемента корзины
- * value qty - Нужное количество товара (input value)
- */
-function editQty() {
-    $('.editQty').change(function(){
-        var rowid = $(this).attr('data-rowid');
-        var qty = $(this).val();
-        if(qty > 0){
-            $.ajax({
-                url: '/ajax/cartQty',
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    rowid: rowid,
-                    qty: qty
-                },
-                error: function() {
-                    noty_show('alert', 'Кол-во не изменено');
-                },
-                success: function(res) {
-                    $('.total').html(res.total);
-                    $('tr[data-rowid='+ rowid +']').find('.subtotal span').html(res.subtotal);
-                    $('.total_discount').html(res.total_discount);
-                    if(res.total_discount < 1){
-                        $('.discount_row').hide();
-                    }else{
-                        $('.discount_row').show();
-                    }
-                }
-            });
-        }
-    });
-}
-
 function link_block() {
     /** Ищет внутри блока ссылку и присваивает ее всему блоку */
     $('.link_block').click(function(){window.location = $(this).find('a').attr('href');});
@@ -277,7 +227,7 @@ function checkKuponDiscount() {
         },
         success: function(res) {
             noty_show('success', 'Купон "'+ keyword +'" будет применен');
-            $('.kupon_text').slideDown().html(res.message);
+            $('.kupon_text').slideDown().html(res.description);
         }
     });
 }
@@ -352,7 +302,6 @@ $(document).ready(function(){
     add_to_cart_fast();
     change_option_ajax();
     removeCartItem();
-    editQty();
     link_block();
     changeCostValue();
     changeParamValue();
