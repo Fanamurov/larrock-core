@@ -2,7 +2,7 @@
 //https://yarnpkg.com/en/docs/install
 //brew install yarn
 //Install Gulp:
-//yarn add gulp-cli gulp gulp-sass gulp-csso gulp-autoprefixer gulp-bless gulp-concat gulp-notify gulp-removelogs gulp-uglify gulp-rename gulp-changed gulp-filesize gulp-imagemin imagemin-pngquant
+//yarn add gulp-cli gulp gulp-sass gulp-csso gulp-autoprefixer gulp-bless gulp-concat gulp-notify gulp-removelogs gulp-rename gulp-changed gulp-filesize gulp-imagemin imagemin-pngquant
 
 var project = 'larrock'; //Название проекта
 
@@ -13,7 +13,6 @@ var bless = require('gulp-bless');
 var concat = require('gulp-concat');
 var notify = require("gulp-notify");
 var removeLogs = require('gulp-removelogs');
-var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var changed = require('gulp-changed');
 var size = require('gulp-filesize');
@@ -26,7 +25,7 @@ gulp.task('default', function() {
 });
 
 gulp.task('reload', function() {
-    gulp.start('sass_uikit_admin', 'sass', 'sass_uikit', 'javascript_admin', 'javascript_front', 'libs_styles');
+    gulp.start('sass_uikit_admin', 'sass', 'sass_uikit', 'javascript_admin', 'libs_styles');
 });
 
 gulp.task('watch', function () {
@@ -34,7 +33,6 @@ gulp.task('watch', function () {
     gulp.watch('./public_html/_assets/_front/_css/**/**/*.scss', ['sass']);
     gulp.watch('./public_html/_assets/bower_components/uikit/scss/**/**/*.scss', ['sass_uikit']);
     gulp.watch(['./public_html/_assets/_admin/_js/**/*.js', '!./public_html/_assets/_admin/_js/min/*'], ['javascript_admin']);
-    gulp.watch(['./public_html/_assets/_front/_js/**/*.js', '!./public_html/_assets/_front/_js/min/*'], ['javascript_front']);
     gulp.watch(['./public_html/_assets/bower_components/**/**/**/**'], ['libs_styles']);
 });
 
@@ -136,22 +134,6 @@ gulp.task('javascript_admin', function() {
         .pipe(notify("Js reload: ./public_html/_assets/_admin/_js/min/<%= file.relative %>! "+ project))
         .pipe(size({showFiles : true}))
         .pipe(gulp.dest('./public_html/_assets/_admin/_js/min'));
-});
-
-gulp.task('javascript_front', function() {
-    return gulp.src([
-            './public_html/_assets/bower_components/jquery.cookie/jquery.cookie.js',
-            './public_html/vendor/jsvalidation/js/jsvalidation.min.js',
-            './public_html/_assets/bower_components/pickadate/lib/compressed/picker.js',
-            './public_html/_assets/bower_components/pickadate/lib/compressed/picker.date.js',
-            './public_html/_assets/_front/_js/frontend.js'
-        ])
-        .pipe(concat('front_core.min.js'))
-        .pipe(uglify())
-        .pipe(removeLogs())
-        .pipe(notify("Js reload: ./public_html/_assets/_front/_js/min/<%= file.relative %>! "+ project))
-        .pipe(size({showFiles : true}))
-        .pipe(gulp.dest('./public_html/_assets/_front/_js/min'));
 });
 
 gulp.task('imagemin', function () {
