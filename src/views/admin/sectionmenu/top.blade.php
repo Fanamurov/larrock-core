@@ -27,7 +27,7 @@
         </li>
     </ul>
     @if(isset($searchSiteAdmin))
-        <div class="uk-navbar-content uk-hidden-small searchSiteAdmin uk-position-relative">
+        <div class="uk-navbar-content uk-hidden-small searchSiteAdmin uk-position-relative" style="margin-top: 7px;">
             {!! $searchSiteAdmin !!}
         </div>
     @endif
