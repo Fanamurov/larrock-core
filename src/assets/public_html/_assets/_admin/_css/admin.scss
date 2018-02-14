@@ -821,6 +821,31 @@ body#clean_template{
   height: 100% !important;
 }
 
+#cartFilters{
+  @media (max-width: 925px) {
+    .uk-float-left{
+      float: none;
+      width: 100%;
+      input, select{
+        width: 100%;
+      }
+      .uk-form-icon{
+        width: 49%;
+      }
+    }
+  }
+}
+
+.uk-offcanvas-bar{
+  .searchSiteAdmin {
+    width: auto;
+    height: 30px;
+    .selectize-dropdown{
+      visibility: hidden;
+    }
+  }
+}
+
 @import "uikit-buttons-modify";
 @import "../notify.css";
 @import "../progress.css";

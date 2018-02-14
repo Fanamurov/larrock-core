@@ -38,10 +38,11 @@
 
     <div id="my-id" class="uk-offcanvas">
         <div class="uk-offcanvas-bar">
-            <form class="uk-form uk-margin uk-margin-top uk-margin-left uk-margin-right" action="/admin/search" method="get">
-                <input type="text" class="uk-form-controls uk-width-1-1 uk-form-large" placeholder="Что ищем?" name="text" value="{{ Request::get('text') }}">
-                <button type="submit" class="uk-button uk-button-primary uk-width-1-1" title="Поиск по сайту"><i class="uk-icon-search"></i> Поиск</button>
-            </form>
+            @if(isset($searchSiteAdmin))
+                <div class="searchSiteAdmin uk-position-relative uk-margin uk-margin-top uk-margin-left uk-margin-right">
+                    {!! $searchSiteAdmin !!}
+                </div>
+            @endif
             <ul class="uk-nav">
                 @foreach($menu as $item)
                     {!! $item !!}
