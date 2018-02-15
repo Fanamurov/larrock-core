@@ -41,16 +41,19 @@ class Component
         return $this;
     }
 
+    /** @return string */
     public function getName()
     {
         return $this->name;
     }
 
+    /** @return string */
     public function getTitle()
     {
         return $this->title;
     }
 
+    /** @return Model */
     public function getModel()
     {
         return new $this->model;
@@ -61,6 +64,7 @@ class Component
         return $this->model;
     }
 
+    /** @return string */
     public function getTable()
     {
         return $this->table;
