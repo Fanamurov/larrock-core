@@ -9,7 +9,7 @@
         <select @if($row_settings->maxItems !== 1) multiple @endif
             name="@if($row_settings->maxItems !== 1){{ $row_key }}[]@else{{ $row_key }}@endif" id="tags_{{ $row_key }}">
             @foreach($selected as $value)
-                <option selected="selected" value="{{ $value->id }}">{{ $value->title }}</option>
+                <option selected="selected" value="{{ $value->id }}">{{ $value->{$row_settings->titleRow} }}</option>
             @endforeach
         </select>
 
@@ -20,7 +20,7 @@
                 <div class="uk-margin-top uk-form uk-form-horizontal">
                     @foreach($selected as $value)
                         <div>
-                            <label class="uk-form-label">Цена модификации «{{ $value->title }}»</label>
+                            <label class="uk-form-label">Цена модификации «{{ $value->{$row_settings->titleRow} }}»</label>
                             <input type="text" name="cost_{{ $value->id }}" value="{{ $value->cost or $data->cost }}" placeholder="Цена модификации">
                         </div>
                     @endforeach
@@ -50,8 +50,8 @@
             },
             options: [
                 @foreach($tags as $value)
-                    @if($value->title)
-                        {title: '{!! $value->title !!}', id: '{!! $value->id !!}'},
+                    @if($value->{$row_settings->titleRow})
+                        {title: '{!! $value->{$row_settings->titleRow} !!}', id: '{!! $value->id !!}'},
                     @elseif($value->name)
                         {title: '{!! $value->name !!}', id: '{!! $value->id !!}'},
                     @else

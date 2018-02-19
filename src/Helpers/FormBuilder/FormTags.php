@@ -25,16 +25,19 @@ class FormTags extends FBElement {
     public $maxItems;
 
     /** @var null|bool  Позволить пользователям создавать новые поля */
-    public $allowCreate = NULL;
+    public $allowCreate;
 
     /** @var null|bool  Удалять поле из $modelChild если связей к ней нет */
-    public $deleteIfNoLink = NULL;
+    public $deleteIfNoLink;
 
     /** @var null|bool  Задается автоматически при наличии сведения о разделе в modelParent */
     public $showCategory;
 
     /** @var null|bool  Поле может использоваться для создания модицикаций (для каталога) */
     public $costValue;
+
+    /** @var string Какое поле использоваться в качестве заголовка в modelChild */
+    public $titleRow = 'title';
 
     /**
      * Передача моделей для связывания
@@ -107,6 +110,17 @@ class FormTags extends FBElement {
     }
 
     /**
+     * Какое поле использоваться в качестве заголовка в modelChild
+     * @param $rowName
+     * @return $this
+     */
+    public function setTitleRow($rowName)
+    {
+        $this->titleRow = $rowName;
+        return $this;
+    }
+
+    /**
      * @param $row_settings
      * @param $data
      * @return \Illuminate\Contracts\Routing\ResponseFactory|string|\Symfony\Component\HttpFoundation\Response
@@ -121,7 +135,7 @@ class FormTags extends FBElement {
             throw LarrockFormBuilderRowException::withMessage('modelChild поля '. $row_settings->name .' не задан');
         }
 
-        $rows = ['id', 'title'];
+        $rows = ['id', $row_settings->titleRow];
         $model = new $row_settings->modelChild;
 
         if(method_exists($model, 'getConfig') && $model->getConfig()->rows && array_key_exists('category', $model->getConfig()->rows)){
@@ -141,14 +155,18 @@ class FormTags extends FBElement {
 
         $selected = NULL;
         if($data){
-            $selected = $data->getLink($row_settings->modelChild)->get();
-            if($row_settings->costValue){
-                foreach ($selected as $key => $value){
-                    if($link = Link::whereModelParent($row_settings->modelParent)
-                        ->whereModelChild($row_settings->modelChild)
-                        ->whereIdParent($data->id)
-                        ->whereIdChild($value->id)->first(['cost'])){
-                        $selected[$key]->cost = $link->cost;
+            if($row_settings->modelChild === 'Larrock\ComponentUsers\Roles\Models\Role'){
+                $selected = $data->getLinkWithParams($row_settings->modelChild, 'role_user', 'role_id', 'user_id')->get();
+            }else{
+                $selected = $data->getLink($row_settings->modelChild)->get();
+                if($row_settings->costValue){
+                    foreach ($selected as $key => $value){
+                        if($link = Link::whereModelParent($row_settings->modelParent)
+                            ->whereModelChild($row_settings->modelChild)
+                            ->whereIdParent($data->id)
+                            ->whereIdChild($value->id)->first(['cost'])){
+                            $selected[$key]->cost = $link->cost;
+                        }
                     }
                 }
             }

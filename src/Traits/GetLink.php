@@ -60,6 +60,22 @@ trait GetLink{
     }
 
     /**
+     * Метод для attach() и detach()
+     * Метод для совместимости привязки сторонних расширений
+     * Например: $data->getLinkWithParams($row_settings->modelChild, 'role_user', 'role_id', 'user_id')->get()
+     * для получения прилинкованных ролей пользователя
+     * @param $childModel
+     * @param $tableLink
+     * @param $parentRow
+     * @param $childRow
+     * @return mixed
+     */
+    public function getLinkWithParams($childModel, $tableLink, $parentRow, $childRow)
+    {
+        return $this->belongsToMany($childModel, $tableLink, $parentRow, $childRow);
+    }
+
+    /**
      * Получение всех связей
      * @return mixed
      */
