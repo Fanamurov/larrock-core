@@ -8,9 +8,11 @@
     <div class="input-group" style="width: 100%">
         <select @if($row_settings->maxItems !== 1) multiple @endif
             name="@if($row_settings->maxItems !== 1){{ $row_key }}[]@else{{ $row_key }}@endif" id="tags_{{ $row_key }}">
-            @foreach($selected as $value)
-                <option selected="selected" value="{{ $value->id }}">{{ $value->{$row_settings->titleRow} }}</option>
-            @endforeach
+            @if($selected)
+                @foreach($selected as $value)
+                    <option selected="selected" value="{{ $value->id }}">{{ $value->{$row_settings->titleRow} }}</option>
+                @endforeach
+            @endif
         </select>
 
         @if($row_settings->costValue)
