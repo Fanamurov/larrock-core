@@ -138,7 +138,8 @@ class FormTags extends FBElement {
         $rows = ['id', $row_settings->titleRow];
         $model = new $row_settings->modelChild;
 
-        if(method_exists($model, 'getConfig') && $model->getConfig()->rows && array_key_exists('category', $model->getConfig()->rows)){
+        if(method_exists($model, 'getConfig') && array_key_exists('category', $model->getConfig()->rows)
+        && $model->getConfig()->rows['category']->fillable === TRUE){
             $rows[] = 'category';
             $this->showCategory = TRUE;
         }
