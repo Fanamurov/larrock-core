@@ -70,6 +70,7 @@ class Component
         return $this->table;
     }
 
+    /** @return array */
     public function getRows()
     {
         return $this->rows;
@@ -239,7 +240,7 @@ class Component
     }
 
     /**
-     * @param Request $request
+     * @param Request|\Illuminate\Http\Request $request
      * @return bool
      */
     public function savePluginSeoData(Request $request)
@@ -488,7 +489,7 @@ class Component
      *
      * @param Component $config     Предсгенерированный конфиг компонента
      * @param Model $data       Данные материала после сохранения ($data->save())
-     * @param Request $request    Параметры переданные в качестве запроса. Значение Request $request
+     * @param Request|\Illuminate\Http\Request $request    Параметры переданные в качестве запроса. Значение Request $request
      */
     public function actionAttach($config, $data, Request $request)
     {

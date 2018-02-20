@@ -24,12 +24,17 @@ class MessageLarrock
     /**
      * @param string $message
      * @param null|bool $logWrite
+     * @param null $exception
+     * @throws \Exception
      */
-    public static function danger(string $message, $logWrite = NULL)
+    public static function danger(string $message, $logWrite = NULL, $exception = NULL)
     {
         \Session::push('message.danger', $message);
         if($logWrite){
             \Log::error($message);
+        }
+        if($exception){
+            throw new \Exception($message, 500);
         }
     }
 
