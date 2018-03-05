@@ -4,7 +4,7 @@ namespace Larrock\Core;
 
 use Illuminate\Http\Request;
 use Larrock\ComponentAdminSeo\Facades\LarrockSeo;
-use Larrock\ComponentFeed\Facades\LarrockFeed;
+use LarrockFeed;
 use Larrock\Core\Helpers\FormBuilder\FormCheckbox;
 use Larrock\Core\Helpers\FormBuilder\FormInput;
 use Larrock\Core\Helpers\FormBuilder\FormTextarea;
@@ -16,15 +16,27 @@ use View;
 
 class Component
 {
+    /** @var string */
     public $name;
+
+    /** @var string */
     public $title;
+
+    /** @var string */
     public $description;
+
+    /** @var string */
     public $table;
+
+    /** @var array */
     public $rows;
+
     public $customMediaConversions;
 
     /** @var Model */
     public $model;
+
+    /** @var bool */
     public $active = TRUE;
     public $plugins_backend;
     public $plugins_front;
@@ -36,6 +48,7 @@ class Component
 
     public $valid;
 
+    /** @return Component */
     public function getConfig()
     {
         return $this;
@@ -59,6 +72,7 @@ class Component
         return new $this->model;
     }
 
+    /** @return string */
     public function getModelName()
     {
         return $this->model;
@@ -78,9 +92,13 @@ class Component
 
     public function getValid()
     {
-        return Component::_valid_construct($this);
+        return self::_valid_construct($this);
     }
 
+    /**
+     * Получение fillable-полей модели компонента из его конфига
+     * @return array
+     */
     public function getFillableRows()
     {
         $fillable_rows = [];
@@ -114,8 +132,8 @@ class Component
     public function addPosition()
     {
         $row = new FormInput('position', 'Вес');
-        $this->rows['position'] = $row->setTab('other', 'Дата, вес, активность')->setValid('integer')
-            ->setDefaultValue(0)->setInTableAdminAjaxEditable()->setFillable();
+        $this->rows['position'] = $row->setTab('main', 'Дата, вес, активность')->setValid('integer')
+            ->setDefaultValue(0)->setInTableAdminAjaxEditable()->setFillable()->setCssClassGroup('uk-width-1-3');
         return $this;
     }
 
@@ -126,8 +144,9 @@ class Component
     public function addActive()
     {
         $row = new FormCheckbox('active', 'Опубликован');
-        $this->rows['active'] = $row->setTab('other', 'Дата, вес, активность')->setChecked()
-            ->setValid('integer|max:1')->setDefaultValue(1)->setInTableAdminAjaxEditable()->setFillable();
+        $this->rows['active'] = $row->setTab('main', 'Дата, вес, активность')
+            ->setValid('integer|max:1')->setDefaultValue(1)->setInTableAdminAjaxEditable()->setFillable()
+            ->setCssClassGroup('uk-width-1-3');
         return $this;
     }
 
@@ -137,8 +156,8 @@ class Component
      */
     public function addPositionAndActive()
     {
-        $this->addActive();
         $this->addPosition();
+        $this->addActive();
         return $this;
     }
 
@@ -152,7 +171,7 @@ class Component
         $this->tabs = collect();
         $this->tabs_data = collect();
         View::share('app', $this);
-        $this->valid = Component::_valid_construct($this);
+        $this->valid = self::_valid_construct($this);
         View::share('validator', JsValidator::make($this->valid));
         return $this;
     }
@@ -205,6 +224,7 @@ class Component
     /**
      * Используется через SaveAdminPluginsData Middleware (Core)
      * @param $request
+     * @throws \Exception
      */
     public function savePluginsData($request)
     {
@@ -339,10 +359,10 @@ class Component
     public function addAnonsToModule($categoryAnons)
     {
         $row = new FormCheckbox('anons_merge', 'Сгенерировать для анонса заголовок и ссылку на новость');
-        $this->rows['anons_merge'] = $rows_plugin[] = $row->setTab('anons', 'Анонс');
+        $this->rows['anons_merge'] = $rows_plugin[] = $row->setTab('anons', 'Создать анонс');
 
         $row = new FormTextarea('anons_description', 'Текст для анонса новости в модуле');
-        $this->rows['anons_description'] = $rows_plugin[] = $row->setTab('anons', 'Анонс')->setTypo();
+        $this->rows['anons_description'] = $rows_plugin[] = $row->setTab('anons', 'Создать анонс')->setTypo();
 
         $this->settings['anons_category'] = $categoryAnons;
         $this->plugins_backend['anons']['rows'] = $rows_plugin;
@@ -353,6 +373,7 @@ class Component
      * Создание анонса новости
      * @param $request
      * @return bool
+     * @throws \Exception
      */
     public function savePluginAnonsToModuleData($request)
     {
@@ -427,7 +448,7 @@ class Component
         foreach($this->tabs as $tab_key => $tab_value){
             $render = '';
             foreach($this->rows as $row_value){
-                $class_name = get_class($row_value);
+                $class_name = \get_class($row_value);
                 $load_class = new $class_name($row_value->name, $row_value->title);
 
                 if(key($row_value->tab) === $tab_key){
@@ -440,7 +461,6 @@ class Component
             }
             $this->tabs_data->put($tab_key, $render);
         }
-
         return $this;
     }
 
@@ -451,12 +471,10 @@ class Component
     public function addDataPlugins($data)
     {
         foreach ($this->plugins_backend as $key_plugin => $value_plugin){
-            if($key_plugin === 'seo'){
-                if($plugin_data = $data->get_seo){
-                    foreach ($this->rows as $key => $value){
-                        if($value->name === 'seo_title' || $value->name === 'seo_description' || $value->name === 'seo_keywords'){
-                            $this->rows[$key]->default = $plugin_data->{$value->name};
-                        }
+            if($key_plugin === 'seo' && $plugin_data = $data->get_seo){
+                foreach ($this->rows as $key => $value){
+                    if($value->name === 'seo_title' || $value->name === 'seo_description' || $value->name === 'seo_keywords'){
+                        $this->rows[$key]->default = $plugin_data->{$value->name};
                     }
                 }
             }
@@ -472,11 +490,9 @@ class Component
     {
         if($config->plugins_backend){
             foreach ($config->plugins_backend as $key_plugin => $value_plugin){
-                if($key_plugin === 'seo'){
-                    if($seo = LarrockSeo::getModel()->whereSeoIdConnect(\Request::input('id_connect'))
+                if($key_plugin === 'seo' && $seo = LarrockSeo::getModel()->whereSeoIdConnect(\Request::input('id_connect'))
                         ->whereSeoTypeConnect(\Request::input('type_connect'))->first()){
-                        $seo->delete();
-                    }
+                    $seo->delete();
                 }
             }
         }
@@ -502,18 +518,16 @@ class Component
                 if($request->has($row->name)){
                     $link_params = ['model_parent' => $row->modelParent, 'model_child' => $row->modelChild];
 
-                    if(is_array($request->get($row->name))){
+                    if(\is_array($request->get($row->name))){
                         foreach ($request->get($row->name) as $param){
-                            if(isset($row->allowCreate) && $row->allowCreate){
-                                if( !$row->modelChild::find($param)){
-                                    if($find_param = $row->modelChild::whereTitle($param)->first()){
-                                        $param = $find_param->id;
-                                    }else{
-                                        $add_param = new $row->modelChild();
-                                        $add_param['title'] = $param;
-                                        $add_param->save();
-                                        $param = $add_param->id;
-                                    }
+                            if(isset($row->allowCreate) && $row->allowCreate && ( !$row->modelChild::find($param))){
+                                if($find_param = $row->modelChild::whereTitle($param)->first()){
+                                    $param = $find_param->id;
+                                }else{
+                                    $add_param = new $row->modelChild();
+                                    $add_param['title'] = $param;
+                                    $add_param->save();
+                                    $param = $add_param->id;
                                 }
                             }
 
@@ -521,7 +535,6 @@ class Component
                             if($row->costValue && $request->has('cost_'. $param)){
                                 $link_params['cost'] = $request->get('cost_'. $param);
                             }
-
                             $data->getLink($row->modelChild)->attach($param, $link_params);
                         }
                     }else{
@@ -540,7 +553,7 @@ class Component
     public function actionDetach($config, $data)
     {
         foreach($config->rows as $row){
-            if(isset($row->modelParent) && isset($row->modelChild)){
+            if(isset($row->modelParent, $row->modelChild)){
                 //Получаем id прилинкованных данных
                 $getLink = $data->getLink($row->modelChild)->get();
 

@@ -8,7 +8,6 @@ class FormInput extends FBElement {
 
     public $typo;
 
-
     public function setTypo()
     {
         $this->typo = TRUE;

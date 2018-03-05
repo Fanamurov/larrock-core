@@ -14,7 +14,7 @@ class AdminDashboardController extends Controller
 
     public function index()
     {
-        $data['coreVersions'] = Cache::remember('coreVersion', 1440, function(){
+        $data['coreVersions'] = Cache::rememberForever('coreVersion', function(){
             $filtered = [];
             if($file = \File::get(base_path('composer.lock'))){
                 $json = json_decode($file);
@@ -26,7 +26,7 @@ class AdminDashboardController extends Controller
             return $filtered;
         });
 
-        Cache::remember('coreVersionInstall', 1440, function() use ($data){
+        Cache::rememberForever('coreVersionInstall', function() use ($data){
             foreach ($data['coreVersions'] as $item){
                 if($item->name === 'fanamurov/larrock-core'){
                     return $item->version;
@@ -58,7 +58,6 @@ class AdminDashboardController extends Controller
         }
 
         $data['toDashboard'] = $this->componentToDashboard();
-
         return view('larrock::admin.dashboard.dashboard', $data);
     }
 
@@ -66,7 +65,7 @@ class AdminDashboardController extends Controller
     {
         $data = [];
         $components = config('larrock-to-dashboard.components');
-        if(is_array($components)){
+        if(\is_array($components)){
             foreach ($components as $item){
                 $data[] = $item->toDashboard();
             }

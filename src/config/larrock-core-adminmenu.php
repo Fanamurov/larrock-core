@@ -18,12 +18,12 @@ if(file_exists(base_path(). '/vendor/fanamurov/larrock-catalog')){
 if(file_exists(base_path(). '/vendor/fanamurov/larrock-cart')){
     $components[] = new \Larrock\ComponentCart\CartComponent();
 }
-if(file_exists(base_path(). '/vendor/fanamurov/larrock-reviews')){
-    $components[] = new \Larrock\ComponentReviews\ReviewsComponent();
-}
 
 /** @var  array $other_items Второстепенные пункты, свернутые в выпадающий список */
 $other_items = [];
+if(file_exists(base_path(). '/vendor/fanamurov/larrock-reviews')){
+    $other_items[] = new \Larrock\ComponentReviews\ReviewsComponent();
+}
 if(file_exists(base_path(). '/vendor/fanamurov/larrock-menu')){
     $other_items[] = new \Larrock\ComponentMenu\MenuComponent();
 }

@@ -1,72 +1,69 @@
-<nav class="uk-navbar">
-    <a href="#my-id" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas></a>
-    <a href="/admin" class="uk-navbar-brand">
-        <img src="/_assets/_admin/_images/hand-with-white-outline-forming-a-rock-on-symbol.png"> L!ROCK
-    </a>
-    <ul class="uk-navbar-nav uk-hidden-small">
-        @foreach($menu as $item)
-            {!! $item !!}
-        @endforeach
-        <li class="uk-parent" data-uk-dropdown="{mode:'click'}" aria-haspopup="true" aria-expanded="false">
-            <a href="#">Прочее <i class="uk-icon-caret-down"></i></a>
-
-            <div class="uk-dropdown uk-dropdown-navbar uk-dropdown-bottom" aria-hidden="true" style="top: 40px; left: 0px;">
-                <ul class="uk-nav uk-nav-navbar">
-                    @foreach($menu_other as $item)
-                        {!! $item !!}
-                    @endforeach
-                    <li class="uk-nav-header">Система</li>
-                    @if(file_exists(public_path(). '/external/adminer.php'))
-                        <li><a target="_blank" href="/external/adminer.php">DB</a></li>
-                    @endif
-                    <li>
-                        <a href="#" onclick="clear_cache(); return false">Очистить кэш</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-    </ul>
-    @if(isset($searchSiteAdmin))
-        <div class="uk-navbar-content uk-hidden-small searchSiteAdmin uk-position-relative" style="margin-top: 7px;">
-            {!! $searchSiteAdmin !!}
-        </div>
-    @endif
-    <div class="uk-navbar-content uk-navbar-flip uk-text-right">
-        <a href="/" target="_blank" class="uk-button">К сайту</a>
-        <a class="uk-button" href="{{ url('/logout') }}">Выйти</a>
+<nav uk-navbar="mode: click" class="uk-navbar-container uk-navbar uk-navbar-transparent">
+    <div class="uk-navbar-left">
+        <a class="uk-navbar-item uk-logo uk-visible@m" href="/admin">
+            <img width="36" src="/_assets/_admin/_images/logo-hand-black.png" alt="Larrock">Larrock</a>
+        <a class="uk-navbar-toggle uk-hidden@m" uk-navbar-toggle-icon href="#" uk-toggle="target: #offcanvas-usage"></a>
+        <ul class="uk-navbar-nav uk-visible@m">
+            @foreach($menu as $item)
+                {!! $item !!}
+            @endforeach
+            <li class="uk-parent">
+                <a href="#">Прочее <span uk-icon="chevron-down"></span></a>
+                <div class="uk-navbar-dropdown">
+                    <ul class="uk-nav uk-navbar-dropdown-nav">
+                        @foreach($menu_other as $item)
+                            {!! $item !!}
+                        @endforeach
+                        <li class="uk-nav-header">Система</li>
+                        @if(file_exists(public_path(). '/external/adminer.php'))
+                            <li><a target="_blank" href="/external/adminer.php">DB Adminer</a></li>
+                        @endif
+                        <li>
+                            <a href="#" onclick="clear_cache(); UIkit.dropdown('uk-navbar').hide(); return false">Очистить кэш</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
     </div>
 
-    <div id="my-id" class="uk-offcanvas">
+    <div class="uk-navbar-right">
+        @if(isset($searchSiteAdmin))
+            {!! $searchSiteAdmin !!}
+        @endif
+        <ul class="uk-navbar-nav">
+            <li><a href="/"><span class="uk-margin-small-right" uk-icon="home"></span><span class="uk-visible@m">К сайту</span></a></li>
+            <li><a href="{{ url('/logout') }}"><span class="uk-margin-small-right" uk-icon="sign-out"></span><span class="uk-visible@m">Выйти</span></a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="uk-offcanvas-content">
+    <div id="offcanvas-usage" uk-offcanvas>
         <div class="uk-offcanvas-bar">
-            @if(isset($searchSiteAdmin))
-                <div class="searchSiteAdmin uk-position-relative uk-margin uk-margin-top uk-margin-left uk-margin-right">
-                    {!! $searchSiteAdmin !!}
-                </div>
-            @endif
+            <button class="uk-offcanvas-close" type="button" uk-close></button>
             <ul class="uk-nav">
                 @foreach($menu as $item)
                     {!! $item !!}
                 @endforeach
-                <li class="uk-parent" data-uk-dropdown aria-haspopup="true" aria-expanded="false">
-                    <a href="">Прочее <i class="uk-icon-caret-down"></i></a>
-
-                    <div class="uk-dropdown uk-dropdown-navbar uk-dropdown-bottom" aria-hidden="true" style="top: 40px; left: 0px;" tabindex="">
-                        <ul class="uk-nav uk-nav-navbar">
+                <li class="uk-parent">
+                    <a href="#">Прочее <span uk-icon="chevron-down"></span></a>
+                    <div class="uk-navbar-dropdown">
+                        <ul class="uk-nav uk-navbar-dropdown-nav">
                             @foreach($menu_other as $item)
                                 {!! $item !!}
                             @endforeach
                             <li class="uk-nav-header">Система</li>
                             @if(file_exists(public_path(). '/external/adminer.php'))
-                                <li><a target="_blank" href="/external/adminer.php">DB</a></li>
+                                <li><a target="_blank" href="/external/adminer.php">DB Adminer</a></li>
                             @endif
                             <li>
-                                <a href="#" onclick="clear_cache(); return false">Очистить кэш</a>
+                                <a href="#" onclick="clear_cache(); UIkit.dropdown('uk-navbar').hide(); return false">Очистить кэш</a>
                             </li>
                         </ul>
                     </div>
-
                 </li>
             </ul>
         </div>
     </div>
-</nav>
+</div>

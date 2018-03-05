@@ -3,48 +3,46 @@
 
 @section('content')
     <div class="container-head uk-margin-bottom">
-        <div class="add-panel uk-margin-bottom uk-text-right">
-            <a class="uk-button" href="#modal-help" data-uk-modal="{target:'#modal-help'}"><i class="uk-icon-question"></i></a>
-            @if(isset($category))
-                @if(isset($allowEdit))
-                    <a class="uk-button uk-button-primary" href="/admin/category/{{ $category->id }}/edit">Изменить раздел</a>
+        <div class="uk-grid">
+            <div class="uk-width-expand">
+                @if(isset($category))
+                    {!! Breadcrumbs::render('admin.'. $app->name .'.category', $category) !!}
+                    <div class="uk-clearfix"></div>
+                    <a class="link-blank" href="{{ $category->full_url }}">{{ $category->full_url }}</a>
+                @else
+                    {!! Breadcrumbs::render('admin.'. $app->name .'.index') !!}
+                    <div class="uk-clearfix"></div>
+                    <a class="link-blank" href="/{{ $app->name }}">/{{ $app->name }}</a>
                 @endif
-                @if(isset($allowCreate))
-                    <a href="#add_category" class="uk-button uk-button-primary show-please" data-target="create-category" data-focus="create-category-title">Добавить подраздел</a>
-                    <a class="uk-button uk-button-primary" href="/admin/{{ $app->name }}/create?category={{ $category->id }}">Добавить материал</a>
+            </div>
+            <div class="uk-width-auto">
+                @if(isset($category))
+                    @if(isset($allowEdit))
+                        <a class="uk-button uk-button-primary" href="/admin/category/{{ $category->id }}/edit">Изменить раздел</a>
+                    @endif
+                    @if(isset($allowCreate))
+                        <a href="#add_category" class="uk-button uk-button-primary show-please" data-target="create-category"
+                           data-focus="create-category-title">Добавить подраздел</a>
+                        <a class="uk-button uk-button-primary" href="/admin/{{ $app->name }}/create?category={{ $category->id }}">Добавить материал</a>
+                    @endif
+                @else
+                    @if(isset($allowCreate))
+                        <a href="#add_category" class="uk-button uk-button-primary show-please" data-target="create-category"
+                           data-focus="create-category-title">Добавить раздел</a>
+                    @endif
                 @endif
-            @else
-                @if(isset($allowCreate))
-                    <a href="#add_category" class="uk-button uk-button-primary show-please" data-target="create-category" data-focus="create-category-title">Добавить раздел</a>
-                @endif
-            @endif
-        </div>
-        <div id="modal-help" class="uk-modal">
-            <div class="uk-modal-dialog">
-                <a class="uk-modal-close uk-close"></a>
-                <p>{{ $app->description }}</p>
             </div>
         </div>
-        <div class="uk-clearfix"></div>
-        @if(isset($category))
-            {!! Breadcrumbs::render('admin.'. $app->name .'.category', $category) !!}
-            <div class="uk-clearfix"></div>
-            <a class="link-blank" href="{{ $category->full_url }}">{{ $category->full_url }}</a>
-        @else
-            {!! Breadcrumbs::render('admin.'. $app->name .'.index') !!}
-            <div class="uk-clearfix"></div>
-            <a class="link-blank" href="/{{ $app->name }}">/{{ $app->name }}</a>
-        @endif
     </div>
 
+    <!-- Разделы -->
     @if(isset($categories))
-        <p class="uk-h4">Разделы:</p>
-        <div class="uk-margin-large-bottom">
+        <div class="uk-margin-large-bottom ibox-content">
             <table class="uk-table uk-table-striped uk-form">
                 <thead>
                 <tr>
                     <th></th>
-                    <th>Название</th>
+                    <th>Разделы:</th>
                     @foreach($app_category->rows as $row)
                         @if($row->in_table_admin || $row->in_table_admin_ajax_editable)
                             <th style="width: 90px" @if($row->name !== 'active') class="uk-hidden-small" @endif>{{ $row->title }}</th>
@@ -55,41 +53,30 @@
                 </thead>
                 <tbody class="uk-sortable" data-uk-sortable="{handleClass:'uk-sortable-handle'}">
                 @if(isset($category))
-                    @include('larrock::admin.category.include-create-easy', array('parent' => $category->id, 'component' => $app->name))
+                    @include('larrock::admin.category.include-create-easy', ['parent' => $category->id, 'component' => $app->name])
                 @else
-                    @include('larrock::admin.category.include-create-easy', array('parent' => 0, 'component' => $app->name))
+                    @include('larrock::admin.category.include-create-easy', ['parent' => 0, 'component' => $app->name])
                 @endif
                 @if(count($categories) === 0)
                     <div class="uk-alert uk-alert-warning">Разделов еще нет</div>
                 @else
-                    @include('larrock::admin.category.include-list-categories', array('data' => $categories))
+                    @include('larrock::admin.category.include-list-categories', ['data' => $categories])
                 @endif
                 </tbody>
             </table>
             @if(method_exists($categories, 'total'))
-                {!! $categories->render() !!}
+                {!! $categories->links('larrock::admin.pagination.uikit3') !!}
             @endif
         </div>
     @endif
+    <!-- END Разделы -->
 
+    <!-- Материалы -->
     @if(isset($data))
         @if(count($data) === 0)
-            <div class="uk-alert uk-alert-warning">Материалов еще нет</div>
+            <div class="uk-alert uk-alert-warning"><span uk-icon="warning"></span> Материалов еще нет</div>
         @else
-            @if(isset($allowDestroy))
-                <form id="massiveActionMaterials" class="uk-alert uk-alert-warning massive_action uk-hidden" method="post" action="/admin/{{ $app->name }}/0">
-                    <select name="ids[]" multiple class="uk-hidden">
-                        @foreach($data as $item)
-                            <option value="{{ $item->id }}">{{ $item->id }}</option>
-                        @endforeach
-                    </select>
-                    {{ method_field('DELETE') }}
-                    {{ csrf_field() }}
-                    <p>Выделено: <span>0</span> элементов. <button type="submit" class="uk-button uk-button-danger please_conform">Удалить</button></p>
-                </form>
-            @endif
-            <p class="uk-h4">Материалы:</p>
-            <div class="uk-margin-large-bottom">
+            <div class="uk-margin-large-bottom ibox-content">
                 <table class="uk-table uk-table-striped uk-form">
                     <thead>
                     <tr>
@@ -97,7 +84,7 @@
                             @if(isset($category))
                                 @php if($category->parent === 0){ $category->parent = NULL; } @endphp
                                 <a href="{{ $category->parent or '/admin/'. $app->name }}">
-                                    <i class="uk-icon-level-up"></i>..
+                                    <span class="uk-margin-small-right" uk-icon="reply"></span>..
                                 </a>
                             @endif
                         </th>
@@ -116,14 +103,20 @@
                     @if(count($data) === 0)
                         <div class="uk-alert uk-alert-warning">Материалов еще нет</div>
                     @else
+                        <tr class="tr-massiveAction">
+                            <td colspan="6">
+                                @include('larrock::admin.admin-builder.massive-action', ['data' => $data, 'app' => $app->name, 'formId' => 'massiveActionMaterials'])
+                            </td>
+                        </tr>
                         @foreach($data as $data_value)
                             <tr>
                                 <td width="55">
-                                    <div class="actionSelect{{ $data_value->id }} actionSelect" onclick="selectIdItem({{ $data_value->id }})" data-target="massiveActionMaterials">
-                                        @if($app->plugins_backend && array_key_exists('images', $app->plugins_backend) && $image = $data_value->getMedia('images')->sortByDesc('order_column')->first())
+                                    <div class="actionSelect" data-target="massiveActionMaterials" data-id="{{ $data_value->id }}">
+                                        @if($app->plugins_backend && array_key_exists('images', $app->plugins_backend)
+                                        && $image = $data_value->getMedia('images')->sortByDesc('order_column')->first())
                                             <img style="width: 55px" src="{{ $image->getUrl('110x110') }}">
                                         @else
-                                            <i class="icon-padding icon-color uk-icon-picture-o" title="Фото не прикреплено"></i>
+                                            <i uk-icon="icon: image; ratio: 2" title="Фото не прикреплено"></i>
                                         @endif
                                     </div>
                                 </td>
@@ -138,29 +131,33 @@
                                 @endif
                                 @foreach($app->rows as $row)
                                     @if($row->in_table_admin_ajax_editable)
-                                        @if(get_class($row) === 'Larrock\Core\Helpers\FormBuilder\FormCheckbox')
+                                        @if($row instanceof \Larrock\Core\Helpers\FormBuilder\FormCheckbox)
                                             <td class="row-active @if($row->name !== 'active') uk-hidden-small @endif">
                                                 <div class="uk-button-group btn-group_switch_ajax" role="group" style="width: 100%">
-                                                    <button type="button" class="uk-button uk-button-primary uk-button-small @if($data_value->{$row->name} === 0) uk-button-outline @endif"
+                                                    <button type="button" class="uk-button uk-button-primary uk-button-small
+                                                            @if($data_value->{$row->name} === 0) uk-button-outline @endif"
                                                             data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="{{ $app->table }}"
                                                             data-row="active" data-value="1" style="width: 50%">on</button>
-                                                    <button type="button" class="uk-button uk-button-danger uk-button-small @if($data_value->{$row->name} === 1) uk-button-outline @endif"
+                                                    <button type="button" class="uk-button uk-button-danger uk-button-small
+                                                            @if($data_value->{$row->name} === 1) uk-button-outline @endif"
                                                             data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="{{ $app->table }}"
                                                             data-row="active" data-value="0" style="width: 50%">off</button>
                                                 </div>
                                             </td>
-                                        @elseif(get_class($row) === 'Larrock\Core\Helpers\FormBuilder\FormInput')
+                                        @elseif($row instanceof \Larrock\Core\Helpers\FormBuilder\FormInput)
                                             <td class="uk-hidden-small">
                                                 <input type="text" value="{{ $data_value->{$row->name} }}" name="{{ $row->name }}"
-                                                       class="ajax_edit_row form-control" data-row_where="id" data-value_where="{{ $data_value->id }}"
+                                                       class="ajax_edit_row form-control uk-input uk-form-small" data-row_where="id"
+                                                       data-value_where="{{ $data_value->id }}"
                                                        data-table="{{ $app->table }}">
                                                 @if($row->name === 'position')
                                                     <i class="uk-sortable-handle uk-icon uk-icon-bars uk-margin-small-right" title="Перенести материал по весу"></i>
                                                 @endif
                                             </td>
-                                        @elseif(get_class($row) === 'Larrock\Core\Helpers\FormBuilder\FormSelect')
+                                        @elseif($row instanceof \Larrock\Core\Helpers\FormBuilder\FormSelect)
                                             <td class="uk-hidden-small">
-                                                <select class="ajax_edit_row form-control" data-row_where="id" data-value_where="{{ $data_value->id }}"
+                                                <select class="ajax_edit_row form-control uk-select uk-form-small" data-row_where="id"
+                                                        data-value_where="{{ $data_value->id }}"
                                                         data-table="{{ $app->table }}" data-row="{{ $row->name }}">
                                                     @foreach($row->options as $option)
                                                         <option @if($option === $data_value->{$row->name}) selected @endif value="{{ $option }}">{{ $option }}</option>
@@ -182,20 +179,21 @@
                     </tbody>
                 </table>
                 @if(method_exists($data, 'total'))
-                    {!! $data->render() !!}
+                    {!! $data->links('larrock::admin.pagination.uikit3') !!}
                 @endif
             </div>
         @endif
     @endif
+    <!-- END Материалы -->
 
+    <!-- Подразделы -->
     @if(isset($category->get_child))
         @if(count($category->get_child) === 0)
             <table class="uk-table uk-table-striped">
-                @include('larrock::admin.category.include-create-easy', array('parent' => $category->id, 'component' => $app->name))
+                @include('larrock::admin.category.include-create-easy', ['parent' => $category->id, 'component' => $app->name])
             </table>
         @else
-            <p class="uk-h4">Подразделы:</p>
-            <div class="uk-margin-large-bottom">
+            <div class="uk-margin-large-bottom ibox-content">
                 <table class="uk-table uk-table-striped uk-form">
                     <thead>
                     <tr>
@@ -203,11 +201,11 @@
                             @if(isset($category))
                                 @php if($category->parent === 0){ $category->parent = NULL; } @endphp
                                 <a href="{{ $category->parent or '/admin/'. $app->name }}">
-                                    <i class="uk-icon-level-up"></i>..
+                                    <span class="uk-margin-small-right" uk-icon="reply"></span>..
                                 </a>
                             @endif
                         </th>
-                        <th>Название</th>
+                        <th>Подразделы:</th>
                         @foreach($app_category->rows as $row)
                             @if($row->in_table_admin || $row->in_table_admin_ajax_editable)
                                 <th style="width: 90px" @if($row->name !== 'active') class="uk-hidden-small" @endif>{{ $row->title }}</th>
@@ -217,11 +215,15 @@
                     </tr>
                     </thead>
                     <tbody class="uk-sortable" data-uk-sortable="{handleClass:'uk-sortable-handle'}">
-                    @include('larrock::admin.category.include-create-easy', array('parent' => $category->id, 'component' => $app->name))
-                    @include('larrock::admin.category.include-list-categories', array('data' => $category->get_child))
+                    @include('larrock::admin.category.include-create-easy', ['parent' => $category->id, 'component' => $app->name])
+                    @include('larrock::admin.category.include-list-categories', ['data' => $category->get_child])
                     </tbody>
                 </table>
+                @if(method_exists($category->get_child, 'total'))
+                    {!! $category->get_child->links('larrock::admin.pagination.uikit3') !!}
+                @endif
             </div>
         @endif
     @endif
+    <!-- END Подразделы -->
 @endsection

@@ -22,7 +22,6 @@ class AdminMenu
         if(Route::current()){
             View::share('top_menu', $menu->top_menu());
         }
-
         return $next($request);
     }
 }

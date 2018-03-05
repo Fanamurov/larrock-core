@@ -3,65 +3,68 @@
 
 @section('content')
     <div class="container-head uk-margin-bottom">
-        <div class="add-panel uk-margin-bottom uk-text-right">
-            <a class="uk-button" href="#modal-help" data-uk-modal="{target:'#modal-help'}"><i class="uk-icon-question"></i></a>
-            @if(isset($data->get_category, $allowCreate))
-                @if(isset($data->get_category->id) && $data->get_category->id)
-                    <a class="uk-button uk-button-primary" href="/admin/{{ $app->name }}/create?category={{ $data->get_category->id }}">Добавить другой материал</a>
+        <div class="uk-grid uk-grid-small">
+            <div class="uk-width-expand">
+                {!! Breadcrumbs::render('admin.'. $app->name .'.edit', $data) !!}
+            </div>
+            <div class="uk-width-auto">
+                @if(isset($data->get_category, $allowCreate))
+                    @if(isset($data->get_category->id) && $data->get_category->id)
+                        <a class="uk-button uk-button-primary" href="/admin/{{ $app->name }}/create?category={{ $data->get_category->id }}">Добавить другой материал</a>
+                    @else
+                        <a class="uk-button uk-button-primary" href="/admin/{{ $app->name }}/create?category={{ $data->get_category->first()->id }}">Добавить другой материал</a>
+                    @endif
                 @else
-                    <a class="uk-button uk-button-primary" href="/admin/{{ $app->name }}/create?category={{ $data->get_category->first()->id }}">Добавить другой материал</a>
+                    <a class="uk-button uk-button-primary" href="/admin/{{ $app->name }}/create">Добавить другой материал</a>
                 @endif
-            @else
-                <a class="uk-button uk-button-primary" href="/admin/{{ $app->name }}/create">Добавить другой материал</a>
-            @endif
-        </div>
-        <div id="modal-help" class="uk-modal">
-            <div class="uk-modal-dialog">
-                <a class="uk-modal-close uk-close"></a>
-                <p>{{ $app->description }}</p>
             </div>
         </div>
-        <div class="uk-clearfix"></div>
-        {!! Breadcrumbs::render('admin.'. $app->name .'.edit', $data) !!}
-        @if(isset($data->get_category) && count($data->get_category) > 1)
-            <div>В разделах:</div>
-            @foreach($data->get_category as $category)
-                <ul>
-                    <li>{{ $category->title }}: <a href="/{{ $app->name }}/{{ $category->url }}/{{ $data->url }}">/{{ $app->name }}/{{ $category->url }}/{{ $data->url }}</a></li>
-                </ul>
-            @endforeach
-        @else
-            <div class="uk-clearfix"></div>
-            <a class="link-blank" href="{{ $data->full_url }}">{{ $data->full_url }}</a>
-        @endif
     </div>
-
-    <ul class="uk-tab uk-margin-large-top" data-uk-switcher="{connect:'#tab-content, #tab-content-plugins'}">
-        @foreach($app->tabs as $tabs_key => $tabs_value)
-            <li class="@if($loop->first) uk-active @endif">
-                <a href="">{{ $tabs_value }}</a>
-            </li>
-            @if($loop->first && $app->plugins_backend)
-                @if(array_key_exists('images', $app->plugins_backend))
-                    @include('larrock::admin.admin-builder.plugins.images.tab-title')
-                @endif
-                @if(array_key_exists('files', $app->plugins_backend))
-                    @include('larrock::admin.admin-builder.plugins.files.tab-title')
-                @endif
-            @endif
-        @endforeach
-    </ul>
 
     <div class="ibox-content">
         <form id="edit-form-build" class="validate uk-form uk-form-stacked" action="/admin/{{ $app->name }}/{{ $data->id }}" method="POST" novalidate="novalidate">
-            <ul id="tab-content" class="uk-switcher uk-margin">
-                @foreach($app->tabs_data as $tabs_key => $tabs_value)
-                    <li id="tab{{ $tabs_key }}">
-                        <div class="uk-grid">{!! $tabs_value !!}</div>
-                    </li>
-                    @if($loop->first && $app->plugins_backend) <li></li><li></li> @endif
-                @endforeach
-            </ul>
+            <div class="uk-grid">
+                <div class="@if(\is_array($app->plugins_backend) && \count($app->plugins_backend) > 0) uk-width-2-3 @else uk-width-1-1 @endif uk-form-stacked">
+                    <div class="uk-grid uk-grid-small">
+                        <!-- Главный таб -->
+                        {!! $app->tabs_data['main'] !!}
+
+                        @if(\count($app->tabs_data->except(['main'])) > 0)
+                        <!-- Другие табы -->
+                            <div class="uk-width-1-1">
+                                <ul uk-tab="connect: .main_tabs" class="uk-tab main_tabs_header">
+                                    @foreach($app->tabs_data->except(['main']) as $tabs_key => $tabs_value)
+                                        <li><a href="">{{ $app->tabs[$tabs_key] }}</a></li>
+                                    @endforeach
+                                </ul>
+                                <ul class="uk-switcher main_tabs uk-margin-remove-top">
+                                    @foreach($app->tabs_data->except(['main']) as $tabs_key => $tabs_value)
+                                        <li class="uk-grid uk-grid-small">{!! $tabs_value !!}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
+                @if(\is_array($app->plugins_backend) && \count($app->plugins_backend) > 0)
+                    <div class="uk-width-1-3">
+                        <ul uk-tab class="uk-tab uk-margin-remove-bottom">
+                            @if(\is_array($app->plugins_backend) && array_key_exists('images', $app->plugins_backend))
+                                <li><a href="">Фото [<span class="countUploadedImages">{{count($data->getImages)}}</span>]</a></li>
+                            @endif
+                            @if(\is_array($app->plugins_backend) && array_key_exists('files', $app->plugins_backend))
+                                <li><a href="">Файлы [<span class="countUploadedFiles">{{ count($data->getFiles) }}</span>]</a></li>
+                            @endif
+                        </ul>
+
+                        <ul class="uk-switcher uk-margin plugins uk-panel uk-panel-scrollable">
+                            @include('larrock::admin.admin-builder.plugins.images.tab-data-images')
+                            @include('larrock::admin.admin-builder.plugins.files.tab-data-files')
+                        </ul>
+                    </div>
+                @endif
+            </div>
 
             <div class="uk-align-right">
                 <input name="_method" type="hidden" value="PUT">
@@ -70,23 +73,7 @@
                 {{ csrf_field() }}
                 <button type="submit" class="uk-button uk-button-primary uk-button-large uk-hidden" form="edit-form-build">Сохранить</button>
             </div>
-            <div class="uk-clearfix"></div>
         </form>
-
-        @if($app->plugins_backend)
-            <ul id="tab-content-plugins" class="uk-switcher uk-margin">
-                @foreach($app->tabs as $tabs_key => $tabs_value) <li></li>
-                @if($loop->first && $app->plugins_backend)
-                    @if(array_key_exists('images', $app->plugins_backend))
-                        @include('larrock::admin.admin-builder.plugins.images.tab-data')
-                    @endif
-                    @if(array_key_exists('files', $app->plugins_backend))
-                        @include('larrock::admin.admin-builder.plugins.files.tab-data')
-                    @endif
-                @endif
-                @endforeach
-            </ul>
-        @endif
     </div>
 
     <div class="uk-grid uk-margin-top buttons-save">
@@ -115,11 +102,9 @@
             @endif
         </div>
     </div>
-
-    <div id="process-modal" class="uk-modal">
-        <div class="uk-modal-dialog">
-            <a class="uk-modal-close uk-close"></a>
-            <p class="text-process-modal"></p>
-        </div>
-    </div>
 @endsection
+
+@push('scripts')
+    <script src="/_assets/bower_components/fileapi/dist/FileAPI.min.js"></script>
+    <script src="/_assets/bower_components/tinymce/tinymce.min.js"></script>
+@endpush

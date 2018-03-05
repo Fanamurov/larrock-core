@@ -50,7 +50,7 @@ trait GetLink{
 
     /**
      * Метод для attach() и detach()
-     * @param $childModel
+     * @param string $childModel
      * @return mixed
      */
     public function getLink($childModel)

@@ -32,10 +32,10 @@ trait AdminMethodsUpdate
         $data->fill($request->all());
         foreach ($this->config->rows as $row){
             if(in_array($row->name, $data->getFillable())){
-                if(get_class($row) === 'Larrock\Core\Helpers\FormBuilder\FormCheckbox'){
+                if($row instanceof \Larrock\Core\Helpers\FormBuilder\FormCheckbox){
                     $data->{$row->name} = $request->input($row->name, NULL);
                 }
-                if(get_class($row) === 'Larrock\Core\Helpers\FormBuilder\FormDate'){
+                if($row instanceof \Larrock\Core\Helpers\FormBuilder\FormDate){
                     $data->{$row->name} = $request->input('date', date('Y-m-d'));
                 }
             }

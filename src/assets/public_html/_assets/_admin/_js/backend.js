@@ -1,3 +1,5 @@
+window.FileAPI = { staticPath: '/_assets/bower_components/fileapi/dist/' };
+
 $(document).ready(function(){
     $.ajaxSetup({
         headers: {
@@ -5,16 +7,56 @@ $(document).ready(function(){
         }
     });
 
-    $('button[type=submit]').click(function(){
-        notify_show('message', '<i class="uk-icon-spin uk-icon-refresh"></i> Выполняется...');
+    actionSelect();
+    ajax_edit_row();
+    sort_rows();
+
+    /**
+     * Функционал для formbuilder select
+     * По нажатию на кнопку .new_list будет создан input с name= data-row-name кнопки
+     * Позволяет вносить в списки кастомные значения
+     * */
+    $('.new_list').click(function () {
+        $(this).hide();
+        var row_name = $(this).attr('data-row-name');
+        $('select[name='+row_name+']').before('<input class="uk-input" placeholder="Новое значение" type="text" name="' + row_name + '" value="">').remove();
+    });
+    $('.new_list_multiply').click(function () {
+        $(this).hide();
+        var row_name = $(this).attr('data-row-name');
+        $('select[id=r-row-'+row_name+']').before('<input class="uk-input" placeholder="Новые значения через ;" type="text" name="' + row_name + '_new_list" value="">');
+        $('select[id='+row_name+']').before('<input class="uk-input" placeholder="Новые значения через ;" type="text" name="' + row_name + '_new_list" value="">');
     });
 
-    $('input.checked_all').change(function () {
-        if($('input.checked_all:checked').val()){
-            $('input.ids').attr('checked', true);
-        }else{
-            $('input.ids').attr('checked', false);
+    // получение максимального элемента массива
+    function getMaxValue(array){
+        var max = array[0];
+        for (var i = 0; i < array.length; i++) {
+            if (max < array[i]) max = array[i];
         }
+        return max;
+    }
+
+    $('.uk-sortable-img-plugin').on('moved', function (e) {
+        var positions = [];
+        var max_position = 0;
+        $(e.currentTarget).each(function (key, value) {
+            $(value).find('div.uk-grid').each(function (k, v) {
+                positions.push($(v).attr('data-id'));
+                //console.log($(v).attr('data-id'));
+            });
+        });
+        max_position = getMaxValue(positions);
+
+        $(e.currentTarget).each(function (key, value) {
+            $(value).find('div.uk-grid').each(function (k, v) {
+                $(v).find('input.position-image').val(--max_position);
+            });
+        });
+    });
+
+    $('button[type=submit]').click(function(){
+        notify_show('message', '<i class="uk-icon-spin uk-icon-refresh"></i> Выполняется...');
     });
 
     $('input[name=anons_merge]').change(function() {
@@ -27,377 +69,173 @@ $(document).ready(function(){
         }
     });
 
-    function create_new_column() {
-        $('.wizard-db-colomns').change(function () {
-            if($(this).val() === 'create-column'){
-                var column = $(this).find(':selected').attr('data-column');
-                if(column !== undefined){
-                    $.ajax({
-                        type: "GET",
-                        url: '/admin/wizard/createMigration',
-                        dataType: 'json',
-                        data: { column: column },
-                        success: function(data)
-                        {
-                            if(data.status === 'success'){
-                                notify_show('success', data.message);
-                                notify_show('success', '! Выберите в поле пункт с названием нового поля !');
-                                $('.wizard-db-colomns')
-                                    .append($("<option></option>")
-                                        .attr("value", column)
-                                        .text(column))
-                                    .prop('selected', true);
-                            }else{
-                                notify_show('error', data.message);
-                            }
-                        },
-                        error: function()
-                        {
-                            alert('Ошибка выполнения запроса');
-                        }
-                    });
-                }else{
-                    alert('Column не определена');
-                }
-            }
-        });
-    }
-
-
-    function triggerUpdateCell() {
-        notify_show('message', 'Доступно редактирование таблицы');
-        $('.tab-content-wizard').css('opacity', '1');
-        create_new_column();
-        $('input.cell_value').focusout(function () {
-            var cell = $(this).attr('data-coordinate');
-            var value = $(this).val();
-            var old_value = $(this).attr('data-oldvalue');
-            var sheet = $(this).attr('data-sheet');
-            if(cell !== undefined){
-                if(old_value !== value){
-                    $.ajax({
-                        type: "GET",
-                        url: '/admin/wizard/updateXLSX',
-                        dataType: 'json',
-                        data: { cell: cell, value: value, sheet: sheet },
-                        success: function(data)
-                        {
-                            if(data.status === 'success'){
-                                notify_show('success', data.message);
-                            }else{
-                                notify_show('error', data.message);
-                            }
-                        },
-                        error: function()
-                        {
-                            alert('Ошибка выполнения запроса');
-                        }
-                    });
-                }
-            }else{
-                notify_show('notice', 'Ячейка не изменилась');
-            }
-        });
-
-        $('select.cell_value').change(function () {
-            var cell = $(this).attr('data-coordinate');
-            var value = $(this).val();
-            var old_value = $(this).attr('data-oldvalue');
-            var sheet = $(this).attr('data-sheet');
-            if(cell !== undefined){
-                if(old_value !== value){
-                    $.ajax({
-                        type: "GET",
-                        url: '/admin/wizard/updateXLSX',
-                        dataType: 'json',
-                        data: { cell: cell, value: value, sheet: sheet },
-                        success: function(data)
-                        {
-                            if(data.status === 'success'){
-                                notify_show('success', data.message);
-                            }else{
-                                notify_show('error', data.message);
-                            }
-                        },
-                        error: function()
-                        {
-                            alert('Ошибка выполнения запроса');
-                        }
-                    });
-                }
-            }else{
-                notify_show('notice', 'Ячейка не изменилась');
-            }
-        });
-    }
-
-    //Загрузка листов xlsx
-    $('.load_sheet').each(function () {
-        var sheet = $(this).attr('data-sheet');
-        if(sheet === '0'){
-            $('.tab-content-wizard').css('opacity', '.3');
-            notify_show('message', 'Выполняется разбор прайса');
-            notify_show('message', 'Редактирование таблицы пока не доступно');
-        }
-        if(sheet !== undefined){
-            loadSheet(sheet, $(this));
-        }
-    });
-    function loadSheet(sheet, element){
-        $('.sheet'+ sheet).addClass('loadSheet').removeClass('finishSheet').removeClass('errorSheet');
-        $.ajax({
-            type: "GET",
-            url: '/admin/wizard/sheetParse/'+ sheet,
-            dataType: 'html',
-            success: function(data)
-            {
-                element.addClass('data_sheet');
-                $('#sheet_content'+ sheet).html(data);
-                //notify_show('success', 'Страница '+ sheet +' разобрана');
-                $('.sheet'+ sheet).removeClass('loadSheet').addClass('finishSheet');
-                if($('.data_sheet').length === $('.load_sheet').length){
-                    triggerUpdateCell();
-                }
+    if (typeof tinymce !== 'undefined') {
+        tinymce.init({
+            selector: "textarea:not(.not-editor)",
+            menu: {
+                format: {title: 'Format', items: 'bold italic underline strikethrough superscript subscript | removeformat'},
+                headers: {'title': 'Стили UiKit', items: 'formats | removeformat'},
+                table: {title: 'Table', items: 'inserttable tableprops deletetable | cell row column'},
+                view: {title: 'View', items: 'visualaid visualblocks visualchars | fullscreen'},
+                edit: {title: 'Edit', items: 'undo redo | cut copy paste pastetext insertdatetime | searchreplace | selectall'},
             },
-            error: function(data)
-            {
-                $('#sheet_content'+ sheet).html(data);
-                $('.sheet'+ sheet).removeClass('loadSheet').addClass('errorSheet');
-                notify_show('error', 'Страница '+ sheet +' не разобрана');
-            }
-        });
-    }
+            height: 300,
+            plugins: [
+                "advlist link image imagetools lists charmap hr anchor pagebreak",
+                "searchreplace visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+                "table contextmenu directionality template paste textcolor importcss wordcount nonbreaking visualblocks visualchars codesample"
+            ],
+            relative_urls: false,
+            extended_valid_elements : "table[cellpadding|cellspacing|class],td[class|colspan|rowspan],tr[class]",
+            paste_remove_styles: true,
+            paste_remove_spans: true,
+            paste_auto_cleanup_on_paste: true,
+            theme: 'modern',
+            image_advtab: true,
+            content_css: "/_assets/_front/_css/_min/uikit.min.css,/_assets/_admin/_css/tinymce.css",
+            content_style: "table {width: 100%}",
+            importcss_append: true,
+            language_url : '/_assets/_admin/_js/tinymce.ru.js',
+            toolbar_items_size: 'small',
+            toolbar: "undo redo | bold italic codesample | alignleft aligncenter alignright | bullist numlist outdent " +
+            "indent | link image media pastetext | forecolor backcolor | template | code | defis nonbreaking hr | photonews | typo | removeformat charmap",
+            imagetools_toolbar: "rotateleft rotateright | flipv fliph | editimage imageoptions",
+            fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
+            style_formats: [
+                {title: 'Headers', items: [
+                        {title: 'h1', block: 'h1'},
+                        {title: 'h2', block: 'h2'},
+                        {title: 'h3', block: 'h3'},
+                        {title: 'h4', block: 'h4'},
+                        {title: 'h5', block: 'h5'},
+                        {title: 'h6', block: 'h6'}
+                    ]},
 
-    //Импорт прайса
-    var current_category_import;
-    var current_level_import;
-    var current_title_import;
+                {title: 'Headers-text', items: [
+                        {title: 'стиль H1', block: 'p', classes: 'uk-h1'},
+                        {title: 'стиль H2', block: 'p', classes: 'uk-h2'},
+                        {title: 'стиль H3', block: 'p', classes: 'uk-h3'},
+                        {title: 'стиль H4', block: 'p', classes: 'uk-h4'},
+                        {title: 'стиль H5', block: 'p', classes: 'uk-h5'},
+                        {title: 'стиль H6', block: 'p', classes: 'uk-h6'}
+                    ]},
 
-    $('.start_import').click(function () {
-        $.ajax({
-            type: "GET",
-            url: '/admin/wizard/clear',
-            dataType: 'json',
-            data: [],
-            success: function()
-            {
-                notify_show('success', 'Каталог очищен');
-                importXLS();
+                {title: 'Blocks', items: [
+                        {title: 'p', block: 'p'},
+                        {title: 'Увеличенный блок', block: 'blockquote'},
+                        {title: 'code', block: 'code'},
+                        {title: 'pre', block: 'pre'}
+                    ]}
+            ],
+            setup: function(editor) {
+                editor.addButton('defis', {
+                    text: '—',
+                    title: 'Дефис',
+                    icon: false,
+                    onclick: function() {
+                        editor.insertContent('—');
+                    }
+                });
+                editor.addButton('photonews', {
+                    text: 'Галерея',
+                    title: 'Вставка шортката для галереи',
+                    icon: false,
+                    onclick: function() {
+                        editor.insertContent('{Фото[news]=}');
+                    }
+                });
+                editor.addButton('typo', {
+                    text: 'Типограф',
+                    title: 'Выделите текст в редакторе и нажмите для типографа',
+                    icon: false,
+                    onclick: function() {
+                        var text = tinyMCE.activeEditor.selection.getContent({format : 'html'});
+                        $.ajax({
+                            type: "POST",
+                            data: { text: text},
+                            dataType: 'json',
+                            url: "/admin/ajax/TypographLight",
+                            success: function (data) {
+                                tinyMCE.activeEditor.execCommand('mceReplaceContent',false, ''+data.text);
+                            }
+                        });
+                    }
+                });
             },
-            error: function()
-            {
-                notify_show('error', 'Каталог не очищен, импорт не запущен');
-            }
+            templates: [
+                {
+                    title: 'Вставка фото-галереи :: Новости (Одно большое, другие маленькие)',
+                    description: 'Вставьте после знака "=" имя группы картинок',
+                    content: '{Фото[news]='+ $('input[name=url]').val() +'}'},
+                {
+                    title: 'Вставка фото-галереи без FancyBox :: Новости (Одно большое, другие маленькие)',
+                    description: 'Вставьте после знака "=" имя группы картинок',
+                    content: '{Фото[nonFancy]='+ $('input[name=url]').val() +'}'},
+                {
+                    title: 'Вставка фото-галереи :: Большие фото с описаниями',
+                    description: 'Вставьте после знака "=" имя группы картинок',
+                    content: '{Фото[newsDescription]='+ $('input[name=url]').val() +'}'},
+                {
+                    title: 'Вставка фото-галереи :: Одинаковые блоки',
+                    description: 'Вставьте после знака "=" имя группы картинок',
+                    content: '{Фото[blocks]='+ $('input[name=url]').val() +'}'},
+                {
+                    title: 'Вставка фото-галереи :: Большие фото',
+                    description: 'Вставьте после знака "=" имя группы картинок',
+                    content: '{Фото[blocksBig]='+ $('input[name=url]').val() +'}'},
+                {
+                    title: 'Вставка фото-галереи :: Сертификаты (небольшие фото с описаниями)',
+                    description: 'Вставьте после знака "=" имя группы картинок',
+                    content: '{Фото[sert]='+ $('input[name=url]').val() +'}'},
+                {
+                    title: 'Вставка фото-галереи :: Вывод одинаковыми блоками',
+                    description: 'Вставьте после знака "=" имя группы картинок',
+                    content: '{Фото[customШиринаxВысота]='+ $('input[name=url]').val() +'}'},
+                {
+                    title: 'Вставка списка разделов сайта',
+                    description: 'Вставьте после знака "=" URL категории (вставятся и потомки)',
+                    content: '{Категории=}'},
+                {
+                    title: 'Вставка материалов из документации',
+                    description: 'Вставьте после знака "=" URL категории',
+                    content: '{Документы[default]='+ $('input[name=url]').val() +'}'},
+                {
+                    title: 'Вставка прикрепленных к материалу файлов',
+                    description: 'Вставьте после знака "=" имя группы файлов',
+                    content: '{Файлы[default]='+ $('input[name=url]').val() +'}'},
+                {
+                    title: 'Вставка файлов из директории',
+                    description: 'Вставьте после знака "=" имя папки в /public/files/',
+                    content: '{Файлы[directory]=}'}
+            ]
         });
-    });
 
-    function importXLS() {
-        var sheet = $('.import_row').parentsUntil('.load_sheet').parent().attr('data-sheet');
-        var last_sheet = 0;
-        var count_rows = $('.import_row').length;
-
-        if(count_rows < 1){
-            sheet = last_sheet;
-        }
-
-        var progress = $('#sheet'+ sheet).find('.uk-progress');
-        var progress_bar = $('#sheet'+ sheet).find('.uk-progress-bar');
-        var progress_all_rows = parseInt($('.all_rows').html());
-        var progress_percent = parseInt(100-(count_rows * 100)/progress_all_rows);
-
-        progress.addClass('uk-progress-striped').addClass('uk-active');
-
-        if(count_rows > 0){
-            var form = $('.import_row:first');
-            var tr = form.find('tr');
-
-            progress_bar
-                .css('width', progress_percent +'%')
-                .find('.imported_rows').html(progress_all_rows - count_rows +' '+ progress_percent +'%');
-
+        //Типограф
+        $('.typo-action').click(function(){
+            var text = tinyMCE.activeEditor.selection.getContent({format : 'html'});
             $.ajax({
                 type: "POST",
-                url: '/admin/wizard/importrow',
+                data: { text: text},
                 dataType: 'json',
-                data: form.serialize() +'&current_category='+ current_category_import +'&current_level='+ current_level_import +'&current_title='+ current_title_import, // serializes the form's elements.
-                success: function(data)
-                {
-                    tr.addClass('uk-alert-success');
-                    form.removeClass('import_row');
-                    current_category_import = data.category_id;
-                    current_level_import = data.category_level;
-                    current_title_import = data.category_title;
-                    importXLS();
-                },
-                error: function()
-                {
-                    tr.addClass('uk-alert-danger');
-                    notify_show('error', 'Импорт не завершен. Ошибка внесения данных');
-                    progress_bar.css('width', progress_percent +'%');
-                    progress.addClass('uk-progress-danger').removeClass('uk-progress-striped').removeClass('uk-active');
+                url: "/admin/ajax/TypographLight",
+                success: function (data) {
+                    tinyMCE.activeEditor.execCommand('mceReplaceContent',false, ''+data.text);
                 }
             });
-        }else{
-            progress_bar
-                .css('width', '100%')
-                .find('.imported_rows').html(progress_all_rows +' 100%');
-            progress.addClass('uk-progress-success').removeClass('uk-progress-striped').removeClass('uk-active');
-            notify_show('success', 'Импорт завершен');
-        }
+        });
     }
 
-    tinymce.init({
-        selector: "textarea:not(.not-editor)",
-        menu: {
-            format: {title: 'Format', items: 'bold italic underline strikethrough superscript subscript | removeformat'},
-            headers: {'title': 'Стили UiKit', items: 'formats | removeformat'},
-            table: {title: 'Table', items: 'inserttable tableprops deletetable | cell row column'},
-            view: {title: 'View', items: 'visualaid visualblocks visualchars | fullscreen'},
-            edit: {title: 'Edit', items: 'undo redo | cut copy paste pastetext insertdatetime | searchreplace | selectall'},
-        },
-        height: 300,
-        plugins: [
-            "advlist link image imagetools lists charmap hr anchor pagebreak",
-            "searchreplace visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-            "table contextmenu directionality template paste textcolor importcss wordcount nonbreaking visualblocks visualchars codesample"
-        ],
-        relative_urls: false,
-        extended_valid_elements : "table[cellpadding|cellspacing|class],td[class|colspan|rowspan],tr[class]",
-        paste_remove_styles: true,
-        paste_remove_spans: true,
-        paste_auto_cleanup_on_paste: true,
-        theme: 'modern',
-        image_advtab: true,
-        content_css: "/_assets/_front/_css/_min/uikit.min.css,/_assets/_admin/_css/tinymce.css",
-        content_style: "table {width: 100%}",
-        importcss_append: true,
-        language_url : '/_assets/_admin/_js/tinymce.ru.js',
-        toolbar_items_size: 'small',
-        toolbar: "undo redo | bold italic codesample | alignleft aligncenter alignright | bullist numlist outdent " +
-        "indent | link image media pastetext | forecolor backcolor | template | code | defis nonbreaking hr | photonews | typo | removeformat charmap",
-        imagetools_toolbar: "rotateleft rotateright | flipv fliph | editimage imageoptions",
-        fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
-        style_formats: [
-            {title: 'Headers', items: [
-                    {title: 'h1', block: 'h1'},
-                    {title: 'h2', block: 'h2'},
-                    {title: 'h3', block: 'h3'},
-                    {title: 'h4', block: 'h4'},
-                    {title: 'h5', block: 'h5'},
-                    {title: 'h6', block: 'h6'}
-                ]},
-
-            {title: 'Headers-text', items: [
-                    {title: 'стиль H1', block: 'p', classes: 'uk-h1'},
-                    {title: 'стиль H2', block: 'p', classes: 'uk-h2'},
-                    {title: 'стиль H3', block: 'p', classes: 'uk-h3'},
-                    {title: 'стиль H4', block: 'p', classes: 'uk-h4'},
-                    {title: 'стиль H5', block: 'p', classes: 'uk-h5'},
-                    {title: 'стиль H6', block: 'p', classes: 'uk-h6'}
-                ]},
-
-            {title: 'Blocks', items: [
-                    {title: 'p', block: 'p'},
-                    {title: 'Увеличенный блок', block: 'blockquote'},
-                    {title: 'code', block: 'code'},
-                    {title: 'pre', block: 'pre'}
-                ]}
-        ],
-        setup: function(editor) {
-            editor.addButton('defis', {
-                text: '—',
-                title: 'Дефис',
-                icon: false,
-                onclick: function() {
-                    editor.insertContent('—');
-                }
-            });
-            editor.addButton('photonews', {
-                text: 'Галерея',
-                title: 'Вставка шортката для галереи',
-                icon: false,
-                onclick: function() {
-                    editor.insertContent('{Фото[news]=}');
-                }
-            });
-            editor.addButton('typo', {
-                text: 'Типограф',
-                title: 'Выделите текст в редакторе и нажмите для типографа',
-                icon: false,
-                onclick: function() {
-                    var text = tinyMCE.activeEditor.selection.getContent({format : 'html'});
-                    $.ajax({
-                        type: "POST",
-                        data: { text: text},
-                        dataType: 'json',
-                        url: "/admin/ajax/TypographLight",
-                        success: function (data) {
-                            tinyMCE.activeEditor.execCommand('mceReplaceContent',false, ''+data.text);
-                        }
-                    });
-                }
-            });
-        },
-        templates: [
-            {
-                title: 'Вставка фото-галереи :: Новости (Одно большое, другие маленькие)',
-                description: 'Вставьте после знака "=" имя группы картинок',
-                content: '{Фото[news]='+ $('input[name=url]').val() +'}'},
-            {
-                title: 'Вставка фото-галереи без FancyBox :: Новости (Одно большое, другие маленькие)',
-                description: 'Вставьте после знака "=" имя группы картинок',
-                content: '{Фото[nonFancy]='+ $('input[name=url]').val() +'}'},
-            {
-                title: 'Вставка фото-галереи :: Большие фото с описаниями',
-                description: 'Вставьте после знака "=" имя группы картинок',
-                content: '{Фото[newsDescription]='+ $('input[name=url]').val() +'}'},
-            {
-                title: 'Вставка фото-галереи :: Одинаковые блоки',
-                description: 'Вставьте после знака "=" имя группы картинок',
-                content: '{Фото[blocks]='+ $('input[name=url]').val() +'}'},
-            {
-                title: 'Вставка фото-галереи :: Большие фото',
-                description: 'Вставьте после знака "=" имя группы картинок',
-                content: '{Фото[blocksBig]='+ $('input[name=url]').val() +'}'},
-            {
-                title: 'Вставка фото-галереи :: Сертификаты (небольшие фото с описаниями)',
-                description: 'Вставьте после знака "=" имя группы картинок',
-                content: '{Фото[sert]='+ $('input[name=url]').val() +'}'},
-            {
-                title: 'Вставка фото-галереи :: Вывод одинаковыми блоками',
-                description: 'Вставьте после знака "=" имя группы картинок',
-                content: '{Фото[customШиринаxВысота]='+ $('input[name=url]').val() +'}'},
-            {
-                title: 'Вставка списка разделов сайта',
-                description: 'Вставьте после знака "=" URL категории (вставятся и потомки)',
-                content: '{Категории=}'},
-            {
-                title: 'Вставка материалов из документации',
-                description: 'Вставьте после знака "=" URL категории',
-                content: '{Документы[default]='+ $('input[name=url]').val() +'}'},
-            {
-                title: 'Вставка прикрепленных к материалу файлов',
-                description: 'Вставьте после знака "=" имя группы файлов',
-                content: '{Файлы[default]='+ $('input[name=url]').val() +'}'},
-            {
-                title: 'Вставка файлов из директории',
-                description: 'Вставьте после знака "=" имя папки в /public/files/',
-                content: '{Файлы[directory]=}'}
-        ]
-    });
-    //Типограф
-    $('.typo-action').click(function(){
-        var text = tinyMCE.activeEditor.selection.getContent({format : 'html'});
+    function typo() {
         $.ajax({
             type: "POST",
             data: { text: text},
             dataType: 'json',
             url: "/admin/ajax/TypographLight",
             success: function (data) {
-                tinyMCE.activeEditor.execCommand('mceReplaceContent',false, ''+data.text);
+                input.val(data.text);
             }
         });
-    });
+    }
 
     $('.typo-target').click(function(){
         var input_target = $(this).attr('data-target');
@@ -428,29 +266,6 @@ $(document).ready(function(){
         });
     });
 
-    /* Cart */
-    $('select.add_to_cart').change(function(){
-        $('#ModalToCart').remove();
-        $.ajax({
-            url: '/admin/ajax/getTovar',
-            type: 'POST',
-            dataType: 'html',
-            data: {
-                id: $(this).val(),
-                order_id: $(this).attr('data-order_id'),
-                in_template: 'true'
-            },
-            error: function() {
-                alert('ERROR!');
-            },
-            success: function(res) {
-                $('#content').after(res);
-                UIkit.modal("#ModalToCart").show();
-            }
-        });
-        return false;
-    });
-
     $('input[name=date], input.date').pickadate({
         monthSelector: true,
         yearSelector: true,
@@ -479,14 +294,6 @@ $(document).ready(function(){
     $('.link_block').click(function(){window.location = $(this).find('a').attr('href');});
     $('.link_block_this').click(function(){window.location = $(this).attr('data-href');});
 
-    $('.show-please').click(function(){
-        var target = '.'+ $(this).attr('data-target');
-        var focus_element = '.'+ $(this).attr('data-focus');
-        $(target).removeClass('uk-hidden');
-        $(focus_element).focus();
-        $(this).remove();
-    });
-
     /** Если присвоить класс change-form селекту в форме, то при клике будет происходить сабмит формы */
     $('select.change-form, input[type=checkbox].change-form').change(function(){
         $(this).parents('form').submit();
@@ -495,10 +302,6 @@ $(document).ready(function(){
     $('input[type=text].change-form').focusout(function(){
         $(this).parents('form').submit();
     });
-
-    /** Input для редактирования поля */
-    ajax_edit_row();
-    sort_rows();
 
     $('.btn-group_switch_ajax').find('button').click(function(){
         $(this).parent().find('button').addClass('uk-button-outline');
@@ -512,10 +315,6 @@ $(document).ready(function(){
         //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
         hidden_action('/admin/ajax/EditRow', data, false, false, false, true);
     });
-
-    //uk-button uk-button-danger uk-button-small  uk-button-outline
-    //uk-button uk-button-danger uk-button-small
-
 
     /** Conform alert. Уверены что хотите сделать это?) */
     $('.please_conform').on('click', function () {
@@ -532,7 +331,7 @@ $(document).ready(function(){
         var form = $(this).closest('form');
         var url_input = $(form).find('input[name=url]').val();
         if(url_input !== undefined){
-            if(url_input.length < 1 || url_input === 'novyy-material'){
+            if(url_input.length < 1 || (url_input === 'novyy-material' || url_input === 'novyy_material')){
                 var table = $(this).attr('data-table');
                 change_url_title(title, table, form);
             }
@@ -544,28 +343,6 @@ $(document).ready(function(){
         var form = $(this).closest('form');
         var table = input.attr('data-table');
         change_url_title(title, table, form);
-    });
-
-    /**
-     * По нажатию на кнопку .new_list будет создан input с name= data-row-name кнопки
-     * Позволяет вносить в списки кастомные значения
-     * */
-    $('.new_list').click(function () {
-        $(this).hide();
-        var row_name = $(this).attr('data-row-name');
-        $('select[name='+row_name+']').before('<input class="form-control" placeholder="Новое значение" type="text" name="' + row_name + '" value="">').remove();
-    });
-    $('.new_list_multiply').click(function () {
-        $(this).hide();
-        var row_name = $(this).attr('data-row-name');
-        $('select[id=r-row-'+row_name+']').before('<input class="form-control" placeholder="Новые значения через ;" type="text" name="' + row_name + '_new_list" value="">');
-        $('select[id='+row_name+']').before('<input class="form-control" placeholder="Новые значения через ;" type="text" name="' + row_name + '_new_list" value="">');
-    });
-
-    /** Выделить все чекбоксы для кнопки удалить все  */
-    $('input[name=checked_all]:not(.checked)').click(function () {
-        $(this).addClass('checked');
-        $('input[name^=delete]:visible').attr('checked', 'checked');
     });
 });
 
@@ -588,53 +365,45 @@ function ajax_edit_row() {
 }
 
 
+// получение максимального элемента массива
+function getMaxValue(array){
+    var max = array[0];
+    for (var i = 0; i < array.length; i++) {
+        if (max < array[i]) max = array[i];
+    }
+    return max;
+}
+
+
 /**
  * Сортировка материалов по весу через плагин uikit sortable
  */
 function sort_rows() {
-    $('.uk-sortable').on('change.uk.sortable', function(e, fn, el) {
-        var row_element = $(el).find('input[name=position]');
-        var input_selector = 'input[name=position]';
-        if($(row_element).val() === undefined){
-            row_element = $(el).find('input[data-row=order_column]');
-            input_selector = 'input[data-row=order_column]';
-        }
-        var old_position = parseInt($(row_element).val());
-        if(old_position){
-            var next_position = parseInt($(el).next().find(input_selector).val());
-            var prev_position = parseInt($(el).prev().find(input_selector).val());
-            var new_position = 0;
-            if(next_position > old_position){
-                if(prev_position > old_position){
-                    new_position = --prev_position;
-                }else{
-                    new_position = ++next_position;
-                }
-            }else{
-                if(prev_position){
-                    new_position = --prev_position;
-                }else{
-                    new_position = ++next_position;
-                }
-            }
-            $(row_element).val(new_position);
+    $('.uk-sortable-img-plugin').on('moved', function (e) {
+        var positions = [];
+        var max_position = 0;
+        $(e.currentTarget).each(function (key, value) {
+            $(value).find('div.uk-grid').each(function (k, v) {
+                positions.push($(v).attr('data-id'));
+            });
+        });
+        max_position = getMaxValue(positions);
 
-            var row = $(row_element).attr('name');
-            if(row === undefined){
-                row = $(row_element).attr('data-row');
-            }
-            var event = 'edit';
+        $(e.currentTarget).each(function (key, value) {
+            $(value).find('div.uk-grid').each(function (k, v) {
+                $(v).find('input.position-image').val(--max_position);
 
-            var data = {
-                value_where: $(row_element).attr('data-value_where'),
-                row_where: $(row_element).attr('data-row_where'),
-                value: new_position,
-                row: row,
-                event: event,
-                table: $(row_element).attr('data-table')
-            };
-            hidden_action('/admin/ajax/EditRow', data, false, false, false, true);
-        }
+                var data = {
+                    value_where: $(v).find('input.position-image').attr('data-value_where'),
+                    row_where: $(v).find('input.position-image').attr('data-row_where'),
+                    value: max_position,
+                    row: $(v).find('input.position-image').attr('data-row'),
+                    event: 'edit',
+                    table: $(v).find('input.position-image').attr('data-table')
+                };
+                hidden_action('/admin/ajax/EditRow', data, false, false, false, true);
+            });
+        });
     });
 }
 
@@ -693,20 +462,6 @@ function hidden_action(url, send_data, good_message, button, redirect_url, clear
     });
 }
 
-function typographLight(text, input) {
-    $.ajax({
-        type: "POST",
-        data: { text: text },
-        dataType: 'json',
-        url: "/admin/ajax/TypographLight",
-        success: function (data) {
-            if (data.text) {
-                input.val(data.text);
-            }
-        }
-    });
-}
-
 /**
  * Уведомления в сплывающих окнах от процессов
  * string @param type  Тип события (good, error)
@@ -714,8 +469,8 @@ function typographLight(text, input) {
  */
 function notify_show(type, message) {
     if(type === 'error'){
-        UIkit.notify({
-            message : '<i class="uk-icon-bug"></i> '+ message,
+        UIkit.notification({
+            message : '<i uk-icon="icon: warning"></i> '+ message,
             status  : 'danger',
             timeout : 0,
             pos     : 'top-center'
@@ -724,8 +479,8 @@ function notify_show(type, message) {
         if(type === 'message'){
             type = 'info';
         }
-        UIkit.notify({
-            message : '<i class="uk-icon-check"></i> '+ message,
+        UIkit.notification({
+            message : '<i uk-icon="icon: check"></i> '+ message,
             status  : type,
             timeout : 3000,
             pos     : 'top-right'
@@ -762,27 +517,32 @@ function change_url_title(title, table, form){
     });
 }
 
-function rebuild_cost() {
-    $('#ModalToCart-form').find('input[name=qty]').keyup(function () {
-        var cost = parseFloat($('#ModalToCart-form').find('.cost').attr('data-cost'));
-        var kolvo = parseInt($(this).val());
+/**
+ * Массовое выделение элементов для их удаления
+ * string @param data-id        ID элемента в БД
+ * string @param data-target    ID формы производящей действие
+ */
+function actionSelect() {
+    $('.actionSelect').click(function () {
+        $(this).toggleClass('uk-active');
+        var id = $(this).attr('data-id');
+        var target = $(this).attr('data-target');
+        var formAction = $('form#'+ target);
+        var select = $(formAction).find('select[name="ids[]"]');
+        if($(select).find('option[value='+ id +']:selected').val()){
+            $(select).find('option[value='+ id +']').prop('selected', false);
+        }else{
+            $(select).find('option[value='+ id +']').prop('selected', true);
+        }
 
-        $('#ModalToCart-form').find('.cost').html(parseFloat(cost*kolvo).toFixed(2));
-    })
-}
-
-function selectIdItem(id) {
-    $('.actionSelect'+id).toggleClass('uk-icon-check');
-    var countSelected = $('.actionSelect.uk-icon-check').length;
-    if(countSelected > 0){
-        $('form#massiveAction').find('span').html(countSelected);
-        $('form#massiveAction').removeClass('uk-hidden');
-    }else{
-        $('form#massiveAction').addClass('uk-hidden');
-    }
-    if($('select[name="ids[]"]').find('option[value='+ id +']:selected').val()){
-        $('select[name="ids[]"]').find('option[value='+ id +']').prop('selected', false);
-    }else{
-        $('select[name="ids[]"]').find('option[value='+ id +']').prop('selected', true);
-    }
+        var countSelected = $(select).find('option:selected').length;
+        $(formAction).find('span').html(countSelected);
+        if(countSelected > 0){
+            $(formAction).removeClass('uk-hidden');
+            $(formAction).parentsUntil('tr').slideDown('fast');
+        }else{
+            $(formAction).addClass('uk-hidden');
+            $(formAction).parentsUntil('tr').slideUp('fast');
+        }
+    });
 }

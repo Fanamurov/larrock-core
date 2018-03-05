@@ -129,7 +129,7 @@ class FBElement
 
     /**
      * Вывод текста описания для поля в интерфейсе
-     * @param string    $help
+     * @param string $text
      * @return $this
      */
     public function setHelp(string $text)

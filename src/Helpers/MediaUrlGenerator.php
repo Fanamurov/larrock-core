@@ -80,7 +80,7 @@ class MediaUrlGenerator extends BaseUrlGenerator
 
     protected function makeCompatibleForNonUnixHosts(string $url): string
     {
-        if (DIRECTORY_SEPARATOR != '/') {
+        if (DIRECTORY_SEPARATOR !== '/') {
             $url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
         }
 

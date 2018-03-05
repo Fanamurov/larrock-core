@@ -3,7 +3,6 @@
 namespace Larrock\Core\Commands;
 
 use Illuminate\Console\Command;
-use App\Exceptions\Handler;
 
 class LarrockUpdateEnvCommand extends Command
 {
@@ -35,6 +34,7 @@ class LarrockUpdateEnvCommand extends Command
      * Execute the console command.
      *
      * @return mixed
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function handle()
     {

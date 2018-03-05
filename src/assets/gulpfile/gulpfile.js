@@ -123,11 +123,10 @@ gulp.task('javascript_admin', function() {
     return gulp.src([
             './public_html/_assets/bower_components/pickadate/lib/compressed/picker.js',
             './public_html/_assets/bower_components/pickadate/lib/compressed/picker.date.js',
-            './public_html/_assets/bower_components/noty/lib/noty.js',
             './public_html/_assets/bower_components/jquery.cookie/jquery.cookie.js',
             './public_html/_assets/_admin/_js/backend.js',
-            './public_html/_assets/_admin/_js/plugin_images.js',
-            './public_html/_assets/_admin/_js/plugin_files.js'
+            './public_html/_assets/_admin/_js/plugin_upload.js',
+            './public_html/_assets/_admin/_js/wizardXLS.js'
         ])
         .pipe(concat('back_core.min.js'))
         .pipe(removeLogs())

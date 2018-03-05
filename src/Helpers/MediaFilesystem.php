@@ -9,8 +9,9 @@ use Spatie\MediaLibrary\PathGenerator\PathGeneratorFactory;
 class MediaFilesystem extends DefaultFilesystem
 {
 
-    /*
+    /**
      * Remove all files for the given media.
+     * @param Media $media
      */
     public function removeFiles(Media $media)
     {

@@ -4,16 +4,8 @@ namespace Larrock\Core\Helpers\FormBuilder;
 
 use View;
 
-class FormCheckbox extends FBElement {
-
-    public $checked;
-
-    public function setChecked()
-    {
-        $this->checked = TRUE;
-        return $this;
-    }
-
+class FormCheckbox extends FBElement
+{
     public function render($row_settings, $data)
     {
         if( !isset($data->{$row_settings->name}) && $row_settings->default){

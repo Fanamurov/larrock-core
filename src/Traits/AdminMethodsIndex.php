@@ -3,12 +3,11 @@
 namespace Larrock\Core\Traits;
 
 use Larrock\Core\Component;
+use LarrockCategory;
 
 trait AdminMethodsIndex
 {
-    /**
-     * @var Component
-     */
+    /** @var Component */
     protected $config;
 
     /**
@@ -18,6 +17,13 @@ trait AdminMethodsIndex
      */
     public function index()
     {
+        if(isset($this->config->rows['category'])){
+            $data['app_category'] = LarrockCategory::getConfig();
+            $data['categories'] = LarrockCategory::getModel()->whereComponent($this->config->name)->whereLevel(1)
+                ->orderBy('position', 'DESC')->orderBy('updated_at', 'ASC')->with(['get_child', 'get_parent'])->paginate(30);
+            return view('larrock::admin.admin-builder.categories', $data);
+        }
+
         if(array_key_exists('position', $this->config->rows)){
             $data['data'] = $this->config->getModel()::orderBy('position', 'DESC')->paginate(30);
         }else{

@@ -20,7 +20,7 @@ class Tree{
 	{
 		$new = array();
 		foreach ($data as $a){
-			if(is_null($a->{$row_level})){
+			if(null === $a->{$row_level}){
 				$a->{$row_level} = 0;
 			}
 			$new[$a->{$row_level}][] = $a;

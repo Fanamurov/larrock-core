@@ -3,7 +3,6 @@
 namespace Larrock\Core\Commands;
 
 use Illuminate\Console\Command;
-use App\Exceptions\Handler;
 
 class LarrockRenamePublicDirectoryCommand extends Command
 {
@@ -20,16 +19,6 @@ class LarrockRenamePublicDirectoryCommand extends Command
      * @var string
      */
     protected $description = 'Rename public directory to "public_html"';
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * Execute the console command.

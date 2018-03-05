@@ -2,27 +2,39 @@
     <label for="{{ $row_key }}" class="uk-form-label">
         {{ $row_settings->title }}
         @if($row_settings->help)
-            <span class="uk-form-help-block">({{ $row_settings->help }})</span>
+            <span class="uk-label uk-label-warning">({{ $row_settings->help }})</span>
         @endif
     </label>
     @if($row_settings->typo)
-        <div class="uk-grid">
-            <div class="uk-width-1-1 uk-width-medium-7-10">
+        <div uk-grid class="uk-grid uk-grid-small uk-form-row-small">
+            <div class="uk-width-expand">
                 <input type="text" name="{{ $row_key }}"
                        value="@isset($data->{$row_key}){{ Request::old($row_key, $data->{$row_key}) }}@endif"
-                       class="uk-width-1-1 {{ $row_settings->css_class }}" id="{{ $row_key }}"
-                @if($row_key === 'title') data-table="{{ $app->model }}" @endif>
+                       class="uk-input uk-width-1-1 {{ $row_settings->css_class }}" id="{{ $row_key }}"
+                       @if($row_key === 'title') data-table="{{ $app->model }}" @endif>
             </div>
-            <div class="uk-width-1-1 uk-width-medium-3-10">
-                <button type="button" class="uk-button uk-button-outline typo-target" data-target="{{ $row_key }}">Типограф</button>
+            <div class="uk-width-auto">
+                <button type="button" class="uk-button uk-button-default typo-target" data-target="{{ $row_key }}">Типограф</button>
                 @if($row_key === 'title')
-                    <button type="button" class="uk-button uk-button-outline refresh-url">Создать url</button>
+                    <button type="button" class="uk-button uk-button-default refresh-url">Создать url</button>
                 @endif
             </div>
         </div>
     @else
         <input type="text" name="{{ $row_key }}"
                value="@isset($data->{$row_key}){{ Request::old($row_key, $data->{$row_key}) }}@endisset"
-               class="{{ $row_settings->css_class }}" id="{{ $row_key }}">
+               class="{{ $row_settings->css_class }} uk-input" id="{{ $row_key }}">
+    @endif
+    @if($row_key === 'title')
+        @if(isset($data->get_category) && count($data->get_category) > 1)
+            <div>В разделах:</div>
+            @foreach($data->get_category as $category)
+                <ul>
+                    <li>Url: {{ $category->title }}: <a href="/{{ $app->name }}/{{ $category->url }}/{{ $data->url }}">/{{ $app->name }}/{{ $category->url }}/{{ $data->url }}</a></li>
+                </ul>
+            @endforeach
+        @else
+            <small>Url: <a class="link-blank" href="{{ $data->full_url }}">{{ $data->full_url }}</a></small>
+        @endif
     @endif
 </div>

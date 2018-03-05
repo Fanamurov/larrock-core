@@ -139,13 +139,13 @@ class FormTags extends FBElement {
         $model = new $row_settings->modelChild;
 
         if(method_exists($model, 'getConfig') && array_key_exists('category', $model->getConfig()->rows)
-        && $model->getConfig()->rows['category']->fillable === TRUE){
+            && $model->getConfig()->rows['category']->fillable === TRUE){
             $rows[] = 'category';
             $this->showCategory = TRUE;
         }
 
         if($row_settings->modelChildWhereKey && $row_settings->modelChildWhereValue){
-            if(is_array($this->modelChildWhereValue)){
+            if(\is_array($this->modelChildWhereValue)){
                 $tags = $model->whereIn($row_settings->modelChildWhereKey, $row_settings->modelChildWhereValue)->get($rows);
             }else{
                 $tags = $model->where($row_settings->modelChildWhereKey, '=', $row_settings->modelChildWhereValue)->get($rows);

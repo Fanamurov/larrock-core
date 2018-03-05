@@ -3,7 +3,6 @@
 namespace Larrock\Core\Commands;
 
 use Illuminate\Console\Command;
-use App\Exceptions\Handler;
 
 class LarrockUpdateVendorConfigCommand extends Command
 {
@@ -20,16 +19,6 @@ class LarrockUpdateVendorConfigCommand extends Command
      * @var string
      */
     protected $description = 'Update vendor configs';
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * Execute the console command.

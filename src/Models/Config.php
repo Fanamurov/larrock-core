@@ -5,7 +5,7 @@ namespace Larrock\Core\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Models\Config
+ * \Larrock\Core\Models\Config
  *
  * @property integer $id
  * @property string $key
@@ -13,13 +13,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $type
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Config imagePresets($key)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Config whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Config whereKey($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Config whereValue($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Config whereType($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Config whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Config whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Config imagePresets($key)
+ * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Config whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Config whereKey($value)
+ * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Config whereValue($value)
+ * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Config whereType($value)
+ * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Config whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Config whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class Config extends Model

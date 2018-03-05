@@ -9,7 +9,6 @@ use App\Http\Controllers\Controller;
 use DB;
 use Image;
 use Cache;
-use Larrock\Core\Helpers\Plugins\Typograf;
 
 class AdminAjax extends Controller
 {
@@ -34,15 +33,14 @@ class AdminAjax extends Controller
         if( !$old_data = DB::table($table)->where($row_where, '=', $value_where)->first([$row])){
             return response()->json(['status' => 'error', 'message' => trans('larrock::apps.404') .' '. trans('larrock::apps.data.error')]);
         }
-        if(is_integer($old_data->{$row})){
+        if(\is_int($old_data->{$row})){
             $value = (integer)$value;
         }
-        if(is_float($old_data->{$row})){
+        if(\is_float($old_data->{$row})){
             $value = (float)$value;
         }
         if($old_data->{$row} !== $value){
             if(DB::table($table)->where($row_where, '=', $value_where)->update([$row => $value])){
-                Cache::flush();
                 return response()->json(['status' => 'success', 'message' => trans('larrock::apps.row.update', ['name' => $row])]);
             }
             return response()->json(['status' => 'error', 'message' => trans('larrock::apps.row.error', ['name' => $row])]);
@@ -173,9 +171,8 @@ class AdminAjax extends Controller
             $content = $model::whereId($request->get('model_id'))->first();
             if($type === 'images'){
                 return view('larrock::admin.admin-builder.plugins.images.getUploadedImages', ['data' => $content->getMedia($type)->sortByDesc('order_column')]);
-            }else{
-                return view('larrock::admin.admin-builder.plugins.files.getUploadedFiles', ['data' => $content->getMedia($type)->sortByDesc('order_column')]);
             }
+            return view('larrock::admin.admin-builder.plugins.files.getUploadedFiles', ['data' => $content->getMedia($type)->sortByDesc('order_column')]);
         }
         return response()->json(['status' => 'error', 'message' => rans('larrock::apps.param.404', ['name' => 'model_id'])], 400);
     }

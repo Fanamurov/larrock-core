@@ -2,7 +2,7 @@
     <label for="{{ $row_key }}" class="uk-form-label">
         {{ $row_settings->title }}
         @if($row_settings->help)
-            <span class="uk-form-help-block">({{ $row_settings->help }})</span>
+            <span class="uk-label uk-label-warning">({{ $row_settings->help }})</span>
         @endif
     </label>
     <div class="input-group" style="width: 100%">

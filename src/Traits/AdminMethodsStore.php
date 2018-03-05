@@ -10,9 +10,7 @@ use Session;
 
 trait AdminMethodsStore
 {
-    /**
-     * @var Component
-     */
+    /** @var Component */
     protected $config;
 
     /**
@@ -25,7 +23,7 @@ trait AdminMethodsStore
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
     public function store(Request $request)
     {
@@ -34,29 +32,27 @@ trait AdminMethodsStore
             Session::push('message.danger', 'Материал с таким URL "'. $request->get('url') .'" уже существует');
             if($this->allow_redirect){
                 return redirect()->to('/admin/'. $this->config->name .'/'. $search_blank->id. '/edit');
-            }else{
-                return NULL;
             }
+            return NULL;
         }
 
         $validator = Validator::make($request->all(), Component::_valid_construct($this->config->valid));
         if($validator->fails()){
             if($this->allow_redirect){
                 return back()->withInput($request->except('password'))->withErrors($validator);
-            }else{
-                Session::push('message.danger', 'Валидация данных не пройдена '. var_dump($validator));
-                return NULL;
             }
+            Session::push('message.danger', 'Валидация данных не пройдена '. var_dump($validator));
+            return NULL;
         }
 
         $data = $this->config->getModel();
         $data->fill($request->all());
         foreach ($this->config->rows as $row){
             if(in_array($row->name, $data->getFillable())){
-                if(get_class($row) === 'Larrock\Core\Helpers\FormBuilder\FormCheckbox'){
+                if($row instanceof \Larrock\Core\Helpers\FormBuilder\FormCheckbox){
                     $data->{$row->name} = $request->input($row->name, NULL);
                 }
-                if(get_class($row) === 'Larrock\Core\Helpers\FormBuilder\FormDate'){
+                if($row instanceof \Larrock\Core\Helpers\FormBuilder\FormDate){
                     $data->{$row->name} = $request->input('date', date('Y-m-d'));
                 }
             }
@@ -68,16 +64,14 @@ trait AdminMethodsStore
             Session::push('message.success', 'Материал '. $request->input('title') .' добавлен');
             if($this->allow_redirect){
                 return Redirect::to('/admin/'. $this->config->name .'/'. $data->id .'/edit')->withInput();
-            }else{
-                return $data;
             }
+            return $data;
         }
 
         Session::push('message.danger', 'Материал '. $request->input('title') .' не добавлен');
         if($this->allow_redirect){
             return back()->withInput();
         }
-
         return NULL;
     }
 }

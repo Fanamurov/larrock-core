@@ -4,9 +4,7 @@ namespace Larrock\Core\Traits;
 
 trait ShareMethods
 {
-    /**
-     * Расшаривание переменных в шаблон, указывающих на использование методов управления контентом
-     */
+    /** Расшаривание переменных в шаблон, указывающих на использование методов управления контентом */
     public function shareMethods()
     {
         if(method_exists($this, 'create')){
@@ -26,6 +24,9 @@ trait ShareMethods
         }
         if(method_exists($this, 'update')){
             \View::share('allowUpdate', TRUE);
+        }
+        if(method_exists($this, 'show')){
+            \View::share('allowShow', TRUE);
         }
     }
 }

@@ -2,10 +2,10 @@
     <label for="{{ $row_key }}" class="uk-form-label">
         {{ $row_settings->title }}
         @if($row_settings->help)
-            <span class="uk-form-help-block">({{ $row_settings->help }})</span>
+            <span class="uk-label uk-label-warning">({{ $row_settings->help }})</span>
         @endif
     </label>
-    <select name="{{ $row_key }}" class="{{ $row_settings->css_class }}" id="{{ $row_key }}">
+    <select name="{{ $row_key }}" class="{{ $row_settings->css_class }} uk-select" id="{{ $row_key }}">
         @if($row_settings->default !== NULL)
             <option>{{ $row_settings->default }}</option>
         @endif

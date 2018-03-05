@@ -53,6 +53,9 @@ class LarrockManagerCommand extends Command
             echo shell_exec('composer require fanamurov/'. $name);
         }
 
+        $this->call('vendor:publish');
+        $this->call('migrate');
+
         $this->info('The task is completed! Thank you for using LarrockCMS');
     }
 }

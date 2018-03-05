@@ -3,19 +3,20 @@
 namespace Larrock\Core\Traits;
 
 use Illuminate\Http\Request;
+use Larrock\Core\Helpers\MessageLarrock;
 
 trait AdminMethodsCreate
 {
     /**
      * Creating a new resource.
-     *
      * @param Request $request
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function create(Request $request)
     {
         if( !method_exists($this, 'store')){
-            return abort(403, 'AdminMethodsStore not found in this Controller');
+            throw new \Exception('AdminMethodsStore not found in this Controller', 403);
         }
         $post_rows = [
             'title' => 'Новый материал',
@@ -24,6 +25,15 @@ trait AdminMethodsCreate
 
         if($request->has('category')){
             $post_rows['category'] = $request->get('category');
+        }else{
+            if(array_key_exists('category', $this->config->rows)){
+                if($findCategory = \LarrockCategory::getModel()->whereComponent($this->config->name)->first()){
+                    $post_rows['category'] = $findCategory->id;
+                }else{
+                    MessageLarrock::danger('Создать материал пока нельзя. Сначала создайте для него раздел');
+                    return back()->withInput();
+                }
+            }
         }
 
         foreach ($this->config->rows as $row){

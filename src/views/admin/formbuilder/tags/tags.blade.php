@@ -1,11 +1,11 @@
-<div class="uk-form-row form-group-{{ $row_key }} {{ $row_settings->css_class_group }}">
+<div class="uk-form-row form-group-{{ $row_key }} {{ $row_settings->css_class_group }} @if($row_settings->costValue) row-costValue @endif">
     <label for="{{ $row_key }}" class="uk-form-label">
         {{ $row_settings->title }}
         @if($row_settings->help)
-            <span class="uk-form-help-block">({{ $row_settings->help }})</span>
+            <span class="uk-label uk-label-warning">{{ $row_settings->help }}</span>
         @endif
     </label>
-    <div class="input-group" style="width: 100%">
+    <div class="input-group">
         <select @if($row_settings->maxItems !== 1) multiple @endif
             name="@if($row_settings->maxItems !== 1){{ $row_key }}[]@else{{ $row_key }}@endif" id="tags_{{ $row_key }}">
             @if($selected)
@@ -16,17 +16,14 @@
         </select>
 
         @if($row_settings->costValue)
-            <div class="uk-margin-top">
-                <p class="uk-alert uk-alert-warning">Данное поле влияет на цену товара. Стандартное поле "Цена" учитываться не будет</p>
-                <p class="uk-alert uk-alert-warning">Внесение цен модификаций товара доступно после сохранения</p>
-                <div class="uk-margin-top uk-form uk-form-horizontal">
-                    @foreach($selected as $value)
-                        <div>
-                            <label class="uk-form-label">Цена модификации «{{ $value->{$row_settings->titleRow} }}»</label>
-                            <input type="text" name="cost_{{ $value->id }}" value="{{ $value->cost or $data->cost }}" placeholder="Цена модификации">
-                        </div>
-                    @endforeach
-                </div>
+            <div class="uk-form uk-form-horizontal">
+                @foreach($selected as $value)
+                    <div>
+                        <label class="uk-form-label">Цена «{{ $value->{$row_settings->titleRow} }}»</label>
+                        <input class="uk-input uk-form-width-medium" type="text" name="cost_{{ $value->id }}" value="{{ $value->cost or $data->cost }}" placeholder="Цена модификации">
+                        <span class="uk-margin-left uk-text-small uk-text-muted">{{ $data->what }}</span>
+                    </div>
+                @endforeach
             </div>
         @endif
     </div>

@@ -10,9 +10,7 @@ use Session;
 
 trait AdminMethodsDestroy
 {
-    /**
-     * @var Component
-     */
+    /** @var Component */
     protected $config;
 
     /**
@@ -24,11 +22,11 @@ trait AdminMethodsDestroy
      */
     public function destroy(Request $request, $id)
     {
-        if($request->has('ids') && is_array($request->get('ids'))){
+        if($request->has('ids') && \is_array($request->get('ids'))){
             foreach ($request->get('ids') as $id_item){
                 $this->destroyElement($request, $id_item);
             }
-            Session::push('message.success', 'Удалено '. count($request->get('ids')) .' элементов');
+            Session::push('message.success', 'Удалено '. \count($request->get('ids')) .' элементов');
             return back();
         }
         $this->destroyElement($request, $id);
@@ -45,6 +43,7 @@ trait AdminMethodsDestroy
      * Remove id element
      * @param Request $request
      * @param $id
+     * @throws \Exception
      */
     protected function destroyElement(Request $request, $id)
     {

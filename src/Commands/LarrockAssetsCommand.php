@@ -3,7 +3,6 @@
 namespace Larrock\Core\Commands;
 
 use Illuminate\Console\Command;
-use App\Exceptions\Handler;
 
 class LarrockAssetsCommand extends Command
 {
@@ -20,16 +19,6 @@ class LarrockAssetsCommand extends Command
      * @var string
      */
     protected $description = 'Install assets (via bower)';
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * Execute the console command.

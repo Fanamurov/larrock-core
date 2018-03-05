@@ -5,7 +5,7 @@ namespace Larrock\Core\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Models\Seo
+ * \Larrock\Core\Models\Seo
  *
  * @property integer $id
  * @property string $seo_title
@@ -16,16 +16,16 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $type_connect
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @method static \Illuminate\Database\Query\Builder|\Larrock\Models\Seo whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\Larrock\Models\Seo whereSeoTitle($value)
- * @method static \Illuminate\Database\Query\Builder|\Larrock\Models\Seo whereSeoDescription($value)
- * @method static \Illuminate\Database\Query\Builder|\Larrock\Models\Seo whereSeoKeywords($value)
- * @method static \Illuminate\Database\Query\Builder|\Larrock\Models\Seo whereSeoIdConnect($value)
- * @method static \Illuminate\Database\Query\Builder|\Larrock\Models\Seo whereSeoUrlConnect($value)
- * @method static \Illuminate\Database\Query\Builder|\Larrock\Models\Seo whereSeoTypeConnect($value)
- * @method static \Illuminate\Database\Query\Builder|\Larrock\Models\Seo whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\Larrock\Models\Seo whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\Larrock\Models\Seo find($value)
+ * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Seo whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Seo whereSeoTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Seo whereSeoDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Seo whereSeoKeywords($value)
+ * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Seo whereSeoIdConnect($value)
+ * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Seo whereSeoUrlConnect($value)
+ * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Seo whereSeoTypeConnect($value)
+ * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Seo whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Seo whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Seo find($value)
  * @mixin \Eloquent
  */
 class Seo extends Model

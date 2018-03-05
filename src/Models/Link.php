@@ -5,7 +5,7 @@ namespace Larrock\Core\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Models\Config
+ * \Larrock\Core\Models\Config
  *
  * @property integer $id
  * @property string $key

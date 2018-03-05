@@ -1,6 +1,6 @@
 @if(isset($allowUpdate))
 <td class="row-edit uk-hidden-small">
-    <a href="/admin/{{ $link or $app->name }}/{{ $data_value->id }}/edit" class="uk-button uk-button-small">Свойства</a>
+    <a href="/admin/{{ $link or $app->name }}/{{ $data_value->id }}/edit" class="uk-button uk-button-default uk-button-small">Свойства</a>
 </td>
 @endif
 @if(isset($allowDestroy))

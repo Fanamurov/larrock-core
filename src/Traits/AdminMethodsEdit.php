@@ -9,14 +9,11 @@ use View;
 
 trait AdminMethodsEdit
 {
-    /**
-     * @var Component
-     */
+    /** @var Component */
     protected $config;
 
     /**
      * Show the form for editing the specified resource.
-     *
      * @param  int $id
      * @return View
      * @throws \DaveJamesMiller\Breadcrumbs\Facades\DuplicateBreadcrumbException
@@ -35,22 +32,37 @@ trait AdminMethodsEdit
             if($data->get_category){
                 if(isset($data->get_category->id)){
                     foreach($data->get_category->parent_tree as $item){
-                        $breadcrumbs->push($item->title, '/admin/'. $this->config->name .'/'. $item->id);
+                        $active = ' [Не опубликован!]';
+                        if($item->active === 1){
+                            $active = '';
+                        }
+                        $breadcrumbs->push($item->title . $active, '/admin/'. $this->config->name .'/'. $item->id);
                     }
                     $current_level = $this->config->getModel()->whereCategory($data->get_category->id)->orderBy('updated_at', 'DESC')->take('15')->get();
                 }else{
                     foreach($data->get_category->first()->parent_tree as $item){
-                        $breadcrumbs->push($item->title, '/admin/'. $this->config->name .'/'. $item->id);
+                        $active = ' [Не опубликован!]';
+                        if($item->active === 1){
+                            $active = '';
+                        }
+                        $breadcrumbs->push($item->title . $active, '/admin/'. $this->config->name .'/'. $item->id);
                     }
+                }
+            }else{
+                if($data->parent){
+                    $breadcrumbs->push($data->getConfig()->title, '/admin/'. $data->getConfig()->name .'/'. $data->parent);
                 }
             }
             if($data->title){
-                $breadcrumbs->push($data->title, '/admin/'. $this->config->getName() .'/'. $data->id, ['current_level' => $current_level]);
+                $active = ' [Не опубликован!]';
+                if($data->active === 1){
+                    $active = '';
+                }
+                $breadcrumbs->push($data->title . $active, '/admin/'. $this->config->getName() .'/'. $data->id, ['current_level' => $current_level]);
             }else{
                 $breadcrumbs->push('Элемент');
             }
         });
-
         return view('larrock::admin.admin-builder.edit', $data);
     }
 }
