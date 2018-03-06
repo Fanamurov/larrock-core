@@ -16,6 +16,23 @@ label{
   text-transform: none;
 }
 
+.uk-alert.uk-alert-level-R1 {
+  background: #939800;
+  color: white;
+}
+.uk-alert.uk-alert-level-R2 {
+  background: #b9bf00;
+  color: white;
+}
+.uk-alert.uk-alert-level-R3 {
+  background: #00bfb1;
+  color: white;
+}
+.uk-alert.uk-alert-level-R4 {
+  background: #bfbfbf;
+  color: white;
+}
+
 .selectize-control.multi .selectize-input > div {
   cursor: pointer;
   margin: 0 5px 3px 0;
