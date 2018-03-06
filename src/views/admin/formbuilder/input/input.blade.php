@@ -33,8 +33,6 @@
                     <li>Url: {{ $category->title }}: <a href="/{{ $app->name }}/{{ $category->url }}/{{ $data->url }}">/{{ $app->name }}/{{ $category->url }}/{{ $data->url }}</a></li>
                 </ul>
             @endforeach
-        @else
-            <small>Url: <a class="link-blank" href="{{ $data->full_url }}">{{ $data->full_url }}</a></small>
         @endif
     @endif
 </div>

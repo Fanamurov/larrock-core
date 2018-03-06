@@ -6,6 +6,7 @@
         <div class="uk-grid uk-grid-small">
             <div class="uk-width-expand">
                 {!! Breadcrumbs::render('admin.'. $app->name .'.edit', $data) !!}
+                <a class="link-blank" href="{{ $data->full_url }}/">{{ $data->full_url }}/</a>
             </div>
             <div class="uk-width-auto">
                 @if(isset($data->get_category, $allowCreate))
