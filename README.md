@@ -9,7 +9,7 @@
 
 Распространяется под лицензией CC-BY-4.0. При использовании CMS вы обязаны указать ее название в своем проекте в виде копирайта в админ-панели.
 
-В основе проекта ядро CMS (LarrockCore), устанавливаемое в дополнение к laravel версии >=5.5 и пакеты компонентов (дополнений к LarrockCore).
+В основе проекта ядро CMS (LarrockCore), устанавливаемое в дополнение к laravel версии >=5.6 и пакеты компонентов (дополнений к LarrockCore).
 
 ***
 
@@ -36,7 +36,7 @@
 ***
 
 ### Зависимости компонентов
-- "php": ">=7.0",
+- "php": ">=7.1.3",
 - "mysql": ">=5.7",
 - "[barryvdh/laravel-debugbar](https://github.com/barryvdh/laravel-debugbar)": "~2.0",
 - "[barryvdh/laravel-ide-helper](https://github.com/barryvdh/laravel-ide-helper)": "~2.1",
@@ -53,7 +53,7 @@
 
 1. **Install laravel**
   ```sh
-  $ composer create-project --prefer-dist laravel/laravel=5.5.* larrock
+  $ composer create-project --prefer-dist laravel/laravel=5.6.* larrock
   ```
 
 2. **Install LarrockСore**
