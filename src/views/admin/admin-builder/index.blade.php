@@ -10,7 +10,7 @@
             </div>
             <div class="uk-width-auto">
                 @if(isset($allowCreate))
-                    <a class="uk-button uk-button-primary" href="/admin/{{ $app->name }}/create">Добавить материал</a>
+                    <a class="uk-button uk-button-primary uk-width-1-1 uk-width-auto@s" href="/admin/{{ $app->name }}/create">Добавить материал</a>
                 @endif
             </div>
         </div>
@@ -27,7 +27,7 @@
                     @endif
                     @foreach($app->rows as $row)
                         @if($row->in_table_admin || $row->in_table_admin_ajax_editable)
-                            <th style="width: 90px" @if($row->name !== 'active') class="uk-hidden-small" @endif>{{ $row->title }}</th>
+                            <th style="width: 90px" class="uk-visible@s">{{ $row->title }}</th>
                         @endif
                     @endforeach
                     @include('larrock::admin.admin-builder.additional-rows-th')
@@ -63,7 +63,7 @@
                         @foreach($app->rows as $row)
                             @if($row->in_table_admin_ajax_editable)
                                 @if($row instanceof \Larrock\Core\Helpers\FormBuilder\FormCheckbox)
-                                    <td class="row-active @if($row->name !== 'active') uk-hidden-small @endif">
+                                    <td class="row-active uk-visible@s">
                                         <div class="uk-button-group btn-group_switch_ajax" role="group" style="width: 100%">
                                             <button type="button" class="uk-button uk-button-primary uk-button-small
                                                     @if($data_value->{$row->name} === 0) uk-button-outline @endif"
@@ -76,7 +76,7 @@
                                         </div>
                                     </td>
                                 @elseif($row instanceof \Larrock\Core\Helpers\FormBuilder\FormInput)
-                                    <td class="uk-hidden-small">
+                                    <td class="uk-visible@s">
                                         <input type="text" value="{{ $data_value->{$row->name} }}" name="{{ $row->name }}"
                                                class="ajax_edit_row form-control uk-input uk-form-small"
                                                data-row_where="id" data-value_where="{{ $data_value->id }}"
@@ -86,7 +86,7 @@
                                         @endif
                                     </td>
                                 @elseif($row instanceof \Larrock\Core\Helpers\FormBuilder\FormSelect)
-                                    <td class="uk-hidden-small">
+                                    <td class="uk-visible@s">
                                         <select class="ajax_edit_row form-control uk-select uk-form-small"
                                                 data-row_where="id" data-value_where="{{ $data_value->id }}"
                                                 data-table="{{ $app->table }}" data-row="{{ $row->name }}">
@@ -98,7 +98,7 @@
                                 @endif
                             @endif
                             @if($row->in_table_admin)
-                                <td class="uk-hidden-small">
+                                <td class="uk-visible@s">
                                     {{ $data_value->{$row->name} }}
                                 </td>
                             @endif

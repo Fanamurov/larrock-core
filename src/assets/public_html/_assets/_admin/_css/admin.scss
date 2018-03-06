@@ -2,6 +2,61 @@ html, .uk-navbar-item, .uk-navbar-nav>li>a, .uk-navbar-toggle{
   font-family: Open-Sans, Arial, sans-serif;
 }
 
+@media (max-width: 960px) {
+  section#content{
+    .container-head{
+      button, .uk-button{
+        margin-bottom: 10px;
+      }
+      .link-blank{
+        margin-bottom: 15px;
+        display: block;
+      }
+    }
+    .uk-breadcrumb p {
+      margin-bottom: 0;
+    }
+    .uk-grid{
+      > .uk-width-expand{
+        width: 100%;
+        display: block;
+        flex: auto;
+        button, .uk-button{
+          width: 100%;
+        }
+      }
+      > .uk-width-auto{
+        width: 100%;
+        display: block;
+        button, .uk-button{
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+.uk-offcanvas-bar{
+  background: #353535;
+  > ul.uk-nav{
+    > li{
+      margin-bottom: 10px;
+      padding: 10px;
+      > a{
+        font-size: 1.2rem;
+        color: antiquewhite;
+        .uk-icon{
+          display: none;
+        }
+      }
+    }
+  }
+  .uk-navbar-dropdown-nav>li{
+    border-bottom: 1px solid #484848;
+    padding: 3px 0;
+  }
+}
+
 label{
   .uk-label{
     color: #232323;

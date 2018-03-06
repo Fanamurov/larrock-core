@@ -10,12 +10,12 @@
             <div class="uk-width-auto">
                 @if(isset($data->get_category, $allowCreate))
                     @if(isset($data->get_category->id) && $data->get_category->id)
-                        <a class="uk-button uk-button-primary" href="/admin/{{ $app->name }}/create?category={{ $data->get_category->id }}">Добавить другой материал</a>
+                        <a class="uk-button uk-button-primary uk-width-1-1 uk-width-auto@s" href="/admin/{{ $app->name }}/create?category={{ $data->get_category->id }}">Добавить другой материал</a>
                     @else
-                        <a class="uk-button uk-button-primary" href="/admin/{{ $app->name }}/create?category={{ $data->get_category->first()->id }}">Добавить другой материал</a>
+                        <a class="uk-button uk-button-primary uk-width-1-1 uk-width-auto@s" href="/admin/{{ $app->name }}/create?category={{ $data->get_category->first()->id }}">Добавить другой материал</a>
                     @endif
                 @else
-                    <a class="uk-button uk-button-primary" href="/admin/{{ $app->name }}/create">Добавить другой материал</a>
+                    <a class="uk-button uk-button-primary uk-width-1-1 uk-width-auto@s" href="/admin/{{ $app->name }}/create">Добавить другой материал</a>
                 @endif
             </div>
         </div>
@@ -24,7 +24,7 @@
     <div class="ibox-content">
         <form id="edit-form-build" class="validate uk-form uk-form-stacked" action="/admin/{{ $app->name }}/{{ $data->id }}" method="POST" novalidate="novalidate">
             <div class="uk-grid">
-                <div class="@if(\is_array($app->plugins_backend) && \count($app->plugins_backend) > 0) uk-width-2-3 @else uk-width-1-1 @endif uk-form-stacked">
+                <div class="@if(\is_array($app->plugins_backend) && \count($app->plugins_backend) > 0) uk-width-2-3@m @endif uk-width-1-1 uk-form-stacked">
                     <div class="uk-grid uk-grid-small">
                         <!-- Главный таб -->
                         {!! $app->tabs_data['main'] !!}
@@ -48,7 +48,7 @@
                 </div>
 
                 @if(\is_array($app->plugins_backend) && \count($app->plugins_backend) > 0)
-                    <div class="uk-width-1-3">
+                    <div class="uk-width-1-1 uk-width-1-3@m">
                         <ul uk-tab class="uk-tab uk-margin-remove-bottom">
                             @if(\is_array($app->plugins_backend) && array_key_exists('images', $app->plugins_backend))
                                 <li><a href="">Фото [<span class="countUploadedImages">{{count($data->getImages)}}</span>]</a></li>
