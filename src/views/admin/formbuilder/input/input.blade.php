@@ -25,14 +25,4 @@
                value="@isset($data->{$row_key}){{ Request::old($row_key, $data->{$row_key}) }}@endisset"
                class="{{ $row_settings->css_class }} uk-input" id="{{ $row_key }}">
     @endif
-    @if($row_key === 'title')
-        @if(isset($data->get_category) && count($data->get_category) > 1)
-            <div>В разделах:</div>
-            @foreach($data->get_category as $category)
-                <ul>
-                    <li>Url: {{ $category->title }}: <a href="/{{ $app->name }}/{{ $category->url }}/{{ $data->url }}">/{{ $app->name }}/{{ $category->url }}/{{ $data->url }}</a></li>
-                </ul>
-            @endforeach
-        @endif
-    @endif
 </div>

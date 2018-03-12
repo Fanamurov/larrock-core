@@ -7,6 +7,14 @@
             <div class="uk-width-expand">
                 {!! Breadcrumbs::render('admin.'. $app->name .'.edit', $data) !!}
                 <a class="link-blank" href="{{ $data->full_url }}/">{{ $data->full_url }}/</a>
+                @if(isset($data->get_category) && count($data->get_category) > 1)
+                    <div>В разделах:</div>
+                    @foreach($data->get_category as $category)
+                        <ul>
+                            <li>Url: {{ $category->title }}: <a href="{{ $category->full_url }}/{{ $data->url }}">{{ $category->full_url }}/{{ $data->url }}</a></li>
+                        </ul>
+                    @endforeach
+                @endif
             </div>
             <div class="uk-width-auto">
                 @if(isset($data->get_category, $allowCreate))
