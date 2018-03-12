@@ -15,15 +15,11 @@ trait GetSeo{
     {
         $cache_key = sha1('getGetSeoTitleAttribute'. $this->id . $this->config->name);
         return Cache::remember($cache_key, 1140, function () {
-            if($get_seo = Seo::whereSeoUrlConnect($this->url)->whereSeoTypeConnect($this->config->name)->first()){
-                if($get_seo->seo_title){
-                    return $get_seo->seo_title;
-                }
+            if(($get_seo = Seo::whereSeoUrlConnect($this->url)->whereSeoTypeConnect($this->config->name)->first()) && $get_seo->seo_title){
+                return $get_seo->seo_title;
             }
-            if($get_seo = Seo::whereSeoIdConnect($this->id)->whereSeoTypeConnect($this->config->name)->first()){
-                if($get_seo->seo_title){
-                    return $get_seo->seo_title;
-                }
+            if(($get_seo = Seo::whereSeoIdConnect($this->id)->whereSeoTypeConnect($this->config->name)->first()) && $get_seo->seo_title){
+                return $get_seo->seo_title;
             }
             return $this->title;
         });

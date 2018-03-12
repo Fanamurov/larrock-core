@@ -99,6 +99,7 @@ class AdminAjax extends Controller
             $content->addMedia(public_path() .'/image_cache/'. $image_name)->withCustomProperties([
                 'alt' => 'photo', 'gallery' => $gallery
             ])->toMediaCollection('images');
+            Cache::forget(sha1('loadMediaCacheimages'. $model_id . $content->getConfig()->getModelName()));
             return response()->json(['status' => 'success', 'message' => trans('larrock::apps.upload.success', ['name' => $images_value->getClientOriginalName()])]);
         }
         return response()->json(['status' => 'error', 'message' => trans('larrock::apps.upload.not_valid', ['name' => $images_value->getClientOriginalName()])], 300);
@@ -125,6 +126,7 @@ class AdminAjax extends Controller
             $content->addMedia(public_path() .'/media/'. $file_name)->withCustomProperties([
                 'alt' => 'file', 'gallery' => $gallery
             ])->toMediaCollection('files');
+            Cache::forget(sha1('loadMediaCachefiles'. $model_id . $content->getConfig()->getModelName()));
             return response()->json(['status' => 'success', 'message' => trans('larrock::apps.upload.success', ['name' => $files_value->getClientOriginalName()])]);
         }
         return response()->json(['status' => 'error', 'message' => trans('larrock::apps.upload.not_valid', ['name' => $files_value->getClientOriginalName()])], 300);
@@ -142,12 +144,14 @@ class AdminAjax extends Controller
             return response()->json(['status' => 'error', 'message' => trans('larrock::apps.param.404', ['name' => 'id'])], 500);
         }
 		$id = $request->get('id'); //ID в таблице media
+        $media = DB::table('media')->where('id', $id)->firstOrFail();
 		if(DB::table('media')
 			->where('id', $id)
 			->update(['order_column' => $request->get('position', 0),
 				'custom_properties' => json_encode([
 					'alt' => $request->get('alt'),
 					'gallery' => $request->get('gallery')])])){
+            Cache::forget(sha1('loadMediaCache'. $request->get('gallery') . $id . $media->model_type));
 			return response()->json(['status' => 'success', 'message' => trans('larrock::apps.data.update', ['name' => 'параметров'])]);
 		}
         return response()->json(['status' => 'error', 'message' => trans('larrock::apps.row.error')], 500);
@@ -174,7 +178,7 @@ class AdminAjax extends Controller
             }
             return view('larrock::admin.admin-builder.plugins.files.getUploadedFiles', ['data' => $content->getMedia($type)->sortByDesc('order_column')]);
         }
-        return response()->json(['status' => 'error', 'message' => rans('larrock::apps.param.404', ['name' => 'model_id'])], 400);
+        return response()->json(['status' => 'error', 'message' => trans('larrock::apps.param.404', ['name' => 'model_id'])], 400);
     }
 
     /**

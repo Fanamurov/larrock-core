@@ -3,6 +3,7 @@
 namespace Larrock\Core\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Cache;
 
 /**
  * \Larrock\Core\Models\Config
@@ -38,7 +39,10 @@ class Link extends Model
 
 	public function getFullDataChild()
     {
-        $data = new $this->model_child;
-        return $data->whereId($this->id_child)->first();
+        $cache_key = sha1('getFullDataChild'. $this->model_child . $this->id_child);
+        return Cache::rememberForever($cache_key, function () {
+            $data = new $this->model_child;
+            return $data->whereId($this->id_child)->first();
+        });
     }
 }
