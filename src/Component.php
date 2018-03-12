@@ -471,7 +471,7 @@ class Component
     public function addDataPlugins($data)
     {
         foreach ($this->plugins_backend as $key_plugin => $value_plugin){
-            if($key_plugin === 'seo' && $plugin_data = $data->get_seo){
+            if($key_plugin === 'seo' && $plugin_data = $data->getSeo){
                 foreach ($this->rows as $key => $value){
                     if($value->name === 'seo_title' || $value->name === 'seo_description' || $value->name === 'seo_keywords'){
                         $this->rows[$key]->default = $plugin_data->{$value->name};

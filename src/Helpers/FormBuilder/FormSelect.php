@@ -64,6 +64,7 @@ class FormSelect extends FBElement {
             $selected[] = \Request::input($row_settings->name);
         }
 
-        return View::make('larrock::admin.formbuilder.select.value', ['row_key' => $row_settings->name, 'row_settings' => $row_settings, 'data' => $data, 'selected' => $selected])->render();
+        return View::make('larrock::admin.formbuilder.select.value', ['row_key' => $row_settings->name,
+            'row_settings' => $row_settings, 'data' => $data, 'selected' => $selected])->render();
     }
 }

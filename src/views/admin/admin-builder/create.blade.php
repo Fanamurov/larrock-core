@@ -78,11 +78,11 @@
                     <input name="id_connect" type="hidden" value="{{ $data->id }}">
                     <input name="type_connect" type="hidden" value="{{ $app->name }}">
                     <input name="place" type="hidden" value="material">
-                    @if(isset($data->get_category))
-                        @if(isset($data->get_category->id) && $data->get_category->id)
-                            <input name="category_item" type="hidden" value="{{ $data->get_category->id }}">
+                    @if(isset($data->getCategory))
+                        @if(isset($data->getCategory->id) && $data->getCategory->id)
+                            <input name="category_item" type="hidden" value="{{ $data->getCategory->id }}">
                         @else
-                            <input name="category_item" type="hidden" value="{{ $data->get_category->first()->id }}">
+                            <input name="category_item" type="hidden" value="{{ $data->getCategory->first()->id }}">
                         @endif
                     @endif
                     {{ csrf_field() }}

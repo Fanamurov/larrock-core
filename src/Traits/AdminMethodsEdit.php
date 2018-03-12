@@ -30,18 +30,18 @@ trait AdminMethodsEdit
         Breadcrumbs::register('admin.'. $this->config->name .'.edit', function($breadcrumbs, $data){
             $current_level = NULL;
             $breadcrumbs->parent('admin.'. $this->config->name .'.index');
-            if($data->get_category){
-                if(isset($data->get_category->id)){
-                    foreach($data->get_category->parent_tree as $item){
+            if($data->getCategory){
+                if(isset($data->getCategory->id)){
+                    foreach($data->getCategory->parent_tree as $item){
                         $active = ' [Не опубликован!]';
                         if($item->active === 1){
                             $active = '';
                         }
                         $breadcrumbs->push($item->title . $active, '/admin/'. $this->config->name .'/'. $item->id);
                     }
-                    $current_level = $this->config->getModel()->whereCategory($data->get_category->id)->orderBy('updated_at', 'DESC')->take('15')->get();
+                    $current_level = $this->config->getModel()->whereCategory($data->getCategory->id)->orderBy('updated_at', 'DESC')->take('15')->get();
                 }else{
-                    foreach($data->get_category->first()->parent_tree as $item){
+                    foreach($data->getCategory->first()->parent_tree as $item){
                         $active = ' [Не опубликован!]';
                         if($item->active === 1){
                             $active = '';

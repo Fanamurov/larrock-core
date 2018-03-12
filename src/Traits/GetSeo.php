@@ -6,7 +6,7 @@ use Cache;
 
 trait GetSeo{
 
-    public function get_seo()
+    public function getSeo()
     {
         return $this->hasOne(Seo::class, 'seo_id_connect', 'id')->whereSeoTypeConnect($this->config->name);
     }
@@ -14,7 +14,7 @@ trait GetSeo{
     public function getGetSeoTitleAttribute()
     {
         $cache_key = sha1('getGetSeoTitleAttribute'. $this->id . $this->config->name);
-        return Cache::remember($cache_key, 1140, function () {
+        return Cache::rememberForever($cache_key, function () {
             if(($get_seo = Seo::whereSeoUrlConnect($this->url)->whereSeoTypeConnect($this->config->name)->first()) && $get_seo->seo_title){
                 return $get_seo->seo_title;
             }

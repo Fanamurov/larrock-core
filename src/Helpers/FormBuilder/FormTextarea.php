@@ -16,7 +16,7 @@ class FormTextarea extends FBElement{
 
     public function setNotEditor()
     {
-        $this->css_class = $this->css_class .' not-editor';
+        $this->css_class .= ' not-editor';
         return $this;
     }
 
@@ -25,6 +25,7 @@ class FormTextarea extends FBElement{
         if( !isset($data->{$row_settings->name}) && $row_settings->default){
             $data->{$row_settings->name} = $row_settings->default;
         }
-        return View::make('larrock::admin.formbuilder.textarea.editor', ['row_key' => $row_settings->name, 'row_settings' => $row_settings, 'data' => $data])->render();
+        return View::make('larrock::admin.formbuilder.textarea.editor', ['row_key' => $row_settings->name,
+            'row_settings' => $row_settings, 'data' => $data])->render();
     }
 }

@@ -187,8 +187,8 @@
     <!-- END Материалы -->
 
     <!-- Подразделы -->
-    @if(isset($category->get_child))
-        @if(count($category->get_child) === 0)
+    @if(isset($category->getChild))
+        @if(count($category->getChild) === 0)
             <table class="uk-table uk-table-striped">
                 @include('larrock::admin.category.include-create-easy', ['parent' => $category->id, 'component' => $app->name])
             </table>
@@ -216,11 +216,11 @@
                     </thead>
                     <tbody class="uk-sortable" data-uk-sortable="{handleClass:'uk-sortable-handle'}">
                     @include('larrock::admin.category.include-create-easy', ['parent' => $category->id, 'component' => $app->name])
-                    @include('larrock::admin.category.include-list-categories', ['data' => $category->get_child])
+                    @include('larrock::admin.category.include-list-categories', ['data' => $category->getChild])
                     </tbody>
                 </table>
-                @if(method_exists($category->get_child, 'total'))
-                    {!! $category->get_child->links('larrock::admin.pagination.uikit3') !!}
+                @if(method_exists($category->getChild, 'total'))
+                    {!! $category->getChild->links('larrock::admin.pagination.uikit3') !!}
                 @endif
             </div>
         @endif

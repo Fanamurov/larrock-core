@@ -3,7 +3,7 @@
 namespace Larrock\Core\Helpers\FormBuilder;
 
 use Larrock\Core\Helpers\Tree;
-use Larrock\ComponentCategory\Facades\LarrockCategory;
+use LarrockCategory;
 use View;
 
 class FormCategory extends FBElement {
@@ -62,8 +62,9 @@ class FormCategory extends FBElement {
         }
 
         $tree = new Tree;
-        $row_settings->options = $tree->build_tree($row_settings->options, 'parent');
+        $row_settings->options = $tree->buildTree($row_settings->options, 'parent');
 
-        return View::make('larrock::admin.formbuilder.tags.categoryTree', ['row_key' => $row_settings->name, 'row_settings' => $row_settings, 'data' => $data, 'selected' => $selected])->render();
+        return View::make('larrock::admin.formbuilder.tags.categoryTree', ['row_key' => $row_settings->name,
+            'row_settings' => $row_settings, 'data' => $data, 'selected' => $selected])->render();
     }
 }

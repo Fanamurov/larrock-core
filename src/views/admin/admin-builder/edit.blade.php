@@ -6,10 +6,10 @@
         <div class="uk-grid uk-grid-small">
             <div class="uk-width-expand">
                 {!! Breadcrumbs::render('admin.'. $app->name .'.edit', $data) !!}
-                <a class="link-blank" href="{{ $data->full_url }}/">{{ $data->full_url }}/</a>
-                @if(isset($data->get_category) && count($data->get_category) > 1)
+                <a class="link-blank uk-display-inline-block" href="{{ $data->full_url }}/">{{ $data->full_url }}/</a>
+                @if(isset($data->getCategory) && count($data->getCategory) > 1)
                     <div>В разделах:</div>
-                    @foreach($data->get_category as $category)
+                    @foreach($data->getCategory as $category)
                         <ul>
                             <li>Url: {{ $category->title }}: <a href="{{ $category->full_url }}/{{ $data->url }}">{{ $category->full_url }}/{{ $data->url }}</a></li>
                         </ul>
@@ -17,11 +17,11 @@
                 @endif
             </div>
             <div class="uk-width-auto">
-                @if(isset($data->get_category, $allowCreate))
-                    @if(isset($data->get_category->id) && $data->get_category->id)
-                        <a class="uk-button uk-button-primary uk-width-1-1 uk-width-auto@s" href="/admin/{{ $app->name }}/create?category={{ $data->get_category->id }}">Добавить другой материал</a>
+                @if(isset($data->getCategory, $allowCreate))
+                    @if(isset($data->getCategory->id) && $data->getCategory->id)
+                        <a class="uk-button uk-button-primary uk-width-1-1 uk-width-auto@s" href="/admin/{{ $app->name }}/create?category={{ $data->getCategory->id }}">Добавить другой материал</a>
                     @else
-                        <a class="uk-button uk-button-primary uk-width-1-1 uk-width-auto@s" href="/admin/{{ $app->name }}/create?category={{ $data->get_category->first()->id }}">Добавить другой материал</a>
+                        <a class="uk-button uk-button-primary uk-width-1-1 uk-width-auto@s" href="/admin/{{ $app->name }}/create?category={{ $data->getCategory->first()->id }}">Добавить другой материал</a>
                     @endif
                 @else
                     <a class="uk-button uk-button-primary uk-width-1-1 uk-width-auto@s" href="/admin/{{ $app->name }}/create">Добавить другой материал</a>
@@ -93,11 +93,11 @@
                     <input name="id_connect" type="hidden" value="{{ $data->id }}">
                     <input name="type_connect" type="hidden" value="{{ $app->name }}">
                     <input name="place" type="hidden" value="material">
-                    @if(isset($data->get_category))
-                        @if(isset($data->get_category->id) && $data->get_category->id)
-                            <input name="category_item" type="hidden" value="{{ $data->get_category->id }}">
+                    @if(isset($data->getCategory))
+                        @if(isset($data->getCategory->id) && $data->getCategory->id)
+                            <input name="category_item" type="hidden" value="{{ $data->getCategory->id }}">
                         @else
-                            <input name="category_item" type="hidden" value="{{ $data->get_category->first()->id }}">
+                            <input name="category_item" type="hidden" value="{{ $data->getCategory->first()->id }}">
                         @endif
                     @endif
                     {{ csrf_field() }}

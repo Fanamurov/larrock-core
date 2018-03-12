@@ -28,7 +28,6 @@ trait GetLink{
 
     /**
      * Get link data
-     * @param $childModel
      * @return mixed
      */
     public function linkParam()
@@ -96,9 +95,9 @@ trait GetLink{
         $cache_key = sha1('getCostLink'. $this->config->model . $childModel . $this->id);
         return Cache::remember($cache_key, 1140, function () use ($childModel, $modelChildWhereKey, $modelChildWhereValue) {
             $query = $this->hasMany(Link::class, 'id_parent')->whereModelParent($this->config->model)->whereModelChild($childModel);
-            if($modelChildWhereKey && $modelChildWhereValue){
-                //$query->where($modelChildWhereKey, '=', $modelChildWhereValue);
-            }
+            /*if($modelChildWhereKey && $modelChildWhereValue){
+                $query->where($modelChildWhereKey, '=', $modelChildWhereValue);
+            }*/
             if($getLink = $query->get()){
                 foreach ($getLink as $key => $item){
                     $class = new $childModel();
@@ -108,6 +107,7 @@ trait GetLink{
                 }
                 return $getLink;
             }
+            return null;
         });
     }
 

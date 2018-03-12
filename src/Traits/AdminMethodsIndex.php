@@ -20,7 +20,7 @@ trait AdminMethodsIndex
         if(isset($this->config->rows['category'])){
             $data['app_category'] = LarrockCategory::getConfig();
             $data['categories'] = LarrockCategory::getModel()->whereComponent($this->config->name)->whereLevel(1)
-                ->orderBy('position', 'DESC')->orderBy('updated_at', 'ASC')->with(['get_child', 'get_parent'])->paginate(30);
+                ->orderBy('position', 'DESC')->orderBy('updated_at', 'ASC')->with(['getChild', 'getParent'])->paginate(30);
             return view('larrock::admin.admin-builder.categories', $data);
         }
 

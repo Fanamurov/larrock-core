@@ -16,7 +16,7 @@ class Tree{
 	 * @param string $row_level     по какому полю ищем детей
 	 * @return array
 	 */
-	public function build_tree($data, $row_level = 'parent')
+	public function buildTree($data, $row_level = 'parent')
 	{
 		$new = array();
 		foreach ($data as $a){

@@ -22,11 +22,11 @@ trait AdminMethodsShow
         $data['app_category'] = LarrockCategory::getConfig();
         $cache_key = sha1('AdminMethodsShowCategory'. $id . $this->config->getModelName());
         $data['category'] = Cache::rememberForever($cache_key, function () use ($id) {
-            return LarrockCategory::getModel()->whereId($id)->with(['get_child', 'get_parent'])->firstOrFail();
+            return LarrockCategory::getModel()->whereId($id)->with(['getChild', 'getParent'])->firstOrFail();
         });
         $cache_key = sha1('AdminMethodsShowData'. $id . $this->config->getModelName());
         $data['data'] = Cache::rememberForever($cache_key, function () use ($id) {
-            return $this->config->getModel()->whereHas('get_category', function ($q) use ($id) {
+            return $this->config->getModel()->whereHas('getCategory', function ($q) use ($id) {
                 $q->where('category.id', '=', $id);
             })->get();
         });

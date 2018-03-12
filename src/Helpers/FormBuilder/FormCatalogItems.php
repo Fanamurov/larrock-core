@@ -31,6 +31,7 @@ class FormCatalogItems extends FBElement {
         }
         $tags = $tags->get();
         $selected = $data->{$row_settings->connect->relation_name};
-        return View::make('larrock::admin.formbuilder.tags.tags', ['tags' => $tags, 'data' => $data, 'row_key' => $row_settings->name, 'row_settings' => $row_settings, 'selected' => $selected])->render();
+        return View::make('larrock::admin.formbuilder.tags.tags', ['tags' => $tags, 'data' => $data,
+            'row_key' => $row_settings->name, 'row_settings' => $row_settings, 'selected' => $selected])->render();
     }
 }
