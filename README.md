@@ -38,8 +38,6 @@
 ### Зависимости компонентов
 - "php": ">=7.1.3",
 - "mysql": ">=5.7",
-- "[barryvdh/laravel-debugbar](https://github.com/barryvdh/laravel-debugbar)": "~2.0",
-- "[barryvdh/laravel-ide-helper](https://github.com/barryvdh/laravel-ide-helper)": "~2.1",
 - "[proengsoft/laravel-jsvalidation](https://github.com/proengsoft/laravel-jsvalidation)": "^1.5",
 - "[albertcht/invisible-recaptcha](https://github.com/albertcht/invisible-recaptcha)": "^1.7",
 - "[davejamesmiller/laravel-breadcrumbs](https://github.com/davejamesmiller/laravel-breadcrumbs)": "^5.0",
