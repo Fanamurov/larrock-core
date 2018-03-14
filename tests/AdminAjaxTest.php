@@ -19,7 +19,6 @@ class AdminAjaxTest extends \PHPUnit\Framework\TestCase
     {
         parent::setUp();
 
-        $this->createApplication();
         $this->controller = new AdminAjax();
         $this->test_table = 'test_model';
 

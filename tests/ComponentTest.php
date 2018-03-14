@@ -13,8 +13,6 @@ class ComponentTest extends \PHPUnit\Framework\TestCase
     {
         parent::setUp();
 
-        $this->createApplication();
-
         $this->component = new Component();
 
     }
