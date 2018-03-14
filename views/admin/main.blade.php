@@ -66,6 +66,7 @@
         <p class="uk-text-muted uk-text-small">
             LarrockCMS 2017-{{ date('Y') }}. Распространяется под лицензией CC-BY-4.0. <br/>
             <a href="https://packagist.org/packages/fanamurov/larrock-core"><img src="https://camo.githubusercontent.com/4995869bf897e3f0ecbada3a719f3ce06217c3a5/68747470733a2f2f706f7365722e707567782e6f72672f66616e616d75726f762f6c6172726f636b2d636f72652f762f737461626c65" alt="Latest Stable Version" data-canonical-src="https://poser.pugx.org/fanamurov/larrock-core/v/stable"></a> |
+            <img src="https://travis-ci.org/Fanamurov/larrock-core.svg?branch=master" alt="travis build status"> |
             <a href="http://larrock-cms.ru/" target="_blank">larrock-cms.ru</a> |
             <a href="https://github.com/Fanamurov/larrock-core" target="_blank">Github</a> |
             <a href="mailto:fanamurov@ya.ru">Разработчик</a> |
