@@ -3,7 +3,6 @@
 namespace Larrock\Core\Tests;
 
 use Larrock\Core\AdminAjax;
-use Tests\TestCase;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Database\Schema\Blueprint;
