@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use DB;
 use Illuminate\Database\Schema\Blueprint;
 
-class AdminAjaxTest extends TestCase
+class AdminAjaxTest extends \PHPUnit\Framework\TestCase
 {
     /** @var AdminAjax */
     protected $controller;

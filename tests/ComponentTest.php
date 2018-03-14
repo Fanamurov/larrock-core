@@ -5,7 +5,7 @@ namespace Larrock\Core\Tests;
 use Larrock\Core\Component;
 use Tests\TestCase;
 
-class ComponentTest extends TestCase
+class ComponentTest extends \PHPUnit\Framework\TestCase
 {
     protected $component;
 
