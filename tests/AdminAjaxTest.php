@@ -6,6 +6,7 @@ use Larrock\Core\AdminAjax;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Database\Schema\Blueprint;
+use Larrock\Core\Tests\TestCase;
 
 class AdminAjaxTest extends TestCase
 {

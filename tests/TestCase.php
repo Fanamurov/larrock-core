@@ -2,11 +2,17 @@
 
 namespace Larrock\Core\Tests;
 
-use Tests\CreatesApplication;
+use Config;
+use Larrock\Core\LarrockCoreServiceProvider;
+use Orchestra\Testbench\TestCase as TestbenchTestCase;
+use View;
 
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-
-abstract class TestCase extends BaseTestCase
+abstract class TestCase extends TestbenchTestCase
 {
-    use CreatesApplication;
+    protected function getPackageProviders($app)
+    {
+        return [
+            LarrockCoreServiceProvider::class,
+        ];
+    }
 }
