@@ -33,7 +33,7 @@ class LarrockRenamePublicDirectoryCommand extends Command
             \File::copyDirectory(base_path('public'), base_path('public_html'));
             \File::deleteDirectory(base_path('public'));
             $dir = str_replace('/Commands', '', __DIR__);
-            \File::copy($dir. '/configVendor/larrock-index-public_html_php', base_path('public_html/index.php'));
+            \File::copy($dir. '/../configVendor/larrock-index-public_html_php', base_path('public_html/index.php'));
             $this->info('Directory and index.php successfully updated');
         }else{
             $this->info('The command is not required, the directory has already changed.');
