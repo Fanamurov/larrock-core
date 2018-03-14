@@ -25,9 +25,9 @@ class LarrockCoreServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadRoutesFrom(__DIR__.'/routes.php');
-        $this->loadViewsFrom(__DIR__.'/views', 'larrock');
-        $this->loadTranslationsFrom(__DIR__.'/lang', 'larrock');
-        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
+        $this->loadViewsFrom(__DIR__.'/../views', 'larrock');
+        $this->loadTranslationsFrom(__DIR__.'/../lang', 'larrock');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         $public_path = public_path();
         if(substr($public_path, -6) === 'public'){
@@ -35,27 +35,27 @@ class LarrockCoreServiceProvider extends ServiceProvider
         }
 
         $this->publishes([
-            __DIR__.'/lang' => resource_path('lang/vendor/larrock')
+            __DIR__.'/../lang' => resource_path('lang/vendor/larrock')
         ], 'lang');
         $this->publishes([
-            __DIR__.'/views/front' => base_path('resources/views/vendor/larrock/front')
+            __DIR__.'/../views/front' => base_path('resources/views/vendor/larrock/front')
         ], 'views-front-core');
         $this->publishes([
-            __DIR__.'/views/admin' => base_path('resources/views/vendor/larrock/admin')
+            __DIR__.'/../views/admin' => base_path('resources/views/vendor/larrock/admin')
         ], 'views-admin-core');
         $this->publishes([
-            __DIR__.'/assets/public_html' => $public_path,
-            __DIR__.'/assets/gulpfile' => base_path(),
-            __DIR__.'/assets/bower' => base_path(),
+            __DIR__.'/../assets/public_html' => $public_path,
+            __DIR__.'/../assets/gulpfile' => base_path(),
+            __DIR__.'/../assets/bower' => base_path(),
         ], 'assets');
         $this->publishes([
-            __DIR__.'/assets/policy' => $public_path
+            __DIR__.'/../assets/policy' => $public_path
         ], 'doc');
         $this->publishes([
-            __DIR__.'/config/larrock-core-adminmenu.php' => config_path('larrock-core-adminmenu.php'),
-            __DIR__.'/config/larrock-sitemap.php' => config_path('larrock-sitemap.php'),
-            __DIR__.'/config/larrock-to-dashboard.php' => config_path('larrock-to-dashboard.php'),
-            __DIR__.'/config/larrock.php' => config_path('larrock.php'),
+            __DIR__.'/../config/larrock-core-adminmenu.php' => config_path('larrock-core-adminmenu.php'),
+            __DIR__.'/../config/larrock-sitemap.php' => config_path('larrock-sitemap.php'),
+            __DIR__.'/../config/larrock-to-dashboard.php' => config_path('larrock-to-dashboard.php'),
+            __DIR__.'/../config/larrock.php' => config_path('larrock.php'),
         ], 'config');
     }
 
@@ -69,10 +69,10 @@ class LarrockCoreServiceProvider extends ServiceProvider
         $this->app['router']->aliasMiddleware('LarrockAdminMenu', AdminMenu::class);
         $this->app['router']->aliasMiddleware('SaveAdminPluginsData', SaveAdminPluginsData::class);
 
-        $this->mergeConfigFrom( __DIR__.'/config/larrock-core-adminmenu.php', 'larrock-core-adminmenu');
-        $this->mergeConfigFrom( __DIR__.'/config/larrock-sitemap.php', 'larrock-sitemap');
-        $this->mergeConfigFrom( __DIR__.'/config/larrock-to-dashboard.php', 'larrock-to-dashboard');
-        $this->mergeConfigFrom( __DIR__.'/config/larrock.php', 'larrock');
+        $this->mergeConfigFrom( __DIR__.'/../config/larrock-core-adminmenu.php', 'larrock-core-adminmenu');
+        $this->mergeConfigFrom( __DIR__.'/../config/larrock-sitemap.php', 'larrock-sitemap');
+        $this->mergeConfigFrom( __DIR__.'/../config/larrock-to-dashboard.php', 'larrock-to-dashboard');
+        $this->mergeConfigFrom( __DIR__.'/../config/larrock.php', 'larrock');
 
         $this->app->bind('command.larrock:install', LarrockInstallCommand::class);
         $this->app->bind('command.larrock:check', LarrockCheckCommand::class);
