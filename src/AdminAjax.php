@@ -5,7 +5,7 @@ namespace Larrock\Core;
 use EMT\EMTypograph;
 use File;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use DB;
 use Image;
 use Cache;

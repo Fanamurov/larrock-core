@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use DB;
 use Illuminate\Database\Schema\Blueprint;
 
-class AdminAjaxTest extends \PHPUnit\Framework\TestCase
+class AdminAjaxTest extends \Orchestra\Testbench\TestCase
 {
     /** @var AdminAjax */
     protected $controller;
@@ -15,19 +15,22 @@ class AdminAjaxTest extends \PHPUnit\Framework\TestCase
     /** @var string */
     protected $test_table;
 
+    protected function getEnvironmentSetUp($app)
+    {
+        $app['config']->set('database.default', 'sqlite');
+        $app['config']->set('database.connections.sqlite', [
+            'driver' => 'sqlite',
+            'database' => ':memory:',
+            'prefix' => '',
+        ]);
+    }
+
     protected function setUp()
     {
         parent::setUp();
 
         $this->controller = new AdminAjax();
         $this->test_table = 'test_model';
-
-        \config()->set('database.default', 'sqlite');
-        \config()->set('database.connections.sqlite', [
-            'driver' => 'sqlite',
-            'database' => ':memory:',
-            'prefix' => '',
-        ]);
 
         $this->setUpUserDatabase();
         $this->setUpTestDatabase();

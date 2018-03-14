@@ -13,6 +13,7 @@ use JsValidator;
 use Larrock\Core\Helpers\MessageLarrock;
 use Larrock\Core\Models\Link;
 use View;
+use Config;
 
 class Component
 {
