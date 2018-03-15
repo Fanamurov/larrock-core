@@ -11,6 +11,3 @@ install:
 
 script:
   - php vendor/bin/phpunit -c phpunit.xml
-
-after_success:
-  - travis_retry php vendor/bin/coveralls
