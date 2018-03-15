@@ -6,14 +6,14 @@ use \Larrock\Core\AdminAjax;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Database\Schema\Blueprint;
+use Larrock\Core\Tests\DatabaseTest\CreateConfigDatabase;
+use Larrock\Core\Tests\DatabaseTest\CreateMediaDatabase;
+use Larrock\Core\Tests\DatabaseTest\CreateUserDatabase;
 
 class AdminAjaxTest extends \Orchestra\Testbench\TestCase
 {
     /** @var AdminAjax */
     protected $controller;
-
-    /** @var string */
-    protected $test_table;
 
     protected function getEnvironmentSetUp($app)
     {
@@ -30,126 +30,22 @@ class AdminAjaxTest extends \Orchestra\Testbench\TestCase
         parent::setUp();
 
         $this->controller = new AdminAjax();
-        $this->test_table = 'test_model';
 
-        $this->setUpUserDatabase();
-        $this->setUpTestDatabase();
-        $this->setUpMediaDatabase();
+        $seed = new CreateUserDatabase();
+        $seed->setUpUserDatabase();
+
+        $seed = new CreateMediaDatabase();
+        $seed->setUpMediaDatabase();
+
+        $seed = new CreateConfigDatabase();
+        $seed->setUpTestDatabase();
     }
 
     public function tearDown()
     {
         parent::tearDown();
 
-        unset($this->controller, $this->test_table);
-    }
-
-    /** Поднимаем тестовую таблицу */
-    protected function setUpTestDatabase()
-    {
-        DB::connection()->getSchemaBuilder()->create($this->test_table, function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->integer('value');
-            $table->integer('type');
-            $table->timestamps();
-        });
-        DB::connection()->table($this->test_table)->insert([
-            'name' => 'name',
-            'value' => 'value',
-            'type' => 'type',
-        ]);
-    }
-
-    /** Поднимаем таблицы пользователей и ролей */
-    protected function setUpUserDatabase()
-    {
-        DB::connection()->getSchemaBuilder()->create('users', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('email', 191)->unique();
-            $table->string('password');
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('fio');
-            $table->rememberToken();
-            $table->timestamps();
-            $table->index(['email']);
-        });
-        DB::connection()->getSchemaBuilder()->create('roles', function (Blueprint $table) {
-            $table->increments('id')->unsigned();
-            $table->string('name');
-            $table->string('slug', 191)->unique();
-            $table->string('description')->nullable();
-            $table->integer('level')->default(1);
-            $table->timestamps();
-        });
-        DB::connection()->getSchemaBuilder()->create('role_user', function (Blueprint $table) {
-            $table->increments('id')->unsigned();
-            $table->integer('role_id')->unsigned()->index();
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
-            $table->integer('user_id')->unsigned()->index();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->timestamps();
-        });
-        DB::connection()->table('roles')->insert([
-            'name' => 'Admin',
-            'slug' => 'Админ',
-            'description' => NULL,
-            'level' => 3
-        ]);
-        DB::connection()->table('roles')->insert([
-            'name' => 'Moderator',
-            'slug' => 'Модератор',
-            'description' => NULL,
-            'level' => 2
-        ]);
-        DB::connection()->table('roles')->insert([
-            'name' => 'User',
-            'slug' => 'Пользователь',
-            'description' => NULL,
-            'level' => 1
-        ]);
-        DB::connection()->table('users')->insert([
-            'name' => 'Admin',
-            'email' => 'admin@larrock-cms.ru',
-            'password' => bcrypt('password'),
-            'first_name' => 'Admin',
-            'last_name' => 'Khabarovsk',
-            'fio' => 'Admin Khabarovsk'
-        ]);
-    }
-
-    protected function setUpMediaDatabase()
-    {
-        DB::connection()->getSchemaBuilder()->create('media', function (Blueprint $table) {
-            $table->increments('id');
-            $table->morphs('model');
-            $table->string('collection_name');
-            $table->string('name');
-            $table->string('file_name');
-            $table->string('mime_type')->nullable();
-            $table->string('disk');
-            $table->unsignedInteger('size');
-            $table->json('manipulations');
-            $table->json('custom_properties');
-            $table->unsignedInteger('order_column')->nullable();
-            $table->nullableTimestamps();
-        });
-
-        DB::connection()->table('media')->insert([
-            'model_id' => 1,
-            'model_type' => $this->test_table,
-            'collection_name' => 'images',
-            'name' => 'test',
-            'file_name' => 'test.jpg',
-            'mime_type' => 'image/jpeg',
-            'disk' => 'media',
-            'size' => 1000,
-            'manipulations' => '[]',
-            'custom_properties' => '{"alt": "photo", "gallery": "gelievye-shary"}',
-            'order_column' => 1
-        ]);
+        unset($this->controller);
     }
 
     /**
@@ -165,7 +61,7 @@ class AdminAjaxTest extends \Orchestra\Testbench\TestCase
             'row_where' => 'id',
             'value' => 'updated_row',
             'row' => 'value',
-            'table' => $this->test_table
+            'table' => 'config'
         ]);
 
         $data = $this->controller->EditRow($request);

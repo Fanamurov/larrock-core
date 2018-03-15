@@ -458,11 +458,13 @@ class Component
      */
     public function addDataPlugins($data)
     {
-        foreach ($this->plugins_backend as $key_plugin => $value_plugin){
-            if($key_plugin === 'seo' && $plugin_data = $data->getSeo){
-                foreach ($this->rows as $key => $value){
-                    if($value->name === 'seo_title' || $value->name === 'seo_description' || $value->name === 'seo_keywords'){
-                        $this->rows[$key]->default = $plugin_data->{$value->name};
+        if($this->plugins_backend && \is_array($this->plugins_backend)){
+            foreach ($this->plugins_backend as $key_plugin => $value_plugin){
+                if($key_plugin === 'seo' && $plugin_data = $data->getSeo){
+                    foreach ($this->rows as $key => $value){
+                        if($value->name === 'seo_title' || $value->name === 'seo_description' || $value->name === 'seo_keywords'){
+                            $this->rows[$key]->default = $plugin_data->{$value->name};
+                        }
                     }
                 }
             }
@@ -476,7 +478,7 @@ class Component
      */
     public function removeDataPlugins($config, $data)
     {
-        if($config->plugins_backend){
+        if(\is_array($config->plugins_backend) && $config->plugins_backend){
             foreach ($config->plugins_backend as $key_plugin => $value_plugin){
                 if($key_plugin === 'seo' && $seo = LarrockSeo::getModel()->whereSeoIdConnect(\Request::input('id_connect'))
                         ->whereSeoTypeConnect(\Request::input('type_connect'))->first()){
