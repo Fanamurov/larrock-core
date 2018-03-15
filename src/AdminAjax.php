@@ -89,7 +89,9 @@ class AdminAjax extends Controller
 		$resize_original_px = $request->get('resize_original_px');
 		$gallery = $request->get('gallery');
         if($images_value->isValid()){
-            $image_name = mb_strimwidth($model_name .'-'. $model_id .'-'.str_slug($images_value->getClientOriginalName()), 0, 150) .'.'. $images_value->getClientOriginalExtension();
+            $image_name = mb_strimwidth($model_name .'-'. $model_id
+                    .'-'.str_slug($images_value->getClientOriginalName()), 0, 150)
+                    .'.'. $images_value->getClientOriginalExtension();
             if($resize_original === '1' && (integer)$resize_original_px > 0){
                 Image::make($images_value->getRealPath())
                     ->resize((integer)$resize_original_px, NULL, function ($constraint) {
@@ -111,9 +113,11 @@ class AdminAjax extends Controller
                 'alt' => 'photo', 'gallery' => $gallery
             ])->toMediaCollection('images');
             Cache::forget(sha1('loadMediaCacheimages'. $model_id . $content->getConfig()->getModelName()));
-            return response()->json(['status' => 'success', 'message' => trans('larrock::apps.upload.success', ['name' => $images_value->getClientOriginalName()])]);
+            return response()->json(['status' => 'success', 'message' => trans('larrock::apps.upload.success',
+                ['name' => $images_value->getClientOriginalName()])]);
         }
-        return response()->json(['status' => 'error', 'message' => trans('larrock::apps.upload.not_valid', ['name' => $images_value->getClientOriginalName()])], 300);
+        return response()->json(['status' => 'error', 'message' => trans('larrock::apps.upload.not_valid',
+            ['name' => $images_value->getClientOriginalName()])], 300);
 	}
 
     /**
@@ -161,14 +165,14 @@ class AdminAjax extends Controller
             return response()->json(['status' => 'error', 'message' => trans('larrock::apps.param.404', ['name' => 'id'])], 500);
         }
 		$id = $request->get('id'); //ID в таблице media
-        $media = DB::table('media')->where('id', $id)->get();
+        $media = DB::table('media')->where('id', $id)->first();
 		if(\count($media) === 1 && DB::table('media')
 			->where('id', $id)
 			->update(['order_column' => $request->get('position', 0),
 				'custom_properties' => json_encode([
 					'alt' => $request->get('alt'),
 					'gallery' => $request->get('gallery')])])){
-            Cache::forget(sha1('loadMediaCache'. $request->get('gallery') . $id . $media[0]->model_type));
+            Cache::forget(sha1('loadMediaCache'. $request->get('gallery') . $id . $media->model_type));
 			return response()->json(['status' => 'success', 'message' => trans('larrock::apps.data.update', ['name' => 'параметров'])]);
 		}
         return response()->json(['status' => 'error', 'message' => trans('larrock::apps.row.error')], 500);

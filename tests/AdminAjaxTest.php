@@ -37,7 +37,10 @@ class AdminAjaxTest extends \Orchestra\Testbench\TestCase
         $this->setUpMediaDatabase();
     }
 
-    public function tearDown() {
+    public function tearDown()
+    {
+        parent::tearDown();
+
         unset($this->controller, $this->test_table);
     }
 
@@ -204,19 +207,6 @@ class AdminAjaxTest extends \Orchestra\Testbench\TestCase
         $this->assertEquals('success', $content->status);
         $this->assertEquals(trans('larrock::apps.data.update', ['name' => 'параметров']), $content->message);
     }
-
-    /*public function testGetUploadedMedia()
-    {
-        $request = Request::create('/admin/ajax/GetUploadedMedia', 'POST', [
-            'type' => 'images',
-            'model_id' => 1,
-            'model_type' => 'test_model'
-        ]);
-
-        $data = $this->controller->GetUploadedMedia($request);
-        $this->assertEquals(200, $data->getStatusCode());
-        //$this->assertEquals('success', $data->status);
-    }*/
 
     /**
      * @throws \Exception

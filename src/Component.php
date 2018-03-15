@@ -112,21 +112,6 @@ class Component
     }
 
     /**
-     * @param array $rows
-     * @return array
-     */
-    public function addFillableUserRows(array $rows)
-    {
-        $fillable_rows = $rows;
-        foreach ($this->rows as $key => $row){
-            if($row->fillable){
-                $fillable_rows[] = $key;
-            }
-        }
-        return $fillable_rows;
-    }
-
-    /**
      * Добавление поля указания веса
      * @return $this
      */
@@ -266,13 +251,16 @@ class Component
      */
     public function savePluginSeoData(Request $request)
     {
-        if( !$request->has('_jsvalidation') && ($request->has('seo_title') || $request->get('seo_description') || $request->get('seo_seo_keywords'))){
+        if( !$request->has('_jsvalidation')
+            && ($request->has('seo_title') || $request->get('seo_description') || $request->get('seo_seo_keywords'))
+            && $request->has('type_connect')){
             $seo = LarrockSeo::getModel()->whereSeoIdConnect($request->get('id_connect'))->whereSeoTypeConnect($request->get('type_connect'))->first();
             if( !empty($request->get('seo_title')) || !empty($request->get('seo_description')) || !empty($request->get('seo_keywords'))){
                 if( !$seo){
                     $seo = LarrockSeo::getModel();
                 }
                 $seo->seo_id_connect = $request->get('id_connect');
+                $seo->seo_url_connect = $request->get('url_connect');
                 $seo->seo_title = $request->get('seo_title');
                 $seo->seo_description = $request->get('seo_description');
                 $seo->seo_keywords = $request->get('seo_keywords');
@@ -308,7 +296,6 @@ class Component
             $model->whereIdParent($modelParentId)->whereModelParent($modelParent)->whereModelChild($modelChild)->delete();
 
             if($modelParent && $modelParentId && $modelChild && $link && \is_array($link) ){
-                $link = $request->get('link');
                 foreach ($link as $value){
                     $model = new Link();
                     $model->id_parent = $request->get('modelParentId');
