@@ -10,7 +10,6 @@ install:
   - travis_retry composer update --prefer-source
 
 script:
-  - mkdir -p build/logs
   - php vendor/bin/phpunit -c phpunit.xml
 
 after_success:
