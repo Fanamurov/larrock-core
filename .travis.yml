@@ -8,9 +8,15 @@ before_install:
 
 install:
   - travis_retry composer update --prefer-source
+  - travis_retry composer require fanamurov/larrock-menu:^1.0 --prefer-source
+  - travis_retry composer require fanamurov/larrock-users:^1.0 --prefer-source
+  - travis_retry composer require fanamurov/larrock-pages:^1.0 --prefer-source
+  - travis_retry composer require fanamurov/larrock-blocks:^1.0 --prefer-source
+  - travis_retry composer require fanamurov/larrock-contact:^1.0 --prefer-source
+  - travis_retry composer require fanamurov/larrock-admin-seo:^1.0 --prefer-source
+  - travis_retry composer require fanamurov/larrock-search:^1.0 --prefer-source
 
 script:
-  - php larrock:installcorepackages
   - php vendor/bin/phpunit -c phpunit.xml
 
 after_success:
