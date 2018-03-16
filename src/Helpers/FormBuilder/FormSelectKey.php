@@ -9,30 +9,52 @@ use View;
  * Class FormSelectKey
  * @package Larrock\Core\Helpers\FormBuilder
  */
-class FormSelectKey extends FBElement {
-
+class FormSelectKey extends FBElement
+{
+    /** @var array|null */
     public $options;
+
+    /** @var string */
     public $option_title;
+
+    /** @var string */
     public $option_key;
 
-    public function setOptions($options)
+    /**
+     * @param array $options
+     * @return $this
+     */
+    public function setOptions(array $options)
     {
         $this->options = $options;
         return $this;
     }
 
+    /**
+     * @param $row
+     * @return $this
+     */
     public function setOptionsTitle($row)
     {
         $this->option_title = $row;
         return $this;
     }
 
+    /**
+     * @param $row
+     * @return $this
+     */
     public function setOptionsKey($row)
     {
         $this->option_key = $row;
         return $this;
     }
 
+    /**
+     * @param $row_settings
+     * @param $data
+     * @return mixed
+     */
     public function render($row_settings, $data)
     {
         if( !isset($data->{$row_settings->name}) && $row_settings->default){

@@ -6,6 +6,11 @@ use View;
 
 class FormCheckbox extends FBElement
 {
+    /**
+     * @param $row_settings
+     * @param $data
+     * @return mixed
+     */
     public function render($row_settings, $data)
     {
         if( !isset($data->{$row_settings->name}) && $row_settings->default){

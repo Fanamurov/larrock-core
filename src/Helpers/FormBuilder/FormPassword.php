@@ -4,8 +4,13 @@ namespace Larrock\Core\Helpers\FormBuilder;
 
 use View;
 
-class FormPassword extends FBElement {
-
+class FormPassword extends FBElement
+{
+    /**
+     * @param $row_settings
+     * @param $data
+     * @return mixed
+     */
     public function render($row_settings, $data)
     {
         if( !isset($data->{$row_settings->name}) && $row_settings->default){

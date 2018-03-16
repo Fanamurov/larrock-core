@@ -4,8 +4,13 @@ namespace Larrock\Core\Helpers\FormBuilder;
 
 use View;
 
-class FormDate extends FBElement {
-
+class FormDate extends FBElement
+{
+    /**
+     * @param $row_settings
+     * @param $data
+     * @return mixed
+     */
     public function render($row_settings, $data)
     {
         $row_settings->default = date('Y-m-d');

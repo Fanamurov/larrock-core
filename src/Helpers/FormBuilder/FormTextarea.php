@@ -4,22 +4,34 @@ namespace Larrock\Core\Helpers\FormBuilder;
 
 use View;
 
-class FormTextarea extends FBElement{
-
+class FormTextarea extends FBElement
+{
+    /** @var null|bool */
     public $typo;
 
+    /**
+     * @return $this
+     */
     public function setTypo()
     {
         $this->typo = TRUE;
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function setNotEditor()
     {
         $this->css_class .= ' not-editor';
         return $this;
     }
 
+    /**
+     * @param $row_settings
+     * @param $data
+     * @return mixed
+     */
     public function render($row_settings, $data)
     {
         if( !isset($data->{$row_settings->name}) && $row_settings->default){

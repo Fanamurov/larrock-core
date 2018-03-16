@@ -97,6 +97,23 @@ class Component
     }
 
     /**
+     * @param array $rows
+     * @return array
+     */
+    public function addFillableUserRows(array $rows)
+    {
+        $fillable_rows = $rows;
+        if($this->rows && \is_array($this->rows)){
+            foreach ($this->rows as $key => $row){
+                if($row->fillable){
+                    $fillable_rows[] = $key;
+                }
+            }
+        }
+        return $fillable_rows;
+    }
+
+    /**
      * Получение fillable-полей модели компонента из его конфига
      * @return array
      */

@@ -57,7 +57,7 @@ class FormTags extends FBElement {
     /**
      * Условие выборки возможных элементов для связывания
      * @param int   $key
-     * @param int|array $value
+     * @param int|array|string $value
      * @return $this
      */
     public function setModelChildWhere($key, $value)
@@ -105,7 +105,6 @@ class FormTags extends FBElement {
     public function setCostValue()
     {
         $this->costValue = TRUE;
-        $this->setCssClassGroup('uk-width-1-1');
         return $this;
     }
 
@@ -128,11 +127,8 @@ class FormTags extends FBElement {
      */
     public function render($row_settings, $data)
     {
-        if( !$row_settings->modelParent){
-            throw LarrockFormBuilderRowException::withMessage('modelParent поля '. $row_settings->name .' не задан');
-        }
-        if( !$row_settings->modelChild){
-            throw LarrockFormBuilderRowException::withMessage('modelChild поля '. $row_settings->name .' не задан');
+        if( !$row_settings->modelParent || !$row_settings->modelChild){
+            throw LarrockFormBuilderRowException::withMessage('modelParent или modelChild поля '. $row_settings->name .' не задан');
         }
 
         $rows = ['id', $row_settings->titleRow];

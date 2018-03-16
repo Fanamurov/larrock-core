@@ -6,28 +6,49 @@ use View;
 
 class FormSelect extends FBElement {
 
+    /** @var array|null */
     public $options;
+
+    /** @var string */
     public $option_title;
+
+    /** @var null|bool */
     public $allowCreate;
 
-    public function setOptions($options)
+    /**
+     * @param array $options
+     * @return $this
+     */
+    public function setOptions(array $options)
     {
         $this->options = $options;
         return $this;
     }
 
+    /**
+     * @param string $row
+     * @return $this
+     */
     public function setOptionsTitle($row)
     {
         $this->option_title = $row;
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function setAllowCreate()
     {
         $this->allowCreate = TRUE;
         return $this;
     }
 
+    /**
+     * @param $row_settings
+     * @param $data
+     * @return mixed
+     */
     public function render($row_settings, $data)
     {
         if( !isset($data->{$row_settings->name}) && $row_settings->default && $row_settings->default !== NULL){

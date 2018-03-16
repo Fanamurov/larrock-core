@@ -2,17 +2,19 @@
 
 namespace Larrock\Core\Tests;
 
+use DaveJamesMiller\Breadcrumbs\BreadcrumbsServiceProvider;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Larrock\ComponentAdminSeo\LarrockComponentAdminSeoServiceProvider;
 use Larrock\Core\Component;
 use Larrock\Core\Helpers\FormBuilder\FormCheckbox;
 use Larrock\Core\Helpers\FormBuilder\FormInput;
 use Larrock\Core\Models\Config;
 use Larrock\Core\Tests\DatabaseTest\CreateLinkDatabase;
 use Larrock\Core\Tests\DatabaseTest\CreateSeoDatabase;
+use Proengsoft\JsValidation\JsValidationServiceProvider;
 
 class ComponentTest extends \Orchestra\Testbench\TestCase
 {
@@ -49,10 +51,9 @@ class ComponentTest extends \Orchestra\Testbench\TestCase
     protected function getPackageProviders($app)
     {
         return [
-            'Proengsoft\JsValidation\JsValidationServiceProvider',
-            'Larrock\ComponentAdminSeo\LarrockComponentAdminSeoServiceProvider',
-            //'Larrock\ComponentFeed\LarrockComponentFeedServiceProvider',
-            'DaveJamesMiller\Breadcrumbs\BreadcrumbsServiceProvider'
+            JsValidationServiceProvider::class,
+            LarrockComponentAdminSeoServiceProvider::class,
+            BreadcrumbsServiceProvider::class
         ];
     }
 
@@ -117,6 +118,13 @@ class ComponentTest extends \Orchestra\Testbench\TestCase
         $row = new FormInput('title', 'Заголовок');
         $this->component->rows['title'] = $row->setValid('max:255|required')->setTypo()->setFillable();
         $this->assertEquals(['title' => 'max:255|required'], $this->component->getValid());
+    }
+
+    public function testAddFillableRows()
+    {
+        $row = new FormInput('title', 'Заголовок');
+        $this->component->rows['title'] = $row;
+        $this->assertEquals([0 => 'test'], $this->component->addFillableUserRows(['test']));
     }
 
     public function testGetFillableRows()

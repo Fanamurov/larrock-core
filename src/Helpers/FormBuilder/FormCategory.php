@@ -2,6 +2,7 @@
 
 namespace Larrock\Core\Helpers\FormBuilder;
 
+use Larrock\Core\Exceptions\LarrockFormBuilderRowException;
 use Larrock\Core\Helpers\Tree;
 use LarrockCategory;
 use View;
@@ -12,26 +13,37 @@ class FormCategory extends FBElement {
     public $max_items;
     public $allow_empty;
 
-    public function setOptions($options)
-    {
-        $this->options = $options;
-        return $this;
-    }
-
+    /**
+     * @param null|integer $max
+     * @return $this
+     */
     public function setMaxItems($max = null)
     {
         $this->max_items = $max;
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function setAllowEmpty()
     {
         $this->allow_empty = TRUE;
         return $this;
     }
 
+    /**
+     * @param $row_settings
+     * @param $data
+     * @return mixed
+     * @throws LarrockFormBuilderRowException
+     */
     public function render($row_settings, $data)
     {
+        if( !isset($row_settings->connect->model, $row_settings->connect->relation_name)){
+            throw new LarrockFormBuilderRowException('Поля model, relation_name не установлены через setConnect()');
+        }
+
         if( !isset($data->{$row_settings->name}) && $row_settings->default){
             $data->{$row_settings->name} = $row_settings->default;
         }
@@ -48,17 +60,15 @@ class FormCategory extends FBElement {
         }
 
         $selected = $data->{$row_settings->connect->relation_name};
-        if(count($selected) === 1 && isset($selected->id)){
+        if(\count($selected) === 1 && isset($selected->id)){
             $once_category[] = $selected;
             $selected = $once_category;
         }
 
-        if($selected === NULL){
-            if(isset($data->{$row_settings->name})){
-                if($get_category = LarrockCategory::getModel()->whereId($data->{$row_settings->name})->first()){
-                    $selected[] = $get_category;
-                }
-            }
+        if($selected === NULL
+            && isset($data->{$row_settings->name})
+            && ($get_category = LarrockCategory::getModel()->whereId($data->{$row_settings->name})->first())){
+            $selected[] = $get_category;
         }
 
         $tree = new Tree;
