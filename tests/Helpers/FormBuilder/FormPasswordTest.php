@@ -33,6 +33,7 @@ class FormPasswordTest extends \Orchestra\Testbench\TestCase
 
     public function testRender()
     {
+        $this->FormPassword->setDefaultValue('test');
         $this->assertNotEmpty($this->FormPassword->render($this->FormPassword, collect([])));
     }
 }

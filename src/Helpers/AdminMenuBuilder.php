@@ -2,11 +2,11 @@
 
 namespace Larrock\Core\Helpers;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 
 class AdminMenuBuilder extends Controller
 {
-    public function top_menu()
+    public function topMenu()
     {
         $menu = [];
         $menu_other = [];

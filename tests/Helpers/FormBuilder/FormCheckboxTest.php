@@ -2,6 +2,7 @@
 
 namespace Larrock\Core\Tests\Helpers\FormBuilder;
 
+use Larrock\ComponentBlocks\LarrockComponentBlocksServiceProvider;
 use Larrock\Core\Helpers\FormBuilder\FormCheckbox;
 use Larrock\Core\LarrockCoreServiceProvider;
 
@@ -27,12 +28,14 @@ class FormCheckboxTest extends \Orchestra\Testbench\TestCase
     protected function getPackageProviders($app)
     {
         return [
-            LarrockCoreServiceProvider::class
+            LarrockCoreServiceProvider::class,
+            LarrockComponentBlocksServiceProvider::class
         ];
     }
 
     public function testRender()
     {
+        $this->FormCheckbox->setDefaultValue('test');
         $this->assertNotEmpty($this->FormCheckbox->render($this->FormCheckbox, collect([])));
     }
 }

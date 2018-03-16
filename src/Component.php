@@ -447,6 +447,7 @@ class Component
             $this->addDataPlugins($data);
         }
 
+        $this->tabs = collect();
         foreach($this->rows as $row_value){
             $this->tabs->put(key($row_value->tab), current($row_value->tab));
         }

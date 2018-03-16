@@ -8,10 +8,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Larrock\ComponentAdminSeo\LarrockComponentAdminSeoServiceProvider;
+use Larrock\ComponentBlocks\BlocksComponent;
+use Larrock\ComponentBlocks\Facades\LarrockBlocks;
+use Larrock\ComponentBlocks\LarrockComponentBlocksServiceProvider;
+use Larrock\ComponentBlocks\Models\Blocks;
 use Larrock\Core\Component;
 use Larrock\Core\Helpers\FormBuilder\FormCheckbox;
 use Larrock\Core\Helpers\FormBuilder\FormInput;
 use Larrock\Core\Models\Config;
+use Larrock\Core\Tests\DatabaseTest\CreateBlocksDatabase;
 use Larrock\Core\Tests\DatabaseTest\CreateLinkDatabase;
 use Larrock\Core\Tests\DatabaseTest\CreateSeoDatabase;
 use Proengsoft\JsValidation\JsValidationServiceProvider;
@@ -53,7 +58,8 @@ class ComponentTest extends \Orchestra\Testbench\TestCase
         return [
             JsValidationServiceProvider::class,
             LarrockComponentAdminSeoServiceProvider::class,
-            BreadcrumbsServiceProvider::class
+            BreadcrumbsServiceProvider::class,
+            LarrockComponentBlocksServiceProvider::class
         ];
     }
 
@@ -63,7 +69,8 @@ class ComponentTest extends \Orchestra\Testbench\TestCase
             'JsValidator' => 'Proengsoft\JsValidation\Facades\JsValidatorFacade',
             'LarrockAdminSeo' => 'Larrock\ComponentAdminSeo\Facades\LarrockSeo',
             //'LarrockFeed' => 'Larrock\ComponentFeed\Facades\LarrockFeed',
-            'Breadcrumbs' => 'DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs'
+            'Breadcrumbs' => 'DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs',
+            'LarrockBlocks' => 'Larrock\ComponentBlocks\Facades\LarrockBlocks'
         ];
     }
 
@@ -301,6 +308,19 @@ class ComponentTest extends \Orchestra\Testbench\TestCase
         $this->assertArrayHasKey('anons_description', $this->component->rows);
         $this->assertArrayHasKey('anons', $this->component->plugins_backend);
     }
+
+    /*public function testTabbable()
+    {
+        $seed = new CreateBlocksDatabase();
+        $seed->setUpBlocksDatabase();
+
+        $seed = new CreateSeoDatabase();
+        $seed->setUpSeoDatabase();
+
+        $data = Blocks::first();
+        $BlocksComponent = new BlocksComponent();
+        $BlocksComponent->tabbable($data);
+    }*/
 
     public function testAddDataPlugins()
     {

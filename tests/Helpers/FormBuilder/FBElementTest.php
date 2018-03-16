@@ -104,13 +104,14 @@ class FBElementTest extends \Orchestra\Testbench\TestCase
      */
     public function testSetWhereConnect()
     {
-        $this->FBElement->setWhereConnect('test_key', 'test_value');
-
         $this->FBElement->setConnect(Config::class, 'test_relation', 'test_group');
         $this->FBElement->setWhereConnect('test_key', 'test_value');
         $this->assertEquals('test_key', $this->FBElement->connect->where_key);
         $this->assertEquals('test_value', $this->FBElement->connect->where_value);
         $this->assertInstanceOf('Larrock\Core\Helpers\FormBuilder\FBElement', $this->FBElement);
+
+        $this->FBElement = new FBElement('test_name', 'test_title');
+        $this->FBElement->setWhereConnect('test_key', 'test_value');
     }
 
     public function testSetAttached()

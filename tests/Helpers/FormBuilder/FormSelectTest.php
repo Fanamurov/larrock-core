@@ -58,6 +58,7 @@ class FormSelectTest extends \Orchestra\Testbench\TestCase
 
     public function testRender()
     {
+        $this->FormSelect->setDefaultValue('test');
         $this->assertNotEmpty($this->FormSelect->render($this->FormSelect, collect([])));
     }
 }

@@ -9,7 +9,8 @@ class AdminDashboardController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(\LarrockPages::combineAdminMiddlewares());
+        $component = new Component;
+        $this->middleware($component->combineAdminMiddlewares());
     }
 
     public function index()

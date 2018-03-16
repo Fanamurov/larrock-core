@@ -55,9 +55,9 @@ class FormCategoryTest extends \Orchestra\Testbench\TestCase
     public function setAllowEmpty()
     {
         $this->FormCategory->setAllowEmpty();
-        $this->assertTrue($this->FormCategory->setAllowEmpty()->allow_empty);
-        $this->assertInstanceOf(FBElement::class, $this->FormCategory->setAllowEmpty());
-        $this->assertInstanceOf(FormCategory::class, $this->FormCategory->setAllowEmpty());
+        $this->assertTrue($this->FormCategory->allow_empty);
+        $this->assertInstanceOf(FBElement::class, $this->FormCategory);
+        $this->assertInstanceOf(FormCategory::class, $this->FormCategory);
     }
 
     /**
@@ -74,6 +74,7 @@ class FormCategoryTest extends \Orchestra\Testbench\TestCase
         $this->FormCategory->setConnect(Config::class, 'test_relation');
         $data = new Config();
         $data->test_relation = collect([]);
+        $this->FormCategory->setDefaultValue('test');
 
         $this->assertNotEmpty($this->FormCategory->render($this->FormCategory, $data));
     }

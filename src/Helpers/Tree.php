@@ -38,7 +38,7 @@ class Tree{
 	 * @param int $level
 	 * @return array
 	 */
-	public function createTree(&$list, $parent, $level = 1){
+	protected function createTree(&$list, $parent, $level = 1){
 		$tree = array();
 		foreach ($parent as $l){
 			$l->level = $level;

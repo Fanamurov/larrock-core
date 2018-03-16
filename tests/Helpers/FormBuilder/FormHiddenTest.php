@@ -33,6 +33,7 @@ class FormHiddenTest extends \Orchestra\Testbench\TestCase
 
     public function testRender()
     {
+        $this->FormHidden->setDefaultValue('test');
         $this->assertNotEmpty($this->FormHidden->render($this->FormHidden, collect([])));
     }
 }

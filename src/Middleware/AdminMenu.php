@@ -20,7 +20,7 @@ class AdminMenu
     {
     	$menu = new AdminMenuBuilder();
         if(Route::current()){
-            View::share('top_menu', $menu->top_menu());
+            View::share('top_menu', $menu->topMenu());
         }
         return $next($request);
     }
