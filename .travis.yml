@@ -10,6 +10,7 @@ install:
   - travis_retry composer update --prefer-source
 
 script:
+  - php larrock:installcorepackages
   - php vendor/bin/phpunit -c phpunit.xml
 
 after_success:
