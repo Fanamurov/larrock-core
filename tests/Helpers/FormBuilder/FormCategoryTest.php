@@ -55,9 +55,9 @@ class FormCategoryTest extends \Orchestra\Testbench\TestCase
     public function setAllowEmpty()
     {
         $this->FormCategory->setAllowEmpty();
-        $this->assertTrue($this->FormCategory->allow_empty);
-        $this->assertInstanceOf(FBElement::class, $this->FormCategory);
-        $this->assertInstanceOf(FormCategory::class, $this->FormCategory);
+        $this->assertTrue($this->FormCategory->setAllowEmpty()->allow_empty);
+        $this->assertInstanceOf(FBElement::class, $this->FormCategory->setAllowEmpty());
+        $this->assertInstanceOf(FormCategory::class, $this->FormCategory->setAllowEmpty());
     }
 
     /**
