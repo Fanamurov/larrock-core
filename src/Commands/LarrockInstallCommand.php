@@ -29,6 +29,8 @@ class LarrockInstallCommand extends Command
     {
         $this->line('=== Install LarrockCMS ===');
 
+        $this->call('larrock:installcorepackages');
+
         if(env('DB_DATABASE') === 'homestead' || env('DB_USERNAME') === 'homestead' || env('DB_PASSWORD') === 'secret') {
             $this->line('Параметры подключения к БД в .env-файле:');
             $this->line('DB_DATABASE=' . env('DB_DATABASE'));

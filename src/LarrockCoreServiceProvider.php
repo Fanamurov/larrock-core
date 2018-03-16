@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Larrock\Core\Commands\LarrockAssetsCommand;
 use Larrock\Core\Commands\LarrockCheckCommand;
 use Larrock\Core\Commands\LarrockInstallCommand;
+use Larrock\Core\Commands\LarrockInstallCorePackagesCommand;
 use Larrock\Core\Commands\LarrockManagerCommand;
 use Larrock\Core\Commands\LarrockRenamePublicDirectoryCommand;
 use Larrock\Core\Commands\LarrockUpdateEnvCommand;
@@ -75,6 +76,7 @@ class LarrockCoreServiceProvider extends ServiceProvider
         $this->mergeConfigFrom( __DIR__.'/../config/larrock.php', 'larrock');
 
         $this->app->bind('command.larrock:install', LarrockInstallCommand::class);
+        $this->app->bind('command.larrock:installcorepackages', LarrockInstallCorePackagesCommand::class);
         $this->app->bind('command.larrock:check', LarrockCheckCommand::class);
         $this->app->bind('command.larrock:updateEnv', LarrockUpdateEnvCommand::class);
         $this->app->bind('command.larrock:updateVendorConfig', LarrockUpdateVendorConfigCommand::class);
@@ -83,6 +85,7 @@ class LarrockCoreServiceProvider extends ServiceProvider
         $this->app->bind('command.larrock:assets', LarrockAssetsCommand::class);
         $this->commands([
             'command.larrock:install',
+            'command.larrock:installcorepackages',
             'command.larrock:check',
             'command.larrock:updateEnv',
             'command.larrock:updateVendorConfig',

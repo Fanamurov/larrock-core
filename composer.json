@@ -12,14 +12,7 @@
         "davejamesmiller/laravel-breadcrumbs": "5.*",
         "nicolaslopezj/searchable": "^1.9",
         "spatie/laravel-medialibrary": "^6.0.0",
-        "kix/mdash": "^0.5.4",
-        "fanamurov/larrock-menu": "^1.0",
-        "fanamurov/larrock-users": "^1.0",
-        "fanamurov/larrock-pages": "^1.0",
-        "fanamurov/larrock-blocks": "^1.0",
-        "fanamurov/larrock-contact": "^1.0",
-        "fanamurov/larrock-admin-seo": "^1.0",
-        "fanamurov/larrock-search": "^1.0"
+        "kix/mdash": "^0.5.4"
     },
     "require-dev": {
         "itsgoingd/clockwork": "^2.2",
