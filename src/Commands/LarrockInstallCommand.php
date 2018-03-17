@@ -70,8 +70,9 @@ class LarrockInstallCommand extends Command
             $this->call('larrock:assets');
         }
 
-        $this->call('larrock:check');
+        //$this->call('larrock:check');
         $this->info('=== Install LarrockCMS successfully ended ===');
-        $this->info('Если вы хотите установить пакеты не входящие в ядро LarrockCMS, выполните команду larrock:manager');
+        $this->info('Проверка корректности установки LarrockCMS - php artisan larrock:check');
+        $this->info('Если вы хотите установить пакеты не входящие в ядро LarrockCMS, выполните команду php artisan larrock:manager');
     }
 }

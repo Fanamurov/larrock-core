@@ -90,7 +90,6 @@ class LarrockCoreServiceProvider extends ServiceProvider
             'command.larrock:updateEnv',
             'command.larrock:updateVendorConfig',
             'command.larrock:manager',
-            'command.larrock:addAdmin',
             'command.larrock:renamePublicDirectory',
             'command.larrock:assets',
         ]);
