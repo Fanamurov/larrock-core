@@ -3,16 +3,16 @@
 namespace Larrock\Core\Tests\Middleware;
 
 use Illuminate\Http\Request;
-use Larrock\Core\Middleware\AdminMenu;
+use Larrock\Core\Middleware\SaveAdminPluginsData;
 use Orchestra\Testbench\TestCase;
 
-class AdminMenuTest extends TestCase
+class SaveAdminPluginsDataTest extends TestCase
 {
     public function testHandle()
     {
-        $adminMenu = new AdminMenu();
+        $saveAdminPluginsData= new SaveAdminPluginsData();
         $request = new Request();
-        $test = $adminMenu->handle($request, function (){
+        $test = $saveAdminPluginsData->handle($request, function (){
             return 'test';
         });
         $this->assertEquals('test', $test);

@@ -69,13 +69,14 @@ class FormCategoryTest extends \Orchestra\Testbench\TestCase
         $seed = new CreateConfigDatabase();
         $seed->setUpTestDatabase();
 
-        $this->FormCategory->render($this->FormCategory, collect([]));
-
         $this->FormCategory->setConnect(Config::class, 'test_relation');
         $data = new Config();
         $data->test_relation = collect([]);
         $this->FormCategory->setDefaultValue('test');
 
         $this->assertNotEmpty($this->FormCategory->render($this->FormCategory, $data));
+
+        $this->FormCategory->setConnect(null, null, null);
+        $this->FormCategory->render($this->FormCategory, collect([]));
     }
 }
