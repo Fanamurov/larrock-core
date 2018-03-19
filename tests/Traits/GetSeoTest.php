@@ -37,15 +37,6 @@ class GetSeoTest extends TestCase
             'description' => 'test2',
             'url' => 'test2',
         ]);
-
-        DB::connection()->table('seo')->insert([
-            'seo_title' => 'test_seo',
-            'seo_description' => 'test_seo',
-            'seo_keywords' => 'test_seo',
-            'seo_id_connect' => 2,
-            'seo_url_connect' => 'test_seo',
-            'seo_type_connect' => 'blocks',
-        ]);
     }
 
     protected function getPackageProviders($app)
@@ -59,14 +50,51 @@ class GetSeoTest extends TestCase
     {
         $model = Blocks::whereId(2)->first();
         $result = $model->getSeo()->first();
+        $this->assertNull($result);
+
+        DB::connection()->table('seo')->insert([
+            'seo_title' => 'test_seo',
+            'seo_description' => 'test_seo',
+            'seo_keywords' => 'test_seo',
+            'seo_id_connect' => 2,
+            'seo_url_connect' => 'test_seo',
+            'seo_type_connect' => 'blocks',
+        ]);
+
+        $result = $model->getSeo()->first();
         $this->assertEquals('test_seo', $result->seo_title);
         $this->assertEquals('test_seo', $result->seo_description);
         $this->assertEquals('test_seo', $result->seo_keywords);
+        $this->assertEquals(2, $result->seo_id_connect);
+
+        DB::connection()->table('seo')->where('id', '=', 2)->delete();
+        DB::connection()->table('seo')->insert([
+            'seo_title' => 'test_seo2',
+            'seo_description' => 'test_seo2',
+            'seo_keywords' => 'test_seo2',
+            'seo_id_connect' => 2,
+            'seo_url_connect' => 'test2',
+            'seo_type_connect' => 'blocks',
+        ]);
+
+        $result = $model->getSeo()->first();
+        $this->assertEquals('test_seo2', $result->seo_title);
+        $this->assertEquals('test_seo2', $result->seo_description);
+        $this->assertEquals('test_seo2', $result->seo_keywords);
         $this->assertEquals(2, $result->seo_id_connect);
     }
 
     public function testGetGetSeoTitleAttribute()
     {
+        DB::connection()->table('seo')->insert([
+            'seo_title' => 'test_seo',
+            'seo_description' => 'test_seo',
+            'seo_keywords' => 'test_seo',
+            'seo_id_connect' => 2,
+            'seo_url_connect' => 'test_seo',
+            'seo_type_connect' => 'blocks',
+        ]);
+
         $model = Blocks::whereId(2)->first();
         $this->assertEquals('test_seo', $model->get_seo_title);
     }

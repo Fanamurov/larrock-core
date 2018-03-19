@@ -86,14 +86,12 @@ trait GetLink{
     /**
      * Получение связи модификации цены
      * @param $childModel
-     * @param $modelChildWhereKey
-     * @param $modelChildWhereValue
      * @return null
      */
-    public function getCostLink($childModel, $modelChildWhereKey = NULL, $modelChildWhereValue = NULL)
+    public function getCostLink($childModel)
     {
         $cache_key = sha1('getCostLink'. $this->config->model . $childModel . $this->id);
-        return Cache::remember($cache_key, 1140, function () use ($childModel, $modelChildWhereKey, $modelChildWhereValue) {
+        return Cache::rememberForever($cache_key, function () use ($childModel) {
             $query = $this->hasMany(Link::class, 'id_parent')->whereModelParent($this->config->model)->whereModelChild($childModel);
             /*if($modelChildWhereKey && $modelChildWhereValue){
                 $query->where($modelChildWhereKey, '=', $modelChildWhereValue);
