@@ -19,7 +19,7 @@ class CreateConfigDatabase
         });
         DB::connection()->table('config')->insert([
             'name' => 'name',
-            'value' => 'value',
+            'value' => serialize([0 => 'value']),
             'type' => 'type',
         ]);
     }

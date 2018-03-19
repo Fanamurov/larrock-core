@@ -14,6 +14,8 @@ use Cache;
  * @property string $type
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ * @property mixed model_child
+ * @property mixed id_child
  * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Config imagePresets($key)
  * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Config whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Config whereKey($value)
