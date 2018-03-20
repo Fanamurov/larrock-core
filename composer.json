@@ -12,7 +12,7 @@
         "davejamesmiller/laravel-breadcrumbs": "5.*",
         "nicolaslopezj/searchable": "^1.9",
         "spatie/laravel-medialibrary": "^6.0.0",
-        "kix/mdash": "^0.5.4"
+        "fanamurov/mdash": "^1.0"
     },
     "require-dev": {
         "itsgoingd/clockwork": "^2.2",

@@ -43,7 +43,7 @@
 - "[davejamesmiller/laravel-breadcrumbs](https://github.com/davejamesmiller/laravel-breadcrumbs)": "^5.0",
 - "[nicolaslopezj/searchable](https://github.com/nicolaslopezj/searchable)": "^1.9",
 - "[spatie/laravel-medialibrary](https://github.com/spatie/laravel-medialibrary)": "^6.0.0",
-- "[kix/mdash](https://github.com/kix/mdash-bundle)": "^0.5.4"
+- "[fanamurov/mdash](https://github.com/fanamurov/mdash)": "^1.0"
 
 
 
