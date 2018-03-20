@@ -16,7 +16,6 @@ trait AdminMethodsEdit
      * Show the form for editing the specified resource.
      * @param  int $id
      * @return View
-     * @throws \DaveJamesMiller\Breadcrumbs\Facades\DuplicateBreadcrumbException
      * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException
      */
     public function edit($id)

@@ -20,6 +20,7 @@ trait AdminMethodsDestroy
      * @param Request $request
      * @param  int $id
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function destroy(Request $request, $id)
     {

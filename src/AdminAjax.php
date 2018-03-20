@@ -26,7 +26,7 @@ class AdminAjax extends Controller
 	public function EditRow(Request $request)
 	{
         if( !$request->has(['value_where', 'row_where', 'value', 'row', 'table'])){
-            throw new \Exception('Не все необходимые поля переданы', 422);
+            throw new \InvalidArgumentException('Не все необходимые поля переданы', 422);
         }
 
 		$value_where = $request->get('value_where');
@@ -74,7 +74,7 @@ class AdminAjax extends Controller
 	public function UploadImage(Request $request)
 	{
         if( !$request->has(['model_type', 'model_id', 'gallery'])){
-            throw new \Exception('Не все необходимые поля переданы', 422);
+            throw new \InvalidArgumentException('Не все необходимые поля переданы', 422);
         }
 
 		if( !file_exists(public_path() .'/image_cache')){
@@ -128,7 +128,7 @@ class AdminAjax extends Controller
     public function UploadFile(Request $request)
     {
         if( !$request->has(['model_type', 'model_id', 'gallery'])){
-            throw new \Exception('Не все необходимые поля переданы', 422);
+            throw new \InvalidArgumentException('Не все необходимые поля переданы', 422);
         }
 
         $files_value = $request->file('files');
@@ -166,7 +166,7 @@ class AdminAjax extends Controller
         }
 		$id = $request->get('id'); //ID в таблице media
         $media = DB::table('media')->where('id', $id)->first();
-		if($media && \count($media) === 1 && DB::table('media')
+		if($media && DB::table('media')
 			->where('id', $id)
 			->update(['order_column' => $request->get('position', 0),
 				'custom_properties' => json_encode([
@@ -189,7 +189,7 @@ class AdminAjax extends Controller
 	public function GetUploadedMedia(Request $request)
     {
         if( !$request->has(['type', 'model_id', 'model_type'])){
-            throw new \Exception('Не все необходимые поля переданы', 422);
+            throw new \InvalidArgumentException('Не все необходимые поля переданы', 422);
         }
 
         $type = $request->get('type'); //Тип файла (images, files etc...)
@@ -211,7 +211,7 @@ class AdminAjax extends Controller
     public function DeleteUploadedMedia(Request $request)
     {
         if( !$request->has(['model', 'model_id', 'id'])){
-            throw new \Exception('Не все необходимые поля переданы', 422);
+            throw new \InvalidArgumentException('Не все необходимые поля переданы', 422);
         }
 
         $model = $request->get('model');
@@ -230,7 +230,7 @@ class AdminAjax extends Controller
     public function DeleteAllUploadedMediaByType(Request $request)
     {
         if( !$request->has(['model', 'type', 'model_id'])){
-            throw new \Exception('Не все необходимые поля переданы', 422);
+            throw new \InvalidArgumentException('Не все необходимые поля переданы', 422);
         }
         $model = $request->get('model');
         $type = $request->get('type');
@@ -249,7 +249,7 @@ class AdminAjax extends Controller
 	public function Translit(Request $request)
 	{
         if( !$request->has(['text'])){
-            throw new \Exception('Не все необходимые поля переданы [text]', 422);
+            throw new \InvalidArgumentException('Не все необходимые поля переданы [text]', 422);
         }
 
 		$url = str_slug($request->get('text'));
@@ -276,7 +276,7 @@ class AdminAjax extends Controller
 	public function Typograph(Request $request)
 	{
         if( !$request->has(['text'])){
-            throw new \Exception('Не все необходимые поля переданы [text]', 422);
+            throw new \InvalidArgumentException('Не все необходимые поля переданы [text]', 422);
         }
 
 		return response()->json(['text' => EMTypograph::fast_apply($request->get('text'))]);
@@ -292,7 +292,7 @@ class AdminAjax extends Controller
 	public function TypographLight(Request $request)
 	{
         if( !$request->has(['text'])){
-            throw new \Exception('Не все необходимые поля переданы [text]', 422);
+            throw new \InvalidArgumentException('Не все необходимые поля переданы [text]', 422);
         }
 
 	    $json = $request->get('to_json', TRUE);
