@@ -166,7 +166,7 @@ class AdminAjax extends Controller
         }
 		$id = $request->get('id'); //ID в таблице media
         $media = DB::table('media')->where('id', $id)->first();
-		if(\count($media) === 1 && DB::table('media')
+		if($media && \count($media) === 1 && DB::table('media')
 			->where('id', $id)
 			->update(['order_column' => $request->get('position', 0),
 				'custom_properties' => json_encode([
