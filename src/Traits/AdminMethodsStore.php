@@ -4,6 +4,7 @@ namespace Larrock\Core\Traits;
 
 use Illuminate\Http\Request;
 use Larrock\Core\Component;
+use Larrock\Core\Events\ComponentItemStored;
 use Redirect;
 use Validator;
 use Session;
@@ -48,7 +49,7 @@ trait AdminMethodsStore
         $data = $this->config->getModel();
         $data->fill($request->all());
         foreach ($this->config->rows as $row){
-            if(in_array($row->name, $data->getFillable())){
+            if(\in_array($row->name, $data->getFillable())){
                 if($row instanceof \Larrock\Core\Helpers\FormBuilder\FormCheckbox){
                     $data->{$row->name} = $request->input($row->name, NULL);
                 }
@@ -59,7 +60,7 @@ trait AdminMethodsStore
         }
 
         if($data->save()){
-            $this->config->actionAttach($this->config, $data, $request);
+            event(new ComponentItemStored($this->config, $data, $request));
             \Cache::flush();
             Session::push('message.success', 'Материал '. $request->input('title') .' добавлен');
             if($this->allow_redirect){
@@ -69,6 +70,7 @@ trait AdminMethodsStore
         }
 
         Session::push('message.danger', 'Материал '. $request->input('title') .' не добавлен');
+
         if($this->allow_redirect){
             return back()->withInput();
         }

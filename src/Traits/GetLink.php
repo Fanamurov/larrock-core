@@ -59,8 +59,7 @@ trait GetLink{
     }
 
     /**
-     * Метод для attach() и detach()
-     * Метод для совместимости привязки сторонних расширений
+     * Метод для совместимости привязки сторонних расширений (роли у пользователей)
      * Например: $data->getLinkWithParams($row_settings->modelChild, 'role_user', 'role_id', 'user_id')->get()
      * для получения прилинкованных ролей пользователя
      * @param $childModel
@@ -93,9 +92,6 @@ trait GetLink{
         $cache_key = sha1('getCostLink'. $this->config->model . $childModel . $this->id);
         return Cache::rememberForever($cache_key, function () use ($childModel) {
             $query = $this->hasMany(Link::class, 'id_parent')->whereModelParent($this->config->model)->whereModelChild($childModel);
-            /*if($modelChildWhereKey && $modelChildWhereValue){
-                $query->where($modelChildWhereKey, '=', $modelChildWhereValue);
-            }*/
             if($getLink = $query->get()){
                 foreach ($getLink as $key => $item){
                     $class = new $childModel();

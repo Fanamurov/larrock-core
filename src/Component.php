@@ -3,7 +3,9 @@
 namespace Larrock\Core;
 
 use Illuminate\Http\Request;
-use Larrock\ComponentAdminSeo\Facades\LarrockSeo;
+use Larrock\ComponentFeed\Models\Feed;
+use Larrock\Core\Models\Seo;
+use LarrockAdminSeo;
 use LarrockFeed;
 use Larrock\Core\Helpers\FormBuilder\FormCheckbox;
 use Larrock\Core\Helpers\FormBuilder\FormInput;
@@ -13,7 +15,6 @@ use JsValidator;
 use Larrock\Core\Helpers\MessageLarrock;
 use Larrock\Core\Models\Link;
 use View;
-use Config;
 
 class Component
 {
@@ -214,7 +215,7 @@ class Component
      */
     public function combineAdminMiddlewares($user_middlewares = NULL)
     {
-        $middleware = ['web', 'level:2', 'LarrockAdminMenu', 'SaveAdminPluginsData', 'SiteSearchAdmin'];
+        $middleware = ['web', 'level:2', 'LarrockAdminMenu', 'SiteSearchAdmin'];
         if($config = config('larrock.middlewares.admin')){
             $middleware = array_merge($middleware, $config);
         }
@@ -222,18 +223,6 @@ class Component
             $middleware = array_merge($middleware, $user_middlewares);
         }
         return array_unique($middleware);
-    }
-
-    /**
-     * Используется через SaveAdminPluginsData Middleware (Core)
-     * @param $request
-     * @throws \Exception
-     */
-    public function savePluginsData($request)
-    {
-        $this->savePluginSeoData($request);
-        $this->savePluginAnonsToModuleData($request);
-        $this->saveLinkData($request);
     }
 
     /**
@@ -260,71 +249,6 @@ class Component
             ->setValid('max:155|required|unique:'. $this->table .',url,:id')->setCssClass('uk-width-1-1')->setFillable();
 
         return $this;
-    }
-
-    /**
-     * @param Request|\Illuminate\Http\Request $request
-     * @return bool
-     */
-    public function savePluginSeoData(Request $request)
-    {
-        if( !$request->has('_jsvalidation')
-            && ($request->has('seo_title') || $request->get('seo_description') || $request->get('seo_seo_keywords'))
-            && $request->has('type_connect')){
-            $seo = LarrockSeo::getModel()->whereSeoIdConnect($request->get('id_connect'))->whereSeoTypeConnect($request->get('type_connect'))->first();
-            if( !empty($request->get('seo_title')) || !empty($request->get('seo_description')) || !empty($request->get('seo_keywords'))){
-                if( !$seo){
-                    $seo = LarrockSeo::getModel();
-                }
-                $seo->seo_id_connect = $request->get('id_connect');
-                $seo->seo_url_connect = $request->get('url_connect');
-                $seo->seo_title = $request->get('seo_title');
-                $seo->seo_description = $request->get('seo_description');
-                $seo->seo_keywords = $request->get('seo_keywords');
-                $seo->seo_type_connect = $request->get('type_connect');
-                if($seo->save()){
-                    MessageLarrock::success('SEO обновлено');
-                }
-            }else{
-                if($seo){
-                    $seo->delete($seo->id);
-                    MessageLarrock::success('SEO удалено');
-                }
-            }
-        }
-        return TRUE;
-    }
-
-    /**
-     * Сохранение связей данных компонента (FormTagsLink)
-     * @param $request
-     * @return bool
-     */
-    public function saveLinkData($request): bool
-    {
-        if( !$request->has('_jsvalidation') && $request->get('link')){
-            $modelParent = $request->get('modelParent');
-            $modelParentId = $request->get('modelParentId');
-            $modelChild = $request->get('modelChild');
-            $link = $request->get('link');
-
-            //Удаляем старые связи
-            $model = new Link();
-            $model->whereIdParent($modelParentId)->whereModelParent($modelParent)->whereModelChild($modelChild)->delete();
-
-            if($modelParent && $modelParentId && $modelChild && $link && \is_array($link) ){
-                foreach ($link as $value){
-                    $model = new Link();
-                    $model->id_parent = $request->get('modelParentId');
-                    $model->model_parent = $request->get('modelParent');
-                    $model->model_child = $request->get('modelChild');
-                    $model->id_child = $value;
-                    $model->save();
-                }
-                MessageLarrock::success('Связи обновлены');
-            }
-        }
-        return TRUE;
     }
 
     /**
@@ -372,43 +296,6 @@ class Component
         $this->settings['anons_category'] = $categoryAnons;
         $this->plugins_backend['anons']['rows'] = $rows_plugin;
         return $this;
-    }
-
-    /**
-     * Создание анонса новости
-     * @param $request
-     * @return bool
-     * @throws \Exception
-     */
-    public function savePluginAnonsToModuleData($request)
-    {
-        if( !\Request::has('_jsvalidation') && (\Request::has('anons_merge') || !empty(\Request::get('anons_description')))){
-            if( !config('larrock.feed.anonsCategory')){
-                \Session::push('message.danger', 'larrock.feed.anonsCategory не задан. Анонс создан не будет');
-                return TRUE;
-            }
-            $anons = LarrockFeed::getModel();
-            $anons->title = \Request::get('title');
-            $anons->url = 'anons_'. \Request::get('id_connect') .''. random_int(1,9999);
-            $anons->category = LarrockFeed::getConfig()->settings['anons_category'];
-            $anons->user_id = \Auth::id();
-            $anons->active = 1;
-            $anons->position = LarrockFeed::getModel()->whereCategory(LarrockFeed::getConfig()->settings['anons_category'])->max('position') +1;
-
-            if(\Request::has('anons_merge')){
-                $original = LarrockFeed::getModel()->whereId(\Request::get('id_connect'))->first();
-                $anons->short = '<a href="'. $original->full_url .'">'. \Request::get('title') .'</a>';
-            }else{
-                $anons->short = \Request::get('anons_description');
-            }
-
-            if($anons->save()){
-                MessageLarrock::success('Анонс добавлен');
-            }else{
-                MessageLarrock::danger('Анонс не добавлен');
-            }
-        }
-        return TRUE;
     }
 
     /**
@@ -482,100 +369,6 @@ class Component
                     foreach ($this->rows as $key => $value){
                         if($value->name === 'seo_title' || $value->name === 'seo_description' || $value->name === 'seo_keywords'){
                             $this->rows[$key]->default = $plugin_data->{$value->name};
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Удаление данных плагинов
-     * @param $config
-     * @param Model $data Модель компонента с удаляемым материалом
-     */
-    public function removeDataPlugins($config, $data)
-    {
-        if(\is_array($config->plugins_backend) && $config->plugins_backend){
-            foreach ($config->plugins_backend as $key_plugin => $value_plugin){
-                if($key_plugin === 'seo' && $seo = LarrockSeo::getModel()->whereSeoIdConnect(\Request::input('id_connect'))
-                        ->whereSeoTypeConnect(\Request::input('type_connect'))->first()){
-                    $seo->delete();
-                }
-            }
-        }
-        $this->actionDetach($config, $data);
-    }
-
-    /**
-     * Метод изменяет данные прикрепляемых полей при изменении/удалении/добавлении материала
-     * ИСПОЛЬЗОВАНИЕ: в экшенах сохранения/удаления материалов после data->save()
-     *
-     * @param Component $config     Предсгенерированный конфиг компонента
-     * @param Model $data       Данные материала после сохранения ($data->save())
-     * @param Request|\Illuminate\Http\Request $request    Параметры переданные в качестве запроса. Значение Request $request
-     */
-    public function actionAttach($config, $data, Request $request)
-    {
-        foreach ($config->rows as $row){
-            if($row->attached){
-                foreach($data->getLink($row->modelChild)->get() as $link_item){
-                    $data->getLink($row->modelChild)->detach($link_item);
-                }
-
-                if($request->has($row->name)){
-                    $link_params = ['model_parent' => $row->modelParent, 'model_child' => $row->modelChild];
-
-                    if(\is_array($request->get($row->name))){
-                        foreach ($request->get($row->name) as $param){
-                            if(isset($row->allowCreate) && $row->allowCreate && ( !$row->modelChild::find($param))){
-                                if($find_param = $row->modelChild::whereTitle($param)->first()){
-                                    $param = $find_param->id;
-                                }else{
-                                    $add_param = new $row->modelChild();
-                                    $add_param['title'] = $param;
-                                    $add_param->save();
-                                    $param = $add_param->id;
-                                }
-                            }
-
-                            //Запись дополнительных данных в таблицу связей link из FormTags
-                            if($row->costValue && $request->has('cost_'. $param)){
-                                $link_params['cost'] = $request->get('cost_'. $param);
-                            }
-                            $data->getLink($row->modelChild)->attach($param, $link_params);
-                        }
-                    }else{
-                        $data->getLink($row->modelChild)->attach($request->get($row->name), $link_params);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Удаление данных связей при удалении материала
-     * @param object    $config     Конфиг компонента
-     * @param Model     $data       Модель компонента с удаляемым материалом
-     */
-    public function actionDetach($config, $data)
-    {
-        foreach($config->rows as $row){
-            if(isset($row->modelParent, $row->modelChild)){
-                //Получаем id прилинкованных данных
-                $getLink = $data->getLink($row->modelChild)->get();
-
-                //Удаляем связи
-                $data->getLink($row->modelChild)->detach($data->id);
-
-                //Удаляем поля в modelChild если у поля указана опция deleteIfNoLink и больше связей к этому материалу нет
-                if($row->deleteIfNoLink){
-                    //Проверяем остались ли связи до modelChild от modelParent
-                    foreach ($getLink as $link){
-                        $linkModel = new Link();
-                        if( !$linkModel->whereIdChild($link->id)->whereModelChild($row->modelChild)->first()){
-                            $modelChild = new $row->modelChild();
-                            $modelChild->whereId($link->id)->delete();
                         }
                     }
                 }

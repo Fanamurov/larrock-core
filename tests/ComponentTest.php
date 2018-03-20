@@ -182,92 +182,10 @@ class ComponentTest extends \Orchestra\Testbench\TestCase
 
     public function testCombineAdminMiddlewares()
     {
-        $this->assertEquals([0 => 'web', 1 => 'level:2', 2 => 'LarrockAdminMenu', 3 => 'SaveAdminPluginsData', 4 => 'SiteSearchAdmin', 5 => 'TestAddAdmin'],
+        $this->assertEquals([0 => 'web', 1 => 'level:2', 2 => 'LarrockAdminMenu', 3 => 'SiteSearchAdmin', 4 => 'TestAddAdmin'],
             $this->component->combineAdminMiddlewares());
-        $this->assertEquals([0 => 'web', 1 => 'level:2', 2 => 'LarrockAdminMenu', 3 => 'SaveAdminPluginsData', 4 => 'SiteSearchAdmin', 5 => 'TestAddAdmin', 6 => 'Test'],
+        $this->assertEquals([0 => 'web', 1 => 'level:2', 2 => 'LarrockAdminMenu', 3 => 'SiteSearchAdmin', 4 => 'TestAddAdmin', 5 => 'Test'],
             $this->component->combineAdminMiddlewares(['Test']));
-    }
-
-    /**
-     * @throws \Exception
-     */
-    public function testSavePluginsData()
-    {
-        $seed = new CreateSeoDatabase();
-        $seed->setUpSeoDatabase();
-
-        //Проверка на успешное внесение seo-данных
-        $request = Request::create('', 'POST', [
-            'id_connect' => 2,
-            'seo_title' => 'seo_title_default',
-            'seo_description' => 'seo_description_default',
-            'seo_keywords' => 'seo_keywords_default',
-            'type_connect' => 'type_connect_default',
-            'url_connect' => 'url_connect_default'
-        ]);
-
-        $this->component->savePluginsData($request);
-        $test = DB::connection()->table('seo')->where('id', '=', 2)->first();
-
-        $this->assertEquals(2, $test->id);
-        $this->assertEquals('seo_title_default', $test->seo_title);
-        $this->assertEquals('seo_description_default', $test->seo_description);
-        $this->assertEquals('seo_keywords_default', $test->seo_keywords);
-        $this->assertEquals('type_connect_default', $test->seo_type_connect);
-        $this->assertEquals('url_connect_default', $test->seo_url_connect);
-
-        //Проверка на неполноту данных для внесения seo-данных
-        $request = Request::create('', 'POST', [
-            'id_connect' => 3,
-            'seo_title' => 'seo_title_default',
-            'seo_description' => 'seo_description_default',
-            'seo_keywords' => 'seo_keywords_default',
-            'url_connect' => 'url_connect_default'
-        ]);
-
-        $this->component->savePluginsData($request);
-        $test = DB::connection()->table('seo')->where('id', '=', 3)->first();
-        $this->assertNull($test);
-
-        //Проверка на удаление сео-данных
-        $request = Request::create('', 'POST', [
-            'id_connect' => 1,
-            'type_connect' => 'test',
-            'seo_title' => '',
-            'seo_description' => '',
-            'seo_keywords' => '',
-        ]);
-        $this->component->savePluginsData($request);
-        $test = DB::connection()->table('seo')->where('id', '=', 1)->first();
-        $this->assertNull($test);
-
-
-        //TODO:Проверка на внесение данных анонса
-        //LarrockFeed не является частью LarrockCore
-        /*$request = Request::create('', 'POST', [
-            'anons_merge' => 1,
-            'anons_description' => 'anons_description_default'
-        ]);
-        $this->component->savePluginsData($request);*/
-
-        //Проверка на вставку связей
-        $seed = new CreateLinkDatabase();
-        $seed->setUpLinkDatabase();
-        $request = Request::create('', 'POST', [
-            'link' => [2],
-            'modelParent' => 'Larrock\ComponentBlocks\Models\Blocks',
-            'modelParentId' => 1,
-            'modelChild' => 'Larrock\ComponentBlocks\Models\Blocks',
-        ]);
-        $this->component->savePluginsData($request);
-        $test = DB::connection()->table('link')->first();
-        $this->assertEquals(1, $test->id);
-        $this->assertEquals(1, $test->id_parent);
-        $this->assertEquals(2, $test->id_child);
-        $this->assertEquals('Larrock\ComponentBlocks\Models\Blocks', $test->model_parent);
-        $this->assertEquals('Larrock\ComponentBlocks\Models\Blocks', $test->model_child);
-        $this->assertNull($test->cost);
-
     }
 
     public function testAddPluginSeo()
@@ -308,19 +226,6 @@ class ComponentTest extends \Orchestra\Testbench\TestCase
         $this->assertArrayHasKey('anons_description', $this->component->rows);
         $this->assertArrayHasKey('anons', $this->component->plugins_backend);
     }
-
-    /*public function testTabbable()
-    {
-        $seed = new CreateBlocksDatabase();
-        $seed->setUpBlocksDatabase();
-
-        $seed = new CreateSeoDatabase();
-        $seed->setUpSeoDatabase();
-
-        $data = Blocks::first();
-        $BlocksComponent = new BlocksComponent();
-        $BlocksComponent->tabbable($data);
-    }*/
 
     public function testAddDataPlugins()
     {

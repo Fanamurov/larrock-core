@@ -5,6 +5,7 @@ namespace Larrock\Core\Traits;
 use Illuminate\Http\Request;
 use Lang;
 use Larrock\Core\Component;
+use Larrock\Core\Events\ComponentItemDestroyed;
 use Redirect;
 use Session;
 
@@ -52,9 +53,9 @@ trait AdminMethodsDestroy
                 $data->clearMediaCollection();
             }
             $name = $data->title;
-            $this->config->removeDataPlugins($this->config, $data);
 
             if($data->delete()){
+                event(new ComponentItemDestroyed($this->config, $data, $request));
                 \Cache::flush();
                 Session::push('message.success', Lang::get('larrock::apps.delete.success', ['name' => $name]));
             }else{

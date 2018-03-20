@@ -4,6 +4,7 @@ namespace Larrock\Core\Traits;
 
 use Illuminate\Http\Request;
 use Larrock\Core\Component;
+use Larrock\Core\Events\ComponentItemUpdated;
 use Validator;
 use Session;
 
@@ -31,7 +32,7 @@ trait AdminMethodsUpdate
         $data = $this->config->getModel()::find($id);
         $data->fill($request->all());
         foreach ($this->config->rows as $row){
-            if(in_array($row->name, $data->getFillable())){
+            if(\in_array($row->name, $data->getFillable())){
                 if($row instanceof \Larrock\Core\Helpers\FormBuilder\FormCheckbox){
                     $data->{$row->name} = $request->input($row->name, NULL);
                 }
@@ -42,7 +43,7 @@ trait AdminMethodsUpdate
         }
 
         if($data->save()){
-            $this->config->actionAttach($this->config, $data, $request);
+            event(new ComponentItemUpdated($this->config, $data, $request));
             Session::push('message.success', 'Материал '. $request->input('title') .' изменен');
             \Cache::flush();
             return back();

@@ -11,9 +11,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $seo_title
  * @property string $seo_description
  * @property string $seo_keywords
- * @property integer $id_connect
- * @property string $url_connect
- * @property string $type_connect
+ * @property integer $seo_id_connect
+ * @property string $seo_url_connect
+ * @property string $seo_type_connect
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Seo whereId($value)

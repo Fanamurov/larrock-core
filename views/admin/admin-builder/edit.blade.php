@@ -6,7 +6,7 @@
         <div class="uk-grid uk-grid-small">
             <div class="uk-width-expand">
                 {!! Breadcrumbs::render('admin.'. $app->name .'.edit', $data) !!}
-                <a class="link-blank uk-display-inline-block" href="{{ $data->full_url }}/">{{ $data->full_url }}/</a>
+                <a class="link-blank uk-display-block" href="{{ $data->full_url }}/">{{ $data->full_url }}/</a>
                 @if(isset($data->getCategory) && count($data->getCategory) > 1)
                     <div>В разделах:</div>
                     @foreach($data->getCategory as $category)

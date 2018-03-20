@@ -58,6 +58,8 @@ class LarrockCoreServiceProvider extends ServiceProvider
             __DIR__.'/../config/larrock-to-dashboard.php' => config_path('larrock-to-dashboard.php'),
             __DIR__.'/../config/larrock.php' => config_path('larrock.php'),
         ], 'config');
+
+        \Event::subscribe('Larrock\Core\Listeners\CoreEventSubscriber');
     }
 
     /**
@@ -68,7 +70,6 @@ class LarrockCoreServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app['router']->aliasMiddleware('LarrockAdminMenu', AdminMenu::class);
-        $this->app['router']->aliasMiddleware('SaveAdminPluginsData', SaveAdminPluginsData::class);
 
         $this->mergeConfigFrom( __DIR__.'/../config/larrock-core-adminmenu.php', 'larrock-core-adminmenu');
         $this->mergeConfigFrom( __DIR__.'/../config/larrock-sitemap.php', 'larrock-sitemap');
