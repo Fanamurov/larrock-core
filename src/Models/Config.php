@@ -13,9 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $type
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Config imagePresets($key)
  * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Config whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Config whereKey($value)
+ * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Config whereName($value)
  * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Config whereValue($value)
  * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Config whereType($value)
  * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Config whereCreatedAt($value)
@@ -30,6 +29,6 @@ class Config extends Model
 
 	public function getValueAttribute($value)
 	{
-		return unserialize($value);
+		return unserialize($value, false);
 	}
 }

@@ -7,8 +7,8 @@ use Larrock\Core\Exceptions\LarrockFormBuilderRowException;
 use Larrock\Core\Models\Link;
 use View;
 
-class FormTags extends FBElement {
-
+class FormTags extends FBElement
+{
     /** @var Model  Модель связываемого компонента */
     public $modelParent;
 
@@ -50,7 +50,6 @@ class FormTags extends FBElement {
     {
         $this->modelParent = $modelParent;
         $this->modelChild = $modelChild;
-        $this->attached = TRUE;
         return $this;
     }
 

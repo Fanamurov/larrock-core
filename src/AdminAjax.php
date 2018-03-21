@@ -273,22 +273,6 @@ class AdminAjax extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
-	public function Typograph(Request $request)
-	{
-        if( !$request->has(['text'])){
-            throw new \InvalidArgumentException('Не все необходимые поля переданы [text]', 422);
-        }
-
-		return response()->json(['text' => EMTypograph::fast_apply($request->get('text'))]);
-	}
-
-    /**
-     * Типограф
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
-     */
 	public function TypographLight(Request $request)
 	{
         if( !$request->has(['text'])){

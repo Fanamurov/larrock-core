@@ -1,4 +1,4 @@
-<div class="uk-form-row form-group-{{ $row_key }} {{ $row_settings->css_class_group }}">
+<div class="uk-form-row form-group-{{ $row_key }} {{ $row_settings->cssClassGroup }}">
     <label for="{{ $row_key }}" class="uk-form-label">
         {{ $row_settings->title }}
         @if($row_settings->help)

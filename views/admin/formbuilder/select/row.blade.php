@@ -1,4 +1,4 @@
-<div class="uk-form-row form-group-{{ $row_key }} {{ \Illuminate\Support\Arr::get($row_settings, 'css_class_group') }}">
+<div class="uk-form-row form-group-{{ $row_key }} {{ \Illuminate\Support\Arr::get($row_settings, 'cssClassGroup }}">
     <label for="{{ $row_key }}" class="uk-form-label">
         {{ $row_settings->title }}
         @if($row_settings->help)
@@ -6,7 +6,7 @@
         @endif
     </label>
     <div class="input-group">
-        <select name="{{ $row_key }}" id="{{ $row_key }}" class="{{ $row_settings->css_class }} uk-select">
+        <select name="{{ $row_key }}" id="{{ $row_key }}" class="{{ $row_settings->cssClass }} uk-select">
             <option value="">Не назначено</option>
             @foreach($row_settings['options'] as $options_key => $options_value)
                 <option value="@if(\Illuminate\Support\Arr::get($row_settings['options_connect'], 'selected_search') === 'value'){{ $options_value }}@else{{ $options_key }}@endif"

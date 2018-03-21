@@ -1,4 +1,4 @@
-<div class="uk-form-row form-group-{{ $row_key }} {{ $row_settings->css_class_group }}">
+<div class="uk-form-row form-group-{{ $row_key }} {{ $row_settings->cssClassGroup }}">
     <label for="{{ $row_key }}" class="uk-form-label">
         {{ $row_settings->title }}
         @if($row_settings->help)
@@ -10,7 +10,7 @@
             <div class="uk-width-expand">
                 <input type="text" name="{{ $row_key }}"
                        value="@isset($data->{$row_key}){{ Request::old($row_key, $data->{$row_key}) }}@endif"
-                       class="uk-input uk-width-1-1 {{ $row_settings->css_class }}" id="{{ $row_key }}"
+                       class="uk-input uk-width-1-1 {{ $row_settings->cssClass }}" id="{{ $row_key }}"
                        @if($row_key === 'title') data-table="{{ $app->model }}" @endif>
             </div>
             <div class="uk-width-auto">
@@ -23,6 +23,6 @@
     @else
         <input type="text" name="{{ $row_key }}"
                value="@isset($data->{$row_key}){{ Request::old($row_key, $data->{$row_key}) }}@endisset"
-               class="{{ $row_settings->css_class }} uk-input" id="{{ $row_key }}">
+               class="{{ $row_settings->cssClass }} uk-input" id="{{ $row_key }}">
     @endif
 </div>

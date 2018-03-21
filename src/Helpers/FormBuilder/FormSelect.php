@@ -2,10 +2,12 @@
 
 namespace Larrock\Core\Helpers\FormBuilder;
 
+use Illuminate\Database\Eloquent\Model;
+use Larrock\Core\Exceptions\LarrockFormBuilderRowException;
 use View;
 
-class FormSelect extends FBElement {
-
+class FormSelect extends FBElement
+{
     /** @var array|null */
     public $options;
 
@@ -14,6 +16,9 @@ class FormSelect extends FBElement {
 
     /** @var null|bool */
     public $allowCreate;
+
+    /** @var null|mixed */
+    public $connect;
 
     /**
      * @param array $options
@@ -41,6 +46,40 @@ class FormSelect extends FBElement {
     public function setAllowCreate()
     {
         $this->allowCreate = TRUE;
+        return $this;
+    }
+
+    /**
+     * Установка связи поля с какой-либо моделью
+     * Сейчас применяется в FormSelect, FormCategory
+     * @param Model $model
+     * @param null $relation_name
+     * @param null $group_by
+     * @return $this
+     */
+    public function setConnect($model, $relation_name = NULL, $group_by = NULL)
+    {
+        $this->connect = collect();
+        $this->connect->model = $model;
+        $this->connect->relation_name = $relation_name;
+        $this->connect->group_by = $group_by;
+        return $this;
+    }
+
+    /**
+     * Установка опции выборки значений для setConnect()
+     * @param string $key
+     * @param string $value
+     * @return $this
+     * @throws LarrockFormBuilderRowException
+     */
+    public function setWhereConnect(string $key, string $value)
+    {
+        if( !isset($this->connect->model)){
+            throw new LarrockFormBuilderRowException('У поля '. $this->name .' сначала нужно определить setConnect');
+        }
+        $this->connect->where_key = $key;
+        $this->connect->where_value = $value;
         return $this;
     }
 

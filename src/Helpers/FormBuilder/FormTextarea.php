@@ -23,7 +23,7 @@ class FormTextarea extends FBElement
      */
     public function setNotEditor()
     {
-        $this->css_class .= ' not-editor';
+        $this->cssClass .= ' not-editor';
         return $this;
     }
 

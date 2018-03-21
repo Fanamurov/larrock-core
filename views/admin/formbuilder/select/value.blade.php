@@ -1,4 +1,4 @@
-<div class="uk-form-row form-group-{{ $row_key }} {{ $row_settings->css_class_group }}">
+<div class="uk-form-row form-group-{{ $row_key }} {{ $row_settings->cssClassGroup }}">
     <label for="{{ $row_key }}" class="uk-form-label">
         {{ $row_settings->title }}
         @if($row_settings->help)
@@ -8,7 +8,7 @@
             <div class="uk-float-right"><span class="uk-button uk-button-default uk-button-small new_list" data-row-name="{{ $row_key }}">Создать</span></div>
         @endif
     </label>
-    <select name="{{ $row_key }}" id="{{ $row_key }}" class="{{ $row_settings->css_class }} uk-select">
+    <select name="{{ $row_key }}" id="{{ $row_key }}" class="{{ $row_settings->cssClass }} uk-select">
         <option></option>
         @foreach($row_settings->options as $options_key => $options_value)
             @if($row_settings->connect)

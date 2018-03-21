@@ -36,8 +36,8 @@ class LarrockInstallCorePackagesCommand extends Command
 
         foreach ($packages as $package) {
             if( !\File::exists(base_path('vendor/fanamurov/'. $package))){
-                $this->info('composer require fanamurov/'. $package .':^1.0');
-                echo shell_exec('composer require fanamurov/'. $package .':^1.0');
+                $this->info('composer require fanamurov/'. $package .':^1.0  --prefer-dist');
+                echo shell_exec('composer require fanamurov/'. $package .':^1.0  --prefer-dist');
             }
         }
 

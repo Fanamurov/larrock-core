@@ -147,7 +147,7 @@ class Component
     {
         $row = new FormInput('position', 'Вес');
         $this->rows['position'] = $row->setTab('main', 'Дата, вес, активность')->setValid('integer')
-            ->setDefaultValue(0)->setInTableAdminAjaxEditable()->setFillable()->setCssClassGroup('uk-width-1-3');
+            ->setDefaultValue(0)->setInTableAdminEditable()->setFillable()->setCssClassGroup('uk-width-1-3');
         return $this;
     }
 
@@ -159,7 +159,7 @@ class Component
     {
         $row = new FormCheckbox('active', 'Опубликован');
         $this->rows['active'] = $row->setTab('main', 'Дата, вес, активность')
-            ->setValid('integer|max:1')->setDefaultValue(1)->setInTableAdminAjaxEditable()->setFillable()
+            ->setValid('integer|max:1')->setDefaultValue(1)->setInTableAdminEditable()->setFillable()
             ->setCssClassGroup('uk-width-1-3');
         return $this;
     }

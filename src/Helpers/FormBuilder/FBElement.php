@@ -2,29 +2,52 @@
 
 namespace Larrock\Core\Helpers\FormBuilder;
 
-use Illuminate\Database\Eloquent\Model;
-use Larrock\Core\Exceptions\LarrockFormBuilderRowException;
-
 class FBElement
 {
+    /** @var string  */
     public $name;
+
+    /** @var string  */
     public $title;
-    public $css_class_group = 'uk-width-1-1';
-    public $css_class = 'uk-width-1-1';
+
+    /**  @var string */
+    public $cssClassGroup = 'uk-width-1-1';
+
+    /** @var string  */
+    public $cssClass = 'uk-width-1-1';
+
+    /** @var string */
     public $default;
+
+    /** @var array  */
     public $tab = ['main' => 'Заголовок, описание'];
+
+    /** @var string */
     public $valid;
-    public $in_table_admin;
-    public $in_table_admin_ajax_editable;
+
+    /** @var null|bool */
+    public $inTableAdmin;
+
+    /** @var null|bool */
+    public $inTableAdminEditable;
+
+    /** @var string */
     public $help;
+
+    /** @var null|bool */
     public $fillable;
-    public $connect;
-    public $attached;
+
+    /** @var null|bool */
     public $filtered;
+
+    /** @var null|bool */
     public $sorted;
+
     /** @var string  Место где используется (в каталоге место вывода) */
     public $template;
-    public $template_admin;
+
+    /** @var string */
+    public $templateAdmin;
 
 
     /**
@@ -55,7 +78,7 @@ class FBElement
      */
     public function setInTableAdmin()
     {
-        $this->in_table_admin = TRUE;
+        $this->inTableAdmin = TRUE;
         return $this;
     }
 
@@ -63,9 +86,9 @@ class FBElement
      * Выводить поле на редактирование в таблице контента в админке
      * @return $this
      */
-    public function setInTableAdminAjaxEditable()
+    public function setInTableAdminEditable()
     {
-        $this->in_table_admin_ajax_editable = TRUE;
+        $this->inTableAdminEditable = TRUE;
         return $this;
     }
 
@@ -100,7 +123,7 @@ class FBElement
      */
     public function setCssClassGroup(string $class)
     {
-        $this->css_class_group = $this->css_class .' '. $class;
+        $this->cssClassGroup = $this->cssClass .' '. $class;
         return $this;
     }
 
@@ -111,7 +134,7 @@ class FBElement
      */
     public function setCssClass(string $class)
     {
-        $this->css_class = $this->css_class .' '. $class;
+        $this->cssClass = $this->cssClass .' '. $class;
         return $this;
     }
 
@@ -135,49 +158,6 @@ class FBElement
     public function setHelp(string $text)
     {
         $this->help = $text;
-        return $this;
-    }
-
-    /**
-     * Установка связи поля с какой-либо моделью
-     * @param Model $model
-     * @param null $relation_name
-     * @param null $group_by
-     * @return $this
-     */
-    public function setConnect($model, $relation_name = NULL, $group_by = NULL)
-    {
-        $this->connect = collect();
-        $this->connect->model = $model;
-        $this->connect->relation_name = $relation_name;
-        $this->connect->group_by = $group_by;
-        return $this;
-    }
-
-    /**
-     * Установка опции выборки значений для setConnect()
-     * @param string $key
-     * @param string $value
-     * @return $this
-     * @throws LarrockFormBuilderRowException
-     */
-    public function setWhereConnect(string $key, string $value)
-    {
-        if( !isset($this->connect->model)){
-            throw new LarrockFormBuilderRowException('У поля '. $this->name .' сначала нужно определить setConnect');
-        }
-        $this->connect->where_key = $key;
-        $this->connect->where_value = $value;
-        return $this;
-    }
-
-    /**
-     * Поле вносит изменение в связанные модели
-     * @return $this
-     */
-    public function setAttached()
-    {
-        $this->attached = TRUE;
         return $this;
     }
 
@@ -214,7 +194,7 @@ class FBElement
 
     public function setTemplateAdmin($template)
     {
-        $this->template_admin = $template;
+        $this->templateAdmin = $template;
         return $this;
     }
 

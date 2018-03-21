@@ -1,10 +1,8 @@
-
-
-[LarrockCMS](https://github.com/Fanamurov/larrock-core) - это CMS основанная на php-фреймворке Laravel поставляемая в формате composer-пакетов.
+[LarrockCMS](https://github.com/Fanamurov/larrock-core) - это CMS основанная на php-фреймворке Laravel 5.6 поставляемая в формате composer-пакетов.
 
 Сайт с официальной технической и пользовательской документацией: [http://larrock-cms.ru](http://larrock-cms.ru)
 
-[![Latest Stable Version](https://poser.pugx.org/fanamurov/larrock-core/v/stable)](https://packagist.org/packages/fanamurov/larrock-core) [![Total Downloads](https://poser.pugx.org/fanamurov/larrock-core/downloads)](https://packagist.org/packages/fanamurov/larrock-core) [![License](https://poser.pugx.org/fanamurov/larrock-core/license)](https://packagist.org/packages/fanamurov/larrock-core) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1a0fb19f2e024607a1d40260c8baa5e7)](https://www.codacy.com/app/Fanamurov/larrock-core?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Fanamurov/larrock-core&amp;utm_campaign=Badge_Grade)[![Build Status](https://travis-ci.org/Fanamurov/larrock-core.svg?branch=master)](https://travis-ci.org/Fanamurov/larrock-core) [![Coverage Status](https://coveralls.io/repos/github/Fanamurov/larrock-core/badge.svg?branch=master)](https://coveralls.io/github/Fanamurov/larrock-core?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/fanamurov/larrock-core/v/stable)](https://packagist.org/packages/fanamurov/larrock-core) [![Total Downloads](https://poser.pugx.org/fanamurov/larrock-core/downloads)](https://packagist.org/packages/fanamurov/larrock-core) [![License](https://poser.pugx.org/fanamurov/larrock-core/license)](https://packagist.org/packages/fanamurov/larrock-core) [![Scrutinizer Badge](https://scrutinizer-ci.com/g/Fanamurov/larrock-core/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Fanamurov/larrock-core/?branch=master) [![Build Status](https://travis-ci.org/Fanamurov/larrock-core.svg?branch=master)](https://travis-ci.org/Fanamurov/larrock-core) [![Coverage Status](https://coveralls.io/repos/github/Fanamurov/larrock-core/badge.svg?branch=master)](https://coveralls.io/github/Fanamurov/larrock-core?branch=master)
 
 
 Распространяется под лицензией CC-BY-4.0. При использовании CMS вы обязаны указать ее название в своем проекте в виде копирайта в админ-панели.
@@ -38,12 +36,12 @@
 ### Зависимости компонентов
 - "php": ">=7.1.3",
 - "mysql": ">=5.7",
-- "[proengsoft/laravel-jsvalidation](https://github.com/proengsoft/laravel-jsvalidation)": "^1.5",
-- "[albertcht/invisible-recaptcha](https://github.com/albertcht/invisible-recaptcha)": "^1.7",
-- "[davejamesmiller/laravel-breadcrumbs](https://github.com/davejamesmiller/laravel-breadcrumbs)": "^5.0",
-- "[nicolaslopezj/searchable](https://github.com/nicolaslopezj/searchable)": "^1.9",
-- "[spatie/laravel-medialibrary](https://github.com/spatie/laravel-medialibrary)": "^6.0.0",
-- "[fanamurov/mdash](https://github.com/fanamurov/mdash)": "^1.0"
+- "[proengsoft/laravel-jsvalidation](https://github.com/proengsoft/laravel-jsvalidation)": "^1.5", (js-валидация форм)
+- "[albertcht/invisible-recaptcha](https://github.com/albertcht/invisible-recaptcha)": "^1.7", (каптча для форм)
+- "[davejamesmiller/laravel-breadcrumbs](https://github.com/davejamesmiller/laravel-breadcrumbs)": "^5.0", ("хлебные крошки")
+- "[nicolaslopezj/searchable](https://github.com/nicolaslopezj/searchable)": "^1.9", (расширенный поиск)
+- "[spatie/laravel-medialibrary](https://github.com/spatie/laravel-medialibrary)": "^6.0.0", (управление файлами в материалах)
+- "[fanamurov/mdash](https://github.com/fanamurov/mdash)": "^1.0" (типограф)
 
 
 
@@ -57,7 +55,7 @@
 2. **Install LarrockСore**
   ```sh
   $ cd larrock
-  $ composer require fanamurov/larrock-core
+  $ composer require fanamurov/larrock-core --prefer-dist
   ```
 
 3. **Install LarrockCMS**
@@ -68,9 +66,9 @@
 # START
 yoursite/```admin```
 
-Login: ```admin@larrock-cms.ru```
+Default login: ```admin@larrock-cms.ru```
 
-Password: ```password```
+Default password: ```password```
 
 
 ### Manual installation of other components LarrockCMS (composer required!)
@@ -79,7 +77,7 @@ Password: ```password```
   ```
   or use composer
   ```sh
-  $ composer require fanamurov/larrock-*name*
+  $ composer require fanamurov/larrock-*name*  --prefer-dist
   ```
   
 ### Manual installation of assets (bower required!)

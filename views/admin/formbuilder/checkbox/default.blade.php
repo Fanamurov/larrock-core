@@ -1,4 +1,4 @@
-<div class="uk-form-row form-group-{{ $row_key }} {{ $row_settings->css_class_group }}">
+<div class="uk-form-row form-group-{{ $row_key }} {{ $row_settings->cssClassGroup }}">
     <label>
         <input type="checkbox" name="{{ $row_key }}" id="{{ $row_key }}" class="uk-checkbox"
                @isset($data->{$row_key}) @if(Request::old($row_key, $data->{$row_key}) === 1) checked @endif @endisset

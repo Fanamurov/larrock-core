@@ -11,15 +11,12 @@ Route::group(['prefix' => 'admin'], function(){
 
     Route::post('ajax/EditRow', 'Larrock\Core\AdminAjax@EditRow');
     Route::post('ajax/ClearCache', 'Larrock\Core\AdminAjax@ClearCache');
-
     Route::post('ajax/UploadFile', 'Larrock\Core\AdminAjax@UploadFile');
     Route::post('ajax/UploadImage', 'Larrock\Core\AdminAjax@UploadImage');
     Route::post('ajax/GetUploadedMedia', 'Larrock\Core\AdminAjax@GetUploadedMedia');
     Route::post('ajax/DeleteUploadedMedia', 'Larrock\Core\AdminAjax@DeleteUploadedMedia');
     Route::post('ajax/DeleteAllUploadedMediaByType', 'Larrock\Core\AdminAjax@DeleteAllUploadedMediaByType');
     Route::post('ajax/CustomProperties', 'Larrock\Core\AdminAjax@CustomProperties');
-
-    Route::post('ajax/Typograph', 'Larrock\Core\AdminAjax@Typograph');
     Route::post('ajax/TypographLight', 'Larrock\Core\AdminAjax@TypographLight');
     Route::post('ajax/Translit', 'Larrock\Core\AdminAjax@Translit');
 });
