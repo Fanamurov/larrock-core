@@ -227,20 +227,6 @@ class ComponentTest extends \Orchestra\Testbench\TestCase
         $this->assertArrayHasKey('anons', $this->component->plugins_backend);
     }
 
-    public function testAddDataPlugins()
-    {
-        $seed = new CreateSeoDatabase();
-        $seed->setUpSeoDatabase();
-        $data = new Config();
-        $data->getSeo = DB::connection()->table('seo')->where('id', '=', 1)->first();
-        $this->component->addPluginSeo();
-        $this->component->addDataPlugins($data);
-
-        $this->assertEquals('test', $this->component->rows['seo_title']->default);
-        $this->assertEquals('test', $this->component->rows['seo_description']->default);
-        $this->assertEquals('test', $this->component->rows['seo_keywords']->default);
-    }
-
     public function testOverrideComponent()
     {
         $this->component->overrideComponent('name', 'test');

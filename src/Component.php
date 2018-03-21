@@ -2,22 +2,19 @@
 
 namespace Larrock\Core;
 
-use Illuminate\Http\Request;
-use Larrock\ComponentFeed\Models\Feed;
-use Larrock\Core\Models\Seo;
-use LarrockAdminSeo;
-use LarrockFeed;
+use Illuminate\Support\Collection;
+use Larrock\Core\Plugins\PluginAnonsTrait;
+use Larrock\Core\Plugins\PluginSeoTrait;
 use Larrock\Core\Helpers\FormBuilder\FormCheckbox;
 use Larrock\Core\Helpers\FormBuilder\FormInput;
-use Larrock\Core\Helpers\FormBuilder\FormTextarea;
 use Illuminate\Database\Eloquent\Model;
 use JsValidator;
-use Larrock\Core\Helpers\MessageLarrock;
-use Larrock\Core\Models\Link;
 use View;
 
 class Component
 {
+    use PluginSeoTrait, PluginAnonsTrait;
+
     /** @var string */
     public $name;
 
@@ -33,6 +30,7 @@ class Component
     /** @var array */
     public $rows;
 
+    /** @var array */
     public $customMediaConversions;
 
     /** @var Model */
@@ -40,14 +38,26 @@ class Component
 
     /** @var bool */
     public $active = TRUE;
+
+    /** @var array */
     public $plugins_backend;
+
+    /** @var array */
     public $plugins_front;
+
+    /** @var array */
     public $settings;
+
+    /** @var null|bool */
     public $searchable;
 
+    /** @var array|Collection */
     public $tabs;
+
+    /** @var array|Collection */
     public $tabs_data;
 
+    /** @var string */
     public $valid;
 
     /** @return Component */
@@ -226,32 +236,6 @@ class Component
     }
 
     /**
-     * Подключение плагина SEO
-     * @return $this
-     */
-    public function addPluginSeo()
-    {
-        $row = new FormInput('seo_title', 'Title материала');
-        $this->rows['seo_title'] = $rows_plugin[] = $row->setTab('seo', 'Seo')->setValid('max:255')
-            ->setTypo()->setHelp('По-умолчанию равно заголовку материала');
-
-        $row = new FormInput('seo_description', 'Description материала');
-        $this->rows['seo_description'] = $rows_plugin[] = $row->setTab('seo', 'Seo')->setValid('max:255')
-            ->setTypo()->setHelp('По-умолчанию равно заголовку материала');
-
-        $row = new FormTextarea('seo_keywords', 'Keywords материала');
-        $this->rows['seo_keywords'] = $rows_plugin[] = $row->setTab('seo', 'Seo')->setValid('max:255')->setCssClass('not-editor uk-width-1-1');
-
-        $this->plugins_backend['seo']['rows'] = $rows_plugin;
-
-        $row = new FormInput('url', 'URL материала');
-        $this->rows['url'] = $row->setTab('seo', 'SEO')
-            ->setValid('max:155|required|unique:'. $this->table .',url,:id')->setCssClass('uk-width-1-1')->setFillable();
-
-        return $this;
-    }
-
-    /**
      * Подключение плагина загрузки фото
      * @return $this
      */
@@ -277,24 +261,6 @@ class Component
     public function addPluginFiles()
     {
         $this->plugins_backend['files'] = 'files';
-        return $this;
-    }
-
-    /**
-     * Плагин для генерации анонса новости для блока анонс новости
-     * @param int $categoryAnons    ID категории с анонсами
-     * @return $this
-     */
-    public function addAnonsToModule($categoryAnons)
-    {
-        $row = new FormCheckbox('anons_merge', 'Сгенерировать для анонса заголовок и ссылку на новость');
-        $this->rows['anons_merge'] = $rows_plugin[] = $row->setTab('anons', 'Создать анонс');
-
-        $row = new FormTextarea('anons_description', 'Текст для анонса новости в модуле');
-        $this->rows['anons_description'] = $rows_plugin[] = $row->setTab('anons', 'Создать анонс')->setTypo();
-
-        $this->settings['anons_category'] = $categoryAnons;
-        $this->plugins_backend['anons']['rows'] = $rows_plugin;
         return $this;
     }
 
@@ -330,8 +296,11 @@ class Component
      */
     public function tabbable($data)
     {
-        if($this->plugins_backend){
-            $this->addDataPlugins($data);
+        if(isset($this->plugins_backend['seo']) && $plugin_data = $data->getSeo){
+            //Присоединяем данные от плагинов
+            $this->rows['seo_title']->default = $plugin_data->seo_title;
+            $this->rows['seo_description']->default = $plugin_data->seo_description;
+            $this->rows['seo_keywords']->default = $plugin_data->seo_keywords;
         }
 
         $this->tabs = collect();
@@ -355,25 +324,6 @@ class Component
             $this->tabs_data->put($tab_key, $render);
         }
         return $this;
-    }
-
-    /**
-     * Присоединяем данные от плагинов
-     * @param Model $data
-     */
-    public function addDataPlugins($data)
-    {
-        if($this->plugins_backend && \is_array($this->plugins_backend)){
-            foreach ($this->plugins_backend as $key_plugin => $value_plugin){
-                if($key_plugin === 'seo' && $plugin_data = $data->getSeo){
-                    foreach ($this->rows as $key => $value){
-                        if($value->name === 'seo_title' || $value->name === 'seo_description' || $value->name === 'seo_keywords'){
-                            $this->rows[$key]->default = $plugin_data->{$value->name};
-                        }
-                    }
-                }
-            }
-        }
     }
 
     /**
@@ -430,7 +380,7 @@ class Component
      * @param null|bool $admin Если TRUE - для поиска будут доступны вообще все элементы (не только опубликованные)
      * @return null
      */
-    public function search($admin)
+    public function search($admin = NULL)
     {
         return NULL;
     }
