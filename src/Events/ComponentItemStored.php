@@ -8,11 +8,11 @@ use Illuminate\Queue\SerializesModels;
 use Larrock\Core\Component;
 
 /**
- * Выбрасываемое событие на изменение материала из компонента
+ * Выбрасываемое событие на создание материала из компонента
  * Class ComponentItemUpdated
  * @package Larrock\Core\Events
  */
-class ComponentItemUpdated
+class ComponentItemStored
 {
     use SerializesModels;
 

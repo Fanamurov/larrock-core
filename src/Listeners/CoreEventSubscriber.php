@@ -3,6 +3,7 @@
 namespace Larrock\Core\Listeners;
 
 use Larrock\Core\Events\ComponentItemDestroyed;
+use Larrock\Core\Events\ComponentItemStored;
 use Larrock\Core\Events\ComponentItemUpdated;
 
 class CoreEventSubscriber
@@ -21,6 +22,11 @@ class CoreEventSubscriber
 
         $events->listen(
             ComponentItemUpdated::class,
+            'Larrock\Core\Plugins\ComponentPlugin@attach'
+        );
+
+        $events->listen(
+            ComponentItemStored::class,
             'Larrock\Core\Plugins\ComponentPlugin@attach'
         );
     }

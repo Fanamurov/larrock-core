@@ -42,7 +42,11 @@ trait AdminMethodsStore
             if($this->allow_redirect){
                 return back()->withInput($request->except('password'))->withErrors($validator);
             }
-            Session::push('message.danger', 'Валидация данных не пройдена '. var_dump($validator));
+            $message = '';
+            foreach ($validator->getMessageBag()->all() as $error){
+                $message .= $error .' ';
+            }
+            Session::push('message.danger', 'Валидация данных не пройдена '. $message);
             return NULL;
         }
 
