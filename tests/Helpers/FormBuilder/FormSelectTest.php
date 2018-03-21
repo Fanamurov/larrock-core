@@ -56,6 +56,31 @@ class FormSelectTest extends \Orchestra\Testbench\TestCase
         $this->assertInstanceOf(FormSelect::class, $this->FormSelect);
     }
 
+    public function testSetConnect()
+    {
+        $this->FormSelect->setConnect(Config::class, 'test_relation', 'test_group');
+        $this->assertEquals(Config::class, $this->FormSelect->connect->model);
+        $this->assertEquals('test_relation', $this->FormSelect->connect->relation_name);
+        $this->assertEquals('test_group', $this->FormSelect->connect->group_by);
+        $this->assertInstanceOf('Larrock\Core\Helpers\FormBuilder\FBElement', $this->FormSelect);
+    }
+
+    /**
+     * @expectedException \Larrock\Core\Exceptions\LarrockFormBuilderRowException
+     * @expectedExceptionMessage У поля test_name сначала нужно определить setConnect
+     */
+    public function testSetWhereConnect()
+    {
+        $this->FormSelect->setConnect(Config::class, 'test_relation', 'test_group');
+        $this->FormSelect->setWhereConnect('test_key', 'test_value');
+        $this->assertEquals('test_key', $this->FormSelect->connect->where_key);
+        $this->assertEquals('test_value', $this->FormSelect->connect->where_value);
+        $this->assertInstanceOf('Larrock\Core\Helpers\FormBuilder\FBElement', $this->FormSelect);
+
+        $this->FormSelect = new FormSelect('test_name', 'test_title');
+        $this->FormSelect->setWhereConnect('test_key', 'test_value');
+    }
+
     public function testRender()
     {
         $this->FormSelect->setDefaultValue('test');

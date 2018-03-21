@@ -34,14 +34,14 @@ class FBElementTest extends \Orchestra\Testbench\TestCase
     public function testSetInTableAdmin()
     {
         $this->FBElement->setInTableAdmin();
-        $this->assertTrue($this->FBElement->in_table_admin);
+        $this->assertTrue($this->FBElement->inTableAdmin);
         $this->assertInstanceOf('Larrock\Core\Helpers\FormBuilder\FBElement', $this->FBElement);
     }
 
     public function testSetInTableAdminAjaxEditable()
     {
-        $this->FBElement->setInTableAdminAjaxEditable();
-        $this->assertTrue($this->FBElement->in_table_admin_ajax_editable);
+        $this->FBElement->setInTableAdminEditable();
+        $this->assertTrue($this->FBElement->inTableAdminEditable);
         $this->assertInstanceOf('Larrock\Core\Helpers\FormBuilder\FBElement', $this->FBElement);
     }
 
@@ -64,14 +64,14 @@ class FBElementTest extends \Orchestra\Testbench\TestCase
     public function testSetCssClassGroup()
     {
         $this->FBElement->setCssClassGroup('test');
-        $this->assertEquals('uk-width-1-1 test', $this->FBElement->css_class_group);
+        $this->assertEquals('uk-width-1-1 test', $this->FBElement->cssClassGroup);
         $this->assertInstanceOf('Larrock\Core\Helpers\FormBuilder\FBElement', $this->FBElement);
     }
 
     public function testSetCssClass()
     {
         $this->FBElement->setCssClass('test');
-        $this->assertEquals('uk-width-1-1 test', $this->FBElement->css_class);
+        $this->assertEquals('uk-width-1-1 test', $this->FBElement->cssClass);
         $this->assertInstanceOf('Larrock\Core\Helpers\FormBuilder\FBElement', $this->FBElement);
     }
 
@@ -86,38 +86,6 @@ class FBElementTest extends \Orchestra\Testbench\TestCase
     {
         $this->FBElement->setHelp('test');
         $this->assertEquals('test', $this->FBElement->help);
-        $this->assertInstanceOf('Larrock\Core\Helpers\FormBuilder\FBElement', $this->FBElement);
-    }
-
-    public function testSetConnect()
-    {
-        $this->FBElement->setConnect(Config::class, 'test_relation', 'test_group');
-        $this->assertEquals(Config::class, $this->FBElement->connect->model);
-        $this->assertEquals('test_relation', $this->FBElement->connect->relation_name);
-        $this->assertEquals('test_group', $this->FBElement->connect->group_by);
-        $this->assertInstanceOf('Larrock\Core\Helpers\FormBuilder\FBElement', $this->FBElement);
-    }
-
-    /**
-     * @expectedException \Larrock\Core\Exceptions\LarrockFormBuilderRowException
-     * @expectedExceptionMessage У поля test_name сначала нужно определить setConnect
-     */
-    public function testSetWhereConnect()
-    {
-        $this->FBElement->setConnect(Config::class, 'test_relation', 'test_group');
-        $this->FBElement->setWhereConnect('test_key', 'test_value');
-        $this->assertEquals('test_key', $this->FBElement->connect->where_key);
-        $this->assertEquals('test_value', $this->FBElement->connect->where_value);
-        $this->assertInstanceOf('Larrock\Core\Helpers\FormBuilder\FBElement', $this->FBElement);
-
-        $this->FBElement = new FBElement('test_name', 'test_title');
-        $this->FBElement->setWhereConnect('test_key', 'test_value');
-    }
-
-    public function testSetAttached()
-    {
-        $this->FBElement->setAttached();
-        $this->assertTrue($this->FBElement->attached);
         $this->assertInstanceOf('Larrock\Core\Helpers\FormBuilder\FBElement', $this->FBElement);
     }
 
@@ -145,7 +113,7 @@ class FBElementTest extends \Orchestra\Testbench\TestCase
     public function testSetTemplateAdmin()
     {
         $this->FBElement->setTemplateAdmin('test');
-        $this->assertEquals('test', $this->FBElement->template_admin);
+        $this->assertEquals('test', $this->FBElement->templateAdmin);
         $this->assertInstanceOf('Larrock\Core\Helpers\FormBuilder\FBElement', $this->FBElement);
     }
 

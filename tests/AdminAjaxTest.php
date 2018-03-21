@@ -5,7 +5,6 @@ namespace Larrock\Core\Tests;
 use \Larrock\Core\AdminAjax;
 use Illuminate\Http\Request;
 use DB;
-use Illuminate\Database\Schema\Blueprint;
 use Larrock\Core\Tests\DatabaseTest\CreateConfigDatabase;
 use Larrock\Core\Tests\DatabaseTest\CreateMediaDatabase;
 use Larrock\Core\Tests\DatabaseTest\CreateUserDatabase;
@@ -118,21 +117,6 @@ class AdminAjaxTest extends \Orchestra\Testbench\TestCase
         $this->assertEquals(200, $data->getStatusCode());
         $this->assertEquals('success', $content->status);
         $this->assertEquals('test-znacheniya', $content->message);
-    }
-
-    /**
-     * @throws \Exception
-     */
-    public function testTypograph()
-    {
-        $request = Request::create('/admin/ajax/Typograph', 'POST', [
-            'text' => 'тест значения'
-        ]);
-
-        $data = $this->controller->Typograph($request);
-        $content = json_decode($data->getContent());
-        $this->assertEquals(200, $data->getStatusCode());
-        $this->assertEquals('<p>тест значения</p>', $content->text);
     }
 
     /**

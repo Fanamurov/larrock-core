@@ -51,7 +51,6 @@ class FormTagsTest extends \Orchestra\Testbench\TestCase
         $this->FormTags->setModels(Config::class, Seo::class);
         $this->assertEquals(Config::class, $this->FormTags->modelParent);
         $this->assertEquals(Seo::class, $this->FormTags->modelChild);
-        $this->assertTrue($this->FormTags->attached);
         $this->assertInstanceOf(FBElement::class, $this->FormTags);
         $this->assertInstanceOf(FormTags::class, $this->FormTags);
     }

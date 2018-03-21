@@ -29,6 +29,6 @@ class Config extends Model
 
 	public function getValueAttribute($value)
 	{
-		return unserialize($value, false);
+		return unserialize($value);
 	}
 }

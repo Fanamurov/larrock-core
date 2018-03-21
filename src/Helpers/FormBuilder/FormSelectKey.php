@@ -22,6 +22,9 @@ class FormSelectKey extends FBElement
     /** @var string */
     public $option_key;
 
+    /** @var null|mixed */
+    public $connect;
+
     /**
      * @param array $options
      * @return $this

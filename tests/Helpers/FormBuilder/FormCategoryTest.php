@@ -60,6 +60,31 @@ class FormCategoryTest extends \Orchestra\Testbench\TestCase
         $this->assertInstanceOf(FormCategory::class, $this->FormCategory);
     }
 
+    public function testSetConnect()
+    {
+        $this->FormCategory->setConnect(Config::class, 'test_relation', 'test_group');
+        $this->assertEquals(Config::class, $this->FormCategory->connect->model);
+        $this->assertEquals('test_relation', $this->FormCategory->connect->relation_name);
+        $this->assertEquals('test_group', $this->FormCategory->connect->group_by);
+        $this->assertInstanceOf('Larrock\Core\Helpers\FormBuilder\FBElement', $this->FormCategory);
+    }
+
+    /**
+     * @expectedException \Larrock\Core\Exceptions\LarrockFormBuilderRowException
+     * @expectedExceptionMessage У поля test_name сначала нужно определить setConnect
+     */
+    public function testSetWhereConnect()
+    {
+        $this->FormCategory->setConnect(Config::class, 'test_relation', 'test_group');
+        $this->FormCategory->setWhereConnect('test_key', 'test_value');
+        $this->assertEquals('test_key', $this->FormCategory->connect->where_key);
+        $this->assertEquals('test_value', $this->FormCategory->connect->where_value);
+        $this->assertInstanceOf('Larrock\Core\Helpers\FormBuilder\FBElement', $this->FormCategory);
+
+        $this->FormCategory = new FormCategory('test_name', 'test_title');
+        $this->FormCategory->setWhereConnect('test_key', 'test_value');
+    }
+
     /**
      * @expectedException \Larrock\Core\Exceptions\LarrockFormBuilderRowException
      * @expectedExceptionMessage Поля model, relation_name не установлены через setConnect()

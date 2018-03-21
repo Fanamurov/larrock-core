@@ -41,7 +41,7 @@ class FormTextareaTest extends \Orchestra\Testbench\TestCase
     public function testSetNotEditor()
     {
         $this->FormTextarea->setNotEditor();
-        $this->assertEquals('uk-width-1-1 not-editor', $this->FormTextarea->css_class);
+        $this->assertEquals('uk-width-1-1 not-editor', $this->FormTextarea->cssClass);
         $this->assertInstanceOf(FBElement::class, $this->FormTextarea);
         $this->assertInstanceOf(FormTextarea::class, $this->FormTextarea);
     }
