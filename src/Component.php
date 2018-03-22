@@ -57,7 +57,7 @@ class Component
     /** @var array|Collection */
     public $tabs_data;
 
-    /** @var string */
+    /** @var mixed */
     public $valid;
 
     /** @return Component */

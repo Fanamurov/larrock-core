@@ -60,6 +60,7 @@
 
 3. **Install LarrockCMS**
   ```sh
+  $ php artisan larrock:installcorepackages
   $ php artisan larrock:install
   ```
   
