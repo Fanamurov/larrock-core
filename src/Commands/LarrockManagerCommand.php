@@ -42,15 +42,15 @@ class LarrockManagerCommand extends Command
             $this->info('Install all packages LarrockCMS');
             foreach ($packages as $package) {
                 if ($package !== 'all' && $package !== 'Do not install other packages') {
-                    $this->info('composer require fanamurov/' . $package .':^1.0');
-                    echo shell_exec('composer require fanamurov/' . $package .':^1.0');
+                    $this->info('composer require fanamurov/' . $package .':^1.0 --prefer-dist');
+                    echo shell_exec('composer require fanamurov/' . $package .':^1.0 --prefer-dist');
                 }
             }
         }elseif($name === 'Do not install other packages'){
             $this->info('Do not install other packages');
         }else{
-            $this->info('composer require fanamurov/'. $name .':^1.0');
-            echo shell_exec('composer require fanamurov/'. $name .':^1.0');
+            $this->info('composer require fanamurov/'. $name .':^1.0 --prefer-dist');
+            echo shell_exec('composer require fanamurov/'. $name .':^1.0 --prefer-dist');
         }
 
         $this->call('vendor:publish');

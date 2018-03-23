@@ -39,6 +39,9 @@ if(file_exists(base_path(). '/vendor/fanamurov/larrock-contact')){
 if(file_exists(base_path(). '/vendor/fanamurov/larrock-blocks')){
     $other_items[] = new \Larrock\ComponentBlocks\BlocksComponent();
 }
+if(file_exists(base_path(). '/vendor/fanamurov/larrock-vscale')){
+    $other_items[] = new \Larrock\ComponentVscale\VscaleComponent();
+}
 
 return [
     'components' => $components,
