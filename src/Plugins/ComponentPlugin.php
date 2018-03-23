@@ -60,9 +60,9 @@ class ComponentPlugin
                 return $seo;
             }
         }else{
-            if( !$seo && (!empty($event->request->get('seo_title')) ||
-                    !empty($event->request->get('seo_description')) ||
-                    !empty($event->request->get('seo_seo_keywords')))){
+            if( !empty($event->request->get('seo_title')) ||
+                !empty($event->request->get('seo_description')) ||
+                !empty($event->request->get('seo_seo_keywords'))){
                 $seo = LarrockAdminSeo::getModel();
                 $seo->seo_id_connect = $event->request->get('id_connect');
                 $seo->seo_url_connect = $event->request->get('url_connect');
