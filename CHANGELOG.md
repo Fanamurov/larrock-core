@@ -4,7 +4,6 @@
 
 ### Added
 - add CHANGELOG.md
-- post-package-install script in composer.json
 
 ### Changed
 - command larrock:install. New option --fast

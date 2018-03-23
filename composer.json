@@ -46,14 +46,6 @@
             "role": "Developer"
         }
     ],
-    "scripts": {
-        "post-package-install": [
-            "@php artisan larrock:installcorepackages",
-            "@php artisan larrock:install --fast",
-            "@php artisan larrock:check",
-            "@php artisan larrock:manager"
-        ]
-    },
     "extra": {
         "laravel": {
             "providers": [
