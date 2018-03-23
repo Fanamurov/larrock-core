@@ -1,9 +1,11 @@
 # Release Notes
 
-## v1.3.6 (2018-03-23)
+## v1.3.5.3 (2018-03-23)
 
 ### Added
 - add CHANGELOG.md
+- add configVendor/database.php
 
 ### Changed
 - command larrock:install. New option --fast
+- command larrock:updateVendorConfig
