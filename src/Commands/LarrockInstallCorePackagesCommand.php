@@ -27,20 +27,10 @@ class LarrockInstallCorePackagesCommand extends Command
      */
     public function handle()
     {
-        $this->info('=== Install larrockCMS core packages ===');
+        $this->info('=== Install larrockCMS core components ===');
 
-        $packages = [
-            'larrock-menu', 'larrock-users', 'larrock-pages', 'larrock-blocks',
-            'larrock-contact', 'larrock-admin-seo', 'larrock-search'
-        ];
+        echo shell_exec('composer require fanamurov/larrock-menu:^1.0 fanamurov/larrock-users:^1.0 fanamurov/larrock-pages:^1.0 fanamurov/larrock-blocks:^1.0 fanamurov/larrock-contact:^1.0 fanamurov/larrock-admin-seo:^1.0 fanamurov/larrock-search:^1.0 --prefer-dist');
 
-        foreach ($packages as $package) {
-            if( !\File::exists(base_path('vendor/fanamurov/'. $package))){
-                $this->info('composer require fanamurov/'. $package .':^1.0 --prefer-dist');
-                echo shell_exec('composer require fanamurov/'. $package .':^1.0 --prefer-dist');
-            }
-        }
-
-        $this->info('LarrockCMS components installed');
+        $this->info('LarrockCMS core components installed');
     }
 }

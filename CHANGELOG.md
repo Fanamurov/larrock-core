@@ -1,5 +1,10 @@
 # Release Notes
 
+## v1.3.5.5 (2018-03-24)
+### Changed
+- optimized larrock:manager command
+- optimized larrock:installcorepackages command
+
 ## v1.3.5.4 (2018-03-23)
 
 ### Changed
