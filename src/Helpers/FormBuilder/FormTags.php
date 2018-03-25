@@ -151,16 +151,16 @@ class FormTags extends FBElement
         }
 
         $selected = NULL;
-        if($data){
+        if($this->data){
             if($this->modelChild === 'Larrock\ComponentUsers\Roles\Models\Role'){
-                $selected = $data->getLinkWithParams($this->modelChild, 'role_user', 'role_id', 'user_id')->get();
+                $selected = $this->data->getLinkWithParams($this->modelChild, 'role_user', 'role_id', 'user_id')->get();
             }else{
-                $selected = $data->getLink($this->modelChild)->get();
+                $selected = $this->data->getLink($this->modelChild)->get();
                 if($this->costValue){
                     foreach ($selected as $key => $value){
                         if($link = Link::whereModelParent($this->modelParent)
                             ->whereModelChild($this->modelChild)
-                            ->whereIdParent($data->id)
+                            ->whereIdParent($this->data->id)
                             ->whereIdChild($value->id)->first(['cost'])){
                             $selected[$key]->cost = $link->cost;
                         }
@@ -170,6 +170,6 @@ class FormTags extends FBElement
         }
 
         return View::make($this->FBTemplate, ['row_key' => $this->name,
-            'row_settings' => $this, 'data' => $this->data, 'selected' => $selected])->render();
+            'row_settings' => $this, 'data' => $this->data, 'selected' => $selected, 'tags' => $tags])->render();
     }
 }

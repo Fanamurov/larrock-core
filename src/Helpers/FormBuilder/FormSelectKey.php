@@ -13,7 +13,7 @@ use View;
  */
 class FormSelectKey extends FBElement
 {
-    /** @var array|null */
+    /** @var null|mixed */
     public $options;
 
     /** @var string */
@@ -131,7 +131,7 @@ class FormSelectKey extends FBElement
         if(\Request::input($this->name)){
             $selected[] = \Request::input($this->name);
         }else{
-            $selected[] = $data->{$this->name};
+            $selected[] = $this->data->{$this->name};
         }
 
         return View::make($this->FBTemplate, ['row_key' => $this->name,

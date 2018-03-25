@@ -104,15 +104,15 @@ class FormCategory extends FBElement
             }
         }
 
-        $selected = $data->{$this->connect->relation_name};
+        $selected = $this->data->{$this->connect->relation_name};
         if(\count($selected) === 1 && isset($selected->id)){
             $once_category[] = $selected;
             $selected = $once_category;
         }
 
         if($selected === NULL
-            && isset($data->{$this->name})
-            && ($get_category = LarrockCategory::getModel()->whereId($data->{$this->name})->first())){
+            && isset($this->data->{$this->name})
+            && ($get_category = LarrockCategory::getModel()->whereId($this->data->{$this->name})->first())){
             $selected[] = $get_category;
         }
 

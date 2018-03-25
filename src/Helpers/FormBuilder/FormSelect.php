@@ -8,7 +8,7 @@ use View;
 
 class FormSelect extends FBElement
 {
-    /** @var array|null */
+    /** @var null|mixed */
     public $options;
 
     /** @var string */
