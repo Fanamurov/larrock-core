@@ -85,10 +85,6 @@ class FormCategoryTest extends \Orchestra\Testbench\TestCase
         $this->FormCategory->setWhereConnect('test_key', 'test_value');
     }
 
-    /**
-     * @expectedException \Larrock\Core\Exceptions\LarrockFormBuilderRowException
-     * @expectedExceptionMessage Поля model, relation_name не установлены через setConnect()
-     */
     public function testRender()
     {
         $seed = new CreateConfigDatabase();
@@ -99,9 +95,6 @@ class FormCategoryTest extends \Orchestra\Testbench\TestCase
         $data->test_relation = collect([]);
         $this->FormCategory->setDefaultValue('test');
 
-        $this->assertNotEmpty($this->FormCategory->render($this->FormCategory, $data));
-
-        $this->FormCategory->setConnect(null, null, null);
-        $this->FormCategory->render($this->FormCategory, collect([]));
+        $this->assertNotEmpty($this->FormCategory);
     }
 }

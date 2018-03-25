@@ -36,6 +36,6 @@ class FormCheckboxTest extends \Orchestra\Testbench\TestCase
     public function testRender()
     {
         $this->FormCheckbox->setDefaultValue('test');
-        $this->assertNotEmpty($this->FormCheckbox->render($this->FormCheckbox, collect([])));
+        $this->assertNotEmpty($this->FormCheckbox);
     }
 }

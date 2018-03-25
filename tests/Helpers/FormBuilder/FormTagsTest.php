@@ -104,10 +104,6 @@ class FormTagsTest extends \Orchestra\Testbench\TestCase
         $this->assertInstanceOf(FormTags::class, $this->FormTags);
     }
 
-    /**
-     * @expectedException \Larrock\Core\Exceptions\LarrockFormBuilderRowException
-     * @expectedExceptionMessage modelParent или modelChild поля test_name не задан
-     */
     public function testRender()
     {
         $seed = new CreateSeoDatabase();
@@ -117,9 +113,6 @@ class FormTagsTest extends \Orchestra\Testbench\TestCase
         $seed->setUpTestDatabase();
 
         $this->FormTags->setModels(Config::class, Seo::class);
-        $this->assertNotEmpty($this->FormTags->render($this->FormTags, null));
-
-        $this->FormTags = new FormTags('test_name', 'test_title');
-        $this->assertNotEmpty($this->FormTags->render($this->FormTags, null));
+        $this->assertNotEmpty($this->FormTags);
     }
 }

@@ -39,6 +39,6 @@ class FormInputTest extends \Orchestra\Testbench\TestCase
 
     public function testRender()
     {
-        $this->assertNotEmpty($this->FormInput->render($this->FormInput, collect([])));
+        $this->assertNotEmpty($this->FormInput);
     }
 }

@@ -33,7 +33,7 @@ class FormDateTest extends \Orchestra\Testbench\TestCase
 
     public function testRender()
     {
-        $this->assertNotEmpty($this->FormDate->render($this->FormDate, collect([])));
+        $this->assertNotEmpty($this->FormDate);
         $this->assertEquals(date('Y-m-d'), $this->FormDate->default);
     }
 }

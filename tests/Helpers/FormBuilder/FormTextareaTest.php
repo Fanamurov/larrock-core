@@ -49,6 +49,6 @@ class FormTextareaTest extends \Orchestra\Testbench\TestCase
     public function testRender()
     {
         $this->FormTextarea->setDefaultValue('test');
-        $this->assertNotEmpty($this->FormTextarea->render($this->FormTextarea, collect([])));
+        $this->assertNotEmpty($this->FormTextarea);
     }
 }

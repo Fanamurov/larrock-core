@@ -87,6 +87,6 @@ class FormSelectKeyTest extends \Orchestra\Testbench\TestCase
         $this->FormSelectKey->setDefaultValue('test');
         $data = new Config();
         $data->test_name = collect([]);
-        $this->assertNotEmpty($this->FormSelectKey->render($this->FormSelectKey, $data));
+        $this->assertNotEmpty($this->FormSelectKey);
     }
 }
