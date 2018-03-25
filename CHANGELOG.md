@@ -1,5 +1,18 @@
 # Release Notes
 
+## v1.3.6 (2018-03-25)
+### Added
+- new properties in FBElement: $FBTemplate, $data 
+- new methods in FBElement: setData, setFBTemplate
+- new method toString() (render() replacement)
+
+### Changed
+- FormInput, FormHidden, Form... (childs FBElement) refactored
+- Refactor tabbable() method in Component.php
+
+### Removed
+- render() method in FBElement
+
 ## v1.3.5.5 (2018-03-24)
 ### Changed
 - optimized larrock:manager command

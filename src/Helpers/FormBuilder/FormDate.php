@@ -2,22 +2,14 @@
 
 namespace Larrock\Core\Helpers\FormBuilder;
 
-use View;
-
 class FormDate extends FBElement
 {
-    /**
-     * @param $row_settings
-     * @param $data
-     * @return mixed
-     */
-    public function render($row_settings, $data)
+    /** @var string Имя шаблона FormBuilder для отрисовки поля */
+    public $FBTemplate = 'larrock::admin.formbuilder.input.date';
+
+    public function __construct(string $name, string $title)
     {
-        $row_settings->default = date('Y-m-d');
-        if( !isset($data->{$row_settings->name}) && $row_settings->default){
-            $data->{$row_settings->name} = $row_settings->default;
-        }
-        return View::make('larrock::admin.formbuilder.input.date', ['row_key' => $row_settings->name,
-            'row_settings' => $row_settings, 'data' => $data])->render();
+        parent::__construct($name, $title);
+        $this->setDefaultValue(date('Y-m-d'));
     }
 }

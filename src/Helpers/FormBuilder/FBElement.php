@@ -2,6 +2,10 @@
 
 namespace Larrock\Core\Helpers\FormBuilder;
 
+use function GuzzleHttp\Psr7\str;
+use Illuminate\Database\Eloquent\Model;
+use View;
+
 class FBElement
 {
     /** @var string  */
@@ -49,6 +53,12 @@ class FBElement
     /** @var string */
     public $templateAdmin;
 
+    /** @var Model|null */
+    public $data;
+
+    /** @var string Имя шаблона FormBuilder для отрисовки поля */
+    public $FBTemplate = 'larrock::admin.formbuilder.input.hidden';
+
 
     /**
      * FBElement constructor.
@@ -59,6 +69,41 @@ class FBElement
     {
         $this->name = $name;
         $this->title = $title;
+    }
+
+    /**
+     * Установка данных модели (при редактировании материалов)
+     * @param $data
+     * @return $this
+     */
+    public function setData($data)
+    {
+        $this->data = $data;
+        return $this;
+    }
+
+    /**
+     * Установка имени шаблона FormBuilder для отрисовки поля
+     * @param $template
+     * @return $this
+     */
+    public function setFBTemplate($template)
+    {
+        $this->FBTemplate = $template;
+        return $this;
+    }
+
+    /**
+     * Отрисовка элемента формы
+     * @return string
+     */
+    public function __toString()
+    {
+        if( !isset($this->data->{$this->name}) && $this->default){
+            $this->data->{$this->name} = $this->default;
+        }
+        return View::make($this->FBTemplate, ['row_key' => $this->name,
+            'row_settings' => $this, 'data' => $this->data])->render();
     }
 
     /**

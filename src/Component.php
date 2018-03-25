@@ -304,24 +304,15 @@ class Component
         }
 
         $this->tabs = collect();
+        $this->tabs_data = collect();
         foreach($this->rows as $row_value){
             $this->tabs->put(key($row_value->tab), current($row_value->tab));
-        }
-        foreach($this->tabs as $tab_key => $tab_value){
-            $render = '';
-            foreach($this->rows as $row_value){
-                $class_name = \get_class($row_value);
-                $load_class = new $class_name($row_value->name, $row_value->title);
 
-                if(key($row_value->tab) === $tab_key){
-                    if(method_exists($load_class, 'render')){
-                        $render .= $load_class->render($row_value, $data);
-                    }else{
-                        $this->tabs_data->put($tab_key, '<p>'. $class_name .' не определен для отрисовки</p>');
-                    }
-                }
+            if( !isset($this->tabs_data[key($row_value->tab)])){
+                $this->tabs_data->put(key($row_value->tab), $row_value->setData($data));
+            }else{
+                $this->tabs_data[key($row_value->tab)] .= $row_value->setData($data);
             }
-            $this->tabs_data->put($tab_key, $render);
         }
         return $this;
     }

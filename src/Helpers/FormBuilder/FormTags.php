@@ -39,6 +39,9 @@ class FormTags extends FBElement
     /** @var string Какое поле использоваться в качестве заголовка в modelChild */
     public $titleRow = 'title';
 
+    /** @var string Имя шаблона FormBuilder для отрисовки поля */
+    public $FBTemplate = 'larrock::admin.formbuilder.select.value';
+
     /**
      * Передача моделей для связывания
      *
@@ -119,19 +122,17 @@ class FormTags extends FBElement
     }
 
     /**
-     * @param $row_settings
-     * @param $data
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|string|\Symfony\Component\HttpFoundation\Response
-     * @throws LarrockFormBuilderRowException
+     * Отрисовка элемента формы
+     * @return string
      */
-    public function render($row_settings, $data)
+    public function __toString()
     {
-        if( !$row_settings->modelParent || !$row_settings->modelChild){
-            throw LarrockFormBuilderRowException::withMessage('modelParent или modelChild поля '. $row_settings->name .' не задан');
+        if( !$this->modelParent || !$this->modelChild){
+            throw LarrockFormBuilderRowException::withMessage('modelParent или modelChild поля '. $this->name .' не задан');
         }
 
-        $rows = ['id', $row_settings->titleRow];
-        $model = new $row_settings->modelChild;
+        $rows = ['id', $this->titleRow];
+        $model = new $this->modelChild;
 
         if(method_exists($model, 'getConfig') && array_key_exists('category', $model->getConfig()->rows)
             && $model->getConfig()->rows['category']->fillable === TRUE){
@@ -139,11 +140,11 @@ class FormTags extends FBElement
             $this->showCategory = TRUE;
         }
 
-        if($row_settings->modelChildWhereKey && $row_settings->modelChildWhereValue){
+        if($this->modelChildWhereKey && $this->modelChildWhereValue){
             if(\is_array($this->modelChildWhereValue)){
-                $tags = $model->whereIn($row_settings->modelChildWhereKey, $row_settings->modelChildWhereValue)->get($rows);
+                $tags = $model->whereIn($this->modelChildWhereKey, $this->modelChildWhereValue)->get($rows);
             }else{
-                $tags = $model->where($row_settings->modelChildWhereKey, '=', $row_settings->modelChildWhereValue)->get($rows);
+                $tags = $model->where($this->modelChildWhereKey, '=', $this->modelChildWhereValue)->get($rows);
             }
         }else{
             $tags = $model->get($rows);
@@ -151,14 +152,14 @@ class FormTags extends FBElement
 
         $selected = NULL;
         if($data){
-            if($row_settings->modelChild === 'Larrock\ComponentUsers\Roles\Models\Role'){
-                $selected = $data->getLinkWithParams($row_settings->modelChild, 'role_user', 'role_id', 'user_id')->get();
+            if($this->modelChild === 'Larrock\ComponentUsers\Roles\Models\Role'){
+                $selected = $data->getLinkWithParams($this->modelChild, 'role_user', 'role_id', 'user_id')->get();
             }else{
-                $selected = $data->getLink($row_settings->modelChild)->get();
-                if($row_settings->costValue){
+                $selected = $data->getLink($this->modelChild)->get();
+                if($this->costValue){
                     foreach ($selected as $key => $value){
-                        if($link = Link::whereModelParent($row_settings->modelParent)
-                            ->whereModelChild($row_settings->modelChild)
+                        if($link = Link::whereModelParent($this->modelParent)
+                            ->whereModelChild($this->modelChild)
                             ->whereIdParent($data->id)
                             ->whereIdChild($value->id)->first(['cost'])){
                             $selected[$key]->cost = $link->cost;
@@ -168,7 +169,7 @@ class FormTags extends FBElement
             }
         }
 
-        return View::make('larrock::admin.formbuilder.tags.tags', ['tags' => $tags, 'data' => $data,
-            'row_key' => $row_settings->name, 'row_settings' => $row_settings, 'selected' => $selected])->render();
+        return View::make($this->FBTemplate, ['row_key' => $this->name,
+            'row_settings' => $this, 'data' => $this->data, 'selected' => $selected])->render();
     }
 }

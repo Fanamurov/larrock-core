@@ -25,6 +25,9 @@ class FormSelectKey extends FBElement
     /** @var null|mixed */
     public $connect;
 
+    /** @var string Имя шаблона FormBuilder для отрисовки поля */
+    public $FBTemplate = 'larrock::admin.formbuilder.select.key';
+
     /**
      * @param array $options
      * @return $this
@@ -90,49 +93,48 @@ class FormSelectKey extends FBElement
     }
 
     /**
-     * @param $row_settings
-     * @param $data
-     * @return mixed
+     * Отрисовка элемента формы
+     * @return string
      */
-    public function render($row_settings, $data)
+    public function __toString()
     {
-        if( !isset($data->{$row_settings->name}) && $row_settings->default){
-            $data->{$row_settings->name} = $row_settings->default;
+        if( !isset($this->data->{$this->name}) && $this->default){
+            $this->data->{$this->name} = $this->default;
         }
 
-        if($row_settings->connect){
-            if( !$row_settings->options){
-                $row_settings->options = collect();
+        if($this->connect){
+            if( !$this->options){
+                $this->options = collect();
             }else{
-                $row_settings->options = collect($row_settings->options);
+                $this->options = collect($this->options);
             }
-            $model = new $row_settings->connect->model;
+            $model = new $this->connect->model;
             $get_options_query = $model;
-            if(isset($row_settings->connect->where_key) && $row_settings->connect->where_key){
-                $get_options_query = $get_options_query->where($row_settings->connect->where_key, '=', $row_settings->connect->where_value);
+            if(isset($this->connect->where_key) && $this->connect->where_key){
+                $get_options_query = $get_options_query->where($this->connect->where_key, '=', $this->connect->where_value);
             }
 
-            if(isset($row_settings->connect->group_by) && $row_settings->connect->group_by){
-                $get_options_query = $get_options_query->groupBy([$row_settings->connect->group_by]);
+            if(isset($this->connect->group_by) && $this->connect->group_by){
+                $get_options_query = $get_options_query->groupBy([$this->connect->group_by]);
             }
 
             if($get_options = $get_options_query->get()){
                 foreach($get_options as $get_options_value){
-                    $row_settings->options->push($get_options_value);
+                    $this->options->push($get_options_value);
                 }
             }
         }else{
-            $row_settings->options = collect($row_settings->options);
+            $this->options = collect($this->options);
         }
 
         $selected = [];
-        if(\Request::input($row_settings->name)){
-            $selected[] = \Request::input($row_settings->name);
+        if(\Request::input($this->name)){
+            $selected[] = \Request::input($this->name);
         }else{
-            $selected[] = $data->{$row_settings->name};
+            $selected[] = $data->{$this->name};
         }
 
-        return View::make('larrock::admin.formbuilder.select.key', ['row_key' => $row_settings->name,
-            'row_settings' => $row_settings, 'data' => $data, 'selected' => $selected])->render();
+        return View::make($this->FBTemplate, ['row_key' => $this->name,
+            'row_settings' => $this, 'data' => $this->data, 'selected' => $selected])->render();
     }
 }

@@ -2,21 +2,8 @@
 
 namespace Larrock\Core\Helpers\FormBuilder;
 
-use View;
-
 class FormPassword extends FBElement
 {
-    /**
-     * @param $row_settings
-     * @param $data
-     * @return mixed
-     */
-    public function render($row_settings, $data)
-    {
-        if( !isset($data->{$row_settings->name}) && $row_settings->default){
-            $data->{$row_settings->name} = $row_settings->default;
-        }
-        return View::make('larrock::admin.formbuilder.input.password', ['row_key' => $row_settings->name,
-            'row_settings' => $row_settings, 'data' => $data])->render();
-    }
+    /** @var string Имя шаблона FormBuilder для отрисовки поля */
+    public $FBTemplate = 'larrock::admin.formbuilder.input.password';
 }

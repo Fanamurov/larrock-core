@@ -22,6 +22,9 @@ class FormCategory extends FBElement
     /** @var null|mixed */
     public $connect;
 
+    /** @var string Имя шаблона FormBuilder для отрисовки поля */
+    public $FBTemplate = 'larrock::admin.formbuilder.tags.categoryTree';
+
     /**
      * @param null|integer $max
      * @return $this
@@ -76,49 +79,47 @@ class FormCategory extends FBElement
     }
 
     /**
-     * @param $row_settings
-     * @param $data
-     * @return mixed
-     * @throws LarrockFormBuilderRowException
+     * Отрисовка элемента формы
+     * @return string
      */
-    public function render($row_settings, $data)
+    public function __toString()
     {
-        if( !isset($row_settings->connect->model, $row_settings->connect->relation_name)){
+        if( !isset($this->connect->model, $this->connect->relation_name)){
             throw new LarrockFormBuilderRowException('Поля model, relation_name не установлены через setConnect()');
         }
 
-        if( !isset($data->{$row_settings->name}) && $row_settings->default){
-            $data->{$row_settings->name} = $row_settings->default;
+        if( !isset($this->data->{$this->name}) && $this->default){
+            $this->data->{$this->name} = $this->default;
         }
 
-        $row_settings->options = collect();
+        $this->options = collect();
         /** @var \Eloquent $model */
-        $model = new $row_settings->connect->model;
-        if(isset($row_settings->connect->where_key)){
-            $model = $model::where($row_settings->connect->where_key, '=', $row_settings->connect->where_value);
+        $model = new $this->connect->model;
+        if(isset($this->connect->where_key)){
+            $model = $model::where($this->connect->where_key, '=', $this->connect->where_value);
         }
         if($get_options = $model::get(['id', 'parent', 'level', 'title'])){
             foreach($get_options as $get_options_value){
-                $row_settings->options->push($get_options_value);
+                $this->options->push($get_options_value);
             }
         }
 
-        $selected = $data->{$row_settings->connect->relation_name};
+        $selected = $data->{$this->connect->relation_name};
         if(\count($selected) === 1 && isset($selected->id)){
             $once_category[] = $selected;
             $selected = $once_category;
         }
 
         if($selected === NULL
-            && isset($data->{$row_settings->name})
-            && ($get_category = LarrockCategory::getModel()->whereId($data->{$row_settings->name})->first())){
+            && isset($data->{$this->name})
+            && ($get_category = LarrockCategory::getModel()->whereId($data->{$this->name})->first())){
             $selected[] = $get_category;
         }
 
         $tree = new Tree;
-        $row_settings->options = $tree->buildTree($row_settings->options, 'parent');
+        $this->options = $tree->buildTree($this->options, 'parent');
 
-        return View::make('larrock::admin.formbuilder.tags.categoryTree', ['row_key' => $row_settings->name,
-            'row_settings' => $row_settings, 'data' => $data, 'selected' => $selected])->render();
+        return View::make($this->FBTemplate, ['row_key' => $this->name,
+            'row_settings' => $this, 'data' => $this->data, 'selected' => $selected])->render();
     }
 }
