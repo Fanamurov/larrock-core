@@ -1,5 +1,9 @@
 # Release Notes
 
+## v1.3.6.4 (2018-03-26)
+### Added
+- new FormBuilder element: FormButton
+
 ## v1.3.6 (2018-03-25)
 ### Added
 - new properties in FBElement: $FBTemplate, $data 
