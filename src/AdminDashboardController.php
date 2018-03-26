@@ -53,6 +53,7 @@ class AdminDashboardController extends Controller
             'fanamurov/larrock-users' => 'Users component for larrockCMS',
             'fanamurov/larrock-wizard' => 'Import .xlsx price to catalog component for larrockCMS',
             'fanamurov/larrock-yandex-kassa' => 'Yandex.Kassa SDK bridge for larrockCMS',
+            'fanamurov/larrock-vscale' => 'Vscale API bridge for larrockCMS'
         ];
         foreach ($data['coreVersions'] as $item){
             unset($data['full_packages_list'][$item->name]);

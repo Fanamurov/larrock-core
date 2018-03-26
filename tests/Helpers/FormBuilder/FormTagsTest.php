@@ -80,9 +80,9 @@ class FormTagsTest extends \Orchestra\Testbench\TestCase
         $this->assertInstanceOf(FormTags::class, $this->FormTags);
     }
 
-    public function testDeleteIfNoLink()
+    public function testSetDeleteIfNoLink()
     {
-        $this->FormTags->deleteIfNoLink();
+        $this->FormTags->setDeleteIfNoLink();
         $this->assertTrue($this->FormTags->deleteIfNoLink);
         $this->assertInstanceOf(FBElement::class, $this->FormTags);
         $this->assertInstanceOf(FormTags::class, $this->FormTags);

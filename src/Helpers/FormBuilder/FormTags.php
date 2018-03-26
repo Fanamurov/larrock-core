@@ -94,7 +94,7 @@ class FormTags extends FBElement
      * Удалять поле из $modelChild если связей к ней нет
      * @return $this
      */
-    public function deleteIfNoLink()
+    public function setDeleteIfNoLink()
     {
         $this->deleteIfNoLink = TRUE;
         return $this;
@@ -127,49 +127,53 @@ class FormTags extends FBElement
      */
     public function __toString()
     {
-        if( !$this->modelParent || !$this->modelChild){
-            throw LarrockFormBuilderRowException::withMessage('modelParent или modelChild поля '. $this->name .' не задан');
-        }
-
-        $rows = ['id', $this->titleRow];
-        $model = new $this->modelChild;
-
-        if(method_exists($model, 'getConfig') && array_key_exists('category', $model->getConfig()->rows)
-            && $model->getConfig()->rows['category']->fillable === TRUE){
-            $rows[] = 'category';
-            $this->showCategory = TRUE;
-        }
-
-        if($this->modelChildWhereKey && $this->modelChildWhereValue){
-            if(\is_array($this->modelChildWhereValue)){
-                $tags = $model->whereIn($this->modelChildWhereKey, $this->modelChildWhereValue)->get($rows);
-            }else{
-                $tags = $model->where($this->modelChildWhereKey, '=', $this->modelChildWhereValue)->get($rows);
+        try{
+            if( !$this->modelParent || !$this->modelChild){
+                throw new LarrockFormBuilderRowException('modelParent или modelChild поля '. $this->name .' не задан');
             }
-        }else{
-            $tags = $model->get($rows);
-        }
 
-        $selected = NULL;
-        if($this->data){
-            if($this->modelChild === 'Larrock\ComponentUsers\Roles\Models\Role'){
-                $selected = $this->data->getLinkWithParams($this->modelChild, 'role_user', 'role_id', 'user_id')->get();
+            $rows = ['id', $this->titleRow];
+            $model = new $this->modelChild;
+
+            if(method_exists($model, 'getConfig') && array_key_exists('category', $model->getConfig()->rows)
+                && $model->getConfig()->rows['category']->fillable === TRUE){
+                $rows[] = 'category';
+                $this->showCategory = TRUE;
+            }
+
+            if($this->modelChildWhereKey && $this->modelChildWhereValue){
+                if(\is_array($this->modelChildWhereValue)){
+                    $tags = $model->whereIn($this->modelChildWhereKey, $this->modelChildWhereValue)->get($rows);
+                }else{
+                    $tags = $model->where($this->modelChildWhereKey, '=', $this->modelChildWhereValue)->get($rows);
+                }
             }else{
-                $selected = $this->data->getLink($this->modelChild)->get();
-                if($this->costValue){
-                    foreach ($selected as $key => $value){
-                        if($link = Link::whereModelParent($this->modelParent)
-                            ->whereModelChild($this->modelChild)
-                            ->whereIdParent($this->data->id)
-                            ->whereIdChild($value->id)->first(['cost'])){
-                            $selected[$key]->cost = $link->cost;
+                $tags = $model->get($rows);
+            }
+
+            $selected = NULL;
+            if($this->data){
+                if($this->modelChild === 'Larrock\ComponentUsers\Roles\Models\Role'){
+                    $selected = $this->data->getLinkWithParams($this->modelChild, 'role_user', 'role_id', 'user_id')->get();
+                }else{
+                    $selected = $this->data->getLink($this->modelChild)->get();
+                    if($this->costValue){
+                        foreach ($selected as $key => $value){
+                            if($link = Link::whereModelParent($this->modelParent)
+                                ->whereModelChild($this->modelChild)
+                                ->whereIdParent($this->data->id)
+                                ->whereIdChild($value->id)->first(['cost'])){
+                                $selected[$key]->cost = $link->cost;
+                            }
                         }
                     }
                 }
             }
-        }
 
-        return View::make($this->FBTemplate, ['row_key' => $this->name,
-            'row_settings' => $this, 'data' => $this->data, 'selected' => $selected, 'tags' => $tags])->render();
+            return View::make($this->FBTemplate, ['row_key' => $this->name,
+                'row_settings' => $this, 'data' => $this->data, 'selected' => $selected, 'tags' => $tags])->render();
+        } catch (LarrockFormBuilderRowException $exception){
+            return $exception->getMessage();
+        }
     }
 }

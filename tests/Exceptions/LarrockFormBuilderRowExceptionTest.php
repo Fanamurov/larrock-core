@@ -2,18 +2,21 @@
 
 namespace Larrock\Core\Tests;
 
-use Larrock\Core\Exceptions\LarrockFormBuilderRowException;
+use Larrock\Core\Helpers\FormBuilder\FormTags;
+use Larrock\Core\LarrockCoreServiceProvider;
 
 class LarrockFormBuilderRowExceptionTest extends \Orchestra\Testbench\TestCase
 {
-    /**
-     * @expectedException LarrockFormBuilderRowException
-     * @expectedExceptionMessage message
-     */
+    protected function getPackageProviders($app)
+    {
+        return [
+            LarrockCoreServiceProvider::class
+        ];
+    }
+
     public function testWithMessage()
     {
-        $this->expectException('Exception');
-        throw new LarrockFormBuilderRowException('message');
-
+        $row = new FormTags('test', 'test');
+        $this->assertEquals('modelParent или modelChild поля test не задан', $row);
     }
 }

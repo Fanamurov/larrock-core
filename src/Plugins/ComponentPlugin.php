@@ -166,7 +166,7 @@ class ComponentPlugin
                     //Удаляем связи
                     $event->model->linkQuery($row->modelChild)->delete();
 
-                    //Удаляем поля в modelChild если у поля указана опция deleteIfNoLink и больше связей к этому материалу нет
+                    //Удаляем поля в modelChild если у поля указана опция setDeleteIfNoLink и больше связей к этому материалу нет
                     if($row->deleteIfNoLink){
                         //Проверяем остались ли связи до modelChild от modelParent
                         foreach ($getLink as $link){

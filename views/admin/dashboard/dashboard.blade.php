@@ -36,10 +36,10 @@
                         <div class="uk-margin-bottom">
                             <div class="uk-card uk-card-small uk-card-secondary">
                                 <div class="uk-card-body">
-                                    <div class="uk-card-badge uk-label">
+                                    <h4>
                                         <a href="https://github.com/Fanamurov/{{ str_replace('fanamurov/', '', $key) }}" target="_blank">
-                                            {{ str_replace('fanamurov/', '', $key) }}</a></div>
-                                    <h4 class="uk-card-title">Не установлен</h4>
+                                            {{ str_replace('fanamurov/', '', $key) }}</a>
+                                    <p>Не установлен</p>
                                     <p>{{ $item }} <img src="https://poser.pugx.org/{{ $key }}/version" alt="Latest Stable Version"></p>
                                 </div>
                             </div>
@@ -48,7 +48,7 @@
                 </div>
             </div>
         @else
-            <p uk-alert>Статистика версий установленных компонентов не доступна. Файл composer.lock не прочитан.</p>
+            <p class="uk-alert" uk-alert>Статистика версий установленных компонентов не доступна. Файл composer.lock не прочитан.</p>
         @endif
     </div>
 @endsection
