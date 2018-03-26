@@ -3,6 +3,7 @@
 namespace Larrock\Core\Tests\Helpers\FormBuilder;
 
 use Larrock\Core\Helpers\FormBuilder\FBElement;
+use Larrock\Core\LarrockCoreServiceProvider;
 use Larrock\Core\Models\Config;
 
 class FBElementTest extends \Orchestra\Testbench\TestCase
@@ -22,6 +23,33 @@ class FBElementTest extends \Orchestra\Testbench\TestCase
         parent::tearDown();
 
         unset($this->FBElement);
+    }
+
+    protected function getPackageProviders($app)
+    {
+        return [
+            LarrockCoreServiceProvider::class
+        ];
+    }
+
+    public function testSetData()
+    {
+        $model = new Config();
+        $this->FBElement->setData($model);
+        $this->assertInstanceOf(Config::class, $this->FBElement->data);
+        $this->assertInstanceOf('Larrock\Core\Helpers\FormBuilder\FBElement', $this->FBElement);
+    }
+
+    public function testSetFBTemplate()
+    {
+        $this->FBElement->setFBTemplate('template');
+        $this->assertEquals('template', $this->FBElement->FBTemplate);
+        $this->assertInstanceOf('Larrock\Core\Helpers\FormBuilder\FBElement', $this->FBElement);
+    }
+
+    public function test__toString()
+    {
+        $this->assertNotNull($this->FBElement->__toString());
     }
 
     public function testSetDefaultValue()

@@ -40,7 +40,7 @@ class FormTags extends FBElement
     public $titleRow = 'title';
 
     /** @var string Имя шаблона FormBuilder для отрисовки поля */
-    public $FBTemplate = 'larrock::admin.formbuilder.select.value';
+    public $FBTemplate = 'larrock::admin.formbuilder.tags.tags';
 
     /**
      * Передача моделей для связывания

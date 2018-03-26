@@ -6,6 +6,8 @@ use Larrock\Core\Helpers\FormBuilder\FormSelectKey;
 use Larrock\Core\LarrockCoreServiceProvider;
 use Larrock\Core\Helpers\FormBuilder\FBElement;
 use Larrock\Core\Models\Config;
+use Larrock\Core\Models\Seo;
+use Larrock\Core\Tests\DatabaseTest\CreateSeoDatabase;
 
 class FormSelectKeyTest extends \Orchestra\Testbench\TestCase
 {
@@ -24,6 +26,16 @@ class FormSelectKeyTest extends \Orchestra\Testbench\TestCase
         parent::tearDown();
 
         unset($this->FormSelectKey);
+    }
+
+    protected function getEnvironmentSetUp($app)
+    {
+        $app['config']->set('database.default', 'sqlite');
+        $app['config']->set('database.connections.sqlite', [
+            'driver' => 'sqlite',
+            'database' => ':memory:',
+            'prefix' => '',
+        ]);
     }
 
     protected function getPackageProviders($app)
@@ -82,11 +94,26 @@ class FormSelectKeyTest extends \Orchestra\Testbench\TestCase
         $this->FormSelectKey->setWhereConnect('test_key', 'test_value');
     }
 
-    public function testRender()
+    public function test__toString()
     {
-        $this->FormSelectKey->setDefaultValue('test');
-        $data = new Config();
-        $data->test_name = collect([]);
-        $this->assertNotEmpty($this->FormSelectKey);
+        $seed = new CreateSeoDatabase();
+        $seed->setUpSeoDatabase();
+
+        \DB::connection()->table('seo')->insert([
+            'seo_title' => 'test2_t',
+            'seo_description' => 'test2_d',
+            'seo_keywords' => 'test2_k',
+            'seo_id_connect' => 2,
+            'seo_url_connect' => 'test2_uc',
+            'seo_type_connect' => 'test2_st',
+        ]);
+
+        $row = new FormSelectKey('type', 'Тип меню');
+        $test = $row->setValid('required')
+            ->setConnect(Seo::class, NULL, 'seo_type_connect')->setDefaultValue('default')
+            ->setOptionsTitle('seo_type_connect')->setOptionsKey('seo_id_connect')
+            ->setCssClassGroup('uk-width-1-1 uk-width-1-3@m')->setFillable();
+
+        $this->assertNotNull((string)$test);
     }
 }

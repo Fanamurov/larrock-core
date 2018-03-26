@@ -104,7 +104,7 @@ class FormTagsTest extends \Orchestra\Testbench\TestCase
         $this->assertInstanceOf(FormTags::class, $this->FormTags);
     }
 
-    public function testRender()
+    public function test__toString()
     {
         $seed = new CreateSeoDatabase();
         $seed->setUpSeoDatabase();
@@ -113,6 +113,6 @@ class FormTagsTest extends \Orchestra\Testbench\TestCase
         $seed->setUpTestDatabase();
 
         $this->FormTags->setModels(Config::class, Seo::class);
-        $this->assertNotEmpty($this->FormTags);
+        $this->assertNotEmpty($this->FormTags->__toString());
     }
 }

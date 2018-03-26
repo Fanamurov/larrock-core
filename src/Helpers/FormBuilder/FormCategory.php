@@ -81,6 +81,7 @@ class FormCategory extends FBElement
     /**
      * Отрисовка элемента формы
      * @return string
+     * @throws LarrockFormBuilderRowException
      */
     public function __toString()
     {
@@ -88,7 +89,7 @@ class FormCategory extends FBElement
             throw new LarrockFormBuilderRowException('Поля model, relation_name не установлены через setConnect()');
         }
 
-        if( !isset($this->data->{$this->name}) && $this->default){
+        if($this->data && !isset($this->data->{$this->name}) && $this->default){
             $this->data->{$this->name} = $this->default;
         }
 
@@ -104,10 +105,13 @@ class FormCategory extends FBElement
             }
         }
 
-        $selected = $this->data->{$this->connect->relation_name};
-        if(\count($selected) === 1 && isset($selected->id)){
-            $once_category[] = $selected;
-            $selected = $once_category;
+        $selected = NULL;
+        if($this->data){
+            $selected = $this->data->{$this->connect->relation_name};
+            if(\count($selected) === 1 && isset($selected->id)){
+                $once_category[] = $selected;
+                $selected = $once_category;
+            }
         }
 
         if($selected === NULL

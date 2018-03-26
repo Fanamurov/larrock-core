@@ -85,7 +85,7 @@ class FormCategoryTest extends \Orchestra\Testbench\TestCase
         $this->FormCategory->setWhereConnect('test_key', 'test_value');
     }
 
-    public function testRender()
+    public function test__toString()
     {
         $seed = new CreateConfigDatabase();
         $seed->setUpTestDatabase();

@@ -98,7 +98,7 @@ class FormSelectKey extends FBElement
      */
     public function __toString()
     {
-        if( !isset($this->data->{$this->name}) && $this->default){
+        if($this->data && !isset($this->data->{$this->name}) && $this->default){
             $this->data->{$this->name} = $this->default;
         }
 
@@ -130,7 +130,7 @@ class FormSelectKey extends FBElement
         $selected = [];
         if(\Request::input($this->name)){
             $selected[] = \Request::input($this->name);
-        }else{
+        }elseif($this->data){
             $selected[] = $this->data->{$this->name};
         }
 
