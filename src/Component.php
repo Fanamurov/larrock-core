@@ -198,15 +198,9 @@ class Component
      */
     public function combineFrontMiddlewares($user_middlewares = NULL)
     {
-        $middleware = ['web', 'GetSeo'];
+        $middleware = ['web', 'GetSeo', 'AddMenuFront', 'AddBlocksTemplate'];
         if($config = config('larrock.middlewares.front')){
             $middleware = array_merge($middleware, $config);
-        }
-        if(file_exists(base_path(). '/vendor/fanamurov/larrock-menu')){
-            $middleware[] = 'AddMenuFront';
-        }
-        if(file_exists(base_path(). '/vendor/fanamurov/larrock-blocks')){
-            $middleware[] = 'AddBlocksTemplate';
         }
         if(file_exists(base_path(). '/vendor/fanamurov/larrock-discount')){
             $middleware[] = 'DiscountsShare';

@@ -17,7 +17,7 @@ class AdminDashboardController extends Controller
     {
         $data['coreVersions'] = Cache::rememberForever('coreVersion', function(){
             $filtered = [];
-            if($file = \File::get(base_path('composer.lock'))){
+            if(\File::exists(base_path('composer.lock')) && $file = \File::get(base_path('composer.lock'))){
                 $json = json_decode($file);
                 $packages = collect($json->packages);
                 $filtered = $packages->filter(function ($value, $key) {

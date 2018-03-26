@@ -84,49 +84,45 @@ class FormCategory extends FBElement
      */
     public function __toString()
     {
-        try{
-            if( !isset($this->connect->model, $this->connect->relation_name)){
-                throw new LarrockFormBuilderRowException('Поля model, relation_name не установлены через setConnect()');
-            }
-
-            if($this->data && !isset($this->data->{$this->name}) && $this->default){
-                $this->data->{$this->name} = $this->default;
-            }
-
-            $this->options = collect();
-            /** @var \Eloquent $model */
-            $model = new $this->connect->model;
-            if(isset($this->connect->where_key)){
-                $model = $model::where($this->connect->where_key, '=', $this->connect->where_value);
-            }
-            if($get_options = $model::get(['id', 'parent', 'level', 'title'])){
-                foreach($get_options as $get_options_value){
-                    $this->options->push($get_options_value);
-                }
-            }
-
-            $selected = NULL;
-            if($this->data){
-                $selected = $this->data->{$this->connect->relation_name};
-                if(\count($selected) === 1 && isset($selected->id)){
-                    $once_category[] = $selected;
-                    $selected = $once_category;
-                }
-            }
-
-            if($selected === NULL
-                && isset($this->data->{$this->name})
-                && ($get_category = LarrockCategory::getModel()->whereId($this->data->{$this->name})->first())){
-                $selected[] = $get_category;
-            }
-
-            $tree = new Tree;
-            $this->options = $tree->buildTree($this->options, 'parent');
-
-            return View::make($this->FBTemplate, ['row_key' => $this->name,
-                'row_settings' => $this, 'data' => $this->data, 'selected' => $selected])->render();
-        } catch (LarrockFormBuilderRowException $exception){
-            return $exception->getMessage();
+        if( !isset($this->connect->model, $this->connect->relation_name)){
+            return 'Отрисовка не возможна! Поля model, relation_name не установлены через setConnect()';
         }
+
+        if($this->data && !isset($this->data->{$this->name}) && $this->default){
+            $this->data->{$this->name} = $this->default;
+        }
+
+        $this->options = collect();
+        /** @var \Eloquent $model */
+        $model = new $this->connect->model;
+        if(isset($this->connect->where_key)){
+            $model = $model::where($this->connect->where_key, '=', $this->connect->where_value);
+        }
+        if($get_options = $model::get(['id', 'parent', 'level', 'title'])){
+            foreach($get_options as $get_options_value){
+                $this->options->push($get_options_value);
+            }
+        }
+
+        $selected = NULL;
+        if($this->data){
+            $selected = $this->data->{$this->connect->relation_name};
+            if(\count($selected) === 1 && isset($selected->id)){
+                $once_category[] = $selected;
+                $selected = $once_category;
+            }
+        }
+
+        if($selected === NULL
+            && isset($this->data->{$this->name})
+            && ($get_category = LarrockCategory::getModel()->whereId($this->data->{$this->name})->first())){
+            $selected[] = $get_category;
+        }
+
+        $tree = new Tree;
+        $this->options = $tree->buildTree($this->options, 'parent');
+
+        return View::make($this->FBTemplate, ['row_key' => $this->name,
+            'row_settings' => $this, 'data' => $this->data, 'selected' => $selected])->render();
     }
 }

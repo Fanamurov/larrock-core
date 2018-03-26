@@ -15,6 +15,7 @@ use Larrock\ComponentBlocks\Models\Blocks;
 use Larrock\Core\Component;
 use Larrock\Core\Helpers\FormBuilder\FormCheckbox;
 use Larrock\Core\Helpers\FormBuilder\FormInput;
+use Larrock\Core\LarrockCoreServiceProvider;
 use Larrock\Core\Models\Config;
 use Larrock\Core\Tests\DatabaseTest\CreateBlocksDatabase;
 use Larrock\Core\Tests\DatabaseTest\CreateLinkDatabase;
@@ -56,6 +57,7 @@ class ComponentTest extends \Orchestra\Testbench\TestCase
     protected function getPackageProviders($app)
     {
         return [
+            LarrockCoreServiceProvider::class,
             JsValidationServiceProvider::class,
             LarrockComponentAdminSeoServiceProvider::class,
             BreadcrumbsServiceProvider::class,
@@ -176,8 +178,12 @@ class ComponentTest extends \Orchestra\Testbench\TestCase
 
     public function testCombineFrontMiddlewares()
     {
-        $this->assertEquals([0 => 'web', 1 => 'GetSeo', 2 => 'TestAddFront'], $this->component->combineFrontMiddlewares());
-        $this->assertEquals([0 => 'web', 1 => 'GetSeo', 2 => 'TestAddFront', 3 => 'Test'], $this->component->combineFrontMiddlewares(['Test']));
+        $this->assertEquals(
+            [0 => 'web', 1 => 'GetSeo', 2 => 'AddMenuFront', 3 => 'AddBlocksTemplate', 4 => 'TestAddFront'],
+            $this->component->combineFrontMiddlewares(['TestAddFront']));
+        $this->assertEquals(
+            [0 => 'web', 1 => 'GetSeo', 2 => 'AddMenuFront', 3 => 'AddBlocksTemplate', 4 => 'TestAddFront', 5 => 'Test'],
+            $this->component->combineFrontMiddlewares(['Test']));
     }
 
     public function testCombineAdminMiddlewares()
@@ -257,5 +263,20 @@ class ComponentTest extends \Orchestra\Testbench\TestCase
     public function testSearch()
     {
         $this->assertNull($this->component->search(null));
+    }
+
+    public function testTabbable()
+    {
+        $seed = new CreateBlocksDatabase();
+        $seed->setUpBlocksDatabase();
+        $seed = new CreateSeoDatabase();
+        $seed->setUpSeoDatabase();
+
+        $component = new BlocksComponent();
+        $data = Blocks::first();
+        $test = $component->tabbable($data);
+        $this->assertNotNull($test);
+        $this->assertObjectHasAttribute('tabs_data', $test);
+        $this->assertObjectHasAttribute('tabs', $test);
     }
 }

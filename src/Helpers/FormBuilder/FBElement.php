@@ -94,19 +94,6 @@ class FBElement
     }
 
     /**
-     * Отрисовка элемента формы
-     * @return string
-     */
-    public function __toString()
-    {
-        if( !isset($this->data->{$this->name}) && $this->default){
-            $this->data->{$this->name} = $this->default;
-        }
-        return View::make($this->FBTemplate, ['row_key' => $this->name,
-            'row_settings' => $this, 'data' => $this->data])->render();
-    }
-
-    /**
      * Можно передать в качестве параметра имя поля, тогда оно будет браться из БД
      * @param $default
      * @return $this
@@ -251,5 +238,18 @@ class FBElement
     {
         $this->fillable = TRUE;
         return $this;
+    }
+
+    /**
+     * Отрисовка элемента формы
+     * @return string
+     */
+    public function __toString()
+    {
+        if( !isset($this->data->{$this->name}) && $this->default){
+            $this->data->{$this->name} = $this->default;
+        }
+        return View::make($this->FBTemplate, ['row_key' => $this->name,
+            'row_settings' => $this, 'data' => $this->data])->render();
     }
 }
