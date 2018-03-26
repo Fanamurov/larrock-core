@@ -95,6 +95,6 @@ class FormCategoryTest extends \Orchestra\Testbench\TestCase
         $data->test_relation = collect([]);
         $this->FormCategory->setDefaultValue('test');
 
-        $this->assertNotEmpty($this->FormCategory);
+        $this->assertNotEmpty($this->FormCategory->__toString());
     }
 }
