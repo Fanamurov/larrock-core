@@ -209,7 +209,7 @@ class Component
      */
     public function combineFrontMiddlewares($user_middlewares = NULL)
     {
-        $middleware = ['web', 'GetSeo', 'AddMenuFront', 'AddBlocksTemplate'];
+        $middleware = ['web', 'GetSeo', 'AddMenuFront', 'AddBlocksTemplate', 'ContactCreateTemplate'];
         if($config = config('larrock.middlewares.front')){
             $middleware = array_merge($middleware, $config);
         }

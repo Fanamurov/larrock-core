@@ -1,5 +1,9 @@
 # Release Notes
 
+## v1.3.7.1 (2018-03-27)
+### Added
+- Middleware ContactCreateTemplate add to default combineFrontMiddlewares
+
 ## v1.3.7 (2018-03-27)
 ### Added
 - new Component method setRow()
