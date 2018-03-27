@@ -3,6 +3,7 @@
 namespace Larrock\Core;
 
 use Illuminate\Support\Collection;
+use Larrock\Core\Helpers\FormBuilder\FBElement;
 use Larrock\Core\Plugins\PluginAnonsTrait;
 use Larrock\Core\Plugins\PluginSeoTrait;
 use Larrock\Core\Helpers\FormBuilder\FormCheckbox;
@@ -67,13 +68,13 @@ class Component
     }
 
     /** @return string */
-    public function getName()
+    public function getName() :string
     {
         return $this->name;
     }
 
     /** @return string */
-    public function getTitle()
+    public function getTitle() :string
     {
         return $this->title;
     }
@@ -91,9 +92,19 @@ class Component
     }
 
     /** @return string */
-    public function getTable()
+    public function getTable() :string
     {
         return $this->table;
+    }
+
+    /**
+     * @param FBElement $FBElement
+     * @return Component
+     */
+    public function setRow($FBElement)
+    {
+        $this->rows[$FBElement->name] = $FBElement;
+        return $this;
     }
 
     /** @return array */

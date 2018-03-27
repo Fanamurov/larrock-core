@@ -1,5 +1,18 @@
 # Release Notes
 
+## v1.3.7 (2018-03-27)
+### Added
+- new Component method setRow()
+- new env vars: MAIL_TEMPLATE_ADDRESS, MAIL_TEMPLATE_PHONE, MAIL_TEMPLATE_MAIL
+
+## v1.3.6.5 (2018-03-27)
+### Bugfix
+- larrock:manager command
+
+## v1.3.6.4 (2018-03-26)
+### Added
+- new FormBuilder element: FormButton
+
 ## v1.3.6.4 (2018-03-26)
 ### Added
 - new FormBuilder element: FormButton
