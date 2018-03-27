@@ -38,7 +38,8 @@ class LarrockManagerCommand extends Command
             'fanamurov/larrock-yandex-kassa', 'fanamurov/larrock-vscale'
         ];
 
-        $question = ['All', $packages, 'Do not install other packages'];
+        $question = array_prepend($packages, 'All');
+        $question[] = 'Do not install other packages';
 
         $name = $this->choice('What to install/update?', $question);
 
