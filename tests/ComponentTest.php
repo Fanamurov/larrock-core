@@ -179,11 +179,8 @@ class ComponentTest extends \Orchestra\Testbench\TestCase
     public function testCombineFrontMiddlewares()
     {
         $this->assertEquals(
-            [0 => 'web', 1 => 'GetSeo', 2 => 'AddMenuFront', 3 => 'AddBlocksTemplate', 4 => 'TestAddFront'],
+            [0 => 'web', 1 => 'GetSeo', 2 => 'AddMenuFront', 3 => 'AddBlocksTemplate', 4 => 'ContactCreateTemplate', 5 => 'TestAddFront'],
             $this->component->combineFrontMiddlewares(['TestAddFront']));
-        $this->assertEquals(
-            [0 => 'web', 1 => 'GetSeo', 2 => 'AddMenuFront', 3 => 'AddBlocksTemplate', 4 => 'TestAddFront', 5 => 'Test'],
-            $this->component->combineFrontMiddlewares(['Test']));
     }
 
     public function testCombineAdminMiddlewares()
