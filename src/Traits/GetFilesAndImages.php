@@ -1,11 +1,19 @@
 <?php
+
 namespace Larrock\Core\Traits;
 
 use Cache;
-use Spatie\MediaLibrary\Media;
+use Spatie\MediaLibrary\Models\Media;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
-trait GetFilesAndImages{
+trait GetFilesAndImages
+{
+    use HasMediaTrait;
 
+    /**
+     * @param Media|null $media
+     * @throws \Spatie\Image\Exceptions\InvalidManipulation
+     */
     public function registerMediaConversions(Media $media = null)
     {
         $this->addMediaConversion('110x110')
@@ -28,17 +36,20 @@ trait GetFilesAndImages{
 
     public function getFiles()
     {
-        return $this->hasMany('Spatie\MediaLibrary\Media', 'model_id', 'id')->where([['model_type', '=', $this->config->model], ['collection_name', '=', 'files']])->orderBy('order_column', 'DESC');
+        return $this->hasMany('Spatie\MediaLibrary\Models\Media', 'model_id', 'id')
+            ->where([['model_type', '=', $this->config->model], ['collection_name', '=', 'files']])->orderBy('order_column', 'DESC');
     }
 
     public function getImages()
     {
-        return $this->hasMany('Spatie\MediaLibrary\Media', 'model_id', 'id')->where([['model_type', '=', $this->config->model], ['collection_name', '=', 'images']])->orderBy('order_column', 'DESC');
+        return $this->hasMany('Spatie\MediaLibrary\Models\Media', 'model_id', 'id')
+            ->where([['model_type', '=', $this->config->model], ['collection_name', '=', 'images']])->orderBy('order_column', 'DESC');
     }
 
     public function getFirstImage()
     {
-        return $this->hasOne('Spatie\MediaLibrary\Media', 'model_id', 'id')->where([['model_type', '=', $this->config->model], ['collection_name', '=', 'images']])->orderBy('order_column', 'DESC');
+        return $this->hasOne('Spatie\MediaLibrary\Models\Media', 'model_id', 'id')
+            ->where([['model_type', '=', $this->config->model], ['collection_name', '=', 'images']])->orderBy('order_column', 'DESC');
     }
 
     public function getFirstImageAttribute()

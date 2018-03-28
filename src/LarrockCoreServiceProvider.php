@@ -12,9 +12,8 @@ use Larrock\Core\Commands\LarrockRenamePublicDirectoryCommand;
 use Larrock\Core\Commands\LarrockUpdateEnvCommand;
 use Larrock\Core\Commands\LarrockUpdateVendorConfigCommand;
 use Larrock\Core\Middleware\AdminMenu;
-use Larrock\Core\Middleware\SaveAdminPluginsData;
-use Spatie\MediaLibrary\Filesystem\DefaultFilesystem;
-use Larrock\Core\Helpers\MediaFilesystem;
+use Larrock\Core\Helpers\Filesystem;
+use Spatie\MediaLibrary\Filesystem\Filesystem as DefaultFilesystem;
 
 class LarrockCoreServiceProvider extends ServiceProvider
 {
@@ -95,6 +94,6 @@ class LarrockCoreServiceProvider extends ServiceProvider
             'command.larrock:assets',
         ]);
 
-        $this->app->bind(DefaultFilesystem::class, MediaFilesystem::class);
+        $this->app->bind(Filesystem::class, DefaultFilesystem::class);
     }
 }

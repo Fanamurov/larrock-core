@@ -83,14 +83,13 @@ class AdminAjax extends Controller
 		}
 		$images_value = $request->file('images');
 		$model = $request->get('model_type');
-		$model_name = class_basename($request->get('model_type'));
 		$model_id = $request->get('model_id');
 		$resize_original = $request->get('resize_original');
 		$resize_original_px = $request->get('resize_original_px');
 		$gallery = $request->get('gallery');
         if($images_value->isValid()){
-            $image_name = mb_strimwidth($model_name .'-'. $model_id
-                    .'-'.str_slug($images_value->getClientOriginalName()), 0, 150)
+            $image_name = mb_strimwidth($model_id
+                    .'-'.str_replace($images_value->getClientOriginalExtension(), '', str_slug($images_value->getClientOriginalName())), 0, 150)
                     .'.'. $images_value->getClientOriginalExtension();
             if($resize_original === '1' && (integer)$resize_original_px > 0){
                 Image::make($images_value->getRealPath())

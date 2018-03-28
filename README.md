@@ -40,7 +40,7 @@
 - "[albertcht/invisible-recaptcha](https://github.com/albertcht/invisible-recaptcha)": "^1.7", (каптча для форм)
 - "[davejamesmiller/laravel-breadcrumbs](https://github.com/davejamesmiller/laravel-breadcrumbs)": "^5.0", ("хлебные крошки")
 - "[nicolaslopezj/searchable](https://github.com/nicolaslopezj/searchable)": "^1.9", (расширенный поиск)
-- "[spatie/laravel-medialibrary](https://github.com/spatie/laravel-medialibrary)": "^6.0.0", (управление файлами в материалах)
+- "[spatie/laravel-medialibrary](https://github.com/spatie/laravel-medialibrary)": "^7.0.0", (управление файлами в материалах)
 - "[fanamurov/mdash](https://github.com/fanamurov/mdash)": "^1.0" (типограф)
 
 

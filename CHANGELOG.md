@@ -1,5 +1,14 @@
 # Release Notes
 
+## v1.4 (2018-03-28)
+### Changed
+- spatie/laravel-medialibrary v7
+- directory storage files
+
+### Removed
+- Helpers/MediaFilesystem
+- Helpers/MediaUrlGenerator
+
 ## v1.3.8 (2018-03-28)
 ### Added
 - FormFile Formbuilder item
