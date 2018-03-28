@@ -36,4 +36,9 @@ class CustomPathGenerator implements PathGenerator
 	{
 		return class_basename($media->model_type). '/'. $media->name .'/';
 	}
+
+    public function getPathForResponsiveImages(Media $media): string
+    {
+        return class_basename($media->model_type). '/'. $media->name .'/r/';
+    }
 }

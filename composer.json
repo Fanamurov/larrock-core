@@ -11,7 +11,7 @@
         "proengsoft/laravel-jsvalidation": "^2.0",
         "davejamesmiller/laravel-breadcrumbs": "5.*",
         "nicolaslopezj/searchable": "^1.9",
-        "spatie/laravel-medialibrary": "^6.0.0",
+        "spatie/laravel-medialibrary": "^7.0.0",
         "fanamurov/mdash": "^1.0"
     },
     "require-dev": {
