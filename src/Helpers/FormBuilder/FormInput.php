@@ -2,8 +2,8 @@
 
 namespace Larrock\Core\Helpers\FormBuilder;
 
-class FormInput extends FBElement {
-
+class FormInput extends FBElement
+{
     /** @var bool|null */
     public $typo;
 

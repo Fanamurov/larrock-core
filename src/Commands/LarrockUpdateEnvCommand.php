@@ -54,7 +54,7 @@ class LarrockUpdateEnvCommand extends Command
 
         if( !env('MAIL_TEMPLATE_PHONE')){
             $current_env = \File::get(base_path('.env'));
-            \File::put(base_path('.env'), $current_env ."\nMAIL_TEMPLATE_PHONE='company phone'");
+            \File::put(base_path('.env'), $current_env ."\nMAIL_TEMPLATE_PHONE=company phone");
             $this->info('MAIL_TEMPLATE_PHONE not found. Add "company phone"');
         }
 

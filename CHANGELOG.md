@@ -1,5 +1,9 @@
 # Release Notes
 
+## v1.3.8 (2018-03-28)
+### Added
+- FormFile Formbuilder item
+
 ## v1.3.7.2 (2018-03-27)
 ### Bugfix
 - larrock:updateEnv
