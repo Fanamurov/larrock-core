@@ -1,6 +1,14 @@
 # Release Notes
 
-## v1.4.1 (2018-03-29)
+## v1.4.4 (2018-03-29)
+### Added
+- DB indexes for link table
+
+### Changed
+- DB indexes for link table
+- migration config, seo, link
+
+## v1.4.3 (2018-03-29)
 ### Changed
 - ComponentPlugin method attachRows: write is not array and object data
 

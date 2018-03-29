@@ -12,16 +12,17 @@ class CreateConfigTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('config', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->char('name');
-			$table->text('value');
-			$table->char('type');
-			$table->timestamps();
+        if( !Schema::hasTable('config')){
+            Schema::create('config', function(Blueprint $table){
+                $table->increments('id');
+                $table->char('name');
+                $table->text('value');
+                $table->char('type');
+                $table->timestamps();
 
-            $table->index(['name', 'type']);
-		});
+                $table->index(['name', 'type']);
+            });
+        }
 	}
 
 

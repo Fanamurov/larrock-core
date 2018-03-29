@@ -12,19 +12,20 @@ class CreateSeoTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('seo', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->string('seo_title')->nullable();
-			$table->text('seo_description')->nullable();
-			$table->text('seo_keywords')->nullable();
-			$table->integer('seo_id_connect')->nullable();
-			$table->string('seo_url_connect')->nullable();
-			$table->string('seo_type_connect');
-			$table->timestamps();
+        if( !Schema::hasTable('seo')){
+            Schema::create('seo', function(Blueprint $table){
+                $table->increments('id');
+                $table->string('seo_title')->nullable();
+                $table->text('seo_description')->nullable();
+                $table->text('seo_keywords')->nullable();
+                $table->integer('seo_id_connect')->nullable();
+                $table->string('seo_url_connect')->nullable();
+                $table->string('seo_type_connect');
+                $table->timestamps();
 
-            $table->index(['seo_id_connect', 'seo_url_connect']);
-		});
+                $table->index(['seo_id_connect', 'seo_url_connect']);
+            });
+        }
 	}
 
 

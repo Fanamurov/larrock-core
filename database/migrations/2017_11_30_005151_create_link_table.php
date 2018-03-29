@@ -13,8 +13,7 @@ class CreateLinkTable extends Migration {
 	public function up()
 	{
         if( !Schema::hasTable('link')){
-            Schema::create('link', function(Blueprint $table)
-            {
+            Schema::create('link', function(Blueprint $table){
                 $table->increments('id');
                 $table->integer('id_parent')->unsigned();
                 $table->integer('id_child')->unsigned();
@@ -22,7 +21,10 @@ class CreateLinkTable extends Migration {
                 $table->char('model_child', 191);
                 $table->float('cost')->nullable();
                 $table->timestamps();
-                $table->index(['id_parent', 'model_parent', 'model_child']);
+                $table->index('id_parent');
+                $table->index('id_child');
+                $table->index('model_parent');
+                $table->index('model_child');
             });
         }
 	}
