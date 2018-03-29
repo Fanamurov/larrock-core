@@ -55,7 +55,7 @@
 2. **Install LarrockСore**
   ```sh
   $ cd larrock
-  $ composer require fanamurov/larrock-core --prefer-dist
+  $ composer require fanamurov/larrock-core=1.* --prefer-dist
   ```
 
 3. **Install LarrockCMS**

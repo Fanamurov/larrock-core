@@ -128,11 +128,16 @@ class ComponentPlugin
                 if (isset($row->modelParent, $row->modelChild)) {
                     $add_params = ['model_parent' => $row->modelParent, 'model_child' => $row->modelChild];
 
-                    if($event->request->has($row->name) && \is_array($event->request->get($row->name))){
-                        foreach ($event->request->get($row->name) as $value){
-                            $params[$value] = $add_params;
-                        }
-                        if(isset($params)){
+                    if($event->request->has($row->name)){
+                        if(\is_array($event->request->get($row->name))){
+                            foreach ($event->request->get($row->name) as $value){
+                                $params[$value] = $add_params;
+                            }
+                            if(isset($params)){
+                                $event->model->getLink($row->modelChild)->sync($params);
+                            }
+                        }else{
+                            $params[$event->request->get($row->name)] = $add_params;
                             $event->model->getLink($row->modelChild)->sync($params);
                         }
                     }
