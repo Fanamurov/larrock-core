@@ -17,7 +17,7 @@
                 @endif
             </div>
             <div class="uk-width-auto">
-                @if(isset($data->getCategory, $allowCreate))
+                @if(isset($data->getCategory, $allowCreate) && \count($data->getCategory) > 0)
                     @if(isset($data->getCategory->id) && $data->getCategory->id)
                         <a class="uk-button uk-button-primary uk-width-1-1 uk-width-auto@s" href="/admin/{{ $app->name }}/create?category={{ $data->getCategory->id }}">Добавить другой материал</a>
                     @else
@@ -93,7 +93,7 @@
                     <input name="id_connect" type="hidden" value="{{ $data->id }}">
                     <input name="type_connect" type="hidden" value="{{ $app->name }}">
                     <input name="place" type="hidden" value="material">
-                    @if(isset($data->getCategory))
+                    @if(isset($data->getCategory) && \count($data->getCategory) > 0)
                         @if(isset($data->getCategory->id) && $data->getCategory->id)
                             <input name="category_item" type="hidden" value="{{ $data->getCategory->id }}">
                         @else

@@ -40,12 +40,16 @@ trait AdminMethodsEdit
                     }
                     $current_level = $this->config->getModel()->whereCategory($data->getCategory->id)->orderBy('updated_at', 'DESC')->take('15')->get();
                 }else{
-                    foreach($data->getCategory->first()->parent_tree as $item){
-                        $active = ' [Не опубликован!]';
-                        if($item->active === 1){
-                            $active = '';
+                    if(\count($data->getCategory) > 0){
+                        foreach($data->getCategory->first()->parent_tree as $item){
+                            $active = ' [Не опубликован!]';
+                            if($item->active === 1){
+                                $active = '';
+                            }
+                            $breadcrumbs->push($item->title . $active, '/admin/'. $this->config->name .'/'. $item->id);
                         }
-                        $breadcrumbs->push($item->title . $active, '/admin/'. $this->config->name .'/'. $item->id);
+                    }else{
+                        $breadcrumbs->push('[Раздел не найден]');
                     }
                 }
             }else{

@@ -1,5 +1,9 @@
 # Release Notes
 
+## v1.4.5 (2018-03-29)
+### Changed
+- AdminMethodEdit trait: added ability to edit material even if its section no longer exists (it is broken)
+
 ## v1.4.4 (2018-03-29)
 ### Added
 - DB indexes for link table
