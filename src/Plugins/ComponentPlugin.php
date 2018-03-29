@@ -136,7 +136,7 @@ class ComponentPlugin
                             if(isset($params)){
                                 $event->model->getLink($row->modelChild)->sync($params);
                             }
-                        }else{
+                        }elseif( !\is_object($event->request->get($row->name))){
                             $params[$event->request->get($row->name)] = $add_params;
                             $event->model->getLink($row->modelChild)->sync($params);
                         }

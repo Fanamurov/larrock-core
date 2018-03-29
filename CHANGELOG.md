@@ -1,5 +1,9 @@
 # Release Notes
 
+## v1.4.1 (2018-03-29)
+### Changed
+- ComponentPlugin method attachRows: write is not array and object data
+
 ## v1.4 (2018-03-28)
 ### Changed
 - spatie/laravel-medialibrary v7
