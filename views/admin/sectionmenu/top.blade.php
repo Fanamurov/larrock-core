@@ -28,9 +28,7 @@
     </div>
 
     <div class="uk-navbar-right">
-        @if(isset($searchSiteAdmin))
-            {!! $searchSiteAdmin !!}
-        @endif
+        @include('larrock::admin.search.module')
         <ul class="uk-navbar-nav">
             <li><a href="/"><span class="uk-margin-small-right" uk-icon="home"></span><span class="uk-visible@m">К сайту</span></a></li>
             <li><a href="{{ url('/logout') }}"><span class="uk-margin-small-right" uk-icon="sign-out"></span><span class="uk-visible@m">Выйти</span></a></li>

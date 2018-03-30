@@ -1,5 +1,9 @@
 # Release Notes
 
+## v1.4.7 (2018-03-30)
+### Changed
+- update menu admin template
+
 ## v1.4.6 (2018-03-30)
 ### Added
 - js for new admin search module
