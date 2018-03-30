@@ -1,5 +1,12 @@
 # Release Notes
 
+## v1.4.6 (2018-03-30)
+### Added
+- js for new admin search module
+
+### Removed
+- Middleware SiteSearchAdmin removed in combineAdminMiddlewares
+
 ## v1.4.5 (2018-03-29)
 ### Changed
 - AdminMethodEdit trait: added ability to edit material even if its section no longer exists (it is broken)

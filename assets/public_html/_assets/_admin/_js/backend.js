@@ -10,6 +10,7 @@ $(document).ready(function(){
     actionSelect();
     ajax_edit_row();
     sort_rows();
+    initSearchModule();
 
     /**
      * Функционал для formbuilder select
@@ -345,6 +346,50 @@ $(document).ready(function(){
         change_url_title(title, table, form);
     });
 });
+
+function initSearchModule() {
+    var request = $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: '/admin/initSearchModule'
+    });
+    request.done(function (data) {
+        $('.form-search-autocomplite').selectize({
+            maxItems: 1,
+            valueField: 'full_url',
+            labelField: 'title',
+            searchField: 'title',
+            persist: true,
+            createOnBlur: false,
+            create: false,
+            allowEmptyOption: true,
+            placeholder: 'Поиск по сайту',
+            options: data,
+            render: {
+                item: function(item, escape) {
+                    return '<div>' +
+                        (item.title ? '<span class="title">' + escape(item.title.replace('&quot;', '').replace('&quot;', '')) + '</span>' : '') +
+                        (item.category ? '<span class="category">/' + escape(item.category.replace('&quot;', '').replace('&quot;', '')) + '</span>' : '') +
+                        '</div>';
+                },
+                option: function(item, escape) {
+                    return '<div>' +
+                        '<span class="uk-label">' + escape(item.title.replace('&quot;', '').replace('&quot;', '')) + '</span>' +
+                        (item.category ? '<span class="caption">в разделе: ' + escape(item.category.replace('&quot;', '').replace('&quot;', '')) + '</span>' :'') +
+                        '</div>';
+                }
+            },
+            onChange: function (item) {
+                window.location = item;
+            }
+        });
+        return true;
+    });
+    request.fail(function (jqXHR, status, statusText) {
+        notify_show('error', statusText);
+        return false;
+    });
+}
 
 function ajax_edit_row() {
     /** Input для редактирования поля */

@@ -230,7 +230,7 @@ class Component
      */
     public function combineAdminMiddlewares($user_middlewares = NULL)
     {
-        $middleware = ['web', 'level:2', 'LarrockAdminMenu', 'SiteSearchAdmin'];
+        $middleware = ['web', 'level:2', 'LarrockAdminMenu'];
         if($config = config('larrock.middlewares.admin')){
             $middleware = array_merge($middleware, $config);
         }
