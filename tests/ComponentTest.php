@@ -185,7 +185,7 @@ class ComponentTest extends \Orchestra\Testbench\TestCase
 
     public function testCombineAdminMiddlewares()
     {
-        $this->assertEquals([0 => 'web', 1 => 'level:2', 2 => 'LarrockAdminMenu', 3 => 'Test'],
+        $this->assertEquals([0 => 'web', 1 => 'level:2', 2 => 'LarrockAdminMenu', 3 => 'TestAddAdmin', 4 => 'Test'],
             $this->component->combineAdminMiddlewares(['Test']));
     }
 
