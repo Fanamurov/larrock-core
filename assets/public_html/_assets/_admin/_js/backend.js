@@ -383,7 +383,7 @@ function initSearchModule() {
                 window.location = item;
             }
         });
-        return true;
+        $('#searchAdmin').removeClass('uk-hidden');
     });
     request.fail(function (jqXHR, status, statusText) {
         notify_show('error', statusText);
