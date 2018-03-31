@@ -43,7 +43,7 @@ class LarrockManagerCommand extends Command
 
         $name = $this->choice('What to install/update?', $question);
 
-        if($name === 'all') {
+        if($name === 'All') {
             $this->info('Install all packages LarrockCMS');
             echo shell_exec('composer require '. implode(':^1.0 ', $packages) .' --prefer-dist');
         }elseif($name !== 'Do not install other packages'){
