@@ -1,12 +1,12 @@
 <?php
 
-Route::get('/sitemap.xml', function() {
+Route::get('/sitemap.xml', function () {
     return Response::view('larrock::front.sitemap', ['data' => config('larrock-sitemap')])->header('Content-Type', 'application/xml');
 });
 
-Route::group(['prefix' => 'admin'], function(){
+Route::group(['prefix' => 'admin'], function () {
     Route::get('/', [
-        'as' => 'admin.home', 'uses' => 'Larrock\Core\AdminDashboardController@index'
+        'as' => 'admin.home', 'uses' => 'Larrock\Core\AdminDashboardController@index',
     ]); //Роут главной страницы админки
 
     Route::post('ajax/EditRow', 'Larrock\Core\AdminAjax@EditRow');

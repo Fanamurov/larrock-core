@@ -11,12 +11,13 @@ class FormInput extends FBElement
     public $FBTemplate = 'larrock::admin.formbuilder.input.input';
 
     /**
-     * Включить типограф
+     * Включить типограф.
      * @return $this
      */
     public function setTypo()
     {
-        $this->typo = TRUE;
+        $this->typo = true;
+
         return $this;
     }
 }

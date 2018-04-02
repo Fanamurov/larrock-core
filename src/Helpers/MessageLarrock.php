@@ -4,8 +4,7 @@ namespace Larrock\Core\Helpers;
 
 /**
  * Вывод уведомлений в интерфейс, запись событий в лог
- * Class MessageLarrock
- * @package Larrock\Core\Helpers
+ * Class MessageLarrock.
  */
 class MessageLarrock
 {
@@ -13,10 +12,10 @@ class MessageLarrock
      * @param string $message
      * @param null|bool $logWrite
      */
-    public static function success(string $message, $logWrite = NULL)
+    public static function success(string $message, $logWrite = null)
     {
         \Session::push('message.success', $message);
-        if($logWrite){
+        if ($logWrite) {
             \Log::info($message);
         }
     }
@@ -27,13 +26,13 @@ class MessageLarrock
      * @param null $exception
      * @throws \Exception
      */
-    public static function danger(string $message, $logWrite = NULL, $exception = NULL)
+    public static function danger(string $message, $logWrite = null, $exception = null)
     {
         \Session::push('message.danger', $message);
-        if($logWrite){
+        if ($logWrite) {
             \Log::error($message);
         }
-        if($exception){
+        if ($exception) {
             throw new \Exception($message, 500);
         }
     }
@@ -42,10 +41,10 @@ class MessageLarrock
      * @param string $message
      * @param null|bool $logWrite
      */
-    public static function warning(string $message, $logWrite = NULL)
+    public static function warning(string $message, $logWrite = null)
     {
         \Session::push('message.warning', $message);
-        if($logWrite){
+        if ($logWrite) {
             \Log::info($message);
         }
     }
@@ -54,10 +53,10 @@ class MessageLarrock
      * @param string $message
      * @param null|bool $logWrite
      */
-    public static function notice(string $message, $logWrite = NULL)
+    public static function notice(string $message, $logWrite = null)
     {
         \Session::push('message.notice', $message);
-        if($logWrite){
+        if ($logWrite) {
             \Log::notice($message);
         }
     }

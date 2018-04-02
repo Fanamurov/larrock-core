@@ -2,10 +2,6 @@
 
 namespace Larrock\Core\Helpers\FormBuilder;
 
-use Illuminate\Database\Eloquent\Model;
-use Larrock\Core\Exceptions\LarrockFormBuilderRowException;
-use View;
-
 class FormSelect extends FormSelectKey
 {
     /** @var string Имя шаблона FormBuilder для отрисовки поля */
@@ -15,12 +11,13 @@ class FormSelect extends FormSelectKey
     public $allowCreate;
 
     /**
-     * Разрешить создавать новые элементы
+     * Разрешить создавать новые элементы.
      * @return $this
      */
     public function setAllowCreate()
     {
-        $this->allowCreate = TRUE;
+        $this->allowCreate = true;
+
         return $this;
     }
 }

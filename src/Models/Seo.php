@@ -5,13 +5,13 @@ namespace Larrock\Core\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * \Larrock\Core\Models\Seo
+ * \Larrock\Core\Models\Seo.
  *
- * @property integer $id
+ * @property int $id
  * @property string $seo_title
  * @property string $seo_description
  * @property string $seo_keywords
- * @property integer $seo_id_connect
+ * @property int $seo_id_connect
  * @property string $seo_url_connect
  * @property string $seo_type_connect
  * @property \Carbon\Carbon $created_at
@@ -30,11 +30,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Seo extends Model
 {
-	protected $table = 'seo';
+    protected $table = 'seo';
 
     protected $fillable = ['seo_title', 'seo_description', 'seo_keywords', 'seo_id_connect', 'seo_url_connect', 'seo_type_connect'];
 
     protected $casts = [
-        'id_connect' => 'integer'
+        'id_connect' => 'integer',
     ];
 }

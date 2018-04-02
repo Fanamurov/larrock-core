@@ -35,7 +35,7 @@ class LarrockManagerCommand extends Command
             'fanamurov/larrock-reviews', 'fanamurov/larrock-smartbanners', 'fanamurov/larrock-menu',
             'fanamurov/larrock-users', 'fanamurov/larrock-pages', 'fanamurov/larrock-blocks',
             'fanamurov/larrock-contact', 'fanamurov/larrock-admin-seo', 'fanamurov/larrock-search',
-            'fanamurov/larrock-yandex-kassa', 'fanamurov/larrock-vscale'
+            'fanamurov/larrock-yandex-kassa', 'fanamurov/larrock-vscale',
         ];
 
         $question = array_prepend($packages, 'All');
@@ -43,15 +43,15 @@ class LarrockManagerCommand extends Command
 
         $name = $this->choice('What to install/update?', $question);
 
-        if($name === 'All') {
+        if ($name === 'All') {
             $this->info('Install all packages LarrockCMS');
-            echo shell_exec('composer require '. implode(':^1.0 ', $packages) .' --prefer-dist');
-        }elseif($name !== 'Do not install other packages'){
-            $this->info('composer require fanamurov/'. $name .':^1.0 --prefer-dist');
-            echo shell_exec('composer require fanamurov/'. $name .':^1.0 --prefer-dist');
+            echo shell_exec('composer require '.implode(':^1.0 ', $packages).' --prefer-dist');
+        } elseif ($name !== 'Do not install other packages') {
+            $this->info('composer require fanamurov/'.$name.':^1.0 --prefer-dist');
+            echo shell_exec('composer require fanamurov/'.$name.':^1.0 --prefer-dist');
         }
 
-        if($name !== 'Do not install other packages'){
+        if ($name !== 'Do not install other packages') {
             $this->call('vendor:publish');
             $this->call('migrate');
         }

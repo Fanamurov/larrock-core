@@ -5,9 +5,9 @@ namespace Larrock\Core\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * \Larrock\Core\Models\Config
+ * \Larrock\Core\Models\Config.
  *
- * @property integer $id
+ * @property int $id
  * @property string $key
  * @property string $value
  * @property string $type
@@ -25,10 +25,10 @@ class Config extends Model
 {
     protected $table = 'config';
 
-	protected $fillable = ['name', 'value', 'type'];
+    protected $fillable = ['name', 'value', 'type'];
 
-	public function getValueAttribute($value)
-	{
-		return unserialize($value);
-	}
+    public function getValueAttribute($value)
+    {
+        return unserialize($value);
+    }
 }

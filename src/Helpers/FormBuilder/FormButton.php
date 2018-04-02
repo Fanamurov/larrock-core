@@ -11,13 +11,14 @@ class FormButton extends FBElement
     public $FBTemplate = 'larrock::admin.formbuilder.button.button';
 
     /**
-     * Указываем тип кнопки (submit|button|reset)
+     * Указываем тип кнопки (submit|button|reset).
      * @param $buttonType
      * @return $this
      */
     public function setButtonType($buttonType)
     {
         $this->buttonType = $buttonType;
+
         return $this;
     }
 }

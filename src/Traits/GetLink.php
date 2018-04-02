@@ -1,13 +1,14 @@
 <?php
+
 namespace Larrock\Core\Traits;
 
-use Larrock\Core\Models\Link;
 use Cache;
+use Larrock\Core\Models\Link;
 
-trait GetLink{
-
+trait GetLink
+{
     /**
-     * Get link query builder
+     * Get link query builder.
      * @param $childModel
      * @return mixed
      */
@@ -17,7 +18,7 @@ trait GetLink{
     }
 
     /**
-     * Get link data
+     * Get link data.
      * @param $childModel
      * @return mixed
      */
@@ -27,7 +28,7 @@ trait GetLink{
     }
 
     /**
-     * Get link data
+     * Get link data.
      * @return mixed
      */
     public function linkParam()
@@ -37,18 +38,19 @@ trait GetLink{
     }
 
     /**
-     * Get Model Component + link in attrubute
+     * Get Model Component + link in attrubute.
      * @param $childModel
      * @return $this
      */
     public function linkAttribute($childModel)
     {
         $this->{$childModel} = $this->hasMany(Link::class, 'id_parent')->whereModelParent($this->config->model)->whereModelChild($childModel)->get();
+
         return $this;
     }
 
     /**
-     * Метод для attach() и detach()
+     * Метод для attach() и detach().
      * @param string $childModel
      * @return mixed
      */
@@ -61,7 +63,7 @@ trait GetLink{
     /**
      * Метод для совместимости привязки сторонних расширений (роли у пользователей)
      * Например: $data->getLinkWithParams($row_settings->modelChild, 'role_user', 'role_id', 'user_id')->get()
-     * для получения прилинкованных ролей пользователя
+     * для получения прилинкованных ролей пользователя.
      * @param $childModel
      * @param $tableLink
      * @param $parentRow
@@ -74,7 +76,7 @@ trait GetLink{
     }
 
     /**
-     * Получение всех связей
+     * Получение всех связей.
      * @return mixed
      */
     public function getAllLinks()
@@ -83,90 +85,98 @@ trait GetLink{
     }
 
     /**
-     * Получение связи модификации цены
+     * Получение связи модификации цены.
      * @param $childModel
      * @return null
      */
     public function getCostLink($childModel)
     {
-        $cache_key = sha1('getCostLink'. $this->config->model . $childModel . $this->id);
+        $cache_key = sha1('getCostLink'.$this->config->model.$childModel.$this->id);
+
         return Cache::rememberForever($cache_key, function () use ($childModel) {
             $query = $this->hasMany(Link::class, 'id_parent')->whereModelParent($this->config->model)->whereModelChild($childModel);
-            if($getLink = $query->get()){
-                foreach ($getLink as $key => $item){
+            if ($getLink = $query->get()) {
+                foreach ($getLink as $key => $item) {
                     $class = new $childModel();
-                    if($param = $class->whereId($item->id_child)->first()){
+                    if ($param = $class->whereId($item->id_child)->first()) {
                         $getLink[$key]->title = $param->title;
                     }
                 }
+
                 return $getLink;
             }
+
             return null;
         });
     }
 
     /**
      * Получение модификаций товаров
-     * Товар->cost_value
+     * Товар->cost_value.
      * @return mixed|null
      */
     public function getCostValuesAttribute()
     {
-        $cache_key = sha1('cost_value'. $this->id);
+        $cache_key = sha1('cost_value'.$this->id);
+
         return Cache::remember($cache_key, 1140, function () {
-            $values = NULL;
-            foreach ($this->config->rows as $row){
-                if(isset($row->costValue) && $row->costValue){
-                    if( !isset($values)){
+            $values = null;
+            foreach ($this->config->rows as $row) {
+                if (isset($row->costValue) && $row->costValue) {
+                    if (! isset($values)) {
                         $values = $this->getCostLink($row->modelChild, $row->modelChildWhereKey, $row->modelChildWhereValue);
-                    }else{
+                    } else {
                         $values = $values->merge($this->getCostLink($row->modelChild, $row->modelChildWhereKey, $row->modelChildWhereValue));
                     }
                 }
             }
+
             return $values;
         });
     }
 
     /**
-     * Получение первой цены модификации товара
+     * Получение первой цены модификации товара.
      * @return mixed
      */
     public function getFirstCostValueAttribute()
     {
-        if($costValues = $this->getCostValuesAttribute()){
-            if($costValues->count() > 0){
+        if ($costValues = $this->getCostValuesAttribute()) {
+            if ($costValues->count() > 0) {
                 return $costValues->first()->cost;
             }
         }
+
         return $this->cost;
     }
 
     /**
-     * Получение ID первой цены модификации товара
+     * Получение ID первой цены модификации товара.
      * @return mixed
      */
     public function getFirstCostValueIdAttribute()
     {
-        if($costValues = $this->getCostValuesAttribute()){
-            if($costValues->count() > 0){
+        if ($costValues = $this->getCostValuesAttribute()) {
+            if ($costValues->count() > 0) {
                 return $costValues->first()->id;
             }
         }
-        return NULL;
+
+        return null;
     }
 
     /**
-     * Получение title первой цены модификации товара
+     * Получение title первой цены модификации товара.
      * @return mixed
      */
     public function getFirstCostValueTitleAttribute()
     {
-        if($costValues = $this->getCostValuesAttribute()){
-            if($costValues->count() > 0){
+        if ($costValues = $this->getCostValuesAttribute()) {
+            if ($costValues->count() > 0) {
                 return $costValues->first()->title;
             }
         }
-        return NULL;
+
+        return null;
     }
 }
