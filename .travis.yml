@@ -16,3 +16,4 @@ script:
 
 after_success:
   - travis_retry php vendor/bin/coveralls
+  - bash <(curl -s https://codecov.io/bash)
