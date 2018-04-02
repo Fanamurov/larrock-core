@@ -1,8 +1,10 @@
+
 [LarrockCMS](https://github.com/Fanamurov/larrock-core) - это CMS основанная на php-фреймворке Laravel 5.6 поставляемая в формате composer-пакетов.
 
 Сайт с официальной технической и пользовательской документацией: [http://larrock-cms.ru](http://larrock-cms.ru)
 
 [![Latest Stable Version](https://poser.pugx.org/fanamurov/larrock-core/v/stable)](https://packagist.org/packages/fanamurov/larrock-core) [![Total Downloads](https://poser.pugx.org/fanamurov/larrock-core/downloads)](https://packagist.org/packages/fanamurov/larrock-core) [![License](https://poser.pugx.org/fanamurov/larrock-core/license)](https://packagist.org/packages/fanamurov/larrock-core) [![Scrutinizer Badge](https://scrutinizer-ci.com/g/Fanamurov/larrock-core/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Fanamurov/larrock-core/?branch=master) [![Build Status](https://travis-ci.org/Fanamurov/larrock-core.svg?branch=master)](https://travis-ci.org/Fanamurov/larrock-core) [![Coverage Status](https://coveralls.io/repos/github/Fanamurov/larrock-core/badge.svg?branch=master)](https://coveralls.io/github/Fanamurov/larrock-core?branch=master)
+![StyleCi badge](https://styleci.io/repos/95172916/shield)![Codecov badge](https://codecov.io/gh/Fanamurov/larrock-core/branch/master/graph/badge.svg)
 
 
 Распространяется под лицензией CC-BY-4.0. При использовании CMS вы обязаны указать ее название в своем проекте в виде копирайта в админ-панели.
