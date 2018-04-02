@@ -31,19 +31,20 @@ class LarrockInstallCommand extends Command
 
         $this->line('=== Install LarrockCMS ===');
 
-        if(env('DB_DATABASE') === 'homestead' || env('DB_USERNAME') === 'homestead' || env('DB_PASSWORD') === 'secret') {
+        if (env('DB_DATABASE') === 'homestead' || env('DB_USERNAME') === 'homestead' || env('DB_PASSWORD') === 'secret') {
             $this->line('Параметры подключения к БД в .env-файле:');
-            $this->line('DB_DATABASE=' . env('DB_DATABASE'));
-            $this->line('DB_USERNAME=' . env('DB_USERNAME'));
-            $this->line('DB_PASSWORD=' . env('DB_PASSWORD'));
-            if ( !$this->confirm('Данные для доступа к БД верны?')) {
+            $this->line('DB_DATABASE='.env('DB_DATABASE'));
+            $this->line('DB_USERNAME='.env('DB_USERNAME'));
+            $this->line('DB_PASSWORD='.env('DB_PASSWORD'));
+            if (! $this->confirm('Данные для доступа к БД верны?')) {
                 $this->error('Установка завершена некорректно. Пожалуйста, установите правильные данные для 
                 доступа к БД и выполните команду php artisan larrock:install');
-                return FALSE;
+
+                return false;
             }
         }
 
-        if($fast){
+        if ($fast) {
             $this->call('larrock:updateEnv');
             $this->call('larrock:renamePublicDirectory');
             $this->call('larrock:updateVendorConfig');
@@ -51,7 +52,7 @@ class LarrockInstallCommand extends Command
             $this->call('migrate');
             $this->call('larrock:addAdmin');
             $this->call('larrock:assets');
-        }else{
+        } else {
             if ($this->confirm('Шаг 1/7. Обновить .env? (larrock:updateEnv)')) {
                 $this->call('larrock:updateEnv');
             }

@@ -8,7 +8,7 @@ use Larrock\Core\Helpers\FormBuilder\FormTextarea;
 trait PluginSeoTrait
 {
     /**
-     * Подключение плагина SEO
+     * Подключение плагина SEO.
      * @return $this
      */
     public function addPluginSeo()
@@ -29,7 +29,7 @@ trait PluginSeoTrait
 
         $row = new FormInput('url', 'URL материала');
         $this->rows['url'] = $row->setTab('seo', 'SEO')
-            ->setValid('max:155|required|unique:'. $this->table .',url,:id')->setCssClass('uk-width-1-1')->setFillable();
+            ->setValid('max:155|required|unique:'.$this->table.',url,:id')->setCssClass('uk-width-1-1')->setFillable();
 
         return $this;
     }

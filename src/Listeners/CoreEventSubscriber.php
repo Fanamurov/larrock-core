@@ -2,9 +2,9 @@
 
 namespace Larrock\Core\Listeners;
 
-use Larrock\Core\Events\ComponentItemDestroyed;
 use Larrock\Core\Events\ComponentItemStored;
 use Larrock\Core\Events\ComponentItemUpdated;
+use Larrock\Core\Events\ComponentItemDestroyed;
 
 class CoreEventSubscriber
 {

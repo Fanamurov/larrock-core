@@ -2,13 +2,13 @@
 
 namespace Larrock\Core\Plugins;
 
-use Larrock\Core\Helpers\FormBuilder\FormTextarea;
 use Larrock\Core\Helpers\FormBuilder\FormCheckbox;
+use Larrock\Core\Helpers\FormBuilder\FormTextarea;
 
 trait PluginAnonsTrait
 {
     /**
-     * Плагин для генерации анонса новости для блока анонс новости
+     * Плагин для генерации анонса новости для блока анонс новости.
      * @param int $categoryAnons    ID категории с анонсами
      * @return $this
      */
@@ -22,6 +22,7 @@ trait PluginAnonsTrait
 
         $this->settings['anons_category'] = $categoryAnons;
         $this->plugins_backend['anons']['rows'] = $rows_plugin;
+
         return $this;
     }
 }

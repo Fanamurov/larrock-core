@@ -2,10 +2,10 @@
 
 namespace Larrock\Core\Middleware;
 
-use Larrock\Core\Helpers\AdminMenuBuilder;
-use Closure;
-use Route;
 use View;
+use Route;
+use Closure;
+use Larrock\Core\Helpers\AdminMenuBuilder;
 
 class AdminMenu
 {
@@ -18,10 +18,11 @@ class AdminMenu
      */
     public function handle($request, Closure $next)
     {
-    	$menu = new AdminMenuBuilder();
-        if(Route::current()){
+        $menu = new AdminMenuBuilder();
+        if (Route::current()) {
             View::share('top_menu', $menu->topMenu());
         }
+
         return $next($request);
     }
 }

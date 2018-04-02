@@ -2,27 +2,26 @@
 
 namespace Larrock\Core\Events;
 
-use Illuminate\Database\Eloquent\Model;
+use Larrock\Core\Component;
 use Illuminate\Http\Request;
 use Illuminate\Queue\SerializesModels;
-use Larrock\Core\Component;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Выбрасываемое событие на удаление материала из компонента
- * Class ComponentItemDestroyed
- * @package Larrock\Core\Events
+ * Class ComponentItemDestroyed.
  */
 class ComponentItemDestroyed
 {
     use SerializesModels;
 
-    /** @var Component  */
+    /** @var Component */
     public $component;
 
-    /** @var Model  */
+    /** @var Model */
     public $model;
 
-    /** @var Request  */
+    /** @var Request */
     public $request;
 
     /**

@@ -14,23 +14,25 @@ class FormFile extends FBElement
     public $FBTemplate = 'larrock::admin.formbuilder.input.file';
 
     /**
-     * Разрешить множественную загрузку файлов
+     * Разрешить множественную загрузку файлов.
      * @return $this
      */
     public function setMultiple()
     {
-        $this->multiple = TRUE;
+        $this->multiple = true;
+
         return $this;
     }
 
     /**
-     * Устанавливает фильтр на типы файлов, которые вы можете отправить через поле загрузки файлов
+     * Устанавливает фильтр на типы файлов, которые вы можете отправить через поле загрузки файлов.
      * @param string $fileTypes
      * @return $this
      */
     public function setAccept(string $fileTypes)
     {
         $this->accept = $fileTypes;
+
         return $this;
     }
 }

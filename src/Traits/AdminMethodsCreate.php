@@ -15,40 +15,42 @@ trait AdminMethodsCreate
      */
     public function create(Request $request)
     {
-        if( !method_exists($this, 'store')){
+        if (! method_exists($this, 'store')) {
             throw new \Exception('AdminMethodsStore not found in this Controller', 403);
         }
         $post_rows = [
             'title' => 'Новый материал',
-            'url' => 'novyy-material'
+            'url' => 'novyy-material',
         ];
 
-        if($request->has('category')){
+        if ($request->has('category')) {
             $post_rows['category'] = $request->get('category');
-        }else{
-            if(array_key_exists('category', $this->config->rows)){
-                if($findCategory = \LarrockCategory::getModel()->whereComponent($this->config->name)->first()){
+        } else {
+            if (array_key_exists('category', $this->config->rows)) {
+                if ($findCategory = \LarrockCategory::getModel()->whereComponent($this->config->name)->first()) {
                     $post_rows['category'] = $findCategory->id;
-                }else{
+                } else {
                     MessageLarrock::danger('Создать материал пока нельзя. Сначала создайте для него раздел');
+
                     return back()->withInput();
                 }
             }
         }
 
-        foreach ($this->config->rows as $row){
-            if($row->default){
+        foreach ($this->config->rows as $row) {
+            if ($row->default) {
                 $post_rows[$row->name] = $row->default;
             }
-            if($row->name === 'user_id'){
+            if ($row->name === 'user_id') {
                 $post_rows[$row->name] = \Auth::id();
             }
         }
 
-        if(array_key_exists('position', $this->config->rows)){
+        if (array_key_exists('position', $this->config->rows)) {
             $post_rows['active'] = 0;
         }
-        $test = Request::create('/admin/'. $this->config->name, 'POST', $post_rows);
+        $test = Request::create('/admin/'.$this->config->name, 'POST', $post_rows);
+
         return $this->store($test);
     }
 }

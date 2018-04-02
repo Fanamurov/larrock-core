@@ -7,9 +7,7 @@ use Spatie\MediaLibrary\PathGenerator\PathGenerator;
 
 /**
  * Изменение файловой структуры для загруженный файлов: ИмяМодели/исходный файл, ИмяМодели/ИмяФайла/пресеты
- * Class CustomPathGenerator
- *
- * @package App\Helpers
+ * Class CustomPathGenerator.
  */
 class CustomPathGenerator implements PathGenerator
 {
@@ -42,6 +40,6 @@ class CustomPathGenerator implements PathGenerator
      */
     protected function getBasePath(Media $media): string
     {
-        return class_basename($media->model_type) .'/'. $media->name;
+        return class_basename($media->model_type).'/'.$media->name;
     }
 }

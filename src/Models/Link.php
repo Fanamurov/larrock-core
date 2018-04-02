@@ -2,19 +2,19 @@
 
 namespace Larrock\Core\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Cache;
+use Illuminate\Database\Eloquent\Model;
 
 /**
- * \Larrock\Core\Models\Link
+ * \Larrock\Core\Models\Link.
  *
- * @property integer $id
+ * @property int $id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property mixed model_child
  * @property mixed model_parent
- * @property integer id_child
- * @property integer id_parent
+ * @property int id_child
+ * @property int id_parent
  * @property float cost
  * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Link whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\Larrock\Core\Models\Link whereIdParent($value)
@@ -30,21 +30,23 @@ class Link extends Model
 {
     protected $table = 'link';
 
-	protected $fillable = ['id_parent', 'id_child', 'model_parent', 'model_child', 'cost'];
+    protected $fillable = ['id_parent', 'id_child', 'model_parent', 'model_child', 'cost'];
 
     protected $casts = [
-        'cost' => 'float'
+        'cost' => 'float',
     ];
 
     protected $appends = [
         'cost',
     ];
 
-	public function getFullDataChild()
+    public function getFullDataChild()
     {
-        $cache_key = sha1('getFullDataChild'. $this->model_child . $this->id_child);
+        $cache_key = sha1('getFullDataChild'.$this->model_child.$this->id_child);
+
         return Cache::rememberForever($cache_key, function () {
             $data = new $this->model_child;
+
             return $data->whereId($this->id_child)->first();
         });
     }
