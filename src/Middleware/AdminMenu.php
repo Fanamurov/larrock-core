@@ -19,9 +19,7 @@ class AdminMenu
     public function handle($request, Closure $next)
     {
         $menu = new AdminMenuBuilder();
-        if (Route::current()) {
-            View::share('top_menu', $menu->topMenu());
-        }
+        View::share('top_menu', $menu->topMenu());
 
         return $next($request);
     }

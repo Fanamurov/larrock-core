@@ -11,14 +11,14 @@ class AdminMenuBuilder extends Controller
         $menu = [];
         $menu_other = [];
 
-        $components = \Config::get('larrock-core-adminmenu.components');
+        $components = \Config::get('larrock-core-adminmenu.components', []);
         foreach ($components as $item) {
             if ($item->active === true) {
                 $menu[] = $item->renderAdminMenu();
             }
         }
 
-        $other_items = \Config::get('larrock-core-adminmenu.other_items');
+        $other_items = \Config::get('larrock-core-adminmenu.other_items', []);
         foreach ($other_items as $item) {
             if ($item->active === true) {
                 $menu_other[] = $item->renderAdminMenu();

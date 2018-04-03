@@ -1,5 +1,13 @@
 # Release Notes
 
+## v1.4.14 (2018-04-03)
+### Added
+- add blocksBig image photoGallery template
+
+### Changed
+- Refactoring AdminMenu
+- Refactoring AdminMenuBuilder
+
 ## v1.4.12 (2018-04-03)
 ### Added
 - FBElement method setModileAdminVisible

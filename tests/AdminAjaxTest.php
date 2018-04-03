@@ -147,6 +147,34 @@ class AdminAjaxTest extends \Orchestra\Testbench\TestCase
      * @expectedExceptionMessage Не все необходимые поля переданы
      * @throws \Exception
      */
+    public function testUploadImage()
+    {
+        $request = Request::create('/admin/ajax/UploadFile', 'POST', [
+            'model_type' => 'Larrock\ComponentBlocks\Models\Blocks',
+            'model_id' => 1,
+            'gallery' => 'test_gallery',
+        ], [], [
+            'files' => UploadedFile::fake()->create('test.jpg', 100)
+        ]);
+        $data = $this->controller->UploadFile($request);
+        $content = json_decode($data->getContent());
+        $this->assertEquals(200, $data->getStatusCode());
+        $this->assertEquals('success', $content->status);
+        $this->assertEquals('Файл test.jpg успешно загружен', $content->message);
+
+        $media = Media::find(2);
+        $this->assertEquals('Blocks-1-testjpg.jpg', $media->file_name);
+
+        //Обработка исключения
+        $request = Request::create('/admin/ajax/UploadImage', 'POST', []);
+        $this->controller->UploadImage($request);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Не все необходимые поля переданы
+     * @throws \Exception
+     */
     public function testUploadFile()
     {
         $request = Request::create('/admin/ajax/UploadFile', 'POST', [
@@ -162,8 +190,8 @@ class AdminAjaxTest extends \Orchestra\Testbench\TestCase
         $this->assertEquals('success', $content->status);
         $this->assertEquals('Файл test.txt успешно загружен', $content->message);
 
-        $media = Media::find(1);
-        $this->assertEquals('test.jpg', $media->file_name);
+        $media = Media::find(2);
+        $this->assertEquals('Blocks-1-testtxt.txt', $media->file_name);
 
         //Обработка исключения
         $request = Request::create('/admin/ajax/UploadFile', 'POST', []);
@@ -241,19 +269,32 @@ class AdminAjaxTest extends \Orchestra\Testbench\TestCase
     }
 
     /**
-     * @expectedException \Spatie\MediaLibrary\Exceptions\MediaCannotBeDeleted
-     * @expectedExceptionMessage Media with id `1` cannot be deleted because it does not exist or does not belong to model Larrock\ComponentBlocks\Models\Blocks with id 1
+     * @1expectedException \Spatie\MediaLibrary\Exceptions\MediaCannotBeDeleted
+     * @1expectedExceptionMessage Media with id `1` cannot be deleted because it does not exist or does not belong to model Larrock\ComponentBlocks\Models\Blocks with id 1
      * @throws \Exception
      */
     public function testDeleteUploadedMedia()
     {
+        $request = Request::create('/admin/ajax/UploadFile', 'POST', [
+            'model_type' => 'Larrock\ComponentBlocks\Models\Blocks',
+            'model_id' => 1,
+            'gallery' => 'test_gallery',
+        ], [], [
+            'files' => UploadedFile::fake()->create('test.jpg', 100)
+        ]);
+        $this->controller->UploadFile($request);
+
         //Выполняем запрос на удаление
         $request = Request::create('/admin/ajax/DeleteUploadedMedia', 'POST', [
             'model' => 'Larrock\ComponentBlocks\Models\Blocks',
             'model_id' => 1,
-            'id' => 1
+            'id' => 2
         ]);
-        $this->controller->DeleteUploadedMedia($request);
+        $data = $this->controller->DeleteUploadedMedia($request);
+        $content = json_decode($data->getContent());
+        $this->assertEquals(200, $data->getStatusCode());
+        $this->assertEquals('success', $content->status);
+        $this->assertEquals(trans('larrock::apps.delete.file'), $content->message);
     }
 
     /**
@@ -292,6 +333,8 @@ class AdminAjaxTest extends \Orchestra\Testbench\TestCase
     }
 
     /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Не все необходимые поля переданы [text]
      * @throws \Exception
      */
     public function testTranslit()
@@ -327,6 +370,10 @@ class AdminAjaxTest extends \Orchestra\Testbench\TestCase
         $this->assertEquals(200, $data->getStatusCode());
         $this->assertEquals('success', $content->status);
         $this->assertNotEquals('test', $content->message);
+
+        $request = Request::create('/admin/ajax/Translit', 'POST', []);
+
+        $this->controller->Translit($request);
     }
 
     /**
@@ -337,12 +384,13 @@ class AdminAjaxTest extends \Orchestra\Testbench\TestCase
     public function testTypographLight()
     {
         $request = Request::create('/admin/ajax/TypographLight', 'POST', [
-            'text' => 'тест значения'
+            'text' => 'тест значения',
+            'to_json' => false
         ]);
 
         $data = $this->controller->TypographLight($request);
         $this->assertEquals(200, $data->getStatusCode());
-        $this->assertEquals('тест значения', $data->getData()->text);
+        $this->assertEquals('тест значения', $data->getContent());
 
         //json
         $request = Request::create('/admin/ajax/TypographLight', 'POST', [
