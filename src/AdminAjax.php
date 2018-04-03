@@ -26,7 +26,7 @@ class AdminAjax extends Controller
     public function EditRow(Request $request)
     {
         if (! $request->has(['value_where', 'row_where', 'value', 'row', 'table'])) {
-            throw new \InvalidArgumentException('Не все необходимые поля переданы', 422);
+            throw new \InvalidArgumentException('Не все необходимые поля переданы', 400);
         }
 
         $value_where = $request->get('value_where');
@@ -45,12 +45,8 @@ class AdminAjax extends Controller
         if (\is_float($old_data->{$row})) {
             $value = (float) $value;
         }
-        if ($old_data->{$row} !== $value) {
-            if (DB::table($table)->where($row_where, '=', $value_where)->update([$row => $value])) {
-                return response()->json(['status' => 'success', 'message' => trans('larrock::apps.row.update', ['name' => $row])]);
-            }
-
-            return response()->json(['status' => 'error', 'message' => trans('larrock::apps.row.error', ['name' => $row])]);
+        if ($old_data->{$row} !== $value && DB::table($table)->where($row_where, '=', $value_where)->update([$row => $value])) {
+            return response()->json(['status' => 'success', 'message' => trans('larrock::apps.row.update', ['name' => $row])]);
         }
 
         return response()->json(['status' => 'blank', 'message' => trans('larrock::apps.row.blank', ['name' => $row])]);
@@ -77,7 +73,7 @@ class AdminAjax extends Controller
     public function UploadImage(Request $request)
     {
         if (! $request->has(['model_type', 'model_id', 'gallery'])) {
-            throw new \InvalidArgumentException('Не все необходимые поля переданы', 422);
+            throw new \InvalidArgumentException('Не все необходимые поля переданы', 400);
         }
 
         if (! file_exists(public_path().'/image_cache')) {
@@ -131,8 +127,8 @@ class AdminAjax extends Controller
      */
     public function UploadFile(Request $request)
     {
-        if (! $request->has(['model_type', 'model_id', 'gallery'])) {
-            throw new \InvalidArgumentException('Не все необходимые поля переданы', 422);
+        if (! $request->has(['model_type', 'model_id', 'gallery', 'files'])) {
+            throw new \InvalidArgumentException('Не все необходимые поля переданы', 400);
         }
 
         $files_value = $request->file('files');
@@ -156,7 +152,7 @@ class AdminAjax extends Controller
             return response()->json(['status' => 'success', 'message' => trans('larrock::apps.upload.success', ['name' => $files_value->getClientOriginalName()])]);
         }
 
-        return response()->json(['status' => 'error', 'message' => trans('larrock::apps.upload.not_valid', ['name' => $files_value->getClientOriginalName()])], 300);
+        return response()->json(['status' => 'error', 'message' => trans('larrock::apps.upload.not_valid', ['name' => $files_value->getClientOriginalName()])], 400);
     }
 
     /**
@@ -168,7 +164,7 @@ class AdminAjax extends Controller
     public function CustomProperties(Request $request)
     {
         if (! $request->has('id')) {
-            return response()->json(['status' => 'error', 'message' => trans('larrock::apps.param.404', ['name' => 'id'])], 500);
+            return response()->json(['status' => 'error', 'message' => trans('larrock::apps.param.404', ['name' => 'id'])], 400);
         }
         $id = $request->get('id'); //ID в таблице media
         $media = DB::table('media')->where('id', $id)->first();
@@ -183,7 +179,7 @@ class AdminAjax extends Controller
             return response()->json(['status' => 'success', 'message' => trans('larrock::apps.data.update', ['name' => 'параметров'])]);
         }
 
-        return response()->json(['status' => 'error', 'message' => trans('larrock::apps.row.error')], 500);
+        return response()->json(['status' => 'error', 'message' => trans('larrock::apps.row.error')], 400);
     }
 
     /**
@@ -196,7 +192,7 @@ class AdminAjax extends Controller
     public function GetUploadedMedia(Request $request)
     {
         if (! $request->has(['type', 'model_id', 'model_type'])) {
-            throw new \InvalidArgumentException('Не все необходимые поля переданы', 422);
+            throw new \InvalidArgumentException('Не все необходимые поля переданы', 400);
         }
 
         $type = $request->get('type'); //Тип файла (images, files etc...)
@@ -219,7 +215,7 @@ class AdminAjax extends Controller
     public function DeleteUploadedMedia(Request $request)
     {
         if (! $request->has(['model', 'model_id', 'id'])) {
-            throw new \InvalidArgumentException('Не все необходимые поля переданы', 422);
+            throw new \InvalidArgumentException('Не все необходимые поля переданы', 400);
         }
 
         $model = $request->get('model');
@@ -239,7 +235,7 @@ class AdminAjax extends Controller
     public function DeleteAllUploadedMediaByType(Request $request)
     {
         if (! $request->has(['model', 'type', 'model_id'])) {
-            throw new \InvalidArgumentException('Не все необходимые поля переданы', 422);
+            throw new \InvalidArgumentException('Не все необходимые поля переданы', 400);
         }
         $model = $request->get('model');
         $type = $request->get('type');
@@ -259,7 +255,7 @@ class AdminAjax extends Controller
     public function Translit(Request $request)
     {
         if (! $request->has(['text'])) {
-            throw new \InvalidArgumentException('Не все необходимые поля переданы [text]', 422);
+            throw new \InvalidArgumentException('Не все необходимые поля переданы [text]', 400);
         }
 
         $url = str_slug($request->get('text'));
@@ -287,7 +283,7 @@ class AdminAjax extends Controller
     public function TypographLight(Request $request)
     {
         if (! $request->has(['text'])) {
-            throw new \InvalidArgumentException('Не все необходимые поля переданы [text]', 422);
+            throw new \InvalidArgumentException('Не все необходимые поля переданы [text]', 400);
         }
 
         $json = $request->get('to_json', true);

@@ -20,13 +20,14 @@ class CreateMediaDatabase
             $table->unsignedInteger('size');
             $table->json('manipulations');
             $table->json('custom_properties');
+            $table->json('responsive_images');
             $table->unsignedInteger('order_column')->nullable();
             $table->nullableTimestamps();
         });
 
         DB::connection()->table('media')->insert([
             'model_id' => 1,
-            'model_type' => 'config',
+            'model_type' => 'blocks',
             'collection_name' => 'images',
             'name' => 'test',
             'file_name' => 'test.jpg',
@@ -34,6 +35,7 @@ class CreateMediaDatabase
             'disk' => 'media',
             'size' => 1000,
             'manipulations' => '[]',
+            'responsive_images' => '[]',
             'custom_properties' => '{"alt": "photo", "gallery": "gelievye-shary"}',
             'order_column' => 1
         ]);

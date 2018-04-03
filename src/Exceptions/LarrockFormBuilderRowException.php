@@ -6,7 +6,7 @@ use Exception;
 
 class LarrockFormBuilderRowException extends Exception
 {
-    public $status = 422;
+    public $status = 400;
 
     /**
      * Create a new validation exception from a plain array of messages.
