@@ -58,6 +58,9 @@ class FBElement
     /** @var string Имя шаблона FormBuilder для отрисовки поля */
     public $FBTemplate = 'larrock::admin.formbuilder.input.hidden';
 
+    /** @var bool|null Показывать поле в мобильном виде в списке материалов админки */
+    public $mobileAdminVisible;
+
     /**
      * FBElement constructor.
      * @param string $name  Название поля для компонента (например: в БД)
@@ -249,6 +252,17 @@ class FBElement
     public function setFillable()
     {
         $this->fillable = true;
+
+        return $this;
+    }
+
+    /**
+     * Сделать поле видимым при выводе списков материалов админки при мобильных
+     * @return $this
+     */
+    public function setMobileAdminVisible()
+    {
+        $this->mobileAdminVisible = true;
 
         return $this;
     }

@@ -151,4 +151,11 @@ class FBElementTest extends \Orchestra\Testbench\TestCase
         $this->assertTrue($this->FBElement->fillable);
         $this->assertInstanceOf('Larrock\Core\Helpers\FormBuilder\FBElement', $this->FBElement);
     }
+
+    public function testSetMobileAdminVisible()
+    {
+        $this->FBElement->setMobileAdminVisible();
+        $this->assertTrue($this->FBElement->mobileAdminVisible);
+        $this->assertInstanceOf('Larrock\Core\Helpers\FormBuilder\FBElement', $this->FBElement);
+    }
 }

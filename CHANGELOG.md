@@ -1,5 +1,19 @@
 # Release Notes
 
+## v1.4.12 (2018-04-03)
+### Added
+- FBElement method setModileAdminVisible
+
+### Changed
+- create_seo_table migration (seo_type_connect nullable)
+
+### Bugfix
+- ComponentPlugin method attachSeo
+
+## v1.4.8 - 1.4.11 (2018-04-02)
+### Changed
+- bugfixes
+
 ## v1.4.7 (2018-03-30)
 ### Changed
 - update menu admin template

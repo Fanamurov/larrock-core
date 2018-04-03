@@ -1,5 +1,5 @@
 @if(isset($allowUpdate))
-<td class="row-edit uk-visible@s">
+<td class="row-edit @if(isset($app->rows['title'])) uk-visible@s @endif">
     <a href="/admin/{{ $link or $app->name }}/{{ $data_value->id }}/edit" class="uk-button uk-button-default uk-button-small">Свойства</a>
 </td>
 @endif

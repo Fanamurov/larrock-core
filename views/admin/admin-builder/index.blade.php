@@ -27,7 +27,7 @@
                     @endif
                     @foreach($app->rows as $row)
                         @if($row->inTableAdmin || $row->inTableAdminEditable)
-                            <th style="width: 90px" class="uk-visible@s">{{ $row->title }}</th>
+                            <th style="width: 90px" @if( !$row->mobileAdminVisible) class="uk-visible@s" @endif>{{ $row->title }}</th>
                         @endif
                     @endforeach
                     @include('larrock::admin.admin-builder.additional-rows-th')
@@ -63,7 +63,7 @@
                         @foreach($app->rows as $row)
                             @if($row->inTableAdminEditable)
                                 @if($row instanceof \Larrock\Core\Helpers\FormBuilder\FormCheckbox)
-                                    <td class="row-active uk-visible@s">
+                                    <td class="row-active @if( !$row->mobileAdminVisible) uk-visible@s @endif">
                                         <div class="uk-button-group btn-group_switch_ajax" role="group" style="width: 100%">
                                             <button type="button" class="uk-button uk-button-primary uk-button-small
                                                     @if($data_value->{$row->name} === 0) uk-button-outline @endif"
@@ -76,7 +76,7 @@
                                         </div>
                                     </td>
                                 @elseif($row instanceof \Larrock\Core\Helpers\FormBuilder\FormInput)
-                                    <td class="uk-visible@s">
+                                    <td class="@if( !$row->mobileAdminVisible) uk-visible@s @endif">
                                         <input type="text" value="{{ $data_value->{$row->name} }}" name="{{ $row->name }}"
                                                class="ajax_edit_row form-control uk-input uk-form-small"
                                                data-row_where="id" data-value_where="{{ $data_value->id }}"
@@ -86,7 +86,7 @@
                                         @endif
                                     </td>
                                 @elseif($row instanceof \Larrock\Core\Helpers\FormBuilder\FormSelect)
-                                    <td class="uk-visible@s">
+                                    <td class="@if( !$row->mobileAdminVisible) uk-visible@s @endif">
                                         <select class="ajax_edit_row form-control uk-select uk-form-small"
                                                 data-row_where="id" data-value_where="{{ $data_value->id }}"
                                                 data-table="{{ $app->table }}" data-row="{{ $row->name }}">
@@ -98,7 +98,7 @@
                                 @endif
                             @endif
                             @if($row->inTableAdmin)
-                                <td class="uk-visible@s">
+                                <td class="@if( !$row->mobileAdminVisible) uk-visible@s @endif">
                                     {{ $data_value->{$row->name} }}
                                 </td>
                             @endif

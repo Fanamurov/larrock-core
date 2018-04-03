@@ -35,46 +35,28 @@ class ComponentPlugin
      */
     protected function attachSeo($event)
     {
-        /** @var Seo $seo */
-        $seo = LarrockAdminSeo::getModel()->whereSeoIdConnect($event->model->id)->whereSeoTypeConnect($event->component->name)->first();
-
-        if ($seo) {
-            if (! empty($event->request->get('seo_title')) ||
-                ! empty($event->request->get('seo_description')) ||
-                ! empty($event->request->get('seo_seo_keywords'))) {
+        if($event->model->getTable() !== 'seo' && (! empty($event->request->get('seo_title')) ||
+        ! empty($event->request->get('seo_description')) || ! empty($event->request->get('seo_seo_keywords')))) {
+            /** @var Seo $seo */
+            if($seo = LarrockAdminSeo::getModel()->whereSeoIdConnect($event->model->id)->whereSeoTypeConnect($event->component->name)->first()) {
+                $message = 'SEO обновлено';
                 $seo->seo_id_connect = $event->model->id;
-                $seo->seo_url_connect = $event->request->get('url_connect');
-                $seo->seo_title = $event->request->get('seo_title');
-                $seo->seo_description = $event->request->get('seo_description');
-                $seo->seo_keywords = $event->request->get('seo_keywords');
                 $seo->seo_type_connect = $event->component->name;
-                if ($seo->save()) {
-                    MessageLarrock::success('SEO обновлено');
-
-                    return $seo;
-                }
             } else {
-                $seo->delete();
-                MessageLarrock::success('SEO удалено');
-
-                return $seo;
-            }
-        } else {
-            if (! empty($event->request->get('seo_title')) ||
-                ! empty($event->request->get('seo_description')) ||
-                ! empty($event->request->get('seo_seo_keywords'))) {
+                $message = 'SEO добавлено';
                 $seo = LarrockAdminSeo::getModel();
                 $seo->seo_id_connect = $event->request->get('id_connect');
-                $seo->seo_url_connect = $event->request->get('url_connect');
-                $seo->seo_title = $event->request->get('seo_title');
-                $seo->seo_description = $event->request->get('seo_description');
-                $seo->seo_keywords = $event->request->get('seo_keywords');
                 $seo->seo_type_connect = $event->request->get('type_connect');
-                if ($seo->save()) {
-                    MessageLarrock::success('SEO добавлено');
+            }
 
-                    return $seo;
-                }
+            $seo->seo_url_connect = $event->request->get('url_connect');
+            $seo->seo_title = $event->request->get('seo_title');
+            $seo->seo_description = $event->request->get('seo_description');
+            $seo->seo_keywords = $event->request->get('seo_keywords');
+            if ($seo->save()) {
+                MessageLarrock::success($message);
+
+                return $seo;
             }
         }
 
