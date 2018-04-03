@@ -3,7 +3,6 @@
 namespace Larrock\Core\Middleware;
 
 use View;
-use Route;
 use Closure;
 use Larrock\Core\Helpers\AdminMenuBuilder;
 
