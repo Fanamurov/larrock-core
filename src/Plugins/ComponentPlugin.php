@@ -35,10 +35,10 @@ class ComponentPlugin
      */
     protected function attachSeo($event)
     {
-        if($event->model->getTable() !== 'seo' && (! empty($event->request->get('seo_title')) ||
+        if ($event->model->getTable() !== 'seo' && (! empty($event->request->get('seo_title')) ||
         ! empty($event->request->get('seo_description')) || ! empty($event->request->get('seo_seo_keywords')))) {
             /** @var Seo $seo */
-            if($seo = LarrockAdminSeo::getModel()->whereSeoIdConnect($event->model->id)->whereSeoTypeConnect($event->component->name)->first()) {
+            if ($seo = LarrockAdminSeo::getModel()->whereSeoIdConnect($event->model->id)->whereSeoTypeConnect($event->component->name)->first()) {
                 $message = 'SEO обновлено';
                 $seo->seo_id_connect = $event->model->id;
                 $seo->seo_type_connect = $event->component->name;
