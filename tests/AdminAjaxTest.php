@@ -4,6 +4,7 @@ namespace Larrock\Core\Tests;
 
 use DaveJamesMiller\Breadcrumbs\BreadcrumbsServiceProvider;
 use Illuminate\Http\UploadedFile;
+use Intervention\Image\ImageServiceProvider;
 use Larrock\ComponentBlocks\LarrockComponentBlocksServiceProvider;
 use \Larrock\Core\AdminAjax;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ use Larrock\Core\Tests\DatabaseTest\CreateBlocksDatabase;
 use Larrock\Core\Tests\DatabaseTest\CreateConfigDatabase;
 use Larrock\Core\Tests\DatabaseTest\CreateMediaDatabase;
 use Larrock\Core\Tests\DatabaseTest\CreateUserDatabase;
+use Spatie\Image\Image;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Spatie\MediaLibrary\Models\Media;
 
@@ -57,7 +59,8 @@ class AdminAjaxTest extends \Orchestra\Testbench\TestCase
             LarrockCoreServiceProvider::class,
             BreadcrumbsServiceProvider::class,
             LarrockComponentBlocksServiceProvider::class,
-            MediaLibraryServiceProvider::class
+            MediaLibraryServiceProvider::class,
+            ImageServiceProvider::class
         ];
     }
 
@@ -66,6 +69,7 @@ class AdminAjaxTest extends \Orchestra\Testbench\TestCase
         return [
             'LarrockBlocks' => 'Larrock\ComponentBlocks\Facades\LarrockBlocks',
             'Breadcrumbs' => 'DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs',
+            'Image' => 'Intervention\Image\Facades\Image',
         ];
     }
 
@@ -149,21 +153,21 @@ class AdminAjaxTest extends \Orchestra\Testbench\TestCase
      */
     public function testUploadImage()
     {
-        $request = Request::create('/admin/ajax/UploadFile', 'POST', [
+        $request = Request::create('/admin/ajax/UploadImage', 'POST', [
             'model_type' => 'Larrock\ComponentBlocks\Models\Blocks',
             'model_id' => 1,
             'gallery' => 'test_gallery',
         ], [], [
-            'files' => UploadedFile::fake()->create('test.jpg', 100)
+            'images' => UploadedFile::fake()->image('test.jpg', 100, 100)
         ]);
-        $data = $this->controller->UploadFile($request);
+        $data = $this->controller->UploadImage($request);
         $content = json_decode($data->getContent());
         $this->assertEquals(200, $data->getStatusCode());
         $this->assertEquals('success', $content->status);
         $this->assertEquals('Файл test.jpg успешно загружен', $content->message);
 
         $media = Media::find(2);
-        $this->assertEquals('Blocks-1-testjpg.jpg', $media->file_name);
+        $this->assertEquals('1-test.jpg', $media->file_name);
 
         //Обработка исключения
         $request = Request::create('/admin/ajax/UploadImage', 'POST', []);
