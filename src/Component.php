@@ -349,6 +349,33 @@ class Component
     }
 
     /**
+     * Перезапись конфига поля компонента (например внутри контроллера).
+     * @param string $key
+     * @param FBElement $row
+     * @return $this
+     */
+    public function overrideRow($key, $row)
+    {
+        if(isset($this->rows{$key})){
+            unset($this->rows{$key});
+        }
+
+        return $this->setRow($row);
+    }
+
+    /**
+     * Удаление поля из компонента (например внутри контроллера).
+     * @param string $key
+     * @return $this
+     */
+    public function removeRow($key)
+    {
+        unset($this->rows[$key]);
+
+        return $this;
+    }
+
+    /**
      * Разрешить поиск по материалам компонента.
      * @return $this
      */

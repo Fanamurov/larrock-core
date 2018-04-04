@@ -230,6 +230,22 @@ class ComponentTest extends \Orchestra\Testbench\TestCase
         $this->assertEquals('test', $this->component->name);
     }
 
+    public function testOverrideRow()
+    {
+        $this->component->addPosition();
+        $test_row = new FormInput('test', 'title_test');
+        $this->component->overrideRow('position', $test_row);
+        $this->assertArrayHasKey('test', $this->component->getRows());
+        $this->assertEquals('title_test', $this->component->getRows()['test']->title);
+    }
+
+    public function testRemoveRow()
+    {
+        $this->component->addPosition();
+        $this->component->removeRow('position');
+        $this->assertCount(0, $this->component->getRows());
+    }
+
     public function testIsSearchable()
     {
         $this->component->isSearchable();

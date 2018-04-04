@@ -2,6 +2,7 @@
 
 namespace Larrock\Core\Tests\Traits;
 
+use Larrock\ComponentBlocks\BlocksComponent;
 use Larrock\ComponentBlocks\LarrockComponentBlocksServiceProvider;
 use Larrock\ComponentBlocks\Models\Blocks;
 use Larrock\Core\Models\Config;
@@ -98,12 +99,10 @@ class GetLinkTest extends TestCase
     public function testLinkAttribute()
     {
         $model = Blocks::whereId(1)->first();
-        $result = $model->link(Blocks::class)->first();
-        $this->assertInstanceOf(Link::class, $result);
-        $this->assertEquals(1, $result->id_parent);
-        $this->assertEquals(2, $result->id_child);
-        $this->assertEquals(Blocks::class, $result->model_parent);
-        $this->assertEquals(Blocks::class, $result->model_child);
+        $result = $model->linkAttribute(Blocks::class)->first();
+        $this->assertInstanceOf(Blocks::class, $result);
+        $this->assertEquals(1, $result->id);
+        $this->assertEquals('test', $result->title);
     }
 
     public function testGetLink()
@@ -155,6 +154,11 @@ class GetLinkTest extends TestCase
         $seed = new CreateConfigDatabase();
         $seed->setUpTestDatabase();
 
+        $model = Blocks::whereId(1)->first();
+        $result = $model->getCostLink(Config::class)->first();
+        $this->assertNull($result);
+        \Cache::flush();
+
         DB::connection()->table('link')->insert([
             'id_parent' => 1,
             'id_child' => 1,
@@ -172,23 +176,31 @@ class GetLinkTest extends TestCase
     {
         $model = Blocks::whereId(1)->first();
         $this->assertNull($model->cost_values);
+
+        //Пока полностью покрыть метод тестами нельзя, нужна имплементация компонента каталога
     }
 
     public function testGetFirstCostValueAttribute()
     {
         $model = Blocks::whereId(1)->first();
         $this->assertNull($model->first_cost_value);
+
+        //Пока полностью покрыть метод тестами нельзя, нужна имплементация компонента каталога
     }
 
     public function testGetFirstCostValueIdAttribute()
     {
         $model = Blocks::whereId(1)->first();
         $this->assertNull($model->first_cost_value_id);
+
+        //Пока полностью покрыть метод тестами нельзя, нужна имплементация компонента каталога
     }
 
     public function testGetFirstCostValueTitleAttribute()
     {
         $model = Blocks::whereId(1)->first();
-        $this->assertNull($model->first_cost_values_title);
+        $this->assertNull($model->first_cost_value_title);
+
+        //Пока полностью покрыть метод тестами нельзя, нужна имплементация компонента каталога
     }
 }

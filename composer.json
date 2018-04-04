@@ -2,8 +2,8 @@
     "name": "fanamurov/larrock-core",
     "description": "Core components for LarrockCMS",
     "type": "library",
-    "keywords": ["larrock", "larrockCMS", "laravel", "laravel5", "laravel55", "laravel-admin", 
-        "cms", "php7", "larrock-core", "larrock-menu", "larrock-users", "larrock-pages", 
+    "keywords": ["larrock", "larrockCMS", "laravel", "laravel5", "laravel55", "laravel-admin",
+        "cms", "php7", "larrock-core", "larrock-menu", "larrock-users", "larrock-pages",
         "larrock-blocks", "larrock-contact", "larrock-admin-seo", "larrock-admin-search"],
     "require": {
         "php": ">=7.1.3",
@@ -20,8 +20,7 @@
         "phpunit/phpunit" : "^6.2|^7.0",
         "mockery/mockery": "^1.0.0",
         "orchestra/testbench": "~3.5.0|~3.6.0",
-        "doctrine/dbal": "^2.5.2",
-        "php-coveralls/php-coveralls": "^1.0"
+        "doctrine/dbal": "^2.5.2"
     },
     "autoload": {
         "psr-4": {

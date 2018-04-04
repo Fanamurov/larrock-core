@@ -16,7 +16,7 @@ trait AdminMethodsCreate
     public function create(Request $request)
     {
         if (! method_exists($this, 'store')) {
-            throw new \Exception('AdminMethodsStore not found in this Controller', 403);
+            throw new \BadMethodCallException('AdminMethodsStore not found in this Controller', 400);
         }
         $post_rows = [
             'title' => 'Новый материал',

@@ -1,5 +1,14 @@
 # Release Notes
 
+## v1.4.15 (2018-04-04)
+### Added
+- Component method overrideRow
+- Component method removeRow
+
+### Changed
+- refactoring
+- trait ShareMethods now return array
+
 ## v1.4.14 (2018-04-03)
 ### Added
 - add blocksBig image photoGallery template

@@ -117,13 +117,13 @@ trait GetLink
      */
     public function getCostValuesAttribute()
     {
-        $cache_key = sha1('cost_value'.$this->id);
+        $cache_key = sha1('cost_value'.$this->id.$this->getConfig()->name);
 
-        return Cache::remember($cache_key, 1140, function () {
+        return Cache::rememberForever($cache_key, function () {
             $values = null;
             foreach ($this->config->rows as $row) {
                 if (isset($row->costValue) && $row->costValue) {
-                    if (! isset($values)) {
+                    if (null === $values) {
                         $values = $this->getCostLink($row->modelChild, $row->modelChildWhereKey, $row->modelChildWhereValue);
                     } else {
                         $values = $values->merge($this->getCostLink($row->modelChild, $row->modelChildWhereKey, $row->modelChildWhereValue));
@@ -141,10 +141,8 @@ trait GetLink
      */
     public function getFirstCostValueAttribute()
     {
-        if ($costValues = $this->getCostValuesAttribute()) {
-            if ($costValues->count() > 0) {
-                return $costValues->first()->cost;
-            }
+        if (($costValues = $this->getCostValuesAttribute()) && $costValues->count() > 0) {
+            return $costValues->first()->cost;
         }
 
         return $this->cost;
