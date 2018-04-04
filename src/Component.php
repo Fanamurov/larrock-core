@@ -356,8 +356,8 @@ class Component
      */
     public function overrideRow($key, $row)
     {
-        if(isset($this->rows{$key})){
-            unset($this->rows{$key});
+        if (isset($this->rows[$key])) {
+            unset($this->rows[$key]);
         }
 
         return $this->setRow($row);
