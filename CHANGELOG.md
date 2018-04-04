@@ -1,5 +1,12 @@
 # Release Notes
 
+## v1.4.16 (2018-04-04)
+### Changed
+- Breadcrumbs on edit page in admin replaced on admin.edit (routes.php)
+
+### Bugfix
+- FormCategory whereConnect
+
 ## v1.4.15 (2018-04-04)
 ### Added
 - Component method overrideRow

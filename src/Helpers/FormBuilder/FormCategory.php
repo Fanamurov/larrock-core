@@ -100,9 +100,11 @@ class FormCategory extends FBElement
         /** @var \Eloquent $model */
         $model = new $this->connect->model;
         if (isset($this->connect->where_key)) {
-            $model = $model::where($this->connect->where_key, '=', $this->connect->where_value);
+            $get_options = $model::where($this->connect->where_key, '=', $this->connect->where_value)->get(['id', 'parent', 'level', 'title']);
+        } else {
+            $get_options = $model::get(['id', 'parent', 'level', 'title']);
         }
-        if ($get_options = $model::get(['id', 'parent', 'level', 'title'])) {
+        if ($get_options) {
             foreach ($get_options as $get_options_value) {
                 $this->options->push($get_options_value);
             }
