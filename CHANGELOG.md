@@ -1,5 +1,17 @@
 # Release Notes
 
+## v1.5 (2018-04-05)
+### Changed
+- Component getValid method
+- bugfixes
+- PluginSeoTrait valid rules
+- AdminMethodsEdit new validation implementation
+- AdminMethodsStore new validation implementation
+- AdminMethodsUpdate new validation implementation
+
+### Removed
+- Component _valid_construct static method
+
 ## v1.4.18 (2018-04-05)
 ### Changed
 - refactoring artisan commands: larrock:check, larrock:updateEnv, larrock:install

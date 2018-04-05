@@ -29,7 +29,7 @@ trait PluginSeoTrait
 
         $row = new FormInput('url', 'URL материала');
         $this->rows['url'] = $row->setTab('seo', 'SEO')
-            ->setValid('max:155|required|unique:'.$this->table.',url,:id')->setCssClass('uk-width-1-1')->setFillable();
+            ->setValid('max:155|required|unique:'.$this->table)->setCssClass('uk-width-1-1')->setFillable();
 
         return $this;
     }

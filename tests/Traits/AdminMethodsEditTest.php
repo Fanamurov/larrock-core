@@ -63,7 +63,9 @@ class AdminMethodsEditTest extends TestCase
     public function testEdit()
     {
         $test = new AdminMethodsEditMock();
-        $this->assertEquals('test', $test->edit(1)->getData()['data']->title);
+        $test = $test->edit(1);
+        $this->assertEquals('larrock::admin.admin-builder.edit', $test->getName());
+        $this->assertEquals('test', $test->getData()['data']->title);
     }
 }
 

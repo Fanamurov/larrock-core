@@ -2,11 +2,13 @@
 
 namespace Larrock\Core\Traits;
 
-use Session;
 use Validator;
 use Larrock\Core\Component;
 use Illuminate\Http\Request;
+use Larrock\Core\Helpers\MessageLarrock;
 use Larrock\Core\Events\ComponentItemUpdated;
+use Larrock\Core\Helpers\FormBuilder\FormDate;
+use Larrock\Core\Helpers\FormBuilder\FormCheckbox;
 
 trait AdminMethodsUpdate
 {
@@ -18,39 +20,40 @@ trait AdminMethodsUpdate
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), Component::_valid_construct($this->config, 'update', $id));
-        if ($validator->fails()) {
-            return back()->withInput($request->except('password'))->withErrors($validator);
-        }
-
         $data = $this->config->getModel()::find($id);
         $data->fill($request->all());
         foreach ($this->config->rows as $row) {
             if (\in_array($row->name, $data->getFillable())) {
-                if ($row instanceof \Larrock\Core\Helpers\FormBuilder\FormCheckbox) {
-                    $data->{$row->name} = $request->input($row->name, null);
+                if ($row instanceof FormCheckbox) {
+                    $data->{$row->name} = $request->input($row->name, $row->default);
                 }
-                if ($row instanceof \Larrock\Core\Helpers\FormBuilder\FormDate) {
+                if ($row instanceof FormDate) {
                     $data->{$row->name} = $request->input('date', date('Y-m-d'));
                 }
             }
         }
 
+        $validator = Validator::make($data->toArray(), $this->config->getValid($id));
+        if ($validator->fails()) {
+            return back()->withInput($request->except('password'))->withErrors($validator);
+        }
+
         if ($data->save()) {
             event(new ComponentItemUpdated($this->config, $data, $request));
-            Session::push('message.success', 'Материал '.$request->input('title').' изменен');
+            MessageLarrock::success('Материал '.$request->input('title').' изменен');
             \Cache::flush();
 
             return back();
         }
 
-        Session::push('message.danger', 'Материал '.$request->input('title').' не изменен');
+        MessageLarrock::danger('Материал '.$request->input('title').' не изменен');
 
         return back()->withInput();
     }

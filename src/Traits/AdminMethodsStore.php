@@ -2,6 +2,9 @@
 
 namespace Larrock\Core\Traits;
 
+use Larrock\Core\Helpers\FormBuilder\FormCheckbox;
+use Larrock\Core\Helpers\FormBuilder\FormDate;
+use Larrock\Core\Helpers\MessageLarrock;
 use Session;
 use Redirect;
 use Validator;
@@ -23,46 +26,37 @@ trait AdminMethodsStore
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     * @throws \Exception
      */
     public function store(Request $request)
     {
-        if (array_key_exists('url', $this->config->rows) &&
-            $search_blank = $this->config->getModel()::whereUrl($request->get('url'))->first()) {
-            Session::push('message.danger', 'Материал с таким URL "'.$request->get('url').'" уже существует');
-            if ($this->allow_redirect) {
-                return redirect()->to('/admin/'.$this->config->name.'/'.$search_blank->id.'/edit');
-            }
-
-            return null;
-        }
-
-        $validator = Validator::make($request->all(), Component::_valid_construct($this->config->valid));
-        if ($validator->fails()) {
-            if ($this->allow_redirect) {
-                return back()->withInput($request->except('password'))->withErrors($validator);
-            }
-            $message = '';
-            foreach ($validator->getMessageBag()->all() as $error) {
-                $message .= $error.' ';
-            }
-            Session::push('message.danger', 'Валидация данных не пройдена '.$message);
-
-            return null;
-        }
-
         $data = $this->config->getModel();
         $data->fill($request->all());
+
         foreach ($this->config->rows as $row) {
             if (\in_array($row->name, $data->getFillable())) {
-                if ($row instanceof \Larrock\Core\Helpers\FormBuilder\FormCheckbox) {
-                    $data->{$row->name} = $request->input($row->name, null);
+                if ($row instanceof FormCheckbox) {
+                    $data->{$row->name} = $request->input($row->name, $row->default);
                 }
-                if ($row instanceof \Larrock\Core\Helpers\FormBuilder\FormDate) {
+                if ($row instanceof FormDate) {
                     $data->{$row->name} = $request->input('date', date('Y-m-d'));
                 }
             }
+        }
+
+        $validator = Validator::make($data->toArray(), $this->config->getValid());
+        if ($validator->fails()) {
+            if ($this->allow_redirect) {
+                if (array_key_exists('url', $validator->failed())) {
+                    $search = $this->config->getModel()::whereUrl($data->url)->first();
+                    MessageLarrock::danger('Материал с тарим url уже существует: /admin/'.$this->config->name.'/'.$search->id.'/edit');
+                }
+                return back()->withInput($request->except('password'))->withErrors($validator);
+            }
+
+            return response()->json(['status' => 'danger', 'message' => 'Материал не прошел валидацию']);
         }
 
         if ($data->save()) {

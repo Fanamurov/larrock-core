@@ -36,7 +36,7 @@ class CreateCategoryDatabase
             'title' => 'test',
             'short' => 'test',
             'description' => 'test',
-            'component' => 'test',
+            'component' => 'feed',
             'parent' => NULL,
             'level' => 1,
             'url' => 'test',

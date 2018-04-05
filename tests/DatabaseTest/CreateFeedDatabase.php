@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class CreateFeedDatabase
 {
     /** Поднимаем тестовую таблицу конфига */
-    public function setUpBlocksDatabase()
+    public function setUpFeedDatabase()
     {
         DB::connection()->getSchemaBuilder()->create('feed', function (Blueprint $table) {
             $table->increments('id');
@@ -28,10 +28,13 @@ class CreateFeedDatabase
 
         DB::connection()->table('feed')->insert([
             'title' => 'test',
-            'description' => 'test',
+            'short' => 'test_s',
+            'description' => 'test_d',
             'url' => 'test',
             'category' => 1,
-            'active' => 1
+            'active' => 1,
+            'date' => date('Y-m-d H:i:s'),
+            'user_id' => 1
         ]);
     }
 }

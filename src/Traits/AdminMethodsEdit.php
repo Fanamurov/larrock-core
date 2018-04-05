@@ -21,7 +21,7 @@ trait AdminMethodsEdit
         $data['data'] = $this->config->getModel()::findOrFail($id);
         $data['app'] = $this->config->tabbable($data['data']);
 
-        $validator = JsValidator::make(Component::_valid_construct($this->config, 'update', $id));
+        $validator = JsValidator::make($this->config->getValid($id));
         View::share('validator', $validator);
 
         return view('larrock::admin.admin-builder.edit', $data);

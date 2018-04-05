@@ -29,7 +29,7 @@ class Component
     public $table;
 
     /** @var array */
-    public $rows;
+    public $rows = [];
 
     /** @var array */
     public $customMediaConversions;
@@ -114,9 +114,29 @@ class Component
         return $this->rows;
     }
 
-    public function getValid()
+    /**
+     * Получение правил валидации
+     *
+     * @param null|integer $edit
+     * @return array
+     */
+    public function getValid($edit = null)
     {
-        return self::_valid_construct($this);
+        $rules = [];
+        foreach ($this->rows as $rows_value) {
+            if (! empty($rows_value->valid)) {
+                $rules[$rows_value->name] = $rows_value->valid;
+                if ($edit && $rows_value->name === 'url') {
+                    $rules[$rows_value->name] = str_replace(
+                        'unique:'.$this->table,
+                        'unique:'.$this->table.','.$rows_value->name.','.$edit,
+                        $rules[$rows_value->name]
+                    );
+                }
+            }
+        }
+
+        return $rules;
     }
 
     /**
@@ -160,7 +180,7 @@ class Component
     public function addPosition()
     {
         $row = new FormInput('position', 'Вес');
-        $this->rows['position'] = $row->setTab('main', 'Дата, вес, активность')->setValid('integer')
+        $this->rows['position'] = $row->setTab('main', 'Дата, вес, активность')->setValid('integer|nullable')
             ->setDefaultValue(0)->setInTableAdminEditable()->setFillable()->setCssClassGroup('uk-width-1-3');
 
         return $this;
@@ -174,7 +194,7 @@ class Component
     {
         $row = new FormCheckbox('active', 'Опубликован');
         $this->rows['active'] = $row->setTab('main', 'Дата, вес, активность')
-            ->setValid('integer|max:1')->setDefaultValue(1)->setInTableAdminEditable()->setFillable()
+            ->setValid('integer|max:1|nullable')->setDefaultValue(1)->setInTableAdminEditable()->setFillable()
             ->setCssClassGroup('uk-width-1-3');
 
         return $this;
@@ -202,8 +222,8 @@ class Component
         $this->tabs = collect();
         $this->tabs_data = collect();
         View::share('app', $this);
-        $this->valid = self::_valid_construct($this);
-        View::share('validator', JsValidator::make($this->valid));
+        $this->valid = $this->getValid();
+        View::share('validator', JsValidator::make($this->getValid()));
 
         return $this;
     }
@@ -281,32 +301,6 @@ class Component
     }
 
     /**
-     * Вспомогательный метод построения правил валидации из конфига полей компонента.
-     * @param array|object $config
-     * @param string $action create|update
-     * @param null|string|int   $id
-     * @return array
-     */
-    public static function _valid_construct($config, $action = 'create', $id = null)
-    {
-        $rules = [];
-        if (isset($config->rows)) {
-            foreach ($config->rows as $rows_value) {
-                if (! empty($rows_value->valid)) {
-                    $rules[$rows_value->name] = $rows_value->valid;
-                    if ($action === 'update') {
-                        $rules[$rows_value->name] = str_replace(':id', $id, $rules[$rows_value->name]);
-                    } else {
-                        $rules[$rows_value->name] = str_replace(',:id', '', $rules[$rows_value->name]);
-                    }
-                }
-            }
-        }
-
-        return $rules;
-    }
-
-    /**
      * Вывод данных полей компонента для табов.
      * @param Model $data
      * @return $this
@@ -356,9 +350,7 @@ class Component
      */
     public function overrideRow($key, $row)
     {
-        if (isset($this->rows[$key])) {
-            unset($this->rows[$key]);
-        }
+        $this->removeRow($key);
 
         return $this->setRow($row);
     }
@@ -370,7 +362,9 @@ class Component
      */
     public function removeRow($key)
     {
-        unset($this->rows[$key]);
+        if(array_key_exists($key, $this->rows)){
+            unset($this->rows[$key]);
+        }
 
         return $this;
     }
