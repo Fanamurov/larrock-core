@@ -56,20 +56,20 @@ class RenderPlugins
         preg_match_all($re, $this->rendered_html, $matches);
         if (isset($matches['type'][0])) {
             $images = $this->model->getImages;
-        }
-        foreach ($matches['type'] as $key => $match) {
-            $name = $matches['name'][$key];
-            //Собираем изображения под каждую найденную галерею
-            $matched_images['images'] = [];
-            foreach ($images as $image) {
-                if ($image->getCustomProperty('gallery') === $matches['name'][$key]) {
-                    $matched_images['images'][] = $image;
+            foreach ($matches['type'] as $key => $match) {
+                $name = $matches['name'][$key];
+                //Собираем изображения под каждую найденную галерею
+                $matched_images['images'] = [];
+                foreach ($images as $image) {
+                    if ($image->getCustomProperty('gallery') === $matches['name'][$key]) {
+                        $matched_images['images'][] = $image;
+                    }
                 }
+                $this->rendered_html = preg_replace('/<p>{Фото\\['.$match.']='.$name.'}<\/p>/',
+                    view('larrock::front.plugins.photoGallery.'.$match, $matched_images)->render(), $this->rendered_html);
+                $this->rendered_html = preg_replace('/{Фото\\['.$match.']='.$name.'}/',
+                    view('larrock::front.plugins.photoGallery.'.$match, $matched_images)->render(), $this->rendered_html);
             }
-            $this->rendered_html = preg_replace('/<p>{Фото\\['.$match.']='.$name.'}<\/p>/',
-                view('larrock::front.plugins.photoGallery.'.$match, $matched_images)->render(), $this->rendered_html);
-            $this->rendered_html = preg_replace('/{Фото\\['.$match.']='.$name.'}/',
-                view('larrock::front.plugins.photoGallery.'.$match, $matched_images)->render(), $this->rendered_html);
         }
 
         return $this;
@@ -86,20 +86,20 @@ class RenderPlugins
         preg_match_all($re, $this->rendered_html, $matches);
         if (isset($matches['type'][0])) {
             $files = $this->model->getFiles;
-        }
-        foreach ($matches['type'] as $key => $match) {
-            $name = $matches['name'][$key];
-            //Собираем изображения под каждую найденную галерею
-            $matched_files['files'] = [];
-            foreach ($files as $file) {
-                if ($file->getCustomProperty('gallery') === $matches['name'][$key]) {
-                    $matched_files['files'][] = $file;
+            foreach ($matches['type'] as $key => $match) {
+                $name = $matches['name'][$key];
+                //Собираем изображения под каждую найденную галерею
+                $matched_files['files'] = [];
+                foreach ($files as $file) {
+                    if ($file->getCustomProperty('gallery') === $matches['name'][$key]) {
+                        $matched_files['files'][] = $file;
+                    }
                 }
+                $this->rendered_html = preg_replace('/<p>{Файлы\\['.$match.']='.$name.'}<\/p>/',
+                    view('larrock::front.plugins.fileGallery.'.$match, $matched_files)->render(), $this->rendered_html);
+                $this->rendered_html = preg_replace('/{Файлы\\['.$match.']='.$name.'}/',
+                    view('larrock::front.plugins.fileGallery.'.$match, $matched_files)->render(), $this->rendered_html);
             }
-            $this->rendered_html = preg_replace('/<p>{Файлы\\['.$match.']='.$name.'}<\/p>/',
-                view('larrock::front.plugins.fileGallery.'.$match, $matched_files)->render(), $this->rendered_html);
-            $this->rendered_html = preg_replace('/{Файлы\\['.$match.']='.$name.'}/',
-                view('larrock::front.plugins.fileGallery.'.$match, $matched_files)->render(), $this->rendered_html);
         }
 
         return $this;

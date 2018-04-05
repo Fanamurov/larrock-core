@@ -21,16 +21,6 @@ class LarrockUpdateEnvCommand extends Command
     protected $description = 'Update Laravel .env to Larrock';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed
@@ -42,55 +32,46 @@ class LarrockUpdateEnvCommand extends Command
 
         if (! env('LARROCK VARS')) {
             $this->info('=== Add LARROCK vars ===');
-            $current_env = \File::get(base_path('.env'));
-            \File::put(base_path('.env'), $current_env."\n\nLARROCK VARS=PLACED");
+            \File::append(base_path('.env'), "\n\nLARROCK VARS=PLACED");
         }
 
         if (! env('MAIL_TEMPLATE_ADDRESS')) {
-            $current_env = \File::get(base_path('.env'));
-            \File::put(base_path('.env'), $current_env."\nMAIL_TEMPLATE_ADDRESS='company address'");
+            \File::append(base_path('.env'), "\nMAIL_TEMPLATE_ADDRESS='company address'");
             $this->info('MAIL_FROM_ADDRESS not found. Add "company address"');
         }
 
         if (! env('MAIL_TEMPLATE_PHONE')) {
-            $current_env = \File::get(base_path('.env'));
-            \File::put(base_path('.env'), $current_env."\nMAIL_TEMPLATE_PHONE='company phone'");
+            \File::append(base_path('.env'), "\nMAIL_TEMPLATE_PHONE='company phone'");
             $this->info('MAIL_TEMPLATE_PHONE not found. Add "company phone"');
         }
 
         if (! env('MAIL_TEMPLATE_MAIL')) {
-            $current_env = \File::get(base_path('.env'));
-            \File::put(base_path('.env'), $current_env."\nMAIL_TEMPLATE_MAIL=admin@larrock-cms.ru");
+            \File::append(base_path('.env'), "\nMAIL_TEMPLATE_MAIL=admin@larrock-cms.ru");
             $this->info('MAIL_TEMPLATE_MAIL not found. Add "admin@larrock-cms.ru"');
         }
 
         if (! env('MAIL_FROM_ADDRESS')) {
-            $current_env = \File::get(base_path('.env'));
-            \File::put(base_path('.env'), $current_env."\nMAIL_FROM_ADDRESS=admin@larrock-cms.ru");
+            \File::append(base_path('.env'), "\nMAIL_FROM_ADDRESS=admin@larrock-cms.ru");
             $this->info('MAIL_FROM_ADDRESS not found. Add "admin@larrock-cms.ru"');
         }
 
         if (! env('MAIL_TO_ADMIN')) {
-            $current_env = \File::get(base_path('.env'));
-            \File::put(base_path('.env'), $current_env."\nMAIL_TO_ADMIN=admin@larrock-cms.ru");
+            \File::append(base_path('.env'), "\nMAIL_TO_ADMIN=admin@larrock-cms.ru");
             $this->info('MAIL_TO_ADMIN not found. Add "admin@larrock-cms.ru"');
         }
 
         if (! env('MAIL_FROM_NAME')) {
-            $current_env = \File::get(base_path('.env'));
-            \File::put(base_path('.env'), $current_env."\nMAIL_FROM_NAME='LARROCK'");
+            \File::append(base_path('.env'), "\nMAIL_FROM_NAME='LARROCK'");
             $this->info('MAIL_FROM_NAME not found. Add "LARROCK"');
         }
 
         if (! env('SITE_NAME')) {
-            $current_env = \File::get(base_path('.env'));
-            \File::put(base_path('.env'), $current_env."\nSITE_NAME='LARROCK'");
+            \File::append(base_path('.env'), "\nSITE_NAME='LARROCK'");
             $this->info('SITE_NAME not found. Add "LARROCK"');
         }
 
-        if (! env('MAIL_STOP')) {
-            $current_env = \File::get(base_path('.env'));
-            \File::put(base_path('.env'), $current_env."\nMAIL_STOP=false");
+        if (env('MAIL_STOP', false) !== false) {
+            \File::append(base_path('.env'), "\nMAIL_STOP=false");
             $this->info('MAIL_STOP not found. Add "false"');
         }
 

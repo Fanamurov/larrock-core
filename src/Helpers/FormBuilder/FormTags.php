@@ -58,8 +58,8 @@ class FormTags extends FBElement
 
     /**
      * Условие выборки возможных элементов для связывания.
-     * @param int   $key
-     * @param int|array|string $value
+     * @param string   $key
+     * @param mixed $value
      * @return $this
      */
     public function setModelChildWhere($key, $value)

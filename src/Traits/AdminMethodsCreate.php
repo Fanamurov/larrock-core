@@ -3,10 +3,14 @@
 namespace Larrock\Core\Traits;
 
 use Illuminate\Http\Request;
+use Larrock\Core\Component;
 use Larrock\Core\Helpers\MessageLarrock;
 
 trait AdminMethodsCreate
 {
+    /** @var Component */
+    protected $config;
+
     /**
      * Creating a new resource.
      * @param Request $request

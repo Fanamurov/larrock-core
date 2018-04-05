@@ -21,46 +21,44 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('ajax/Translit', 'Larrock\Core\AdminAjax@Translit');
 });
 
-if(Breadcrumbs::exists('admin.edit') !== true){
-    Breadcrumbs::register('admin.edit', function ($breadcrumbs, $data) {
-        $current_level = null;
-        $breadcrumbs->parent('admin.'.$data->getConfig()->name.'.index');
-        if ($data->getCategory) {
-            if (isset($data->getCategory->id)) {
-                foreach ($data->getCategory->parent_tree as $item) {
+Breadcrumbs::register('admin.edit', function ($breadcrumbs, $data) {
+    $current_level = null;
+    $breadcrumbs->parent('admin.'.$data->getConfig()->name.'.index');
+    if ($data->getCategory) {
+        if (isset($data->getCategory->id)) {
+            foreach ($data->getCategory->parent_tree as $item) {
+                $active = ' [Не опубликован!]';
+                if ($item->active === 1) {
+                    $active = '';
+                }
+                $breadcrumbs->push($item->title.$active, '/admin/'.$data->getConfig()->name.'/'.$item->id);
+            }
+            $current_level = $data->getConfig()->getModel()->whereCategory($data->getCategory->id)->orderBy('updated_at', 'DESC')->take('15')->get();
+        } else {
+            if (\count($data->getCategory) > 0) {
+                foreach ($data->getCategory->first()->parent_tree as $item) {
                     $active = ' [Не опубликован!]';
                     if ($item->active === 1) {
                         $active = '';
                     }
                     $breadcrumbs->push($item->title.$active, '/admin/'.$data->getConfig()->name.'/'.$item->id);
                 }
-                $current_level = $data->getConfig()->getModel()->whereCategory($data->getCategory->id)->orderBy('updated_at', 'DESC')->take('15')->get();
             } else {
-                if (\count($data->getCategory) > 0) {
-                    foreach ($data->getCategory->first()->parent_tree as $item) {
-                        $active = ' [Не опубликован!]';
-                        if ($item->active === 1) {
-                            $active = '';
-                        }
-                        $breadcrumbs->push($item->title.$active, '/admin/'.$data->getConfig()->name.'/'.$item->id);
-                    }
-                } else {
-                    $breadcrumbs->push('[Раздел не найден]');
-                }
-            }
-        } else {
-            if ($data->parent) {
-                $breadcrumbs->push($data->getConfig()->title, '/admin/'.$data->getConfig()->name.'/'.$data->parent);
+                $breadcrumbs->push('[Раздел не найден]');
             }
         }
-        if ($data->title) {
-            $active = ' [Не опубликован!]';
-            if ($data->active === 1) {
-                $active = '';
-            }
-            $breadcrumbs->push($data->title.$active, '/admin/'.$data->getConfig()->getName().'/'.$data->id, ['current_level' => $current_level]);
-        } else {
-            $breadcrumbs->push('Элемент');
+    } else {
+        if ($data->parent) {
+            $breadcrumbs->push($data->getConfig()->title, '/admin/'.$data->getConfig()->name.'/'.$data->parent);
         }
-    });
-}
+    }
+    if ($data->title) {
+        $active = ' [Не опубликован!]';
+        if ($data->active === 1) {
+            $active = '';
+        }
+        $breadcrumbs->push($data->title.$active, '/admin/'.$data->getConfig()->getName().'/'.$data->id, ['current_level' => $current_level]);
+    } else {
+        $breadcrumbs->push('Элемент');
+    }
+});

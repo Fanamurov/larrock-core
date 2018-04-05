@@ -1,5 +1,10 @@
 # Release Notes
 
+## v1.4.18 (2018-04-05)
+### Changed
+- refactoring artisan commands: larrock:check, larrock:updateEnv, larrock:install
+- bugfixes
+
 ## v1.4.16 (2018-04-04)
 ### Changed
 - Breadcrumbs on edit page in admin replaced on admin.edit (routes.php)
