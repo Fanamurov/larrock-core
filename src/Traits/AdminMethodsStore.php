@@ -2,15 +2,15 @@
 
 namespace Larrock\Core\Traits;
 
-use Larrock\Core\Helpers\FormBuilder\FormCheckbox;
-use Larrock\Core\Helpers\FormBuilder\FormDate;
-use Larrock\Core\Helpers\MessageLarrock;
 use Session;
 use Redirect;
 use Validator;
 use Larrock\Core\Component;
 use Illuminate\Http\Request;
+use Larrock\Core\Helpers\MessageLarrock;
 use Larrock\Core\Events\ComponentItemStored;
+use Larrock\Core\Helpers\FormBuilder\FormDate;
+use Larrock\Core\Helpers\FormBuilder\FormCheckbox;
 
 trait AdminMethodsStore
 {
@@ -53,6 +53,7 @@ trait AdminMethodsStore
                     $search = $this->config->getModel()::whereUrl($data->url)->first();
                     MessageLarrock::danger('Материал с тарим url уже существует: /admin/'.$this->config->name.'/'.$search->id.'/edit');
                 }
+
                 return back()->withInput($request->except('password'))->withErrors($validator);
             }
 
