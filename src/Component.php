@@ -115,9 +115,9 @@ class Component
     }
 
     /**
-     * Получение правил валидации
+     * Получение правил валидации.
      *
-     * @param null|integer $edit
+     * @param null|int $edit
      * @return array
      */
     public function getValid($edit = null)
@@ -362,7 +362,7 @@ class Component
      */
     public function removeRow($key)
     {
-        if(array_key_exists($key, $this->rows)){
+        if (array_key_exists($key, $this->rows)) {
             unset($this->rows[$key]);
         }
 
