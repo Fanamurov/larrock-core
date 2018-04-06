@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Larrock\Core\Helpers\MessageLarrock;
 use Larrock\Core\Events\ComponentItemUpdated;
 use Larrock\Core\Helpers\FormBuilder\FormDate;
-use Larrock\Core\Helpers\FormBuilder\FormCheckbox;
 
 trait AdminMethodsUpdate
 {
@@ -29,13 +28,13 @@ trait AdminMethodsUpdate
     {
         $data = $this->config->getModel()::find($id);
         $data->fill($request->all());
+
         foreach ($this->config->rows as $row) {
-            if (\in_array($row->name, $data->getFillable())) {
-                if ($row instanceof FormCheckbox) {
-                    $data->{$row->name} = $request->input($row->name, $row->default);
-                }
+            if (\in_array($row->name, $data->getFillable(), false) && ! isset($data->{$row->name})) {
                 if ($row instanceof FormDate) {
                     $data->{$row->name} = $request->input('date', date('Y-m-d'));
+                } else {
+                    $data->{$row->name} = $request->input($row->name, $row->default);
                 }
             }
         }
@@ -45,16 +44,11 @@ trait AdminMethodsUpdate
             return back()->withInput($request->except('password'))->withErrors($validator);
         }
 
-        if ($data->save()) {
-            event(new ComponentItemUpdated($this->config, $data, $request));
-            MessageLarrock::success('Материал '.$request->input('title').' изменен');
-            \Cache::flush();
+        $data->save();
+        event(new ComponentItemUpdated($this->config, $data, $request));
+        MessageLarrock::success('Материал '.$request->input('title').' изменен');
+        \Cache::flush();
 
-            return back();
-        }
-
-        MessageLarrock::danger('Материал '.$request->input('title').' не изменен');
-
-        return back()->withInput();
+        return back();
     }
 }

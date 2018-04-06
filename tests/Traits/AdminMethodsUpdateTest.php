@@ -3,6 +3,7 @@
 namespace Larrock\Core\Tests\Traits;
 
 use DaveJamesMiller\Breadcrumbs\BreadcrumbsServiceProvider;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Larrock\ComponentBlocks\BlocksComponent;
 use Larrock\ComponentBlocks\LarrockComponentBlocksServiceProvider;
@@ -25,6 +26,7 @@ class AdminMethodsUpdateTest extends TestCase
             'database' => ':memory:',
             'prefix' => '',
         ]);
+        $app['config']->set('medialibrary.media_model', \Spatie\MediaLibrary\Models\Media::class);
     }
 
     protected function setUp()
@@ -70,9 +72,23 @@ class AdminMethodsUpdateTest extends TestCase
             'active' => 1
         ]);
         $test = new AdminMethodsUpdateMock();
+
+        /** @var RedirectResponse $load */
         $load = $test->update($request, 1);
         $this->assertEquals(302, $load->getStatusCode());
         $this->assertEquals('Новый заголовок', Blocks::find(1)->title);
+        $this->assertEquals('http://localhost', $load->getTargetUrl());
+
+        //Вызов ошибки валидатора
+        $request = Request::create('/admin/update', 'POST', [
+            'active' => 4
+        ]);
+
+        /** @var RedirectResponse $load */
+        $load = $test->update($request, 1);
+        $this->assertEquals(302, $load->getStatusCode());
+        $this->assertEquals('The active may not be greater than 1.', $load->getSession()->get('errors')->first());
+        $this->assertEquals('http://localhost', $load->getTargetUrl());
     }
 }
 

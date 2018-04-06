@@ -65,7 +65,7 @@ trait AdminMethodsDestroy
                 Session::push('message.danger', Lang::get('larrock::apps.delete.error', ['name' => $name]));
             }
         } else {
-            Session::push('message.danger', 'Такого материала больше нет');
+            Session::push('message.danger', 'Такого материала уже не существует');
         }
     }
 }

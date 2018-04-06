@@ -11,7 +11,7 @@
             </label>
             @if(count($data->getImages) > 0)
                 <button id="clearImages" type="button" class="uk-button uk-button-danger uk-width-1-1 clearMedia"
-                        data-model_id="{{ $data->id }}" data-model_type="{{ $app->model }}" data-type="images">Удалить все фото</button>
+                        data-model_id="{{ $data->id }}" data-model_type="{{ $package->model }}" data-type="images">Удалить все фото</button>
             @endif
             <div class="js-fileapi-wrapper upload-btn" id="choose">
                 <div class="upload-btn__txt">Выберите файлы для загрузки</div>
@@ -22,7 +22,7 @@
                 <progress id="js-progressbar-upload-image" class="uk-progress" value="10" max="100"></progress>
             </div>
             <div id="images"><!-- предпросмотр --></div>
-            <div id="uploadedImages" data-model_id="{{ $data->id }}" data-model_type="{{ $app->model }}">
+            <div id="uploadedImages" data-model_id="{{ $data->id }}" data-model_type="{{ $package->model }}">
                 @include('larrock::admin.admin-builder.plugins.images.getUploadedImages', ['data' => $data->getImages, 'app' => $app])
             </div>
         </div>

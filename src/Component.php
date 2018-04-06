@@ -221,7 +221,7 @@ class Component
     {
         $this->tabs = collect();
         $this->tabs_data = collect();
-        View::share('app', $this);
+        View::share('package', $this);
         $this->valid = $this->getValid();
         View::share('validator', JsValidator::make($this->getValid()));
 

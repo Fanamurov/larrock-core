@@ -14,7 +14,6 @@ use Larrock\Core\Tests\DatabaseTest\CreateBlocksDatabase;
 use Larrock\Core\Tests\DatabaseTest\CreateConfigDatabase;
 use Larrock\Core\Tests\DatabaseTest\CreateMediaDatabase;
 use Larrock\Core\Tests\DatabaseTest\CreateUserDatabase;
-use Spatie\Image\Image;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Spatie\MediaLibrary\Models\Media;
 

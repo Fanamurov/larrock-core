@@ -7,7 +7,7 @@
             </label>
             @if(count($data->getFiles) > 0)
                 <button id="clearFiles" type="button" class="uk-button uk-button-danger uk-width-1-1 clearMedia"
-                        data-model_id="{{ $data->id }}" data-model_type="{{ $app->model }}" data-type="files">Удалить все файлы</button>
+                        data-model_id="{{ $data->id }}" data-model_type="{{ $package->model }}" data-type="files">Удалить все файлы</button>
             @endif
             <div class="js-fileapi-wrapper upload-btn" id="choose_file">
                 <div class="upload-btn__txt">Выберите файлы для загрузки</div>
@@ -17,7 +17,7 @@
             <div class="uk-progress uk-progress-striped uk-active uk-progress-upload-file" style="display: none">
                 <progress id="js-progressbar-upload-file" class="uk-progress" value="10" max="100"></progress>
             </div>
-            <div id="uploadedFiles" data-model_id="{{ $data->id }}" data-model_type="{{ $app->model }}">
+            <div id="uploadedFiles" data-model_id="{{ $data->id }}" data-model_type="{{ $package->model }}">
                 @include('larrock::admin.admin-builder.plugins.files.getUploadedFiles', ['data' => $data->getFiles, 'app' => $app])
             </div>
         </div>

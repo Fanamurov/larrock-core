@@ -20,7 +20,7 @@ trait AdminMethodsStore
      * @var bool Разрешать ли делать редиректы
      * Возвращать пользователя на страницу вместо ответа api
      */
-    protected $allow_redirect = true;
+    public $allow_redirect = true;
 
     /**
      * Store a newly created resource in storage.
@@ -55,26 +55,17 @@ trait AdminMethodsStore
                 return back()->withInput($request->except('password'))->withErrors($validator);
             }
 
-            return response()->json(['status' => 'danger', 'message' => 'Материал не прошел валидацию']);
+            return response()->json(['status' => 'danger', 'message' => $validator->errors()->first()]);
         }
 
-        if ($data->save()) {
-            event(new ComponentItemStored($this->config, $data, $request));
-            \Cache::flush();
-            Session::push('message.success', 'Материал '.$request->input('title').' добавлен');
-            if ($this->allow_redirect) {
-                return Redirect::to('/admin/'.$this->config->name.'/'.$data->id.'/edit')->withInput();
-            }
-
-            return $data;
-        }
-
-        Session::push('message.danger', 'Материал '.$request->input('title').' не добавлен');
-
+        $data->save();
+        event(new ComponentItemStored($this->config, $data, $request));
+        \Cache::flush();
+        Session::push('message.success', 'Материал '.$request->input('title').' добавлен');
         if ($this->allow_redirect) {
-            return back()->withInput();
+            return Redirect::to('/admin/'.$this->config->name.'/'.$data->id.'/edit')->withInput();
         }
 
-        return null;
+        return $data;
     }
 }

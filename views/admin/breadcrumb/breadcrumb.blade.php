@@ -15,7 +15,7 @@
             <div uk-dropdown class="uk-dropdown">
                 <ul class="uk-nav uk-nav-default">
                     @foreach(collect($breadcrumbs)->last()->current_level as $item)
-                        <li><a href="/admin/{{ $app->name }}/{{ $item->id }}/edit">{{ $item->title }}</a></li>
+                        <li><a href="/admin/{{ $package->name }}/{{ $item->id }}/edit">{{ $item->title }}</a></li>
                     @endforeach
                 </ul>
             </div>

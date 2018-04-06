@@ -1,5 +1,5 @@
-<li @if(str_contains(\URL::current(), $url)) class="uk-active" @endif title="{{ $app->description }}">
-    <a href="{{ $url }}">{{ $app->title }} @if(isset($count))<span class="count">[{{ $count }}]</span>@endif <span uk-icon="chevron-down"></span></a>
+<li @if(str_contains(\URL::current(), $url)) class="uk-active" @endif title="{{ $package->description }}">
+    <a href="{{ $url }}">{{ $package->title }} @if(isset($count))<span class="count">[{{ $count }}]</span>@endif <span uk-icon="chevron-down"></span></a>
     <div class="uk-navbar-dropdown">
         <ul class="uk-nav uk-navbar-dropdown-nav">
             <li><a href="{{ $url }}" class="uk-text-bold">Все материалы</a></li>

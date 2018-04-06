@@ -1,5 +1,12 @@
 # Release Notes
 
+## v1.6 (2018-04-06)
+### Changed
+- Component shareConfig method. Now config component in var "package" (old "app")
+- AdminMethodsUpdate change code to add default value row
+- AdminMethodsStore change code to add default value row
+- replace "app" var to "package" in admin templates
+
 ## v1.5.3 (2018-04-06)
 ### Changed
 - AdminMethodsCreate trait refactor

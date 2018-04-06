@@ -11,7 +11,7 @@
                 <input type="text" name="{{ $row_key }}"
                        value="@isset($data->{$row_key}){{ Request::old($row_key, $data->{$row_key}) }}@endif"
                        class="uk-input uk-width-1-1 {{ $row_settings->cssClass }}" id="{{ $row_key }}"
-                       @if($row_key === 'title' && isset($app->model)) data-table="{{ $app->model }}" @endif>
+                       @if($row_key === 'title' && isset($package->model)) data-table="{{ $package->model }}" @endif>
             </div>
             <div class="uk-width-auto">
                 <button type="button" class="uk-button uk-button-default typo-target" data-target="{{ $row_key }}">Типограф</button>

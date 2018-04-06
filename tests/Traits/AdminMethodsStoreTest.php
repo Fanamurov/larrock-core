@@ -3,6 +3,7 @@
 namespace Larrock\Core\Tests\Traits;
 
 use DaveJamesMiller\Breadcrumbs\BreadcrumbsServiceProvider;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Larrock\ComponentBlocks\BlocksComponent;
 use Larrock\ComponentBlocks\LarrockComponentBlocksServiceProvider;
@@ -73,6 +74,27 @@ class AdminMethodsStoreTest extends TestCase
         $load = $test->store($request);
         $this->assertEquals(302, $load->getStatusCode());
         $this->assertNotNull(Blocks::find(2));
+
+        //Проверка внесения данных без редиректа (получение ошибки)
+        $test->allow_redirect = null;
+        /** @var JsonResponse $load */
+        $load = $test->store($request);
+        $this->assertInstanceOf(JsonResponse::class, $load);
+        $this->assertEquals(200, $load->getStatusCode());
+        $response = json_decode($load->getContent());
+        $this->assertEquals('danger', $response->status);
+        $this->assertEquals('The url has already been taken.', $response->message);
+
+        //Проверка внесения данных без редиректа
+        $request = Request::create('/admin/create', 'POST', [
+            'title' => 'Новый материал2',
+            'url' => 'novyy-material2',
+            'active' => 1
+        ]);
+        $test->allow_redirect = null;
+        $load = $test->store($request);
+        $this->assertInstanceOf(Blocks::class, $load);
+        $this->assertEquals(3, $load->id);
     }
 }
 

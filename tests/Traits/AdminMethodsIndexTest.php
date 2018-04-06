@@ -12,9 +12,12 @@ use Larrock\Core\LarrockCoreServiceProvider;
 use Larrock\Core\Tests\DatabaseTest\CreateBlocksDatabase;
 use Larrock\Core\Tests\DatabaseTest\CreateCategoryDatabase;
 use Larrock\Core\Tests\DatabaseTest\CreateFeedDatabase;
+use Larrock\Core\Tests\DatabaseTest\CreateMediaDatabase;
 use Larrock\Core\Traits\AdminMethodsIndex;
 use Larrock\Core\Traits\ShareMethods;
 use Orchestra\Testbench\TestCase;
+use Proengsoft\JsValidation\JsValidationServiceProvider;
+use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 
 class AdminMethodsIndexTest extends TestCase
 {
@@ -40,6 +43,9 @@ class AdminMethodsIndexTest extends TestCase
 
         $seed = new CreateFeedDatabase();
         $seed->setUpFeedDatabase();
+
+        $seed = new CreateMediaDatabase();
+        $seed->setUpMediaDatabase();
     }
 
     protected function getPackageProviders($app)
@@ -49,7 +55,9 @@ class AdminMethodsIndexTest extends TestCase
             LarrockComponentBlocksServiceProvider::class,
             BreadcrumbsServiceProvider::class,
             LarrockComponentFeedServiceProvider::class,
-            LarrockComponentCategoryServiceProvider::class
+            LarrockComponentCategoryServiceProvider::class,
+            JsValidationServiceProvider::class,
+            MediaLibraryServiceProvider::class
         ];
     }
 
@@ -74,6 +82,7 @@ class AdminMethodsIndexTest extends TestCase
         $test = new AdminMethodsIndexMock();
         $this->assertEquals('larrock::admin.admin-builder.categories', $test->index()->getName());
         $this->assertEquals(1, $test->index()->getData()['categories']->total());
+        $this->assertNotEmpty($test->index()->render());
 
         $test = new AdminMethodsIndexMockBlock();
         $this->assertEquals('larrock::admin.admin-builder.index', $test->index()->getName());
@@ -94,6 +103,7 @@ class AdminMethodsIndexMock
     public function __construct()
     {
         $this->config = new FeedComponent();
+        $this->config->shareConfig();
     }
 }
 
@@ -106,6 +116,7 @@ class AdminMethodsIndexMockBlock
     public function __construct()
     {
         $this->config = new BlocksComponent();
+        $this->config->shareConfig();
     }
 }
 
@@ -119,5 +130,6 @@ class AdminMethodsIndexMockBlockNotPosition
     {
         $this->config = new BlocksComponent();
         $this->config->removeRow('position');
+        $this->config->shareConfig();
     }
 }
