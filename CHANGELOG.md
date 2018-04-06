@@ -1,5 +1,9 @@
 # Release Notes
 
+## v1.5.2 (2018-04-06)
+### Bugfix
+- js show easy category creating item
+
 ## v1.5.1 (2018-04-06)
 ### Changed
 - AdminMethodsCreate trait refactor
@@ -15,7 +19,7 @@
 - AdminMethodsUpdate new validation implementation
 
 ### Removed
-- Component _valid_construct static method
+- Component valid_construct static method
 
 ## v1.4.18 (2018-04-05)
 ### Changed

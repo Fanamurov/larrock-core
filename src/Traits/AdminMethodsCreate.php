@@ -44,7 +44,9 @@ trait AdminMethodsCreate
         $test = Request::create('/admin/'.$this->config->name, 'POST', $post_rows);
 
         if (! method_exists($this, 'store')) {
-            $trait = new class { use AdminMethodsStore; };
+            $trait = new class {
+                use AdminMethodsStore;
+            };
             return $trait->store($test);
         }
         return $this->store($test);
