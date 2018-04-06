@@ -28,7 +28,7 @@ trait AdminMethodsCreate
         foreach ($this->config->rows as $row) {
             if ($row->fillable && $row instanceof FormCategory) {
                 if (! empty($request->get($row->name))) {
-                    if ($findCategory = \LarrockCategory::getModel()->whereComponent($this->config->name) ->whereId($request->get($row->name))->first()) {
+                    if ($findCategory = \LarrockCategory::getModel()->whereComponent($this->config->name)->whereId($request->get($row->name))->first()) {
                         $post_rows[$row->name] = $findCategory->id;
                     } else {
                         MessageLarrock::danger('Раздела с переданным id:'.$request->get($row->name).' не существует');
