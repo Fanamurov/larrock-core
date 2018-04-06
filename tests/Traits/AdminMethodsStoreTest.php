@@ -57,10 +57,10 @@ class AdminMethodsStoreTest extends TestCase
         ];
     }
 
-    public function testSetConfig()
+    public function testUpdateConfig()
     {
         $test = new AdminMethodsStoreMock();
-        $this->assertNotNull($test->setConfig(new BlocksComponent()));
+        $this->assertNotNull($test->updateConfig(new BlocksComponent()));
     }
 
     public function testShareMethods()

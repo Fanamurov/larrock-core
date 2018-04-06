@@ -26,7 +26,7 @@ trait AdminMethodsStore
      * @param Component $config
      * @return AdminMethodsStore
      */
-    public function setConfig($config)
+    public function updateConfig($config)
     {
         $this->config = $config;
 

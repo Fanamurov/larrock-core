@@ -54,7 +54,7 @@ trait AdminMethodsCreate
                 use AdminMethodsStore;
             };
 
-            return $trait->setConfig($this->config)->store($test);
+            return $trait->updateConfig($this->config)->store($test);
         }
 
         return $this->store($test);
