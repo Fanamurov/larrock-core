@@ -23,6 +23,17 @@ trait AdminMethodsStore
     public $allow_redirect = true;
 
     /**
+     * @param Component $config
+     * @return bool
+     */
+    public function setConfig($config)
+    {
+        $this->config = $config;
+
+        return true;
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request

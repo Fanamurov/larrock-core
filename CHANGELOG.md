@@ -1,5 +1,9 @@
 # Release Notes
 
+## v1.6.1 (2018-04-06)
+### Bugfix
+- AdminMedtodsCreate. Use AdminMedtodsStore in anonymous function
+
 ## v1.6 (2018-04-06)
 ### Changed
 - Component shareConfig method. Now config component in var "package" (old "app")

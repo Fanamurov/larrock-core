@@ -15,7 +15,7 @@ trait AdminMethodsCreate
     /**
      * Creating a new resource.
      * @param Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
     public function create(Request $request)
@@ -54,7 +54,7 @@ trait AdminMethodsCreate
                 use AdminMethodsStore;
             };
 
-            return $trait->store($test);
+            return $trait->setConfig($this->config)->store($test);
         }
 
         return $this->store($test);
