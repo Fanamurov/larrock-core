@@ -35,7 +35,7 @@ trait AdminMethodsStore
         $data->fill($request->all());
 
         foreach ($this->config->rows as $row) {
-            if (\in_array($row->name, $data->getFillable(), false) && ! isset($data->{$row->name})) {
+            if ($row->fillable && ! isset($data->{$row->name})) {
                 if ($row instanceof FormDate) {
                     $data->{$row->name} = $request->input('date', date('Y-m-d'));
                 } else {
