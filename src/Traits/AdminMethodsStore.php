@@ -24,13 +24,13 @@ trait AdminMethodsStore
 
     /**
      * @param Component $config
-     * @return bool
+     * @return AdminMethodsStore
      */
     public function setConfig($config)
     {
         $this->config = $config;
 
-        return true;
+        return $this;
     }
 
     /**
