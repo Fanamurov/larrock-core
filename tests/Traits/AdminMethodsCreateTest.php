@@ -3,12 +3,15 @@
 namespace Larrock\Core\Tests\Traits;
 
 use DaveJamesMiller\Breadcrumbs\BreadcrumbsServiceProvider;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Larrock\ComponentBlocks\BlocksComponent;
-use Larrock\ComponentBlocks\LarrockComponentBlocksServiceProvider;
-use Larrock\ComponentBlocks\Models\Blocks;
+use Larrock\ComponentCategory\LarrockComponentCategoryServiceProvider;
+use Larrock\ComponentFeed\FeedComponent;
+use Larrock\ComponentFeed\LarrockComponentFeedServiceProvider;
+use Larrock\ComponentFeed\Models\Feed;
 use Larrock\Core\LarrockCoreServiceProvider;
-use Larrock\Core\Tests\DatabaseTest\CreateBlocksDatabase;
+use Larrock\Core\Tests\DatabaseTest\CreateCategoryDatabase;
+use Larrock\Core\Tests\DatabaseTest\CreateFeedDatabase;
 use Larrock\Core\Tests\DatabaseTest\CreateSeoDatabase;
 use Larrock\Core\Traits\AdminMethodsCreate;
 use Larrock\Core\Traits\AdminMethodsStore;
@@ -32,18 +35,22 @@ class AdminMethodsCreateTest extends TestCase
     {
         parent::setUp();
 
-        $seed = new CreateBlocksDatabase();
-        $seed->setUpBlocksDatabase();
-
         $seed = new CreateSeoDatabase();
         $seed->setUpSeoDatabase();
+
+        $seed = new CreateFeedDatabase();
+        $seed->setUpFeedDatabase();
+
+        $seed = new CreateCategoryDatabase();
+        $seed->setUpCategoryDatabase();
     }
 
     protected function getPackageProviders($app)
     {
         return [
             LarrockCoreServiceProvider::class,
-            LarrockComponentBlocksServiceProvider::class,
+            LarrockComponentFeedServiceProvider::class,
+            LarrockComponentCategoryServiceProvider::class,
             BreadcrumbsServiceProvider::class,
             JsValidationServiceProvider::class
         ];
@@ -52,7 +59,8 @@ class AdminMethodsCreateTest extends TestCase
     protected function getPackageAliases($app)
     {
         return [
-            'LarrockBlocks' => 'Larrock\ComponentBlocks\Facades\LarrockBlocks',
+            'LarrockFeed' => 'Larrock\ComponentFeed\Facades\LarrockFeed',
+            'LarrockCategory' => 'Larrock\ComponentCategory\Facades\LarrockCategory',
             'Breadcrumbs' => 'DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs'
         ];
     }
@@ -64,20 +72,47 @@ class AdminMethodsCreateTest extends TestCase
     }
 
     /**
-     * @expectedException \BadMethodCallException
-     * @expectedExceptionMessage AdminMethodsStore not found in this Controller
      * @throws \Exception
      */
     public function testCreate()
     {
-        $request = new Request();
+        $request = Request::create('/admin/feed/create', 'POST', []);
+
         $test = new AdminMethodsCreateMock();
         $load = $test->create($request);
         $this->assertEquals(302, $load->getStatusCode());
-        $this->assertNotNull(Blocks::find(2));
+        $this->assertNotNull(Feed::find(2));
 
-        $test = new class { use AdminMethodsCreate; };
-        $test->create($request);
+        //Проверка на попытку создания материала с тем же title
+        $request = Request::create('/admin/feed/create', 'POST', []);
+        /** @var RedirectResponse $load */
+        $load = $test->create($request);
+        $this->assertArrayHasKey(0, $load->getSession()->get('message.danger'));
+        $this->assertEquals('Материал с тарим url уже существует: /admin/feed/2/edit', $load->getSession()->get('message.danger.0'));
+
+        //Проверка на попытку создания материала с несуществующим разделом
+        $request = Request::create('/admin/feed/create', 'POST', [
+            'title' => 'new_title_feed',
+            'category' => 2
+        ]);
+        /** @var RedirectResponse $load */
+        $load = $test->create($request);
+        $this->assertEquals(302, $load->getStatusCode());
+        $feed = Feed::find(3);
+        $this->assertNotNull($feed);
+        $this->assertEquals(2, $feed->category);
+
+        //Создание материала с переданным category
+        $request = Request::create('/admin/feed/create', 'POST', [
+            'title' => 'new_title2',
+            'category' => 1,
+            'short' => 'short',
+            'description' => 'description'
+        ]);
+        /** @var RedirectResponse $load */
+        $load = $test->create($request);
+        $this->assertEquals(302, $load->getStatusCode());
+        $this->assertNotNull(Feed::find(4));
     }
 }
 
@@ -89,6 +124,6 @@ class AdminMethodsCreateMock
 
     public function __construct()
     {
-        $this->config = new BlocksComponent();
+        $this->config = new FeedComponent();
     }
 }

@@ -1,5 +1,10 @@
 # Release Notes
 
+## v1.5.1 (2018-04-06)
+### Changed
+- AdminMethodsCreate trait refactor
+- AdminMethodsStore trait refactor
+
 ## v1.5 (2018-04-05)
 ### Changed
 - Component getValid method

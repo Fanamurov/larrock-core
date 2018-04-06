@@ -5,6 +5,7 @@ namespace Larrock\Core\Traits;
 use Larrock\Core\Component;
 use Illuminate\Http\Request;
 use Larrock\Core\Helpers\MessageLarrock;
+use Larrock\Core\Helpers\FormBuilder\FormCategory;
 
 trait AdminMethodsCreate
 {
@@ -19,42 +20,33 @@ trait AdminMethodsCreate
      */
     public function create(Request $request)
     {
-        if (! method_exists($this, 'store')) {
-            throw new \BadMethodCallException('AdminMethodsStore not found in this Controller', 400);
-        }
         $post_rows = [
-            'title' => 'Новый материал',
-            'url' => 'novyy-material',
+            'title' => $request->get('title', 'Новый материал'),
+            'url' => str_slug($request->get('title', 'Новый материал')),
         ];
 
         if ($request->has('category')) {
             $post_rows['category'] = $request->get('category');
         } else {
-            if (array_key_exists('category', $this->config->rows)) {
-                if ($findCategory = \LarrockCategory::getModel()->whereComponent($this->config->name)->first()) {
-                    $post_rows['category'] = $findCategory->id;
-                } else {
-                    MessageLarrock::danger('Создать материал пока нельзя. Сначала создайте для него раздел');
+            foreach ($this->config->rows as $row) {
+                if ($row->fillable && $row instanceof FormCategory) {
+                    if ($findCategory = \LarrockCategory::getModel()->whereComponent($this->config->name)->first()) {
+                        $post_rows[$row->name] = $findCategory->id;
+                    } else {
+                        MessageLarrock::danger('Создать материал пока нельзя. Сначала создайте для него раздел');
 
-                    return back()->withInput();
+                        return back()->withInput();
+                    }
                 }
             }
         }
 
-        foreach ($this->config->rows as $row) {
-            if ($row->default) {
-                $post_rows[$row->name] = $row->default;
-            }
-            if ($row->name === 'user_id') {
-                $post_rows[$row->name] = \Auth::id();
-            }
-        }
-
-        if (array_key_exists('position', $this->config->rows)) {
-            $post_rows['active'] = 0;
-        }
         $test = Request::create('/admin/'.$this->config->name, 'POST', $post_rows);
 
+        if (! method_exists($this, 'store')) {
+            $trait = new class { use AdminMethodsStore; };
+            return $trait->store($test);
+        }
         return $this->store($test);
     }
 }

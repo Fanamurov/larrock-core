@@ -25,7 +25,6 @@ class CreateCategoryDatabase
             $table->integer('position')->default(1);
             $table->integer('active')->default(1);
             $table->integer('user_id')->unsigned()->nullable();
-            //$table->integer('user_id')->unsigned()->nullable()->index('category_user_id_foreign');
             $table->integer('attached')->default(0);
             $table->timestamps();
 

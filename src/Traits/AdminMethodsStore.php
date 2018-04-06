@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Larrock\Core\Helpers\MessageLarrock;
 use Larrock\Core\Events\ComponentItemStored;
 use Larrock\Core\Helpers\FormBuilder\FormDate;
-use Larrock\Core\Helpers\FormBuilder\FormCheckbox;
 
 trait AdminMethodsStore
 {
@@ -36,12 +35,11 @@ trait AdminMethodsStore
         $data->fill($request->all());
 
         foreach ($this->config->rows as $row) {
-            if (\in_array($row->name, $data->getFillable())) {
-                if ($row instanceof FormCheckbox) {
-                    $data->{$row->name} = $request->input($row->name, $row->default);
-                }
+            if (\in_array($row->name, $data->getFillable(), false) && ! isset($data->{$row->name})) {
                 if ($row instanceof FormDate) {
                     $data->{$row->name} = $request->input('date', date('Y-m-d'));
+                } else {
+                    $data->{$row->name} = $request->input($row->name, $row->default);
                 }
             }
         }
