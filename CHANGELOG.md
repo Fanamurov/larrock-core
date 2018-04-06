@@ -1,5 +1,9 @@
 # Release Notes
 
+## v1.5.3 (2018-04-06)
+### Changed
+- AdminMethodsCreate trait refactor
+
 ## v1.5.2 (2018-04-06)
 ### Bugfix
 - js show easy category creating item

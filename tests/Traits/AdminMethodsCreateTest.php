@@ -76,15 +76,18 @@ class AdminMethodsCreateTest extends TestCase
      */
     public function testCreate()
     {
-        $request = Request::create('/admin/feed/create', 'POST', []);
+        $request = Request::create('/admin/feed/create', 'POST');
 
         $test = new AdminMethodsCreateMock();
+        /** @var RedirectResponse $load */
         $load = $test->create($request);
         $this->assertEquals(302, $load->getStatusCode());
-        $this->assertNotNull(Feed::find(2));
+        $data = Feed::find(2);
+        $this->assertNotNull($data);
+        $this->assertEquals(1, $data->category);
 
         //Проверка на попытку создания материала с тем же title
-        $request = Request::create('/admin/feed/create', 'POST', []);
+        $request = Request::create('/admin/feed/create', 'POST');
         /** @var RedirectResponse $load */
         $load = $test->create($request);
         $this->assertArrayHasKey(0, $load->getSession()->get('message.danger'));
@@ -98,9 +101,8 @@ class AdminMethodsCreateTest extends TestCase
         /** @var RedirectResponse $load */
         $load = $test->create($request);
         $this->assertEquals(302, $load->getStatusCode());
-        $feed = Feed::find(3);
-        $this->assertNotNull($feed);
-        $this->assertEquals(2, $feed->category);
+        $this->assertArrayHasKey(0, $load->getSession()->get('message.danger'));
+        $this->assertEquals('Раздела с переданным id:2 не существует', $load->getSession()->get('message.danger.1'));
 
         //Создание материала с переданным category
         $request = Request::create('/admin/feed/create', 'POST', [
@@ -112,7 +114,9 @@ class AdminMethodsCreateTest extends TestCase
         /** @var RedirectResponse $load */
         $load = $test->create($request);
         $this->assertEquals(302, $load->getStatusCode());
-        $this->assertNotNull(Feed::find(4));
+        $data = Feed::find(3);
+        $this->assertNotNull($data);
+        $this->assertEquals('new_title2', $data->title);
     }
 }
 

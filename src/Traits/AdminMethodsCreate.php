@@ -25,18 +25,24 @@ trait AdminMethodsCreate
             'url' => str_slug($request->get('title', 'Новый материал')),
         ];
 
-        if ($request->has('category')) {
-            $post_rows['category'] = $request->get('category');
-        } else {
-            foreach ($this->config->rows as $row) {
-                if ($row->fillable && $row instanceof FormCategory) {
-                    if ($findCategory = \LarrockCategory::getModel()->whereComponent($this->config->name)->first()) {
+        foreach ($this->config->rows as $row) {
+            if ($row->fillable && $row instanceof FormCategory) {
+                if (! empty($request->get($row->name))) {
+                    if ($findCategory = \LarrockCategory::getModel()->whereComponent($this->config->name) ->whereId($request->get($row->name))->first()) {
                         $post_rows[$row->name] = $findCategory->id;
                     } else {
-                        MessageLarrock::danger('Создать материал пока нельзя. Сначала создайте для него раздел');
+                        MessageLarrock::danger('Раздела с переданным id:'.$request->get($row->name).' не существует');
 
                         return back()->withInput();
                     }
+                }
+
+                if ($findCategory = \LarrockCategory::getModel()->whereComponent($this->config->name)->first()) {
+                    $post_rows[$row->name] = $findCategory->id;
+                } else {
+                    MessageLarrock::danger('Создать материал пока нельзя. Сначала создайте для него раздел');
+
+                    return back()->withInput();
                 }
             }
         }
@@ -47,8 +53,10 @@ trait AdminMethodsCreate
             $trait = new class {
                 use AdminMethodsStore;
             };
+
             return $trait->store($test);
         }
+
         return $this->store($test);
     }
 }
