@@ -86,6 +86,24 @@ class GetSeoTest extends TestCase
 
     public function testGetGetSeoTitleAttribute()
     {
+        //Возвращение чистого title материала, когда нет сео-записи
+        $model = Blocks::whereId(1)->first();
+        $this->assertEquals('test', $model->get_seo_title);
+        \Cache::flush();
+
+        //Возвращение сео-записи по url
+        DB::connection()->table('seo')->insert([
+            'seo_title' => 'test_url',
+            'seo_description' => 'test_url',
+            'seo_keywords' => 'test_url',
+            'seo_id_connect' => 1,
+            'seo_url_connect' => 'test',
+            'seo_type_connect' => 'blocks',
+        ]);
+        $model = Blocks::whereId(1)->first();
+        $this->assertEquals('test_url', $model->get_seo_title);
+
+        //Проверка возвращения существующей сео-записи
         DB::connection()->table('seo')->insert([
             'seo_title' => 'test_seo',
             'seo_description' => 'test_seo',
