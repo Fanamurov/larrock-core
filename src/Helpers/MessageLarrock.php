@@ -76,7 +76,7 @@ class MessageLarrock
      */
     public static function manual(string $type, string $message, $logWrite = null, $exception = null)
     {
-        \Session::push('message.'. $type, $message);
+        \Session::push('message.'.$type, $message);
         if ($logWrite) {
             \Log::notice($message);
         }
