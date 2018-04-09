@@ -4,6 +4,7 @@ namespace Larrock\Core\Tests;
 
 use DaveJamesMiller\Breadcrumbs\BreadcrumbsServiceProvider;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Larrock\ComponentAdminSeo\LarrockComponentAdminSeoServiceProvider;
 use Larrock\ComponentBlocks\BlocksComponent;

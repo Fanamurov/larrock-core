@@ -2,12 +2,17 @@
 
 namespace Larrock\Core\Tests\Helpers\FormBuilder;
 
+use Larrock\ComponentFeed\Facades\LarrockFeed;
+use Larrock\ComponentFeed\LarrockComponentFeedServiceProvider;
+use Larrock\ComponentFeed\Models\Feed;
 use Larrock\Core\Helpers\FormBuilder\FormTags;
 use Larrock\Core\LarrockCoreServiceProvider;
 use Larrock\Core\Models\Config;
 use Larrock\Core\Models\Seo;
 use Larrock\Core\Helpers\FormBuilder\FBElement;
 use Larrock\Core\Tests\DatabaseTest\CreateConfigDatabase;
+use Larrock\Core\Tests\DatabaseTest\CreateFeedDatabase;
+use Larrock\Core\Tests\DatabaseTest\CreateLinkDatabase;
 use Larrock\Core\Tests\DatabaseTest\CreateSeoDatabase;
 
 class FormTagsTest extends \Orchestra\Testbench\TestCase
@@ -42,7 +47,15 @@ class FormTagsTest extends \Orchestra\Testbench\TestCase
     protected function getPackageProviders($app)
     {
         return [
-            LarrockCoreServiceProvider::class
+            LarrockCoreServiceProvider::class,
+            LarrockComponentFeedServiceProvider::class
+        ];
+    }
+
+    protected function getPackageAliases($app)
+    {
+        return [
+            'LarrockFeed' => LarrockFeed::class,
         ];
     }
 
@@ -109,10 +122,14 @@ class FormTagsTest extends \Orchestra\Testbench\TestCase
         $seed = new CreateSeoDatabase();
         $seed->setUpSeoDatabase();
 
-        $seed = new CreateConfigDatabase();
-        $seed->setUpTestDatabase();
+        $seed = new CreateFeedDatabase();
+        $seed->setUpFeedDatabase();
 
-        $this->FormTags->setModels(Config::class, Seo::class);
+        $seed = new CreateLinkDatabase();
+        $seed->setUpLinkDatabase();
+
+        $this->FormTags->setModels(Feed::class, Seo::class);
+        $this->FormTags->setModelChildWhere('id', 1);
         $this->assertNotEmpty($this->FormTags->__toString());
     }
 }
