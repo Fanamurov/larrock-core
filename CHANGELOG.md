@@ -1,5 +1,9 @@
 # Release Notes
 
+## v1.6.4 (2018-04-09)
+### Added
+- MessageLarrockEvent
+
 ## v1.6.1 (2018-04-06)
 ### Bugfix
 - AdminMedtodsCreate. Use AdminMedtodsStore in anonymous function
