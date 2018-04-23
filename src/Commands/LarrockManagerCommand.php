@@ -45,10 +45,10 @@ class LarrockManagerCommand extends Command
 
         if ($name === 'All') {
             $this->info('Install all packages LarrockCMS');
-            echo shell_exec('composer require '.implode(':^1.0 ', $packages).' --prefer-dist');
+            echo shell_exec('composer require '.implode(':^1.* ', $packages).' --prefer-dist');
         } elseif ($name !== 'Do not install other packages') {
-            $this->info('composer require fanamurov/'.$name.':^1.0 --prefer-dist');
-            echo shell_exec('composer require fanamurov/'.$name.':^1.0 --prefer-dist');
+            $this->info('composer require fanamurov/'.$name.':^1.* --prefer-dist');
+            echo shell_exec('composer require fanamurov/'.$name.':^1.* --prefer-dist');
         }
 
         if ($name !== 'Do not install other packages') {
