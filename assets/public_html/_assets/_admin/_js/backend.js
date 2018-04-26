@@ -561,6 +561,8 @@ function change_url_title(title, table, form){
             if (data.message) {
                 url_input.val(data.message);
                 active_input.attr('checked', 'checked');
+                $('input[name=gallery_img]').val(data.message);
+                $('input[name=gallery_file]').val(data.message);
                 notify_show('info', 'Материалу будет присвоен url: '+data.message);
             }
         }
