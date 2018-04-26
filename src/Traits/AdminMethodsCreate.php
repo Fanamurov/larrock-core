@@ -35,14 +35,14 @@ trait AdminMethodsCreate
 
                         return back()->withInput();
                     }
-                }
-
-                if ($findCategory = \LarrockCategory::getModel()->whereComponent($this->config->name)->first()) {
-                    $post_rows[$row->name] = $findCategory->id;
                 } else {
-                    MessageLarrock::danger('Создать материал пока нельзя. Сначала создайте для него раздел');
+                    if ($findCategory = \LarrockCategory::getModel()->whereComponent($this->config->name)->first()) {
+                        $post_rows[$row->name] = $findCategory->id;
+                    } else {
+                        MessageLarrock::danger('Создать материал пока нельзя. Сначала создайте для него раздел');
 
-                    return back()->withInput();
+                        return back()->withInput();
+                    }
                 }
             }
         }

@@ -1,5 +1,9 @@
 # Release Notes
 
+## v1.6.8 (2018-04-26)
+### Bugfix
+- Trait AdminMethodsCreate: save with category
+
 ## v1.6.4 (2018-04-09)
 ### Added
 - MessageLarrockEvent
