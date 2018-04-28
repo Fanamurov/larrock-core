@@ -3,7 +3,6 @@
 namespace Larrock\Core\Traits;
 
 use Cache;
-use Larrock\Core\Models\Seo;
 
 trait GetAdminLink
 {
