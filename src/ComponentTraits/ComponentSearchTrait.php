@@ -2,6 +2,8 @@
 
 namespace Larrock\Core\ComponentTraits;
 
+use Larrock\Core\Helpers\FormBuilder\FormTags;
+
 trait ComponentSearchTrait
 {
     /** @var null|bool Осуществляется ли поиск по компоненту */
@@ -31,26 +33,33 @@ trait ComponentSearchTrait
      */
     public function search($admin = null)
     {
+        if ($this->searchable !== true) {
+            return [];
+        }
+
         return \Cache::rememberForever('search'.$this->name.$admin, function () use ($admin) {
             $data = [];
 
+            $model = new $this->model;
+
             $search_rows = ['id', $this->search_title];
 
+            if (isset($this->rows['category']) && !$this->rows['category'] instanceof FormTags) {
+                $search_rows[] = 'category';
+            }
+
             if ($admin) {
-                if (\in_array('category', array_keys($this->rows))) {
-                    $search_rows[] = 'category';
-                    $items = $this->model::with(['getCategory'])->get($search_rows);
-                } else {
-                    $items = $this->model::get($search_rows);
+                if (isset($this->rows['category'])) {
+                    $model = $model::with(['getCategory']);
                 }
             } else {
-                if (\in_array('category', array_keys($this->rows))) {
-                    $search_rows[] = 'category';
-                    $items = $this->model::whereActive(1)->with(['getCategoryActive'])->get($search_rows);
-                } else {
-                    $items = $this->model::whereActive(1)->get($search_rows);
+                if (isset($this->rows['category'])) {
+                    $model = $model::with(['getCategoryActive']);
                 }
             }
+
+            $items = $model->get($search_rows);
+
             foreach ($items as $item) {
                 $data[$item->id]['id'] = $item->id;
                 $data[$item->id]['title'] = $item->{$this->search_title};
@@ -60,11 +69,23 @@ trait ComponentSearchTrait
                 $data[$item->id]['admin_url'] = $item->admin_url;
                 if ($admin) {
                     if ($item->getCategory) {
-                        $data[$item->id]['category'] = $item->getCategory->title;
+                        if (\count($item->getCategory) > 0) {
+                            $data[$item->id]['category'] = $item->getCategory->first()->title;
+                        } elseif (isset($item->getCategory->title)) {
+                            $data[$item->id]['category'] = $item->getCategory->title;
+                        } else {
+                            unset($data[$item->id]);
+                        }
                     }
                 } else {
                     if ($item->getCategoryActive) {
-                        $data[$item->id]['category'] = $item->getCategoryActive->title;
+                        if (\count($item->getCategoryActive) > 0) {
+                            $data[$item->id]['category'] = $item->getCategoryActive->first()->title;
+                        } elseif (isset($item->getCategoryActive->title)) {
+                            $data[$item->id]['category'] = $item->getCategoryActive->title;
+                        } else {
+                            unset($data[$item->id]);
+                        }
                     }
                 }
             }
