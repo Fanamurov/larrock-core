@@ -11,10 +11,11 @@ use Larrock\Core\Plugins\PluginAnonsTrait;
 use Larrock\Core\Helpers\FormBuilder\FBElement;
 use Larrock\Core\Helpers\FormBuilder\FormInput;
 use Larrock\Core\Helpers\FormBuilder\FormCheckbox;
+use Larrock\Core\ComponentTraits\ComponentSearchTrait;
 
 class Component
 {
-    use PluginSeoTrait, PluginAnonsTrait;
+    use PluginSeoTrait, PluginAnonsTrait, ComponentSearchTrait;
 
     /** @var string */
     public $name;
@@ -48,9 +49,6 @@ class Component
 
     /** @var array */
     public $settings;
-
-    /** @var null|bool */
-    public $searchable;
 
     /** @var array|Collection */
     public $tabs;
@@ -370,17 +368,6 @@ class Component
     }
 
     /**
-     * Разрешить поиск по материалам компонента.
-     * @return $this
-     */
-    public function isSearchable()
-    {
-        $this->searchable = true;
-
-        return $this;
-    }
-
-    /**
      * Формирование пунктов меню компонента в админке.
      * @return string
      */
@@ -403,16 +390,6 @@ class Component
      * @return null
      */
     public function createRSS()
-    {
-        return null;
-    }
-
-    /**
-     * Данные для поиска по материалам компонента.
-     * @param null|bool $admin Если TRUE - для поиска будут доступны вообще все элементы (не только опубликованные)
-     * @return null
-     */
-    public function search($admin = null)
     {
         return null;
     }

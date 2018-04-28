@@ -1,5 +1,10 @@
 # Release Notes
 
+## v1.6.10 (2018-04-28)
+### Added
+- ComponentSearchTrait
+- Model trait GetAdminLink
+
 ## v1.6.9 (2018-04-26)
 ### Added
 - current gallery name for images/files plugins in new material
