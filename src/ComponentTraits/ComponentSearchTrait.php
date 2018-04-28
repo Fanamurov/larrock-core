@@ -44,7 +44,7 @@ trait ComponentSearchTrait
 
             $search_rows = ['id', $this->search_title];
 
-            if (isset($this->rows['category']) && !$this->rows['category'] instanceof FormTags) {
+            if (isset($this->rows['category']) && ! $this->rows['category'] instanceof FormTags) {
                 $search_rows[] = 'category';
             }
 
@@ -61,30 +61,34 @@ trait ComponentSearchTrait
             $items = $model->get($search_rows);
 
             foreach ($items as $item) {
-                $data[$item->id]['id'] = $item->id;
-                $data[$item->id]['title'] = $item->{$this->search_title};
-                $data[$item->id]['full_url'] = $item->full_url;
-                $data[$item->id]['component'] = $this->name;
-                $data[$item->id]['category'] = null;
-                $data[$item->id]['admin_url'] = $item->admin_url;
-                if ($admin) {
-                    if ($item->getCategory) {
-                        if (\count($item->getCategory) > 0) {
-                            $data[$item->id]['category'] = $item->getCategory->first()->title;
-                        } elseif (isset($item->getCategory->title)) {
-                            $data[$item->id]['category'] = $item->getCategory->title;
-                        } else {
-                            unset($data[$item->id]);
-                        }
-                    }
+                if (empty($item->{$this->search_title})) {
+                    unset($data[$item->id]);
                 } else {
-                    if ($item->getCategoryActive) {
-                        if (\count($item->getCategoryActive) > 0) {
-                            $data[$item->id]['category'] = $item->getCategoryActive->first()->title;
-                        } elseif (isset($item->getCategoryActive->title)) {
-                            $data[$item->id]['category'] = $item->getCategoryActive->title;
-                        } else {
-                            unset($data[$item->id]);
+                    $data[$item->id]['id'] = $item->id;
+                    $data[$item->id]['title'] = $item->{$this->search_title};
+                    $data[$item->id]['full_url'] = $item->full_url;
+                    $data[$item->id]['component'] = $this->name;
+                    $data[$item->id]['category'] = null;
+                    $data[$item->id]['admin_url'] = $item->admin_url;
+                    if ($admin) {
+                        if ($item->getCategory) {
+                            if (\count($item->getCategory) > 0) {
+                                $data[$item->id]['category'] = $item->getCategory->first()->title;
+                            } elseif (isset($item->getCategory->title)) {
+                                $data[$item->id]['category'] = $item->getCategory->title;
+                            } else {
+                                unset($data[$item->id]);
+                            }
+                        }
+                    } else {
+                        if ($item->getCategoryActive) {
+                            if (\count($item->getCategoryActive) > 0) {
+                                $data[$item->id]['category'] = $item->getCategoryActive->first()->title;
+                            } elseif (isset($item->getCategoryActive->title)) {
+                                $data[$item->id]['category'] = $item->getCategoryActive->title;
+                            } else {
+                                unset($data[$item->id]);
+                            }
                         }
                     }
                 }
