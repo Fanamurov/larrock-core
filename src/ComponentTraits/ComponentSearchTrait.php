@@ -40,9 +40,17 @@ trait ComponentSearchTrait
         return \Cache::rememberForever('search'.$this->name.$admin, function () use ($admin) {
             $data = [];
 
+            if($this->name !== 'feed'){
+                return [];
+            }
+
             $model = new $this->model;
 
             $search_rows = ['id', $this->search_title];
+
+            if (isset($this->rows['url'])) {
+                $search_rows[] = 'url';
+            }
 
             if (isset($this->rows['category']) && ! $this->rows['category'] instanceof FormTags) {
                 $search_rows[] = 'category';
