@@ -270,7 +270,7 @@ class ComponentTest extends \Orchestra\Testbench\TestCase
 
     public function testSearch()
     {
-        $this->assertNull($this->component->search(null));
+        $this->assertNotNull($this->component->search(null));
     }
 
     public function testTabbable()
