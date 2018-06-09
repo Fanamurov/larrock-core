@@ -40,7 +40,7 @@ trait ComponentSearchTrait
         return \Cache::rememberForever('search'.$this->name.$admin, function () use ($admin) {
             $data = [];
 
-            if ($this->name !== 'feed') {
+            if ($this->name !== 'feed' && $this->name !== 'catalog') {
                 return [];
             }
 
