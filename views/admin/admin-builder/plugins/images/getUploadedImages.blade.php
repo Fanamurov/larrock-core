@@ -23,7 +23,7 @@
                     </div>
                     <div class="uk-form-row-small">
                         <label class="uk-form-label uk-display-inline-block uk-text-right" style="width: 55px">Галерея:</label>
-                        <input class="param-image ajax_edit_media uk-input uk-form-small uk-form-width-small" type="text"
+                        <input class="param-file ajax_edit_media uk-input uk-form-small uk-form-width-small" type="text"
                                value="{{ $image_value->custom_properties['gallery'] or '' }}"
                                data-model_type="{!! $image_value->model_type !!}"
                                data-id="{{ $image_value->id }}" data-row="param"
@@ -31,7 +31,7 @@
                     </div>
                     <div class="uk-form-row-small">
                         <label class="uk-form-label uk-display-inline-block uk-text-right" style="width: 55px">Alt:</label>
-                        <input class="description-image ajax_edit_media uk-input uk-form-small uk-form-width-small" type="text"
+                        <input class="description-file ajax_edit_media uk-input uk-form-small uk-form-width-small" type="text"
                                value="{{ $image_value->custom_properties['alt'] or '' }}"
                                data-model_type="{!! $image_value->model_type !!}"
                                data-id="{{ $image_value->id }}" data-row="description"
@@ -39,7 +39,7 @@
                     </div>
                     <div class="plugin-position uk-form-row-small">
                         <label class="uk-form-label uk-display-inline-block uk-text-right" style="width: 55px">Вес:</label>
-                        <input class="position-image position-input ajax_edit_media uk-input uk-form-small uk-form-width-small" type="text"
+                        <input class="position-file position-input ajax_edit_media uk-input uk-form-small uk-form-width-small" type="text"
                                value="{{ $image_value->order_column or '0' }}"
                                data-model_type="{!! $image_value->model_type !!}" data-row="order_column"
                                data-id="{{ $image_value->id }}" data-table="media" data-row_where="id" data-value_where="{{ $image_value->id }}"
