@@ -3,6 +3,7 @@
 namespace Larrock\Core\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Larrock\ComponentAdminSeo\Facades\LarrockSeo;
 
 /**
  * \Larrock\Core\Models\Seo.
@@ -30,6 +31,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Seo extends Model
 {
+    /** @var $this Component */
+    protected $config;
+
     protected $table = 'seo';
 
     protected $fillable = ['seo_title', 'seo_description', 'seo_keywords', 'seo_id_connect', 'seo_url_connect', 'seo_type_connect'];
@@ -37,4 +41,17 @@ class Seo extends Model
     protected $casts = [
         'id_connect' => 'integer',
     ];
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->fillable(LarrockSeo::addFillableUserRows([]));
+        $this->config = LarrockSeo::getConfig();
+        $this->table = LarrockSeo::getTable();
+    }
+
+    public function getConfig()
+    {
+        return $this->config;
+    }
 }
