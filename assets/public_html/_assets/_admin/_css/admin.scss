@@ -203,6 +203,17 @@ html{
 }
 .mce-container, .mce-container *, .mce-widget, .mce-widget *, .mce-reset {
   background: #f7f7f7 !important;
+  opacity: 1;
+  button, i{
+    color: black !important;
+    opacity: 1;
+  }
+}
+.mce-tooltip{
+  a, span, div, i{
+    color: black !important;
+  }
+  color: black !important;
 }
 .mce-container-body .mce-btn{
   background: transparent !important;
