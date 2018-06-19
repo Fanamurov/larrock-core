@@ -135,7 +135,7 @@
                                             <td class="row-active uk-visible@s">
                                                 <div class="uk-button-group btn-group_switch_ajax" role="group" style="width: 100%">
                                                     <button type="button" class="uk-button uk-button-primary uk-button-small
-                                                            @if($data_value->{$row->name} === 0) uk-button-outline @endif"
+                                                            @if(!$data_value->{$row->name} || $data_value->{$row->name} === 0) uk-button-outline @endif"
                                                             data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="{{ $package->table }}"
                                                             data-row="active" data-value="1" style="width: 50%">on</button>
                                                     <button type="button" class="uk-button uk-button-danger uk-button-small
@@ -159,7 +159,7 @@
                                                 <select class="ajax_edit_row form-control uk-select uk-form-small" data-row_where="id"
                                                         data-value_where="{{ $data_value->id }}"
                                                         data-table="{{ $package->table }}" data-row="{{ $row->name }}">
-                                                    @foreach($row->options as $option)
+                                                    @foreach($row->getOptions() as $option)
                                                         <option @if($option === $data_value->{$row->name}) selected @endif value="{{ $option }}">{{ $option }}</option>
                                                     @endforeach
                                                 </select>

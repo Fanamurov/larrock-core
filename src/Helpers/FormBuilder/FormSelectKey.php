@@ -97,15 +97,11 @@ class FormSelectKey extends FBElement
     }
 
     /**
-     * Отрисовка элемента формы.
-     * @return string
+     * Получени списка опций
+     * @return \Illuminate\Support\Collection|mixed|null
      */
-    public function __toString()
+    public function getOptions()
     {
-        if ($this->data && ! isset($this->data->{$this->name}) && $this->default) {
-            $this->data->{$this->name} = $this->default;
-        }
-
         if ($this->connect) {
             if (! $this->options) {
                 $this->options = collect();
@@ -127,9 +123,26 @@ class FormSelectKey extends FBElement
                     $this->options->push($get_options_value);
                 }
             }
+
+            $this->options = $this->options->pluck($this->name);
         } else {
             $this->options = collect($this->options);
         }
+
+        return $this->options;
+    }
+
+    /**
+     * Отрисовка элемента формы.
+     * @return string
+     */
+    public function __toString()
+    {
+        if ($this->data && ! isset($this->data->{$this->name}) && $this->default) {
+            $this->data->{$this->name} = $this->default;
+        }
+
+        $this->options = $this->getOptions();
 
         $selected = [];
         if (\Request::input($this->name)) {
