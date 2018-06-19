@@ -90,6 +90,7 @@
                                         <select class="ajax_edit_row form-control uk-select uk-form-small"
                                                 data-row_where="id" data-value_where="{{ $data_value->id }}"
                                                 data-table="{{ $package->table }}" data-row="{{ $row->name }}">
+                                            <option value=""></option>
                                             @foreach($row->getOptions() as $option)
                                                 <option @if($option === $data_value->{$row->name}) selected @endif value="{{ $option }}">{{ $option }}</option>
                                             @endforeach
