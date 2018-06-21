@@ -26,6 +26,7 @@ trait AdminMethodsUpdate
      */
     public function update(Request $request, $id)
     {
+        $validate_data_array = $request->all();
         $data = $this->config->getModel()::find($id);
         $data->fill($request->all());
 
@@ -36,10 +37,11 @@ trait AdminMethodsUpdate
                 } else {
                     $data->{$row->name} = $request->input($row->name, $row->default);
                 }
+                $validate_data_array[$row->name] = $data->{$row->name};
             }
         }
 
-        $validator = Validator::make($data->toArray(), $this->config->getValid($id));
+        $validator = Validator::make($validate_data_array, $this->config->getValid($id));
         if ($validator->fails()) {
             return back()->withInput($request->except('password'))->withErrors($validator);
         }

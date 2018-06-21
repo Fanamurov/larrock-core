@@ -42,6 +42,7 @@ trait AdminMethodsStore
      */
     public function store(Request $request)
     {
+        $validate_data_array = $request->all();
         $data = $this->config->getModel();
         $data->fill($request->all());
 
@@ -52,10 +53,11 @@ trait AdminMethodsStore
                 } else {
                     $data->{$row->name} = $request->input($row->name, $row->default);
                 }
+                $validate_data_array[$row->name] = $data->{$row->name};
             }
         }
 
-        $validator = Validator::make($data->toArray(), $this->config->getValid());
+        $validator = Validator::make($validate_data_array, $this->config->getValid());
         if ($validator->fails()) {
             if ($this->allow_redirect) {
                 if (array_key_exists('url', $validator->failed())) {

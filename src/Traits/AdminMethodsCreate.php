@@ -6,6 +6,7 @@ use Larrock\Core\Component;
 use Illuminate\Http\Request;
 use Larrock\Core\Helpers\MessageLarrock;
 use Larrock\Core\Helpers\FormBuilder\FormCategory;
+use Larrock\ComponentCategory\Models\Category;
 
 trait AdminMethodsCreate
 {
@@ -26,7 +27,7 @@ trait AdminMethodsCreate
         ];
 
         foreach ($this->config->rows as $row) {
-            if ($row->fillable && $row instanceof FormCategory) {
+            if (isset($row->modelChild) && $row->modelChild === \config('larrock.models.category', Category::class)) {
                 if (! empty($request->get($row->name))) {
                     if ($findCategory = \LarrockCategory::getModel()->whereComponent($this->config->name)->whereId($request->get($row->name))->first()) {
                         $post_rows[$row->name] = $findCategory->id;
@@ -47,16 +48,16 @@ trait AdminMethodsCreate
             }
         }
 
-        $test = Request::create('/admin/'.$this->config->name, 'POST', $post_rows);
+        $store = Request::create('/admin/'.$this->config->name, 'POST', $post_rows);
 
         if (! method_exists($this, 'store')) {
             $trait = new class {
                 use AdminMethodsStore;
             };
 
-            return $trait->updateConfig($this->config)->store($test);
+            return $trait->updateConfig($this->config)->store($store);
         }
 
-        return $this->store($test);
+        return $this->store($store);
     }
 }
