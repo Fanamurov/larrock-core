@@ -115,12 +115,14 @@ class FormSelectKey extends FBElement
             }
 
             if (isset($this->connect->group_by) && $this->connect->group_by) {
-                $get_options_query = $get_options_query->groupBy([$this->connect->group_by]);
+                $get_options_query = $get_options_query->whereNotNull($this->connect->group_by)->groupBy([$this->connect->group_by]);
             }
 
             if ($get_options = $get_options_query->get()) {
                 foreach ($get_options as $get_options_value) {
-                    $this->options->push($get_options_value);
+                    if ($get_options_value !== null) {
+                        $this->options->push($get_options_value);
+                    }
                 }
             }
 

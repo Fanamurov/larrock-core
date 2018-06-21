@@ -12,22 +12,26 @@
         <option></option>
         @foreach($row_settings->options as $options_key => $options_value)
             @if($row_settings->connect)
-                <option value="@if($row_settings->option_key){{ $options_value->{$row_settings->option_key} }}@else{{ $options_value->{$row_settings->name} }}@endif"
-                    @if($row_settings->option_key)
-                        @isset($data->{$row_settings->option_key})
-                            @if(Request::old($row_settings->name, $data->{$row_settings->name}) === $options_value->{$row_settings->option_key}) selected @endif
-                        @endisset
-                    @else
-                        @isset($data->{$row_settings->name})
-                            @if(Request::old($row_settings->name, $data->{$row_settings->name}) === $options_value->{$row_settings->name}) selected @endif
-                        @endisset
-                    @endif>
-                    @if($row_settings->option_title)
-                        {{ $options_value->{$row_settings->option_title} }}
-                    @else
-                        {{ $options_value->{$row_settings->name} }}
-                    @endif
-                </option>
+                @if(\count($row_settings->options) > 0 && isset($options_value->{$row_settings->option_key}))
+                    <option value="@if($row_settings->option_key){{ $options_value->{$row_settings->option_key} }}@else{{ $options_value->{$row_settings->name} }}@endif"
+                        @if($row_settings->option_key)
+                            @isset($data->{$row_settings->option_key})
+                                @if(Request::old($row_settings->name, $data->{$row_settings->name}) === $options_value->{$row_settings->option_key}) selected @endif
+                            @endisset
+                        @else
+                            @isset($data->{$row_settings->name})
+                                @if(Request::old($row_settings->name, $data->{$row_settings->name}) === $options_value->{$row_settings->name}) selected @endif
+                            @endisset
+                        @endif>
+                        @if($row_settings->option_title)
+                            {{ $options_value->{$row_settings->option_title} }}
+                        @else
+                            {{ $options_value->{$row_settings->name} }}
+                        @endif
+                    </option>
+                @else
+                    <option></option>
+                @endif
             @else
                 <option value="{{ $options_value }}"
                     @isset($data->{$row_settings->name})
