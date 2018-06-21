@@ -131,7 +131,7 @@ class FormSelectKey extends FBElement
             $this->options = collect($this->options);
         }
 
-        return $this->options;
+        return $this->options->unique();
     }
 
     /**
