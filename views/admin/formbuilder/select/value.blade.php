@@ -11,9 +11,8 @@
     <select name="{{ $row_key }}" id="{{ $row_key }}" class="{{ $row_settings->cssClass }} uk-select">
         <option></option>
         @foreach($row_settings->options as $options_key => $options_value)
-            @if($row_settings->connect)
-                @if(\count($row_settings->options) > 0 && isset($options_value->{$row_settings->option_key}))
-                    <option value="@if($row_settings->option_key){{ $options_value->{$row_settings->option_key} }}@else{{ $options_value->{$row_settings->name} }}@endif"
+            @if($row_settings->connect && \count($row_settings->options) > 0 && $row_settings->connect->relation_name)
+                <option value="@if($row_settings->option_key){{ $options_value->{$row_settings->option_key} }}@else{{ $options_value->{$row_settings->name} }}@endif"
                         @if($row_settings->option_key)
                             @isset($data->{$row_settings->option_key})
                                 @if(Request::old($row_settings->name, $data->{$row_settings->name}) === $options_value->{$row_settings->option_key}) selected @endif
@@ -23,15 +22,12 @@
                                 @if(Request::old($row_settings->name, $data->{$row_settings->name}) === $options_value->{$row_settings->name}) selected @endif
                             @endisset
                         @endif>
-                        @if($row_settings->option_title)
-                            {{ $options_value->{$row_settings->option_title} }}
-                        @else
-                            {{ $options_value->{$row_settings->name} }}
-                        @endif
-                    </option>
-                @else
-                    <option></option>
-                @endif
+                    @if($row_settings->option_title)
+                        {{ $options_value->{$row_settings->option_title} }}
+                    @else
+                        {{ $options_value->{$row_settings->name} }}
+                    @endif
+                </option>
             @else
                 <option value="{{ $options_value }}"
                     @isset($data->{$row_settings->name})
