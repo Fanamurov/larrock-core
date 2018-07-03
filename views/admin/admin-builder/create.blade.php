@@ -16,7 +16,7 @@
     </div>
 
     <div class="ibox-content">
-        <form id="edit-form-build" class="validate uk-form uk-form-stacked" action="/admin/{{ $package->name }}/{{ $data->id }}" method="POST" novalidate="novalidate">
+        <form id="edit-form-build" class="validate uk-form uk-form-stacked" action="/admin/{{ $package->name }}" method="POST" novalidate="novalidate">
             <div class="uk-grid">
                 <div class="@if(\is_array($package->plugins_backend) && \count($package->plugins_backend) > 0) uk-width-2-3@m @endif uk-width-1-1 uk-form-stacked">
                     <div class="uk-grid uk-grid-small">
@@ -61,9 +61,8 @@
             </div>
 
             <div class="uk-align-right">
-                <input name="_method" type="hidden" value="PUT">
                 <input name="type_connect" type="hidden" value="{{ $package->name }}">
-                <input name="id_connect" type="hidden" value="{{ $data->id }}">
+                <input name="id_connect" type="hidden" value="{{ DB::table($app->table)->max('id') +1 }}">
                 {{ csrf_field() }}
                 <button type="submit" class="uk-button uk-button-primary uk-button-large uk-hidden" form="edit-form-build">Сохранить</button>
             </div>
@@ -71,25 +70,7 @@
     </div>
 
     <div class="uk-grid uk-margin-top buttons-save">
-        <div class="uk-width-1-2">
-            @if(isset($allowDestroy))
-                <form class="uk-form" action="/admin/{{ $package->name }}/{{ $data->id }}" method="post" id="test">
-                    <input name="_method" type="hidden" value="DELETE">
-                    <input name="id_connect" type="hidden" value="{{ $data->id }}">
-                    <input name="type_connect" type="hidden" value="{{ $package->name }}">
-                    <input name="place" type="hidden" value="material">
-                    @if(isset($data->getCategory))
-                        @if(isset($data->getCategory->id) && $data->getCategory->id)
-                            <input name="category_item" type="hidden" value="{{ $data->getCategory->id }}">
-                        @else
-                            <input name="category_item" type="hidden" value="{{ $data->getCategory->first()->id }}">
-                        @endif
-                    @endif
-                    {{ csrf_field() }}
-                    <button type="submit" class="uk-button uk-button-danger uk-button-large please_conform">Удалить материал</button>
-                </form>
-            @endif
-        </div>
+        <div class="uk-width-1-2"></div>
         <div class="uk-width-1-2 uk-text-right">
             @if(isset($allowUpdate))
                 <button type="submit" class="uk-button uk-button-primary uk-button-large" form="edit-form-build">Сохранить</button>
