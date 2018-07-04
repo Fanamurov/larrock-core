@@ -121,12 +121,18 @@ class FormSelectKey extends FBElement
             if ($get_options = $get_options_query->get()) {
                 foreach ($get_options as $get_options_value) {
                     if ($get_options_value !== null) {
-                        $this->options->push($get_options_value);
+                        if ($this->option_key) {
+                            $this->options->put($get_options_value->{$this->option_key}, $get_options_value->{$this->option_title});
+                        } else {
+                            $this->options->push($get_options_value);
+                        }
                     }
                 }
             }
 
-            $this->options = $this->options->pluck($this->name);
+            if (!$this->option_key) {
+                $this->options = $this->options->pluck($this->name);
+            }
         } else {
             $this->options = collect($this->options);
         }
