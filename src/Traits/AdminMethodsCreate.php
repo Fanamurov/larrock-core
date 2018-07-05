@@ -26,6 +26,10 @@ trait AdminMethodsCreate
             'url' => str_slug($request->get('title', 'Новый материал')),
         ];
 
+        if ($request->has('category')) {
+            $post_rows['category'] = $request->get('category');
+        }
+
         foreach ($this->config->rows as $row) {
             if (isset($row->modelChild) && $row->modelChild === \config('larrock.models.category', Category::class)) {
                 if (! empty($request->get($row->name))) {
