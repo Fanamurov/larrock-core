@@ -2,6 +2,7 @@
 
 namespace Larrock\Core\Traits;
 
+use Larrock\Core\Helpers\FormBuilder\FormCheckbox;
 use Validator;
 use Larrock\Core\Component;
 use Illuminate\Http\Request;
@@ -38,6 +39,9 @@ trait AdminMethodsUpdate
                     $data->{$row->name} = $request->input($row->name, $row->default);
                 }
                 $validate_data_array[$row->name] = $data->{$row->name};
+            }
+            if ($row instanceof FormCheckbox && empty($request->get($row->name, null))) {
+                $data->{$row->name} = null;
             }
         }
 
