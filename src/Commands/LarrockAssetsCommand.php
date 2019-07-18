@@ -30,7 +30,7 @@ class LarrockAssetsCommand extends Command
         $this->line('=== Install assets via bower ===');
 
         $libraries = ['fancybox', 'jquery-validation', 'jquery.cookie', 'fileapi', 'jquery.spinner', 'microplugin', 'pickadate',
-            'selectize', 'sifter', 'tinymce', 'uikit', ];
+            'selectize', 'sifter', 'tinymce', 'uikit#2.27.5', ];
 
         foreach ($libraries as $library) {
             if (! \File::exists(base_path('public_html/_assets/bower_components/'.$library))) {
