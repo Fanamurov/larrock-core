@@ -80,7 +80,7 @@ trait ComponentSearchTrait
                     $data[$item->id]['admin_url'] = $item->admin_url;
                     if ($admin) {
                         if ($item->getCategory) {
-                            if (\count($item->getCategory) > 0) {
+                            if (!isset($item->getCategory->id) && \count($item->getCategory) > 0) {
                                 $data[$item->id]['category'] = $item->getCategory->first()->title;
                             } elseif (isset($item->getCategory->title)) {
                                 $data[$item->id]['category'] = $item->getCategory->title;
@@ -90,7 +90,7 @@ trait ComponentSearchTrait
                         }
                     } else {
                         if ($item->getCategoryActive) {
-                            if (\count($item->getCategoryActive) > 0) {
+                            if (!isset($item->getCategoryActive->id) && \count($item->getCategoryActive) > 0) {
                                 $data[$item->id]['category'] = $item->getCategoryActive->first()->title;
                             } elseif (isset($item->getCategoryActive->title)) {
                                 $data[$item->id]['category'] = $item->getCategoryActive->title;
