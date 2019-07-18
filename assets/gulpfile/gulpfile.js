@@ -3,6 +3,8 @@
 //brew install yarn
 //Install Gulp:
 //yarn add gulp-cli gulp gulp-sass gulp-csso gulp-autoprefixer gulp-bless gulp-concat gulp-notify gulp-removelogs gulp-rename gulp-changed gulp-filesize gulp-imagemin imagemin-pngquant
+// Install old Gulp:
+// npm install --save-dev gulp@3.9.1
 
 var project = 'larrock'; //Название проекта
 

@@ -21,14 +21,14 @@
                 @endif
             </div>
             <div class="uk-width-auto">
-                @if(isset($data->getCategory, $allowCreate) && !isset($data->getCategory->id) && \count($data->getCategory) > 0)
-                    @if(isset($data->getCategory->id) && $data->getCategory->id)
+                @if(isset($data->getCategory, $allowCreate))
+                    @if(isset($data->getCategory->id))
                         <a class="uk-button uk-button-primary uk-width-1-1 uk-width-auto@s" href="/admin/{{ $package->name }}/create?category={{ $data->getCategory->id }}">Добавить другой материал</a>
-                    @else
+                    @elseif(\count($data->getCategory) > 0)
                         <a class="uk-button uk-button-primary uk-width-1-1 uk-width-auto@s" href="/admin/{{ $package->name }}/create?category={{ $data->getCategory->first()->id }}">Добавить другой материал</a>
+                    @else
+                        <a class="uk-button uk-button-primary uk-width-1-1 uk-width-auto@s" href="/admin/{{ $package->name }}/create">Добавить другой материал</a>
                     @endif
-                @else
-                    <a class="uk-button uk-button-primary uk-width-1-1 uk-width-auto@s" href="/admin/{{ $package->name }}/create">Добавить другой материал</a>
                 @endif
             </div>
         </div>

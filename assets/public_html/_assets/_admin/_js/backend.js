@@ -78,25 +78,18 @@ $(document).ready(function(){
     if (typeof tinymce !== 'undefined') {
         tinymce.init({
             selector: "textarea:not(.not-editor)",
-            menu: {
-                format: {title: 'Format', items: 'bold italic underline strikethrough superscript subscript | removeformat'},
-                headers: {'title': 'Стили UiKit', items: 'formats | removeformat'},
-                table: {title: 'Table', items: 'inserttable tableprops deletetable | cell row column'},
-                view: {title: 'View', items: 'visualaid visualblocks visualchars | fullscreen'},
-                edit: {title: 'Edit', items: 'undo redo | cut copy paste pastetext insertdatetime | searchreplace | selectall'},
-            },
             height: 300,
             plugins: [
                 "advlist link image imagetools lists charmap hr anchor pagebreak",
                 "searchreplace visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-                "table contextmenu directionality template paste textcolor importcss wordcount nonbreaking visualblocks visualchars codesample"
+                "table directionality template paste importcss wordcount nonbreaking visualblocks visualchars codesample"
             ],
             relative_urls: false,
             extended_valid_elements : "table[cellpadding|cellspacing|class],td[class|colspan|rowspan],tr[class]",
             paste_remove_styles: true,
             paste_remove_spans: true,
             paste_auto_cleanup_on_paste: true,
-            theme: 'modern',
+            theme: 'silver',
             image_advtab: true,
             content_css: "/_assets/_front/_css/_min/uikit.min.css,/_assets/_admin/_css/tinymce.css",
             content_style: "table {width: 100%}",
@@ -107,54 +100,25 @@ $(document).ready(function(){
             "indent | link image media pastetext | forecolor backcolor | template | code | defis nonbreaking hr | photonews | typo | removeformat charmap",
             imagetools_toolbar: "rotateleft rotateright | flipv fliph | editimage imageoptions",
             fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
-            style_formats: [
-                {title: 'Headers', items: [
-                        {title: 'h1', block: 'h1'},
-                        {title: 'h2', block: 'h2'},
-                        {title: 'h3', block: 'h3'},
-                        {title: 'h4', block: 'h4'},
-                        {title: 'h5', block: 'h5'},
-                        {title: 'h6', block: 'h6'}
-                    ]},
-
-                {title: 'Headers-text', items: [
-                        {title: 'стиль H1', block: 'p', classes: 'uk-h1'},
-                        {title: 'стиль H2', block: 'p', classes: 'uk-h2'},
-                        {title: 'стиль H3', block: 'p', classes: 'uk-h3'},
-                        {title: 'стиль H4', block: 'p', classes: 'uk-h4'},
-                        {title: 'стиль H5', block: 'p', classes: 'uk-h5'},
-                        {title: 'стиль H6', block: 'p', classes: 'uk-h6'}
-                    ]},
-
-                {title: 'Blocks', items: [
-                        {title: 'p', block: 'p'},
-                        {title: 'Увеличенный блок', block: 'blockquote'},
-                        {title: 'code', block: 'code'},
-                        {title: 'pre', block: 'pre'}
-                    ]}
-            ],
             setup: function(editor) {
-                editor.addButton('defis', {
+                editor.ui.registry.addButton('defis', {
                     text: '—',
                     title: 'Дефис',
-                    icon: false,
-                    onclick: function() {
+                    onAction: function (_) {
                         editor.insertContent('—');
                     }
                 });
-                editor.addButton('photonews', {
+                editor.ui.registry.addButton('photonews', {
                     text: 'Галерея',
                     title: 'Вставка шортката для галереи',
-                    icon: false,
-                    onclick: function() {
+                    onAction: function (_) {
                         editor.insertContent('{Фото[news]=}');
                     }
                 });
-                editor.addButton('typo', {
+                editor.ui.registry.addButton('typo', {
                     text: 'Типограф',
                     title: 'Выделите текст в редакторе и нажмите для типографа',
-                    icon: false,
-                    onclick: function() {
+                    onAction: function (_) {
                         var text = tinyMCE.activeEditor.selection.getContent({format : 'html'});
                         $.ajax({
                             type: "POST",
