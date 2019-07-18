@@ -11,7 +11,7 @@
                     {!! Breadcrumbs::render('admin.edit', $data) !!}
                 @endif
                 <a class="link-blank uk-display-block" href="{{ $data->full_url }}/">{{ $data->full_url }}/</a>
-                @if(isset($data->getCategory) && count($data->getCategory) > 1)
+                @if(isset($data->getCategory) && !isset($data->getCategory->id) && count($data->getCategory) > 1)
                     <div>В разделах:</div>
                     @foreach($data->getCategory as $category)
                         <ul>
@@ -21,7 +21,7 @@
                 @endif
             </div>
             <div class="uk-width-auto">
-                @if(isset($data->getCategory, $allowCreate) && \count($data->getCategory) > 0)
+                @if(isset($data->getCategory, $allowCreate) && !isset($data->getCategory->id) && \count($data->getCategory) > 0)
                     @if(isset($data->getCategory->id) && $data->getCategory->id)
                         <a class="uk-button uk-button-primary uk-width-1-1 uk-width-auto@s" href="/admin/{{ $package->name }}/create?category={{ $data->getCategory->id }}">Добавить другой материал</a>
                     @else
@@ -97,7 +97,7 @@
                     <input name="id_connect" type="hidden" value="{{ $data->id }}">
                     <input name="type_connect" type="hidden" value="{{ $package->name }}">
                     <input name="place" type="hidden" value="material">
-                    @if(isset($data->getCategory) && \count($data->getCategory) > 0)
+                    @if(isset($data->getCategory) && !isset($data->getCategory->id) && \count($data->getCategory) > 0)
                         @if(isset($data->getCategory->id) && $data->getCategory->id)
                             <input name="category_item" type="hidden" value="{{ $data->getCategory->id }}">
                         @else

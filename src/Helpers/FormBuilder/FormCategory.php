@@ -113,7 +113,7 @@ class FormCategory extends FBElement
         $selected = null;
         if ($this->data) {
             $selected = $this->data->{$this->connect->relation_name};
-            if (\count($selected) === 1 && isset($selected->id)) {
+            if (isset($selected->id)) {
                 $once_category[] = $selected;
                 $selected = $once_category;
             }
