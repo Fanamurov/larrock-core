@@ -39,6 +39,7 @@ function rebuild_cost() {
                         $('.row-clear-total').find('.clear-total').html(res.clear_total);
                         $('.row-total-discount').find('.total-discount').html(res.profit);
                         $('tr[data-rowid='+ rowid +']').find('.subtotal span.subtotal').html(res.subtotal);
+                        $('.repeat-total-cost').html(res.total);
                     }
                 });
             }
@@ -153,6 +154,7 @@ function removeCartItem() {
                     $('tr[data-rowid='+ rowid +']').remove();
                     $('.total').html(res);
                     $('.total_cart').html(res);
+                    $('.repeat-total-cost').html(res);
                     noty_show('message', 'Товар удален из корзины');
                 }
             }
