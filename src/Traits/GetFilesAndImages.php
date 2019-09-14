@@ -59,6 +59,10 @@ trait GetFilesAndImages
                 return $get_image->getUrl();
             }
 
+            if (method_exists($this, 'getCategoryActive') && $this->getCategoryActive) {
+                return $this->getCategoryActive->first()->first_image;
+            }
+
             return '/_assets/_front/_images/empty_big.png';
         });
 
@@ -72,6 +76,10 @@ trait GetFilesAndImages
                 return $get_image->getUrl('110x110');
             }
 
+            if (method_exists($this, 'getCategoryActive') && $this->getCategoryActive) {
+                return $this->getCategoryActive->first()->first_image_110;
+            }
+
             return '/_assets/_front/_images/empty_big.png';
         });
 
@@ -83,6 +91,10 @@ trait GetFilesAndImages
         $value = Cache::rememberForever(sha1('image_f140_category'.$this->id.'_'.$this->config->model), function () {
             if ($get_image = $this->getMedia('images')->sortByDesc('order_column')->first()) {
                 return $get_image->getUrl('140x140');
+            }
+
+            if (method_exists($this, 'getCategoryActive') && $this->getCategoryActive) {
+                return $this->getCategoryActive->first()->first_image_140;
             }
 
             return '/_assets/_front/_images/empty_big.png';
