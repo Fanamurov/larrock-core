@@ -79,6 +79,7 @@ return [
         'ShowItemPage' => true, //Если true - показывать ссылки на страницу товара
         'DescriptionCatalogItemLink' => TRUE, //Если true - показывать прилинкованные описания для страницы товара
         'DescriptionCatalogCategoryLink' => TRUE, //Если true - показывать прилинкованные описания для страницы раздела каталога
+        'categoryImageForItem' => true, // Добавлять к товару фото его раздела, если у самого товара нет отдельного фото
     
         'modules' => [
             'sortCost' => TRUE, //Показывать модуль сортировки
